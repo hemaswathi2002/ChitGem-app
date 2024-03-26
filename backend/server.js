@@ -10,14 +10,15 @@ configureDB()
 
 const usersCltr = require('./App/controllers/users-controller')
 const {userRegisterValidationSchema,loginValidationSchema} = require('./App/validations/user-validation')
+const {authenticateUser,authorizeUser} = require('./App/middlewares/auth')
 
 app.use(express.json())
 app.use(cors())
 
-app.post('/users',checkSchema(userRegisterValidationSchema),usersCltr.register)
-app.post ('/users/login',checkSchema(loginValidationSchema),usersCltr.login)
+app.post('/api/users',checkSchema(userRegisterValidationSchema),usersCltr.register)
+app.post ('/api/users/login',checkSchema(loginValidationSchema),usersCltr.login)
 
-app.get('/users/account',usersCltr.account)
+app.get('/api/account',authenticateUser,usersCltr.account)
 
 app.listen(port,()=>{
     console.log(`ChitGem-app is successfully running on the ${port}`)
