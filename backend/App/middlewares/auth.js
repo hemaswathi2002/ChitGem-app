@@ -20,4 +20,14 @@ const authenticateUser = (req,res,next)=>{
     }
 }
 
-module.exports = authenticateUser
+const authorizeUser = (permittedRoles)=>{
+    return (req,res,next)=>{
+        if(permittedRoles.includes(req.user.role)){
+            next()
+        }else{
+            res.status(403).json({error:'You are not authorized to access'})
+        }
+    }
+}
+
+module.exports = {authenticateUser,authorizeUser}

@@ -1,60 +1,85 @@
 const User = require('../models/user-model')
-
 const userRegisterValidationSchema = {
-    username:{
-        notEmpty:{
-            errorMessage: 'username should not be empty'
+
+    username : {
+        notEmpty : {
+            errorMessage : 'username should not be empty'
         },
-    trim:true
+        trim : true
     },
-    email:{
-        notEmpty:{
-            errorMessage : "email should not be empty"
+    email : {
+        notEmpty : {
+            errorMessage : 'email should not be empty'
         },
-        isEmail:{
+        isEmail : {
             errorMessage : 'email must be in email format'
         },
         custom : {
-            options : (async(value)=>{
+            options : async function(value){
                 const user = await User.findOne({email:value})
                 if(!user){
                     return true
-                }else{
-                    throw new Error('email already exists')
+                }else {
+                    throw new Error ('Email already exists')
                 }
-            })
-        },normalizeEmail : true
+            }
+        },normalizeEmail : true,trim : true
     },
-    role : {
-        notEmpty: {
-            errorMessage : 'role should not be empty'
-        },trim: true
+    mobile : {
+        notEmpty : {
+            errorMessage : 'mobile should not be empty'
+        },
+        isNumeric : {
+            errorMessage : 'mobile should be a number type'
+        },
+        isLength : {
+            options : {max:10},
+            errorMessage : 'mobile number should have 10 digits'
+        },
+        custom : {
+            options : async function (value) {
+                const user = await User.findOne({mobile:value})
+                if(!user){
+                    return true
+                }else{
+                    throw new Error('number already exists')
+                }
+            }
+        } , 
+        trim : true
     },
     password : {
         notEmpty : {
             errorMessage : 'password should not be empty'
         },
-        isStrongPassword:{
-            minLength:8,
-            minLowerCase:1,
-            minUpperCase:1,
-            minNumber:1,
-            minSymbols:1,
-            errorMessage:'Password must containt atleast 1-uppercase, 1-lowercase, 1-number, 1-symbols'
-        },escape:true
+        isStrongPassword : {
+            minLength : 8,
+            minLowerCase : 1,
+            minUpperCase : 1,
+            minSymbols : 1,
+            minNumber : 1,
+            errorMessage : 'Password must containt atleast 1-uppercase, 1-lowercase, 1-number, 1-symbols'
+        }
     }
-}
+    }
 
 const loginValidationSchema = {
-    email : {
+    mobile : {
         notEmpty : {
-            errorMessage : 'email is required'
-        },trim : true
+            errorMessage : 'mobile number is required'
+        },
+        trim : true
     },
     password : {
-        notEmpty : {
+        notEmpty :{
             errorMessage : 'password is required'
-        },trim : true
-    }
+        },
+        trim : true
+
+    },
 }
-module.exports = {userRegisterValidationSchema,loginValidationSchema}
+
+module.exports = {
+    userRegisterValidationSchema: userRegisterValidationSchema,
+    loginValidationSchema : loginValidationSchema
+}

@@ -1,6 +1,7 @@
 const User = require('../models/user-model')
 const bcryptjs = require('bcryptjs')
 const jwt = require('jsonwebtoken')
+const _ = require('lodash')
 
 const {validationResult} = require('express-validator')
 
@@ -17,6 +18,16 @@ usersCltr.register = async(req,res)=>{
         const salt = await bcryptjs.genSalt()
         const encryptedPassword = await bcryptjs.hash(user.password,salt)
         user.password = encryptedPassword
+        const count = await User.countDocuments()
+        if(count == 0){
+            user.role = 'admin'
+        }
+        else if (user.role == 'owner'){
+            user.role = 'owner'
+        }
+        else {
+            user.role = 'customer'
+        }
         const response = await user.save()
         res.status(201).json(response)
     }
@@ -31,9 +42,9 @@ usersCltr.login = async(req,res)=>{
     if(!errors.isEmpty()){
         return res.status(400).json({errors:errors.array()})
     }
+    const body = _.pick(req.body,['mobile','password'])
     try{
-        const {body} = req
-        const user = await User.findOne({email:body.email})
+        const user = await User.findOne({mobile:body.mobile})
         if(!user){
             return res.status(404).json({errors:'Invalid email/password'})
         }
