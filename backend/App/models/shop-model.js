@@ -1,23 +1,22 @@
 const mongoose = require("mongoose")
 const { Schema, model } = mongoose
 
-const shopSchema = new Schema(
-  {
+const shopSchema = new Schema({
     shopname: String,
     email:String,
     location: {
-      lang: String,
       lat: String,
+      long: String,
     },
-    contact:Number,
+    contact:String,
     description: String,
     approvalStatus: {
       type: String,
       enum: ["pending", "rejected", "approved"],
       default: "pending",
     },
-  },
-  { timestamps: true }
-)
+  },{ timestamps: true })
+
 const Shop = model("Shop", shopSchema)
+
 module.exports = Shop

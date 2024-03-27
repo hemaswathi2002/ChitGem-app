@@ -30,10 +30,7 @@ const shopRegisterValidationSchema = {
       errorMessage: "enter only numbers",
     },
     isLength: {
-      options: {
-        min: 10,
-        max: 10,
-      },
+      options: {min: 10,max: 10},
       errorMessage: "enter a valid number",
     },
   },
@@ -42,11 +39,8 @@ const shopRegisterValidationSchema = {
       errorMessage: "enter the description",
     },
     isLength: {
-      options: {
-        min: 5,
-        max: 250,
-      },
-      errorMessage: "description should be a minimum of 100 words",
+      options: {min: 50,max: 500},
+      errorMessage: "description should have minimum of 100 words",
     },
   },
 }

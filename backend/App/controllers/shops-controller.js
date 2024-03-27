@@ -1,7 +1,7 @@
 const Shop = require("../models/shop-model")
 const { validationResult } = require("express-validator")
-const shopCltr = {}
-shopCltr.register = async (req, res) => {
+const shopsCltr = {}
+shopsCltr.register = async (req, res) => {
   const errors = validationResult(req)
   if (!errors.isEmpty()) {
     return res.status(400).json({ errors: errors.array() })
@@ -10,7 +10,7 @@ shopCltr.register = async (req, res) => {
     const { body } = req
     const existingShop = await Shop.findOne({ email: body.email },{ contact: body.contact })
     if (existingShop) {
-        return res.status(400).json({ error: 'Email/phonealready exists' })
+        return res.status(400).json({ error: 'Email/phone already exists' })
     }
 
     const shop = new Shop(body)
@@ -24,7 +24,7 @@ shopCltr.register = async (req, res) => {
 }
 
 
-shopCltr.update = async (req, res) => {
+shopsCltrs.update = async (req, res) => {
   try {
     const id = req.params.id
     const { body } = req
@@ -55,7 +55,7 @@ shopCltr.update = async (req, res) => {
   }
 }
 
-shopCltr.getOneshop = async (req, res) => {
+shopsCltr.getOneshop = async (req, res) => {
   try {
     const { id } = req.params
     const shop = await Shop.findOne({ _id: id })
@@ -70,7 +70,7 @@ shopCltr.getOneshop = async (req, res) => {
   }
 }
 
-shopCltr.getAllshop = async (req, res) => {
+shopsCltr.getAllshop = async (req, res) => {
   try {
     const shop = await Shop.find()
     res.json(shop)
@@ -79,7 +79,8 @@ shopCltr.getAllshop = async (req, res) => {
     res.status(500).json({ error: "Error while getting all the shop records" })
   }
 }
-shopCltr.destory = async (req, res) => {
+
+shopsCltr.destory = async (req, res) => {
   try {
     const id = req.params.id
     const deletedshop = await Shop.findOneAndDelete({ _id: id })
@@ -93,4 +94,4 @@ shopCltr.destory = async (req, res) => {
   }
 }
 
-module.exports = shopCltr
+module.exports = shopsCltr
