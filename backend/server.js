@@ -9,15 +9,20 @@ const configureDB = require('./config/db')
 configureDB()
 
 const usersCltr = require('./App/controllers/users-controller')
+const shopCltr=require('./App/controllers/shop-controller')
 const {userRegisterValidationSchema,loginValidationSchema} = require('./App/validations/user-validation')
-
+const shopRegisterValidationSchema=require('./App/validations/shop-validation')
 app.use(express.json())
 app.use(cors())
 
 app.post('/users',checkSchema(userRegisterValidationSchema),usersCltr.register)
 app.post ('/users/login',checkSchema(loginValidationSchema),usersCltr.login)
-
 app.get('/users/account',usersCltr.account)
+app.post('/api/shops',checkSchema(shopRegisterValidationSchema),shopCltr.register)
+app.put('/api/shops/:id',checkSchema(shopRegisterValidationSchema),shopCltr.update)
+app.get('/api/shops',shopCltr.getAllshop)
+app.get('/api/shops/:id',shopCltr.getOneshop)
+app.delete('/api/shops/:id',shopCltr.destory)
 
 app.listen(port,()=>{
     console.log(`ChitGem-app is successfully running on the ${port}`)
