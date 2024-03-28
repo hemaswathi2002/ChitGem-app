@@ -4,7 +4,7 @@ const {Schema,model} = mongoose
 const userSchema = new Schema({
     username : String,
     email : String,
-    mobile : String,
+    mobile : Number,
     role : {
         type : String,
         enum : ['admin','owner','customer']

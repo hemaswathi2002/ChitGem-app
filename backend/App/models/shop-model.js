@@ -8,7 +8,7 @@ const shopSchema = new Schema({
       lat: String,
       long: String,
     },
-    contact:String,
+    contact:Number,
     description: String,
     approvalStatus: {
       type: String,
