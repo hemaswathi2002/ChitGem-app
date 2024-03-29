@@ -20,14 +20,14 @@ app.use(express.json())
 app.use(cors())
 
 app.post('/api/users',checkSchema(userRegisterValidationSchema),usersCltr.register)
-app.post ('/api/login',checkSchema(loginValidationSchema),usersCltr.login)
-app.get('/api/account',usersCltr.account)
+app.post ('/api/login',authenticateUser,checkSchema(loginValidationSchema),usersCltr.login)
+app.get('/api/account',authenticateUser,usersCltr.account)
 
-app.post('/api/shops',checkSchema(shopRegisterValidationSchema),shopsCltr.register)
-app.put('/api/shops/:id',checkSchema(shopRegisterValidationSchema),shopsCltr.update)
-app.get('/api/shops',shopsCltr.getAllshop)
-app.get('/api/shops/:id',shopsCltr.getOneshop)
-app.delete('/api/shops/:id',shopsCltr.destroy)
+app.post('/api/shops',authenticateUser,checkSchema(shopRegisterValidationSchema),shopsCltr.register)
+app.put('/api/shops/:id',authenticateUser,checkSchema(shopRegisterValidationSchema),shopsCltr.update)
+app.get('/api/shops',authenticateUser,shopsCltr.getAllshop)
+app.get('/api/shops/:id',authenticateUser,shopsCltr.getOneshop)
+app.delete('/api/shops/:id',authenticateUser,shopsCltr.destroy)
 
 
 
