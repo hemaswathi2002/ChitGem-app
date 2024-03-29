@@ -8,49 +8,30 @@ shopsCltr.register = async (req, res) => {
   }
   try {
     const { body } = req
-    const existingShop = await Shop.findOne({ email: body.email },{ contact: body.contact })
-    if (existingShop) {
-        return res.status(400).json({ error: 'Email/phone already exists' })
-    }
-
     const shop = new Shop(body)
+    shop.status = 'pending'
+    shop.ownerId = req.user.id
     await shop.save()
 
     res.status(201).json(shop)
 } catch (err) {
-    console.error('Error registering shop:', err)
+    console.error(err)
     res.status(500).json({ error: 'Internal server error' })
 }
 }
 
-
-shopsCltrs.update = async (req, res) => {
+shopsCltr.update = async (req, res) => {
+  const errors = validationResult(req)
+  if(!errors.isEmpty()){
+    return res.status(400).json({errors: 'Internal Server Error'})
+  }
   try {
     const id = req.params.id
     const { body } = req
-
-    const updatedShop = await Shop.findOneAndUpdate(
-      { _id: id },
-      {
-        $set: {
-          shopname: body.shopname,
-          location: body.location,
-          email: body.email,
-          contact: body.contact,
-          description: body.description,
-          approvalStatus: body.approvalStatus,
-        },
-      },
-      { new: true, runValidators: true }
-    )
-
-    if (!updatedShop) {
-      return res.status(404).json({ message: "Shop not found" })
-    }
-
-    res.status(200).json(updatedShop)
+    const shop = await Shop.findOneAndUpdate({ _id: id , ownerId : req.user.id },body,{ new: true})
+    res.status(200).json(shop)
   } catch (err) {
-    console.error("Error updating shop:", err)
+    console.log(err)
     res.status(500).json({ errors: "Internal server error" })
   }
 }
@@ -65,8 +46,8 @@ shopsCltr.getOneshop = async (req, res) => {
     }
     res.json(shop)
   } catch (error) {
-    console.error("Error while getting shop record:", error)
-    res.status(500).json({ error: "Error fetching shop record" })
+    console.error( error)
+    res.status(500).json({ errors: "Internal Server Error" })
   }
 }
 
@@ -76,21 +57,18 @@ shopsCltr.getAllshop = async (req, res) => {
     res.json(shop)
   } catch (error) {
     console.log(error)
-    res.status(500).json({ error: "Error while getting all the shop records" })
+    res.status(500).json({ errors: "Internal Server Error" })
   }
 }
 
-shopsCltr.destory = async (req, res) => {
+shopsCltr.destroy = async (req, res) => {
   try {
     const id = req.params.id
-    const deletedshop = await Shop.findOneAndDelete({ _id: id })
-    if (!deletedshop) {
-      return res.status(404).json({ error: "Shop not found" })
-    }
-    res.status(200).json({ message: "Shop deleted successfully" })
+    const shop = await Shop.findOneAndDelete({ _id: id })
+    res.json(shop)
   } catch (error) {
     console.error(error)
-    res.status(500).json({ error: "Error while deleting shop" })
+    res.status(500).json({ errors: "Internal Server Error" })
   }
 }
 

@@ -2,7 +2,11 @@ const mongoose = require("mongoose")
 const { Schema, model } = mongoose
 
 const shopSchema = new Schema({
-    shopname: String,
+    ownerId : {
+      type : Schema.Types.ObjectId,
+      ref : 'User'
+    },
+    shopName: String,
     email:String,
     location: {
       lat: String,

@@ -1,7 +1,7 @@
 const Shop = require("../models/shop-model")
 
 const shopRegisterValidationSchema = {
-  shopname: {
+  shopName: {
     notEmpty: {
       errorMessage: "shopname is required",
     },
@@ -13,6 +13,16 @@ const shopRegisterValidationSchema = {
     },
     isEmail: {
       errorMessage: "email should be a valid email address",
+    },
+    custom : {
+      options : async function(value){
+        const shop = await User.findOne({email:value})
+        if(!shop){
+          return true
+        } else {
+          throw new Error('Email already exists')
+        }
+      }
     },
     normalizeEmail: true,
     trim: true,
@@ -33,6 +43,16 @@ const shopRegisterValidationSchema = {
       options: {min: 10,max: 10},
       errorMessage: "enter a valid number",
     },
+    custom : {
+      options : async function(value){
+        const shop = await Shop.findOne({ number:value })
+        if(!shop){
+          return true
+        }else {
+          throw new Error('Number already exists')
+        }
+      }
+    }
   },
   description: {
     notEmpty: {
