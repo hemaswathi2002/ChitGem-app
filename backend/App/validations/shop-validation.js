@@ -1,18 +1,26 @@
 const Shop = require("../models/shop-model")
 
 const shopRegisterValidationSchema = {
+  ownerId : {
+    notEmpty : {
+      errorMessage : '* ownerId should not be empty'
+    },
+    isMongoId : {
+      errorMessage : '* Enter valid mongoId'
+    }
+  },
   shopName: {
     notEmpty: {
-      errorMessage: "shopname is required",
+      errorMessage: "* shopname is required",
     },
     trim: true,
   },
   email: {
     notEmpty: {
-      errorMessage: "email is required",
+      errorMessage: "* email is required",
     },
     isEmail: {
-      errorMessage: "email should be a valid email address",
+      errorMessage: "* email should be a valid email address",
     },
     custom : {
       options : async function(value){
@@ -20,7 +28,7 @@ const shopRegisterValidationSchema = {
         if(!shop){
           return true
         } else {
-          throw new Error('Email already exists')
+          throw new Error('* Email already exists')
         }
       }
     },
@@ -29,15 +37,15 @@ const shopRegisterValidationSchema = {
   },
   location: {
     notEmpty: {
-      errorMessage: "location is required",
+      errorMessage: "* location is required",
     },
   },
   contact: {
     notEmpty: {
-      errorMessage: "number is required",
+      errorMessage: "* number is required",
     },
     isNumeric: {
-      errorMessage: "enter only numbers",
+      errorMessage: "* enter only numbers",
     },
     isLength: {
       options: {min: 10,max: 10},
