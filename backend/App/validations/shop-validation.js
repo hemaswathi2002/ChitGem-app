@@ -17,20 +17,20 @@ const shopRegisterValidationSchema = {
     trim: true,
   },
   
-  address: {
-    area: {
+
+    "address.area": {
       notEmpty: {
         errorMessage: '* Area is required',
       },
       trim: true,
     },
-    landmark: {
+    "address.landmark": {
       notEmpty: {
         errorMessage: '* Landmark is required',
       },
       trim: true,
     },
-    pincode: {
+    "address.pincode": {
       notEmpty: {
         errorMessage: '* Pincode is required',
       },
@@ -42,19 +42,18 @@ const shopRegisterValidationSchema = {
         errorMessage: 'Enter a valid 6-digit pincode',
       },
     },
-    city: {
+    "address.city": {
       notEmpty: {
         errorMessage: '* City is required',
       },
       trim: true,
     },
-    state: {
+    "address.state": {
       notEmpty: {
         errorMessage: '* State is required',
       },
       trim: true,
-    }
-  },
+    },
 
   location: {
     notEmpty: {
@@ -75,15 +74,15 @@ const shopRegisterValidationSchema = {
     },
   },
 
-  description: {
-    notEmpty: {
-      errorMessage: 'enter the description',
-    },
-    isLength: {
-      options: {min: 25,max: 500},
-      errorMessage: 'description should have minimum of 50 words',
-    },
-  },
+  // description: {
+  //   notEmpty: {
+  //     errorMessage: 'enter the description',
+  //   },
+  //   isLength: {
+  //     options: {min: 25,max: 500},
+  //     errorMessage: 'description should have minimum of 50 words',
+  //   },
+  // },
   
 }
 

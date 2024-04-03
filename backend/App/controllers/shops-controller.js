@@ -11,12 +11,9 @@ shopsCltr.register = async (req, res) => {
     const body = _.pick(req.body,['ownerId','shopName','address','location','contact','description'])
     body.approvalStatus = 'pending'
     body.ownerId = req.user.id
+    console.log(req.user)
     const shop = new Shop(body)
     const response = await shop.save()
-    res.status(201).json(response)
-    shop.status = 'pending'
-    shop.ownerId = req.user.id
-    await shop.save()
     res.status(201).json(shop)
 } catch (err) {
     console.error(err)

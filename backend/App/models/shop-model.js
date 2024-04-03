@@ -7,12 +7,15 @@ const shopSchema = new Schema({
       ref : 'User'
     },
     shopName: String,
-    address : { 
-      area : String ,
-      landmark : String,
-      pincode : Number,
-      city : String,
-      state : String
+    address: {
+      type: {
+        area: String,
+        landmark: String,
+        pincode: Number,
+        city: String,
+        state: String
+      },
+      required: true
     },
     location: {
       lat: String,

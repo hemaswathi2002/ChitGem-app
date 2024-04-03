@@ -10,11 +10,8 @@ configureDB()
 
 const usersCltr = require('./App/controllers/users-controller')
 const shopsCltr=require('./App/controllers/shops-controller')
-<<<<<<< Updated upstream
 const jewelsCltr = require('./App/controllers/jewels-controller')
-=======
 const chitsCltr=require('./App/controllers/chits-controller')
->>>>>>> Stashed changes
 
 const {authenticateUser,authorizeUser} = require('./App/middlewares/auth')
 
@@ -54,22 +51,18 @@ app.get('/api/shops',authenticateUser,shopsCltr.getAllshop)
 app.get('/api/shops/:id',authenticateUser,shopsCltr.getOneshop)
 app.delete('/api/shops/:id',authenticateUser,shopsCltr.destroy)
 
-<<<<<<< Updated upstream
 app.post('/api/jewels',upload.array('images', 2),jewelsCltr.create)
 
 app.get('/api/jewels',jewelsCltr.get)
 app.put('/api/jewels/:id',jewelsCltr.update)
 app.delete('/api/jewels/:id',jewelsCltr.delete)
 
-
-
-=======
 app.post('/api/chits',authenticateUser,checkSchema(chitRegisterValidationSchema),chitsCltr.register)
 app.put('/api/chits/:id',authenticateUser,checkSchema(chitRegisterValidationSchema),chitsCltr.update)
 app.get('/api/chits',authenticateUser,chitsCltr.getAllchit)
 app.get('/api/chits/:id',authenticateUser,chitsCltr.getOnechit)
 app.delete('/api/chits/:id',authenticateUser,chitsCltr.destroy)
->>>>>>> Stashed changes
+
 app.listen(port,()=>{
     console.log(`ChitGem-app is successfully running on the ${port}`)
 })
