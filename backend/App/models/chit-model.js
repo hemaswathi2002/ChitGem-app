@@ -10,14 +10,16 @@ const chitSchema=new Schema({
         type:Schema.Types.ObjectId,
         ref:'Customer'
     },
-    name:String,
     amount :{
         minAmount:Number,
         maxAmount:Number,
     },
     totalAmount:Number,
-    installments:String,
-    joinDate:Date,
+    installments:{
+       type:Number,
+       default:12
+    },
+    startDate:Date,
     endDate:Date,
     status: {
         type: String,
@@ -26,8 +28,6 @@ const chitSchema=new Schema({
     benefits:String,
     termsAndConditions:String,
     goldPrice:String,
-    goldHarvested:Number,
-    amountSaved:Number
 },{ timestamps: true })
 const Chit=mongoose.model('Chit',chitSchema)
 module.exports=Chit

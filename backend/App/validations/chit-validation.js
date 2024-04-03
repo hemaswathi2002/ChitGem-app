@@ -17,11 +17,6 @@ const chitRegisterValidationSchema={
             errorMessage:"*Enter a valid mongoId"
         }
     },
-    name:{
-        notEmpty:{
-            errorMessage:"*name is required"
-        }
-    },
     amount: {
         notEmpty: {
             errorMessage: "* Amount should not be empty"
@@ -50,7 +45,7 @@ const chitRegisterValidationSchema={
             errorMessage:"* installment should not be empty"
         }
     },
-    joinDate: {
+    startDate: {
         notEmpty: {
             errorMessage: "* Date should not be empty"
         },
