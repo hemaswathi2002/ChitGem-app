@@ -10,12 +10,13 @@ configureDB()
 
 const usersCltr = require('./App/controllers/users-controller')
 const shopsCltr=require('./App/controllers/shops-controller')
+const wishlistCltr = require('./App/controllers/wishlist-controller')
 
 const {authenticateUser,authorizeUser} = require('./App/middlewares/auth')
 
 const {userRegisterValidationSchema,loginValidationSchema} = require('./App/validations/user-validation')
 const shopRegisterValidationSchema=require('./App/validations/shop-validation')
-
+const wishlistValidationSchema=require('./App/validations/wishlist-validation')
 app.use(express.json())
 app.use(cors())
 
@@ -29,6 +30,11 @@ app.get('/api/shops',authenticateUser,shopsCltr.getAllshop)
 app.get('/api/shops/:id',authenticateUser,shopsCltr.getOneshop)
 app.delete('/api/shops/:id',authenticateUser,shopsCltr.destroy)
 
+app.post('/api/wishlists',authenticateUser,checkSchema(wishlistValidationSchema),wishlistCltr.create)
+app.put('/api/wishlists/:id',authenticateUser,checkSchema(wishlistValidationSchema),wishlistCltr.update)
+app.get('/api/wishlists',authenticateUser,wishlistCltr.getAllWishlist)
+app.get('/api/wishlists/:id',authenticateUser,wishlistCltr.getOneWishlist)
+app.delete('/api/wishlists/:id',authenticateUser,wishlistCltr.destroy)
 
 
 app.listen(port,()=>{
