@@ -1,19 +1,19 @@
 const Shop = require("../models/shop-model")
 const { validationResult } = require("express-validator")
+const _ = require('lodash')
 const shopsCltr = {}
 shopsCltr.register = async (req, res) => {
   const errors = validationResult(req)
   if (!errors.isEmpty()) {
     return res.status(400).json({ errors: errors.array() })
   }
-  try {
-    const { body } = req
+    try {
+    const body = _.pick(req.body,['ownerId','shopName','address','location','contact','description'])
+    body.approvalStatus = 'pending'
+    body.ownerId = req.user.id
     const shop = new Shop(body)
-    shop.status = 'pending'
-    shop.ownerId = req.user.id
-    await shop.save()
-
-    res.status(201).json(shop)
+    const response = await shop.save()
+    res.status(201).json(response)
 } catch (err) {
     console.error(err)
     res.status(500).json({ error: 'Internal server error' })
@@ -23,7 +23,7 @@ shopsCltr.register = async (req, res) => {
 shopsCltr.update = async (req, res) => {
   const errors = validationResult(req)
   if(!errors.isEmpty()){
-    return res.status(400).json({errors: 'Internal Server Error'})
+    return res.status(400).json({errors: errors.array()})
   }
   try {
     const id = req.params.id

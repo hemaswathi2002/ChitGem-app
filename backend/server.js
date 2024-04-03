@@ -10,6 +10,7 @@ configureDB()
 
 const usersCltr = require('./App/controllers/users-controller')
 const shopsCltr=require('./App/controllers/shops-controller')
+const jewelsCltr = require('./App/controllers/jewels-controller')
 
 const {authenticateUser,authorizeUser} = require('./App/middlewares/auth')
 
@@ -19,8 +20,27 @@ const shopRegisterValidationSchema=require('./App/validations/shop-validation')
 app.use(express.json())
 app.use(cors())
 
+const multer = require('multer')
+
+
+const storage = multer.diskStorage({
+    destination: (req, file, cb)=>{
+        console.log(req.files)
+        console.log(file)
+      return cb(null, "./public/Images");
+    },
+    filename: (req, file, cb)=>{
+      console.log(file);
+      console.log(req.files)
+      cb(null, `${Date.now()}-${file.originalname}`)
+    }
+  });
+  
+const upload = multer({storage:storage})
+
+
 app.post('/api/users',checkSchema(userRegisterValidationSchema),usersCltr.register)
-app.post ('/api/login',authenticateUser,checkSchema(loginValidationSchema),usersCltr.login)
+app.post ('/api/login',checkSchema(loginValidationSchema),usersCltr.login)
 app.get('/api/account',authenticateUser,usersCltr.account)
 
 app.post('/api/shops',authenticateUser,checkSchema(shopRegisterValidationSchema),shopsCltr.register)
@@ -28,6 +48,12 @@ app.put('/api/shops/:id',authenticateUser,checkSchema(shopRegisterValidationSche
 app.get('/api/shops',authenticateUser,shopsCltr.getAllshop)
 app.get('/api/shops/:id',authenticateUser,shopsCltr.getOneshop)
 app.delete('/api/shops/:id',authenticateUser,shopsCltr.destroy)
+
+app.post('/api/jewels',upload.array('images', 2),jewelsCltr.create)
+
+app.get('/api/jewels',jewelsCltr.get)
+app.put('/api/jewels/:id',jewelsCltr.update)
+app.delete('/api/jewels/:id',jewelsCltr.delete)
 
 
 

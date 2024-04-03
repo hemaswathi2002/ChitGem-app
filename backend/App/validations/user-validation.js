@@ -66,7 +66,7 @@ const userRegisterValidationSchema = {
 const loginValidationSchema = {
     mobile : {
         notEmpty : {
-            errorMessage : 'mobile number is required'
+            errorMessage : 'email number is required'
         },
         trim : true
     },
