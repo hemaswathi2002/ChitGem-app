@@ -10,6 +10,7 @@ configureDB()
 
 const usersCltr = require('./App/controllers/users-controller')
 const shopsCltr=require('./App/controllers/shops-controller')
+
 const wishlistCltr = require('./App/controllers/wishlist-controller')
 
 const {authenticateUser,authorizeUser} = require('./App/middlewares/auth')
@@ -31,7 +32,7 @@ app.get('/api/shops/:id',authenticateUser,shopsCltr.getOneshop)
 app.delete('/api/shops/:id',authenticateUser,shopsCltr.destroy)
 
 app.post('/api/wishlists',authenticateUser,checkSchema(wishlistValidationSchema),wishlistCltr.create)
-app.put('/api/wishlists/:id',authenticateUser,checkSchema(wishlistValidationSchema),wishlistCltr.update)
+app.put('/api/wishlists/:id',checkSchema(wishlistValidationSchema),wishlistCltr.update)
 app.get('/api/wishlists',authenticateUser,wishlistCltr.getAllWishlist)
 app.get('/api/wishlists/:id',authenticateUser,wishlistCltr.getOneWishlist)
 app.delete('/api/wishlists/:id',authenticateUser,wishlistCltr.destroy)
