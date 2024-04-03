@@ -36,6 +36,7 @@ wishlistCltr.update=async(req,res)=>{
         res.status(500).json({errors:'Internal server error'})
     }
 }
+
 wishlistCltr.getOneWishlist=async(req,res)=>{
     try{
         const {id}=req.params
@@ -49,6 +50,7 @@ wishlistCltr.getOneWishlist=async(req,res)=>{
         res.status(500).json({errors:'Internal server error'})
     }
 }
+
 wishlistCltr.getAllWishlist=async(req,res)=>{
     try{
         const wishlist=await Wishlist.find()
@@ -58,6 +60,7 @@ wishlistCltr.getAllWishlist=async(req,res)=>{
         res.status(500).json({errors:'Internal server error'})
     }
 }
+
 wishlistCltr.destroy=async(req,res)=>{
     try{
         const id=req.params.id

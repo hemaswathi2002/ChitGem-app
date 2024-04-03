@@ -2,10 +2,6 @@ const mongoose=require('mongoose')
 const{Schema,model}=mongoose
 
 const wishlistSchema=new Schema({
-    // customerId:{
-    //     type:Schema.Types.ObjectId,
-    //     ref:'Customer'
-    // },
     shopId:{
         type:Schema.Types.ObjectId,
         ref:'Shop'
