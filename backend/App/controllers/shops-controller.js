@@ -14,6 +14,10 @@ shopsCltr.register = async (req, res) => {
     const shop = new Shop(body)
     const response = await shop.save()
     res.status(201).json(response)
+    shop.status = 'pending'
+    shop.ownerId = req.user.id
+    await shop.save()
+    res.status(201).json(shop)
 } catch (err) {
     console.error(err)
     res.status(500).json({ error: 'Internal server error' })
