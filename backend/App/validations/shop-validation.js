@@ -9,68 +9,82 @@ const shopRegisterValidationSchema = {
       errorMessage : '* Enter valid mongoId'
     }
   },
+
   shopName: {
     notEmpty: {
-      errorMessage: "* shopname is required",
+      errorMessage: '* shopname is required',
     },
     trim: true,
   },
-  email: {
-    notEmpty: {
-      errorMessage: "* email is required",
+  
+  address: {
+    area: {
+      notEmpty: {
+        errorMessage: '* Area is required',
+      },
+      trim: true,
     },
-    isEmail: {
-      errorMessage: "* email should be a valid email address",
+    landmark: {
+      notEmpty: {
+        errorMessage: '* Landmark is required',
+      },
+      trim: true,
     },
-    custom : {
-      options : async function(value){
-        const shop = await User.findOne({email:value})
-        if(!shop){
-          return true
-        } else {
-          throw new Error('* Email already exists')
-        }
-      }
+    pincode: {
+      notEmpty: {
+        errorMessage: '* Pincode is required',
+      },
+      isNumeric: {
+        errorMessage: '* Enter only numbers',
+      },
+      isLength: {
+        options: { min: 6, max: 6 },
+        errorMessage: 'Enter a valid 6-digit pincode',
+      },
     },
-    normalizeEmail: true,
-    trim: true,
+    city: {
+      notEmpty: {
+        errorMessage: '* City is required',
+      },
+      trim: true,
+    },
+    state: {
+      notEmpty: {
+        errorMessage: '* State is required',
+      },
+      trim: true,
+    }
   },
+
   location: {
     notEmpty: {
-      errorMessage: "* location is required",
+      errorMessage: '* location is required',
     },
   },
+
   contact: {
     notEmpty: {
-      errorMessage: "* number is required",
+      errorMessage: '* number is required',
     },
     isNumeric: {
-      errorMessage: "* enter only numbers",
+      errorMessage: '* enter only numbers',
     },
     isLength: {
       options: {min: 10,max: 10},
-      errorMessage: "enter a valid number",
+      errorMessage: 'enter a valid number',
     },
-    custom : {
-      options : async function(value){
-        const shop = await Shop.findOne({ number:value })
-        if(!shop){
-          return true
-        }else {
-          throw new Error('Number already exists')
-        }
-      }
-    }
   },
+
   description: {
     notEmpty: {
-      errorMessage: "enter the description",
+      errorMessage: 'enter the description',
     },
     isLength: {
-      options: {min: 50,max: 500},
-      errorMessage: "description should have minimum of 100 words",
+      options: {min: 25,max: 500},
+      errorMessage: 'description should have minimum of 50 words',
     },
   },
+  
 }
 
 module.exports = shopRegisterValidationSchema

@@ -46,11 +46,11 @@ usersCltr.login = async(req,res)=>{
     try{
         const user = await User.findOne({mobile:body.mobile})
         if(!user){
-            return res.status(404).json({errors:'Invalid email/password'})
+            return res.status(404).json({errors:'Invalid mobile/password'})
         }
         const checkPassword = await bcryptjs.compare(body.password,user.password)
             if(!checkPassword){
-                return res.status(404).json({errors:'Invalid email/password'})
+                return res.status(404).json({errors:'Invalid mobile/password'})
             }     
             const tokenData = {
                 id : user._id,

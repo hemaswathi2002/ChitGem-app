@@ -7,12 +7,21 @@ const shopSchema = new Schema({
       ref : 'User'
     },
     shopName: String,
-    email:String,
+    address : { 
+      area : String ,
+      landmark : String,
+      pincode : Number,
+      city : String,
+      state : String
+    },
     location: {
       lat: String,
       long: String,
     },
-    contact:Number,
+    contact: {
+      email : String,
+      mobile : Number
+    },
     description: String,
     approvalStatus: {
       type: String,
