@@ -9,14 +9,14 @@ const chitRegisterValidationSchema={
             errorMessage : '* Enter a valid mongoId'
         }
     },
-    // customerId:{
-    //     notEmpty:{
-    //         errorMessage:"* customerId should not be empty "
-    //     },
-    //     isMongoId:{
-    //         errorMessage:"*Enter a valid mongoId"
-    //     }
-    // },
+    customerId:{
+        notEmpty:{
+            errorMessage:"* customerId should not be empty "
+        },
+        isMongoId:{
+            errorMessage:"*Enter a valid mongoId"
+        }
+    },
         chitAmount: {
           notEmpty: {
             errorMessage: "* chitAmount should not be empty"

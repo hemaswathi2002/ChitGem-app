@@ -61,7 +61,7 @@ const shopRegisterValidationSchema = {
     },
   },
 
-  contact: {
+  "contact.mobile": {
     notEmpty: {
       errorMessage: '* number is required',
     },
@@ -73,8 +73,17 @@ const shopRegisterValidationSchema = {
       errorMessage: 'enter a valid number',
     },
   },
+"contact.email":{
+  notEmpty: {
+    errorMessage: '* email is required',
+  },
+  isEmail:{
+    errorMessage:'*email should be valid'
+  },
+  normalizeEmail: true,
+},
 
-  description: {
+description: {
     notEmpty: {
       errorMessage: 'enter the description',
     },
