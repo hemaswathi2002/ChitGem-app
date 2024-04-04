@@ -44,6 +44,9 @@ customersCltr.update = async(req,res) => {
     try{
         const id = req.params.id
         const {body} = req
+        if(body.ownerId!==shop.ownerId ){
+            return res.status(403).json({errors:'You can only update customers for your own shop'})
+        }
         const customer = await Customers.findOneAndUpdate({_id:id},body,{new:true})
         res.status(200).json(customer)
     }

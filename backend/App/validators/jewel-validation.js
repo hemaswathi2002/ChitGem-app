@@ -1,5 +1,13 @@
 const jewelValidationSchema = {
-    shopId : {
+    // shopId : {
+    //     notEmpty : {
+    //         errorMessage : '* shopId should not be empty'
+    //     },
+    //     isMongoId : {
+    //         errorMessage : '* Enter valid mongoId'
+    //     },
+    // },
+    ownerId : {
         notEmpty : {
             errorMessage : '* shopId should not be empty'
         },

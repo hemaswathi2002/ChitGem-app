@@ -3,7 +3,11 @@ const mongoose = require('mongoose')
 const {Schema,model} = mongoose
 
 const jewelSchema = new Schema({
-    shopId : {
+    // shopId : {
+    //     type : Schema.Types.ObjectId,
+    //     ref : 'Shop'
+    // },
+    ownerId:{
         type : Schema.Types.ObjectId,
         ref : 'Shop'
     },
