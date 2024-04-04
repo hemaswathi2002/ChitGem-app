@@ -6,10 +6,10 @@ const chitSchema=new Schema({
         type:Schema.Types.ObjectId,
         ref:'Shop'
     },
-    // customerId:{
-    //     type:Schema.Types.ObjectId,
-    //     ref:'Customer'
-    // },
+    customerId:{
+        type:Schema.Types.ObjectId,
+        ref:'Customer'
+    },
     chitAmount :{
        type: Number,
        default:500
