@@ -6,19 +6,25 @@ const chitSchema=new Schema({
         type:Schema.Types.ObjectId,
         ref:'Shop'
     },
-    customerId:{
-        type:Schema.Types.ObjectId,
-        ref:'Customer'
+    // customerId:{
+    //     type:Schema.Types.ObjectId,
+    //     ref:'Customer'
+    // },
+    chitAmount :{
+       type: Number,
+       default:500
     },
-    name:String,
-    amount :{
-        minAmount:Number,
-        maxAmount:Number,
+    installments:{
+        type:Number,
+        default:12
     },
+
     totalAmount:Number,
-    installments:String,
-    joinDate:Date,
-    endDate:Date,
+
+    date: {
+        startDate:Date,
+        endDate:Date,
+    },
     status: {
         type: String,
         enum: ['active', 'closed']
@@ -26,8 +32,15 @@ const chitSchema=new Schema({
     benefits:String,
     termsAndConditions:String,
     goldPrice:String,
-    goldHarvested:Number,
-    amountSaved:Number
 },{ timestamps: true })
+
+chitSchema.pre('save', function(next) {
+    const startDate = this.date.startDate
+    const installments = this.installments
+    const endDate = new Date(startDate)
+    endDate.setMonth(endDate.getMonth() + installments)
+    this.date.endDate = endDate
+    next()
+  })
 const Chit=mongoose.model('Chit',chitSchema)
 module.exports=Chit

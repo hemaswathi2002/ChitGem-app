@@ -9,7 +9,9 @@ chitsCltr.register = async (req, res) => {
   try {
     const { body } = req
     const chit = new Chit(body)
-    chit.customerId = req.user.id
+    // chit.customerId = req.user.id
+    const response = await chit.save()
+    res.status(201).json(chit)
   } catch (err) {
     console.log(err)
     res.status(500).json({ errors: "Internal server error" })
