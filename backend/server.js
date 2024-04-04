@@ -15,9 +15,12 @@ const chitsCltr=require('./App/controllers/chits-controller')
 
 const {authenticateUser,authorizeUser} = require('./App/middlewares/auth')
 
-const {userRegisterValidationSchema,loginValidationSchema} = require('./App/validations/user-validation')
-const shopRegisterValidationSchema=require('./App/validations/shop-validation')
-const chitRegisterValidationSchema = require('./App/validations/chit-validation')
+const {userRegisterValidationSchema,loginValidationSchema} = require('./App/validators/user-validation')
+const shopRegisterValidationSchema=require('./App/validators/shop-validation')
+const chitRegisterValidationSchema = require('./App/validators/chit-validation')
+const customerValidationSchema = require('./App/validators/customer-validation')
+
+const customersCltr = require('./App/controllers/customers-controller')
 
 
 app.use(express.json())
@@ -66,6 +69,13 @@ app.put('/api/chits/:id',authenticateUser,checkSchema(chitRegisterValidationSche
 app.get('/api/chits',authenticateUser,chitsCltr.getAllchit)
 app.get('/api/chits/:id',authenticateUser,chitsCltr.getOnechit)
 app.delete('/api/chits/:id',authenticateUser,chitsCltr.destroy)
+
+app.post('/api/customers',authenticateUser,authorizeUser(['owner']),checkSchema(customerValidationSchema),customersCltr.create)
+app.get('/api/customers',customersCltr.list)
+app.get('/api/customers/:id',customersCltr.getOneCustomer)
+app.put('/api/customers/:id',checkSchema(customerValidationSchema),customersCltr.update)
+app.delete('/api/customers/:id',customersCltr.destroy)
+
 
 app.listen(port,()=>{
     console.log(`ChitGem-app is successfully running on the ${port}`)
