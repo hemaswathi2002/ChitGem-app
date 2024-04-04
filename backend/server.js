@@ -12,6 +12,9 @@ const usersCltr = require('./App/controllers/users-controller')
 const shopsCltr=require('./App/controllers/shops-controller')
 const jewelsCltr = require('./App/controllers/jewels-controller')
 const chitsCltr=require('./App/controllers/chits-controller')
+const customersCltr = require('./App/controllers/customers-controller')
+const reviewsCltr = require('./App/controllers/reviews-controller')
+
 
 const {authenticateUser,authorizeUser} = require('./App/middlewares/auth')
 
@@ -19,8 +22,9 @@ const {userRegisterValidationSchema,loginValidationSchema} = require('./App/vali
 const shopRegisterValidationSchema=require('./App/validators/shop-validation')
 const chitRegisterValidationSchema = require('./App/validators/chit-validation')
 const customerValidationSchema = require('./App/validators/customer-validation')
+const jewelValidationSchema = require('./App/validators/jewel-validation')
+const reviewsValidationSchema = require('./App/validators/review-validation')
 
-const customersCltr = require('./App/controllers/customers-controller')
 
 
 app.use(express.json())
@@ -44,37 +48,45 @@ const storage = multer.diskStorage({
   
 const upload = multer({storage:storage})
 
-
+//api users
 app.post('/api/users',checkSchema(userRegisterValidationSchema),usersCltr.register)
 app.post ('/api/login',checkSchema(loginValidationSchema),usersCltr.login)
 app.get('/api/account',authenticateUser,usersCltr.account)
 
-app.post('/api/shops',authenticateUser,checkSchema(shopRegisterValidationSchema),shopsCltr.register)
-app.put('/api/shops/:id',authenticateUser,checkSchema(shopRegisterValidationSchema),shopsCltr.update)
-app.get('/api/shops',authenticateUser,shopsCltr.getAllshop)
-app.get('/api/shops/:id',authenticateUser,shopsCltr.getOneshop)
+//api shops
+app.post('/api/shops',authenticateUser,authorizeUser(['owner']),checkSchema(jewelValidationSchema),authenticateUser,checkSchema(shopRegisterValidationSchema),shopsCltr.register)
+app.get('/api/shops',authenticateUser,authorizeUser(['owner']),shopsCltr.getAllshop)
+app.get('/api/shops/:id',authenticateUser,authorizeUser(['admin','owner','customer']),shopsCltr.getOneshop)
+app.put('/api/shops/:id',authenticateUser,authorizeUser(['owner']),checkSchema(jewelValidationSchema),authenticateUser,checkSchema(shopRegisterValidationSchema),shopsCltr.update)
+app.put('/api/shops/update/:id',authenticateUser,authorizeUser(['admin']),checkSchema(shopRegisterValidationSchema),shopsCltr.updateStatus)
 app.delete('/api/shops/:id',authenticateUser,shopsCltr.destroy)
 
+//api jewels
 app.post('/api/jewels',upload.array('images', 2),jewelsCltr.create)
-
 app.get('/api/jewels',jewelsCltr.get)
 app.put('/api/jewels/:id',jewelsCltr.update)
 app.delete('/api/jewels/:id',jewelsCltr.delete)
 
-
-
-
+//api chits
 app.post('/api/chits',authenticateUser,checkSchema(chitRegisterValidationSchema),chitsCltr.register)
 app.put('/api/chits/:id',authenticateUser,checkSchema(chitRegisterValidationSchema),chitsCltr.update)
 app.get('/api/chits',authenticateUser,chitsCltr.getAllchit)
 app.get('/api/chits/:id',authenticateUser,chitsCltr.getOnechit)
 app.delete('/api/chits/:id',authenticateUser,chitsCltr.destroy)
 
+//api customers
 app.post('/api/customers',authenticateUser,authorizeUser(['owner']),checkSchema(customerValidationSchema),customersCltr.create)
-app.get('/api/customers',customersCltr.list)
-app.get('/api/customers/:id',customersCltr.getOneCustomer)
-app.put('/api/customers/:id',checkSchema(customerValidationSchema),customersCltr.update)
+app.get('/api/customers',authenticateUser,authorizeUser(['owner']),customersCltr.list)
+app.get('/api/customers/:id',authenticateUser,authorizeUser(['owner','customer']),customersCltr.getOneCustomer)
+app.put('/api/customers/:id',authenticateUser,authorizeUser(['owner']),checkSchema(customerValidationSchema),customersCltr.update)
 app.delete('/api/customers/:id',customersCltr.destroy)
+
+//api reviews
+app.post ('/api/reviews',authenticateUser,authorizeUser(['customer']),checkSchema(reviewsValidationSchema),reviewsCltr.create)
+app.get('/api/reviews',reviewsCltr.list)
+app.get('/api/reviews/:id',authenticateUser,authorizeUser(['customer','owner']),reviewsCltr.getOneReview)
+app.put('/api/reviews/:id',authenticateUser,authorizeUser(['customer']),checkSchema(reviewsValidationSchema),reviewsCltr.update)
+app.delete('/api/reviews/:id',authenticateUser,authorizeUser(['customer']),reviewsCltr.delete)
 
 
 app.listen(port,()=>{

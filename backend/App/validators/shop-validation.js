@@ -83,6 +83,11 @@ const shopRegisterValidationSchema = {
       errorMessage: 'description should have minimum of 50 words',
     },
   },
+  approvalStatus : {
+    isIn : {
+      options : [['pending','rejected','approved']]
+    }
+  }
   
 }
 

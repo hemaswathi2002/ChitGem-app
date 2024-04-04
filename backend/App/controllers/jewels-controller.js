@@ -1,5 +1,6 @@
 const Jewels = require('../models/jewel-model')
 const {validationResult} = require('express-validator')
+const _ = require('lodash')
 const jewelsCltr = {}
 
 
@@ -12,13 +13,9 @@ jewelsCltr.create = async (req, res) => {
     try {
       const images = req.files.map(file => file.path);
       console.log(images)
-      const {shopId,price,caption} = req.body
-      const jewel = new Jewels({
-        shopId : shopId,
-        images: images,
-        price : price,
-        caption : caption
-      })
+      const body = _.pick(req.body,['image','price','caption'])
+      body.ownerId = req.user.id
+      const jewel = new Jewels(body)
       console.log(jewel)
       const savedJewel = await jewel.save();
   
@@ -48,7 +45,8 @@ jewelsCltr.update = async(req,res)=>{
     }
     try{
         const id = req.params.id
-        const {body} = req
+        const body = _.pick(req.body,['image','price','caption'])
+        body.ownerId = req.user.id
         const jewel = await Jewels.findOneAndUpdate({_id:id},body,{new:true})
         res.json(jewel)
     }
@@ -61,7 +59,7 @@ jewelsCltr.update = async(req,res)=>{
 jewelsCltr.delete = async(req,res) => {
     try{
         const id = req.params.id
-        const jewel = await Jewel.findOneAndDelete({_id:id})
+        const jewel = await Jewels.findOneAndDelete({_id:id,ownerId:req.user.id})
         res.json(jewel)
     }
     catch(err){
