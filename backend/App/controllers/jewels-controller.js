@@ -1,10 +1,14 @@
 const Jewels = require('../models/jewel-model')
-
+const {validationResult} = require('express-validator')
 const jewelsCltr = {}
 
 
 
 jewelsCltr.create = async (req, res) => {
+    const errors = validationResult(req)
+    if(!errors.isEmpty()){
+        return res.status(404).json({errors:errors.array()})
+    }
     try {
       const images = req.files.map(file => file.path);
       console.log(images)
@@ -25,18 +29,6 @@ jewelsCltr.create = async (req, res) => {
     }
   }
 
-// jewelsCltr.create = async(req,res)=>{
-//     try{
-//         const {body} = req
-//         const jewel = new Jewels(body)
-//         const response = await jewel.save()
-//         res.status(201).json(response)
-//     }
-//     catch(err){
-//         console.log(err)
-//         res.status(500).json({errors:'Internal Server Error'})
-//     }
-// }
 
 jewelsCltr.get = async(req,res) =>{
     try{
@@ -50,6 +42,10 @@ jewelsCltr.get = async(req,res) =>{
 }
 
 jewelsCltr.update = async(req,res)=>{
+    const errors = validationResult(req)
+    if(!errors.isEmpty()){
+        return res.status(404).json({errors:errors.array()})
+    }
     try{
         const id = req.params.id
         const {body} = req
