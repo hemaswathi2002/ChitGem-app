@@ -19,6 +19,7 @@ const {userRegisterValidationSchema,loginValidationSchema} = require('./App/vali
 const shopRegisterValidationSchema=require('./App/validations/shop-validation')
 const chitRegisterValidationSchema = require('./App/validations/chit-validation')
 
+
 app.use(express.json())
 app.use(cors())
 
@@ -56,6 +57,9 @@ app.post('/api/jewels',upload.array('images', 2),jewelsCltr.create)
 app.get('/api/jewels',jewelsCltr.get)
 app.put('/api/jewels/:id',jewelsCltr.update)
 app.delete('/api/jewels/:id',jewelsCltr.delete)
+
+
+
 
 app.post('/api/chits',authenticateUser,checkSchema(chitRegisterValidationSchema),chitsCltr.register)
 app.put('/api/chits/:id',authenticateUser,checkSchema(chitRegisterValidationSchema),chitsCltr.update)
