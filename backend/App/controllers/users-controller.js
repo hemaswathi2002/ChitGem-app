@@ -20,7 +20,7 @@ usersCltr.register = async(req,res)=>{
         user.password = encryptedPassword
         const count = await User.countDocuments()
         if(count == 0){
-            user.role = 'admin'
+           user.role = 'admin'
         }
         else if (user.role == 'owner'){
             user.role = 'owner'
