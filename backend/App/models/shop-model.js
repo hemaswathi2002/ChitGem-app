@@ -8,14 +8,11 @@ const shopSchema = new Schema({
     },
     shopName: String,
     address: {
-      type: {
         area: String,
         landmark: String,
         pincode: Number,
         city: String,
         state: String
-      },
-      required: true
     },
     location: {
       lat: String,
