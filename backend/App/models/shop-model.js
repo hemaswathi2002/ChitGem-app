@@ -19,8 +19,9 @@ const shopSchema = new Schema({
       long: String,
     },
     contact: {
-      email : String,
-      mobile : Number
+      mobile : Number,
+      email : String
+      
     },
     description: String,
     approvalStatus: {
