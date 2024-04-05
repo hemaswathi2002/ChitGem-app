@@ -54,10 +54,10 @@ app.post ('/api/login',checkSchema(loginValidationSchema),usersCltr.login)
 app.get('/api/account',authenticateUser,usersCltr.account)
 
 //api shops
-app.post('/api/shops',authenticateUser,authorizeUser(['owner']),checkSchema(jewelValidationSchema),authenticateUser,checkSchema(shopRegisterValidationSchema),shopsCltr.register)
+app.post('/api/shops',authenticateUser,authorizeUser(['owner']),checkSchema(shopRegisterValidationSchema),shopsCltr.register)
 app.get('/api/shops',authenticateUser,authorizeUser(['owner']),shopsCltr.getAllshop)
 app.get('/api/shops/:id',authenticateUser,authorizeUser(['admin','owner','customer']),shopsCltr.getOneshop)
-app.put('/api/shops/:id',authenticateUser,authorizeUser(['owner']),checkSchema(jewelValidationSchema),authenticateUser,checkSchema(shopRegisterValidationSchema),shopsCltr.update)
+app.put('/api/shops/:id',authenticateUser,authorizeUser(['owner']),checkSchema(shopRegisterValidationSchema),shopsCltr.update)
 app.put('/api/shops/update/:id',authenticateUser,authorizeUser(['admin']),checkSchema(shopRegisterValidationSchema),shopsCltr.updateStatus)
 app.delete('/api/shops/:id',authenticateUser,shopsCltr.destroy)
 
