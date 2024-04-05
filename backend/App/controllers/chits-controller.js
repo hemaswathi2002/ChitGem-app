@@ -11,7 +11,7 @@ chitsCltr.register = async (req, res) => {
     const chit = new Chit(body)
     chit.customerId = req.user.id
     const response = await chit.save()
-    res.status(201).json(chit)
+    res.status(201).json(response)
   } catch (err) {
     console.log(err)
     res.status(500).json({ errors: "Internal server error" })
@@ -21,10 +21,7 @@ chitsCltr.update = async (req, res) => {
   try {
     const { body } = req
     const chitId = req.params.chitId
-    const updatedChit = await Chit.findByIdAndUpdate(chitId, body, {
-      new: true,
-    })
-
+    const updatedChit = await Chit.findByIdAndUpdate(chitId, body, {new: true,})
     if (!updatedChit) {
       return res.status(404).json({ errors: "Chit not found" })
     }
