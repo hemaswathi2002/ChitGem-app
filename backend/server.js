@@ -75,8 +75,8 @@ app.get('/api/chits/:id',authenticateUser,chitsCltr.getOnechit)
 app.delete('/api/chits/:id',authenticateUser,chitsCltr.destroy)
 
 //api customers
-app.post('/api/customers',authenticateUser,authorizeUser(['owner']),checkSchema(customerValidationSchema),customersCltr.create)
-app.get('/api/customers',authenticateUser,authorizeUser(['owner']),customersCltr.list)
+app.post('/api/customers/:shopId',authenticateUser,authorizeUser(['owner']),checkSchema(customerValidationSchema),customersCltr.create)
+app.get('/api/customers/:shopId',authenticateUser,authorizeUser(['owner']),customersCltr.list) // list all customers of that shop
 app.get('/api/customers/:id',authenticateUser,authorizeUser(['owner','customer']),customersCltr.getOneCustomer)
 app.put('/api/customers/:id',authenticateUser,authorizeUser(['owner']),checkSchema(customerValidationSchema),customersCltr.update)
 app.delete('/api/customers/:id',customersCltr.destroy)
