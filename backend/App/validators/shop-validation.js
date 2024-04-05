@@ -1,14 +1,14 @@
 const Shop = require("../models/shop-model")
 
 const shopRegisterValidationSchema = {
-  ownerId : {
-    notEmpty : {
-      errorMessage : '* ownerId should not be empty'
-    },
-    isMongoId : {
-      errorMessage : '* Enter valid mongoId'
-    }
-  },
+  // ownerId : {
+  //   notEmpty : {
+  //     errorMessage : '* ownerId should not be empty'
+  //   },
+  //   isMongoId : {
+  //     errorMessage : '* Enter valid mongoId'
+  //   }
+  // },
 
   shopName: {
     notEmpty: {
@@ -61,17 +61,26 @@ const shopRegisterValidationSchema = {
     },
   },
 
-  "contact.mobile": {
+  "contact.email": {
     notEmpty: {
-      errorMessage: '* number is required',
+      errorMessage: "* email is required"
     },
-    isNumeric: {
-      errorMessage: '* enter only numbers',
+    isEmail : {
+      errorMessage : "* email must be in email format"
+    },normalizeEmail : true, trim : true
+  },
+
+  "contact.mobile" : {
+    notEmpty : {
+      errorMessage : "* mobile is required"
     },
-    isLength: {
-      options: {min: 10,max: 10},
-      errorMessage: 'enter a valid number',
+    isNumeric : {
+      errorMessage : "* mobile must contain only numbers"
     },
+    isLength : {
+      options : {min:10,max:10},
+      errorMessage : "* mobile must contain 10 digits"
+    }
   },
 "contact.email":{
   notEmpty: {
@@ -92,11 +101,11 @@ description: {
       errorMessage: 'description should have minimum of 50 words',
     },
   },
-  approvalStatus : {
-    isIn : {
-      options : [['pending','rejected','approved']]
-    }
-  }
+  // approvalStatus : {
+  //   isIn : {
+  //     options : [['pending','rejected','approved']]
+  //   }
+  // }
   
 }
 

@@ -8,7 +8,7 @@ shopsCltr.register = async (req, res) => {
     return res.status(400).json({ errors: errors.array() })
   }
     try {
-    const body = _.pick(req.body,['ownerId','shopName','address','location','contact','description'])
+    const body = _.pick(req.body,['shopName','address','location','contact','description'])
     body.approvalStatus = 'pending'
     body.ownerId = req.user.id
     console.log(req.user)
@@ -55,7 +55,7 @@ shopsCltr.update = async (req, res) => {
   }
   try {
     const id = req.params.id
-    const body = _.pick(req.body,['ownerId','shopName','address','location','contact','description'])
+    const body = _.pick(req.body,['shopName','address','location','contact','description'])
     const shop = await Shop.findOneAndUpdate({ _id: id , ownerId : req.user.id },body,{ new: true})
     res.status(200).json(shop)
   } catch (err) {
