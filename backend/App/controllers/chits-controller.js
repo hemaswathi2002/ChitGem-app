@@ -1,4 +1,5 @@
 const Chit = require("../models/chit-model")
+const axios = require('axios')
 const { validationResult } = require("express-validator")
 const chitsCltr = {}
 chitsCltr.register = async (req, res) => {
@@ -8,6 +9,8 @@ chitsCltr.register = async (req, res) => {
   }
   try {
     const { body } = req
+    const goldPrice = await axios.get('https://api.metalpriceapi.com/v1/latest?api_key=0bf7381d2498228ede3ae4df25ac62b2&base=XAU&currencies=INR')
+    console.log(goldPrice.data)
     const chit = new Chit(body)
     chit.customerId = req.user.id
     const response = await chit.save()
