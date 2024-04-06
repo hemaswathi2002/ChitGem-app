@@ -31,7 +31,10 @@ const chitSchema=new Schema({
     },
     benefits:String,
     termsAndConditions:String,
-    goldPrice:String,
+    goldPrice: {
+        type: Object, 
+        required: true 
+      }
 },{ timestamps: true })
 
 chitSchema.pre('save', function(next) {
