@@ -1,16 +1,19 @@
 const Customers = require('../models/customer-model')
 const shop = require('../models/shop-model')
 const {validationResult} = require('express-validator')
+const _ = require("lodash")
 
 const customersCltr = {}
 
 customersCltr.create = async(req,res) => {
     const errors = validationResult(req)
     if(!errors.isEmpty()){
-        return res.status(404).json({errors:errors.array()})
+        return res.status(400).json({errors:errors.array()})
     }
     try{
-        const {body} = req
+        const shopId = req.params.shopId
+        const body = _.pick(req.body,['username','contact','description','goldHarvested'])
+        body.shopId =  shopId
         const customer = new Customers(body)
         if(customer.ownerId!==shop.ownerId ){
             return res.status(403).json({errors:'You can only create customers for your own shop'})
@@ -26,7 +29,8 @@ customersCltr.create = async(req,res) => {
 
 customersCltr.list = async(req,res)=>{
     try{
-        const customer = await Customers.find()
+        const shopId = req.params.shopId
+        const customer = await Customers.find({id:shopId})
         res.status(200).json(customer)
     }
     catch(err){
@@ -39,7 +43,7 @@ customersCltr.list = async(req,res)=>{
 customersCltr.update = async(req,res) => {
     const errors = validationResult(req)
     if(!errors.isEmpty()){
-        return res.status(404).json({errors:errors.array()})
+        return res.status(400).json({errors:errors.array()})
     }
     try{
         const id = req.params.id
@@ -60,7 +64,10 @@ customersCltr.getOneCustomer = async(req,res)=>{
     try{
         const id = req.params.id
         const customer = await Customers.findOne({_id:id})
-        res.status(200).json({customer})
+        if(!customer){
+           return res.status(400).json({errors:'Customer not found'})
+        }
+        res.status(200).json(customer)
     }
     catch(err){
         console.log(err)
