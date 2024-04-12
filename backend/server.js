@@ -50,8 +50,10 @@ const upload = multer({storage:storage})
 
 //api users
 app.post('/api/users',checkSchema(userRegisterValidationSchema),usersCltr.register)
+app.post('/api/users/customers',authenticateUser,authorizeUser(['owner']),checkSchema(userRegisterValidationSchema),usersCltr.register)
+// app.post('/api/create/customers',authenticateUser,authorizeUser(['owner']),usersCltr.register)
 app.post ('/api/login',checkSchema(loginValidationSchema),usersCltr.login)
-app.get('/api/account',authenticateUser,usersCltr.account)
+app.get('/api/account',authenticateUser,authorizeUser(['admin','owner','customer']),usersCltr.account)
 
 //api shops
 app.post('/api/shops',authenticateUser,authorizeUser(['owner']),checkSchema(shopRegisterValidationSchema),shopsCltr.register)
@@ -62,10 +64,10 @@ app.put('/api/shops/update/:id',authenticateUser,authorizeUser(['admin']),checkS
 app.delete('/api/shops/:id',authenticateUser,shopsCltr.destroy)
 
 //api jewels
-app.post('/api/jewels',upload.array('images', 2),jewelsCltr.create)
-app.get('/api/jewels',jewelsCltr.get)
-app.put('/api/jewels/:id',jewelsCltr.update)
-app.delete('/api/jewels/:id',jewelsCltr.delete)
+app.post('/api/jewels',authenticateUser,authorizeUser(['owner']),upload.array('images', 2),jewelsCltr.create)
+app.get('/api/jewels',authenticateUser,authorizeUser(['owner','customer','admin']),jewelsCltr.get)
+app.put('/api/jewels/:id',authenticateUser,authorizeUser(['owner']),jewelsCltr.update)
+app.delete('/api/jewels/:id',authenticateUser,authorizeUser(['owner']),jewelsCltr.delete)
 
 //api chits
 app.post('/api/chits',authenticateUser,checkSchema(chitRegisterValidationSchema),chitsCltr.register)
@@ -75,7 +77,7 @@ app.get('/api/chits/:id',authenticateUser,chitsCltr.getOnechit)
 app.delete('/api/chits/:id',authenticateUser,chitsCltr.destroy)
 
 //api customers
-app.post('/api/customers',authenticateUser,authorizeUser(['owner']),checkSchema(customerValidationSchema),customersCltr.create)
+app.post('/api/:customerId',authenticateUser,authorizeUser(['owner']),checkSchema(customerValidationSchema),customersCltr.register)
 app.get('/api/customers',authenticateUser,authorizeUser(['owner']),customersCltr.list)
 app.get('/api/customers/:id',authenticateUser,authorizeUser(['owner','customer']),customersCltr.getOneCustomer)
 app.put('/api/customers/:id',authenticateUser,authorizeUser(['owner']),checkSchema(customerValidationSchema),customersCltr.update)

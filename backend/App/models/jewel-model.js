@@ -7,7 +7,7 @@ const jewelSchema = new Schema({
     //     type : Schema.Types.ObjectId,
     //     ref : 'Shop'
     // },
-    ownerId:{
+    shopId:{
         type : Schema.Types.ObjectId,
         ref : 'Shop'
     },

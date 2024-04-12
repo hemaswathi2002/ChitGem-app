@@ -9,13 +9,16 @@ const customerSchema = new Schema({
     },
     ownerId : {
         type : Schema.Types.ObjectId,
-        ref : 'Shop'
+        ref : 'User'
     },
     shopId: {
         type : Schema.Types.ObjectId,
         ref : 'Shop'
     },
-
+    customerId : {
+        type : Schema.Types.ObjectId,
+        ref : 'User'
+    },
     description : String,
     goldHarversted : String
 }, {timestamps : true} )

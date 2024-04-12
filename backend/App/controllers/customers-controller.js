@@ -1,20 +1,28 @@
 const Customers = require('../models/customer-model')
-const shop = require('../models/shop-model')
+const Shop = require('../models/shop-model')
+const User = require('../models/user-model')
+const _ = require('lodash')
 const {validationResult} = require('express-validator')
 
 const customersCltr = {}
 
-customersCltr.create = async(req,res) => {
+customersCltr.register = async(req,res) => {
     const errors = validationResult(req)
     if(!errors.isEmpty()){
         return res.status(404).json({errors:errors.array()})
     }
     try{
-        const {body} = req
-        const customer = new Customers(body)
-        if(customer.ownerId!==shop.ownerId ){
-            return res.status(403).json({errors:'You can only create customers for your own shop'})
-        }
+        const customerId = req.params.customerId
+        const body = _.pick(req.body,['username','contact','description','goldHarvested'])
+        const owner = req.user.id
+        console.log(owner)
+        const shop = await Shop.findOne({ownerId : owner})
+        console.log(shop)
+        if (!shop) {
+            return res.status(404).json({ errors: 'Shop not found' });
+        }   
+        console.log(shop) 
+        const customer = new Customers({ ...body, ownerId: owner , shopId:shop.id,customerId:customerId});
         const response = await customer.save()
         res.status(201).json(response)
     }
@@ -43,11 +51,18 @@ customersCltr.update = async(req,res) => {
     }
     try{
         const id = req.params.id
-        const {body} = req
-        if(body.ownerId!==shop.ownerId ){
-            return res.status(403).json({errors:'You can only update customers for your own shop'})
+        const body = _.pick(req.body,['username','contact','description','goldHarvested'])
+        const owner = req.user.id
+        console.log(owner)
+        const shop = await Shop.findOne({ownerId : owner})
+        // body.shopId = shop.id
+        if (!shop) {
+            return res.status(404).json({ errors: 'Shop not found' });
         }
-        const customer = await Customers.findOneAndUpdate({_id:id},body,{new:true})
+        const customer = await Customers.findOneAndUpdate({_id:id,ownerId:req.user.id,shopId: shop.id},body,{new:true})
+        if (!customer) {
+            return res.status(404).json({ errors: 'Customer not found' });
+          }
         res.status(200).json(customer)
     }
     catch(err){
@@ -55,6 +70,7 @@ customersCltr.update = async(req,res) => {
         res.status(500).json({errors:'Internal Server Error'})
     }
 }
+
 
 customersCltr.getOneCustomer = async(req,res)=>{
     try{

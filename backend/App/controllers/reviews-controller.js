@@ -2,7 +2,6 @@ const Reviews = require('../models/review-model')
 const Customer = require('../models/customer-model')
 const {validationResult} = require('express-validator')
 const _ = require('lodash')
-const { customerId } = require('../validators/review-validation')
 
 const reviewsCltr = {}
 reviewsCltr.create = async(req,res)=>{
