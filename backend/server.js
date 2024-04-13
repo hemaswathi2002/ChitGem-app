@@ -70,7 +70,7 @@ app.put('/api/jewels/:id',authenticateUser,authorizeUser(['owner']),jewelsCltr.u
 app.delete('/api/jewels/:id',authenticateUser,authorizeUser(['owner']),jewelsCltr.delete)
 
 //api chits
-app.post('/api/chits',authenticateUser,checkSchema(chitRegisterValidationSchema),chitsCltr.register)
+app.post('/api/chits/:customerId',authenticateUser,checkSchema(chitRegisterValidationSchema),chitsCltr.register)
 app.put('/api/chits/:id',authenticateUser,checkSchema(chitRegisterValidationSchema),chitsCltr.update)
 app.get('/api/chits',authenticateUser,chitsCltr.getAllchit)
 app.get('/api/chits/:id',authenticateUser,chitsCltr.getOnechit)

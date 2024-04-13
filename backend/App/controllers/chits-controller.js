@@ -8,7 +8,18 @@ chitsCltr.register = async (req, res) => {
     return res.status(400).json({ errors: errors.array() })
   }
   try {
+    const customerId=req.params.customerId
     const { body } = req
+    const owner=req.user.id
+    console.log(owner)
+    const chit=await Chit.findOne({owerId:owner})
+    console.log(chit)
+    if(!chit){
+      return res.status(404).json({errors:'Shop not found'})
+    }
+    console.log(chit)
+  
+
     const apiKey = process.env.GOLD_API_KEY
     const config = {
       headers: {
@@ -18,14 +29,17 @@ chitsCltr.register = async (req, res) => {
     const goldPriceResponse = await axios.get("https://www.goldapi.io/api/XAU/INR", config)
     const { price_gram_24k } = goldPriceResponse.data
 
-    const chit = new Chit({
-      ...req.body,
+    const chits = new Chit({
+      ...body,
+      ownerId: owner,
+      shopId: shopId.id,
+      customerId: customerId,
       goldPrice: price_gram_24k 
-    })
+  });
+  
 
-    chit.customerId = req.user.id
-    const response = await chit.save()
-    res.status(201).json(chit)
+    const response = await Chit.save()
+    res.status(201).json(chits)
   } catch (err) {
     console.log(err)
     res.status(500).json({ errors: "Internal server error" })
