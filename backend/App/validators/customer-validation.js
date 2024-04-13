@@ -1,5 +1,5 @@
 const customerValidationSchema = {
-    username : {
+    name : {
         notEmpty : {
             errorMessage : "* username is required"
         },
