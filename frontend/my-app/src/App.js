@@ -3,7 +3,7 @@ import {BrowserRouter,Routes,Route} from 'react-router-dom'
 import {useReducer,useEffect} from 'react'
 import axios from 'axios'
 import { UsersContext } from "./Context/UsersContext"
-import CustomersContainer from "./Components/Customer/CustomersContainer"
+// import CustomersContainer from "./Components/Customer/CustomersContainer"
 import UsersContainer from "./Components/Users/UsersContainer"
 import CustomersReducer from "./Reducers/Customers"
 import UsersReducer from "./Reducers/Users"
@@ -43,15 +43,16 @@ export default function App(){
       <h1>App Component</h1>
       <>
       <UsersContext.Provider value = {{users,usersDispatch}}>
-      <CustomersContext.Provider value = {{customers,customerDispatch}}>
+      {/* <CustomersContext.Provider value = {{customers,customerDispatch}}> */}
       <BrowserRouter>
       <Routes>
       <Route path = '/register' element = {<UsersContainer/>}/>
-      <Route path = '/customer' element = {<CustomersContainer/>}/>
+      {/* <Route path = '/customer' element = {<CustomersContainer/>}/> */}
       </Routes>
-      <CustomersContainer/>
+      {/* <CustomersContainer/> */}
+      <UsersContainer/>
       </BrowserRouter>
-      </CustomersContext.Provider>
+      {/* </CustomersContext.Provider> */}
       </UsersContext.Provider>
       </>
     </div>

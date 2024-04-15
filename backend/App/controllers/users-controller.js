@@ -24,9 +24,11 @@ const generateOTP = () => {
 
 const sendMail = (userMail, otp) => {
     const transport = nodemailer.createTransport({
-        host: 'smtp.gmail.com',
-        port: 465,
-        secure: true,
+        // host: 'smtp.gmail.com',
+        host : 'smtp.mailtrap.io',
+        port : 2525,
+        // port: 465,
+        secure: false,
         auth: {
             user: process.env.SMTP_USERNAME,
             pass: process.env.SMTP_PASSWORD
@@ -37,7 +39,7 @@ const sendMail = (userMail, otp) => {
     const html = `<p><b>Hi</br> Thank you for registering to post app,</b> Your otp is ${otp}</p>`
     async function sendMail() {
         const info = await transport.sendMail({
-            from: 'hemaswathi2002@gmail.com', // Sender address
+            from: 'sender@example.com', // Sender address
             to: userMail, // List of recipients
             subject: 'Registration Confirmation', // Subject line
             html: html,
@@ -65,7 +67,7 @@ usersCltr.register = async (req, res) => {
         if (count == 0) {
             user.role = 'admin'
         }
-        else if (req.user.role == 'owner') {
+        else if (user.role == 'owner') {
             user.role = 'customer'
         } else {
             user.role = 'owner'

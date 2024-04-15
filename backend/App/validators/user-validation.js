@@ -20,7 +20,7 @@ const userRegisterValidationSchema = {
                 if(!user){
                     return true
                 }else {
-                    throw new Error ('Email already exists')
+                    throw new Error ('Email already exists!')
                 }
             }
         },normalizeEmail : true,trim : true
@@ -33,7 +33,7 @@ const userRegisterValidationSchema = {
             errorMessage : 'mobile should be a number type'
         },
         isLength : {
-            options : {max:10},
+            options : {min:10,max:10},
             errorMessage : 'mobile number should have 10 digits'
         },
         custom : {
