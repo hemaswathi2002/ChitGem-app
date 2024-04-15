@@ -63,6 +63,7 @@ export default function RegisterForm() {
                     setMobile('')
                     setRole('')
                     setPassword('')
+                    navigate('/login')
             }
             catch(err){
                 console.log(err)

@@ -1,10 +1,14 @@
 import RegisterForm from "./RegisterForm";
-import UsersLogin from "./UsersLogin";
+import LoginForm from "../../LoginForm";
 export default function UsersContainer(){
     return(
-        <div>
+        <>
+            <div>
             <RegisterForm/>
-            <UsersLogin/>
-        </div>
+            </div>
+            <div>
+            <LoginForm/>
+            </div>
+        </>
     )
 }

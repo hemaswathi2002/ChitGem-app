@@ -1,19 +1,23 @@
-import { CustomersContext } from "./Context/CustomersContext"
-import {BrowserRouter,Routes,Route} from 'react-router-dom'
-import {useReducer,useEffect} from 'react'
+import {useReducer,useEffect,useContext, createContext} from 'react'
 import axios from 'axios'
 import { UsersContext } from "./Context/UsersContext"
-// import CustomersContainer from "./Components/Customer/CustomersContainer"
+import {BrowserRouter,Routes,Route} from 'react-router-dom'
+import {ToastContainer,toast} from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
+import 'bootstrap/dist/css/bootstrap.min.css'
+import { CustomersContext } from "./Context/CustomersContext"
+import CustomersContainer from "./Components/Customer/CustomersContainer"
 import UsersContainer from "./Components/Users/UsersContainer"
+import LoginForm from "./LoginForm"
 import CustomersReducer from "./Reducers/Customers"
 import UsersReducer from "./Reducers/Users"
 export default function App(){
   const [users,usersDispatch] = useReducer(UsersReducer, {
     userDetails : [],
-    errors : []
+    isLoggedIn : false
   })
   const [customers,customerDispatch] = useReducer(CustomersReducer,{data:[],errors:[]})
-  
+
   useEffect(()=>{
     // (async()=>{
     //   try{
@@ -37,22 +41,31 @@ export default function App(){
     })();
   },[])
 
+  // const loginToast = () => {
+  //   toast.success('logged in successfully')
+  // }
+
 
   return(
     <div>
       <h1>App Component</h1>
       <>
       <UsersContext.Provider value = {{users,usersDispatch}}>
-      {/* <CustomersContext.Provider value = {{customers,customerDispatch}}> */}
+      <CustomersContext.Provider value = {{customers,customerDispatch}}>
       <BrowserRouter>
       <Routes>
       <Route path = '/register' element = {<UsersContainer/>}/>
-      {/* <Route path = '/customer' element = {<CustomersContainer/>}/> */}
+      <Route path = '/login' element = {<LoginForm/>}/>
+      {users.isLoggedIn ? 
+      <Route path = '/customer' element = {<CustomersContainer/>}/>
+      : 
+      <Route path = '/register' element = {<UsersContainer/>}/>
+      }
       </Routes>
-      {/* <CustomersContainer/> */}
       <UsersContainer/>
+      <ToastContainer/>
       </BrowserRouter>
-      {/* </CustomersContext.Provider> */}
+      </CustomersContext.Provider>
       </UsersContext.Provider>
       </>
     </div>
