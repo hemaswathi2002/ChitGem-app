@@ -1,10 +1,10 @@
 import axios from 'axios'
 import{useNavigate} from "react-router-dom"
 const  { useEffect, useState, useContext } = require('react')
-const { ChitContext } = require('../../Context/root-contexts')
+const { ChitsContext } = require('../../Context/ChitsContext')
 
 export default function ChitForm(props) {
-    const {chits, chitDispatch} = useContext(ChitContext)
+    const {chits, chitDispatch} = useContext(ChitsContext)
 
     const [chitAmount, setChitAmount] = useState(500)
     const [installments, setInstallments] = useState(12)
