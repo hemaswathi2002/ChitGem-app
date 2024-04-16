@@ -62,7 +62,7 @@ usersCltr.register = async (req, res) => {
 
         const otp = generateOTP()
         user.otp = otp
-        sendMail(user.email, user.otp)
+        await sendMail(user.email, user.otp)
         const count = await User.countDocuments()
         if (count == 0) {
             user.role = 'admin'
@@ -128,7 +128,7 @@ usersCltr.login = async (req, res) => {
     try {
         const user = await User.findOne({ email: body.email })
         if (!user) {
-            return res.status(404).json({ errors: 'Invalid email/password' })
+            return res.status(401).json({ errors: 'Invalid email/password' })
         }
         const checkPassword = await bcryptjs.compare(body.password, user.password)
         if (!checkPassword) {
@@ -148,12 +148,108 @@ usersCltr.login = async (req, res) => {
     }
 }
 
-usersCltr.forgotPassword = async(req,res)=>{
+usersCltr.updatePassword=async(req,res)=>{
+    const errors=validationResult(req)
+    if(!errors.isEmpty()){
+        return res.status(400).json({errors:errors.array()})
+    }
+    const id=req.user.id
+    const data=_.pick(req.body,["oldPassword","newPassword","changePassword"])
     try{
-        const {body} = req
+        const user = await User.findOne({_id:id})
+        if(!user){
+            return res.status(401).json({error:"user not found"})
+        }
+        const result= await bcryptjs.compare(data.oldPassword,user.password,)
+        if(!result){
+            return res.status(401).json({error:"your old password is not matching"})
+        }
+        if(data.newPassword==data.changePassword){
+            const salt=await bcryptjs.genSalt()
+            const hashPassword=await bcryptjs.hash(data.newPassword,salt)
+           const response=await User.findOneAndUpdate({_id:req.user.id},{password:hashPassword},{new:true})
+           return res.status(200).json(response)
+        }else{
+            return  res.status(401).json({error:" new password are not matching"})       
+        }
+    }catch(err){
+        console.log(err)
+
+    }
+}
+
+usersCltr.forgotPassword=async(req,res)=>{
+    const errors=validationResult(req)
+    // if(!errors.isEmpty()){
+    //     return res.status(402).json({errors:errors.array()})
+    // }
+    const {email}=_.pick(req.body,["email"])
+    try{
+        const user=await User.findOne({email:email})
+        if(!user){
+            return res.status(401).json({error:"email not found"})
+        }
+        const otp=generateOtp()
+        const response=await User.findOneAndUpdate({email:email},{otp:otp},{new:true})
+        sendMail({
+            email: user.email,
+            subject: "EVENT_SPOT@ <support> Password Change",
+            text: `set password with otp ${otp}
+             don't share otp to any one`
+        })
+        res.status(201).json({ status: "success", msg: "sent success " })
+    }catch(err){
+    console.log(err)
+    }
+}
+
+usersCltr.forgotPassword = async(req,res)=>{
+
+    const {email} = _.pick(req.body,['email'])
+    try{
+        const  user = await user.findOne({email:email})
+        if(!user){
+            return res.statusS(401).json({error:"email not found"})
+        }
+        const otp=generateOTP()
+        const response=await User.findOneAndUpdate({email:email},{otp:otp},{new:true})
+        sendMail({
+            email: user.email,
+            subject: "EVENT_SPOT@ <support> Password Change",
+            text: `set password with otp ${otp}
+             don't share otp to any one`
+        })
+        res.status(201).json({ status: "success", msg: "sent success " })
     }
     catch(err){
         console.log(err)
+    }
+}
+
+usersCltr.resetForgotPassword=async(req,res)=>{
+    // const errors=validationResult(req)
+    // if(!errors.isEmpty()){
+    //     return res.status(402).json({errors:errors.array()})
+    // }
+    const{email,otp,password}=_.pick(req.body,["email","otp","password"])
+    try{
+        const salt=await bcryptjs.genSalt()
+        const hashPassword=await bcryptjs.hash(password,salt)
+        const user=await User.findOneAndUpdate({email:email,otp:otp},{password:hashPassword},{new:true})
+        res.status(201).json(user)
+    }catch(err){
+        console.log(err)
+        res.status(501).json({error:"internal server error"})
+    }
+}
+
+usersCltr.remove=async(req,res)=>{
+    const id=req.params.id
+    try{
+       const user=await User.findOneAndDelete({_id:id})
+       res.json(user)
+    }catch(err){
+        res.status(401).json({error:"internal server errro"})
     }
 }
 
