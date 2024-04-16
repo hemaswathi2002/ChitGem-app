@@ -110,7 +110,7 @@ usersCntrl.verifyEmail = async (req, res) => {
         const user = await User.findOneAndUpdate({ email: email, otp: otp }, { $set: { isverified: true } }, { new: true })
         console.log(user)
         if (!user) {
-            return res.status(401).json("email and otp is not currect")
+            return res.status(401).json("Invalid otp")
         }
         res.status(201).json("email verified")
     } catch (err) {
@@ -243,15 +243,15 @@ usersCltr.resetForgotPassword=async(req,res)=>{
     }
 }
 
-usersCltr.remove=async(req,res)=>{
-    const id=req.params.id
-    try{
-       const user=await User.findOneAndDelete({_id:id})
-       res.json(user)
-    }catch(err){
-        res.status(401).json({error:"internal server errro"})
-    }
-}
+// usersCltr.remove=async(req,res)=>{
+//     const id=req.params.id
+//     try{
+//        const user=await User.findOneAndDelete({_id:id})
+//        res.json(user)
+//     }catch(err){
+//         res.status(401).json({error:"internal server errro"})
+//     }
+// }
 
 usersCltr.account = async (req, res) => {
     try {

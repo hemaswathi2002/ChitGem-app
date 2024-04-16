@@ -54,6 +54,9 @@ app.put('/api/verify/email',checkSchema(userOtpValidationSchema),usersCltr.verif
 app.post('/api/users/customers',authenticateUser,authorizeUser(['owner']),checkSchema(userRegisterValidationSchema),usersCltr.register)
 // app.post('/api/create/customers',authenticateUser,authorizeUser(['owner']),usersCltr.register)
 app.post ('/api/login',checkSchema(loginValidationSchema),usersCltr.login)
+app.put('/api/update/password',usersCltr.updatePassword)
+app.post('/api/forgotpassword',usersCltr.forgotPassword)
+app.put('/api/forgotpassword',usersCltr.resetForgotPassword)
 app.get('/api/account',authenticateUser,authorizeUser(['admin','owner','customer']),usersCltr.account)
 
 //api shops
