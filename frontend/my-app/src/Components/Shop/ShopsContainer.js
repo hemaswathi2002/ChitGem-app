@@ -1,4 +1,5 @@
 import ShopsTable from './ShopsTable'
+import ShopsForm from './ShopsForm'
 export default function ChitsContainer(){
     return(
         <div className="row">
@@ -6,9 +7,9 @@ export default function ChitsContainer(){
         <div className="col-md-8">
             <ShopsTable/>
         </div>
-        {/* <div className="col-md-4">
-        <ShopForm/>
-        </div> */}
+        <div className="col-md-4">
+        {/* <ShopsForm/> */}
+        </div>
         </div>
     )
 }

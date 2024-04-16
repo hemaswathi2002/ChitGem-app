@@ -9,7 +9,7 @@ const { validationResult } = require('express-validator')
 
 const usersCltr = {}
 
-const OTP_LENGTH = 6
+const OTP_LENGTH = 4
 const OTP_CONFIG = {
     digits: true,
     lowerCaseAlphabets: false,
@@ -81,22 +81,41 @@ usersCltr.register = async (req, res) => {
     }
 }
 
-usersCltr.verify = async (req, res) => {
-    const { body } = req
-    try {
-        const user = await User.findOne({ email: body.email })
-        if (!user) {
-            return res.status(404).json({ error: 'Record not found' })
-        }
-        if (user && user.otp != body.otp) {
-            return res.status(400).json({ error: 'Invalid OTP' })
-        }
-        await User.findOneAndUpdate({ email: body.email }, { $set: { isVerified: true } }, { new: true })
-        res.send('Email Verified')
+// usersCltr.verifyEmail = async (req, res) => {
+//     const { body } = req
+//     try {
+//         const user = await User.findOne({ email: body.email })
+//         if (!user) {
+//             return res.status(404).json({ error: 'Record not found' })
+//         }
+//         if (user && user.otp != body.otp) {
+//             return res.status(400).json({ error: 'Invalid OTP' })
+//         }
+//         await User.findOneAndUpdate({ email: body.email }, { $set: { isVerified: true } }, { new: true })
+//         res.send('Email Verified')
+//     }
+//     catch (err) {
+//         console.log(err)
+//         res.status(500).json({ error: 'Internal Server Error' })
+//     }
+// }
+
+usersCntrl.verifyEmail = async (req, res) => {
+    const errors = validationResult(req)
+    if (!errors.isEmpty()) {
+        res.status(401).json({ errors: errors.array() })
     }
-    catch (err) {
-        console.log(err)
-        res.status(500).json({ error: 'Internal Server Error' })
+    const { email, otp } = req.body
+    try {
+        const user = await User.findOneAndUpdate({ email: email, otp: otp }, { $set: { isverified: true } }, { new: true })
+        console.log(user)
+        if (!user) {
+            return res.status(401).json("email and otp is not currect")
+        }
+        res.status(201).json("email verified")
+    } catch (err) {
+        console.error("Error verifying email:", err);
+        res.status(500).json({ error: "Internal Server Error" })
     }
 }
 
@@ -126,6 +145,15 @@ usersCltr.login = async (req, res) => {
     catch (err) {
         console.log(err)
         res.status(500).json({ errors: 'Internal Server Error' })
+    }
+}
+
+usersCltr.forgotPassword = async(req,res)=>{
+    try{
+        const {body} = req
+    }
+    catch(err){
+        console.log(err)
     }
 }
 

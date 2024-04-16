@@ -1,7 +1,8 @@
 import {useState,useContext} from 'react'
 import axios from 'axios'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate,Link} from 'react-router-dom'
 import { UsersContext } from './Context/UsersContext'
+// import ShopForm from './Components/Shop/ShopsForm'
 export default function LoginForm(props){
     const {users,usersDispatch} = useContext(UsersContext)
     const [email,setEmail] = useState('')
@@ -24,7 +25,8 @@ export default function LoginForm(props){
             const token = response.data.token
             localStorage.setItem('token',token)
             usersDispatch({type:'SIGN_IN',payload : true});
-            navigate('/customer')
+            // <Link to = '/shops' element = {<ShopForm/>}/>
+            // navigate('/shops')
             // loginToast();
         }
         catch(err){

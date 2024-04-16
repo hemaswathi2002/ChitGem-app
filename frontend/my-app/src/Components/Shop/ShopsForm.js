@@ -1,9 +1,10 @@
-
+import {useEffect,useState,useContext} from 'react'
 import axios from 'axios';
-const  { useEffect, useState, useContext } = require('react');
+import {Link,useNavigate} from 'react-router-dom'
+import CustomersForm from '../Customer/CustomersForm';
 const { ShopsContext } = require('../../Context/ShopsContext');
 
-export default function ShopForm(props) {
+export default function ShopsForm(props) {
     const {shops, shopDispatch} = useContext(ShopsContext);
     const [shopName, setShopname] = useState('');
     const [area, setArea] = useState('');
@@ -16,6 +17,8 @@ export default function ShopForm(props) {
     const [approvalStatus, setApprovalStatus] = useState('pending');
     const [shop, setShop] = useState({});
     const { editId } = props;
+
+    const navigate = useNavigate()
 
     useEffect(() => {
         const shop = shops?.data.find(ele => ele._id === editId);
@@ -30,8 +33,11 @@ export default function ShopForm(props) {
             setMobile(shop.mobile || '');
             setDescription(shop.description || '');
             setApprovalStatus(shop.approvalStatus || 'pending');
-
-        } else {
+            // <Link to = '/customers/form' element ={CustomersForm}/>
+            // navigate('/customers/form')
+        } 
+        
+         else {
           setShopname('');
           setArea('');
           setPincode(0);

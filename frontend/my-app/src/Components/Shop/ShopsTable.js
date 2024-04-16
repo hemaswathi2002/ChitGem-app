@@ -4,12 +4,15 @@ import axios from 'axios';
 import ShopsForm from './ShopsForm';
 import { ShopsContext } from '../../Context/ShopsContext';
 import { Button, Modal, ModalHeader, ModalBody } from 'reactstrap';
+import { useNavigate } from 'react-router-dom';
 
 export default function ShopsTable() {
     const {shops, shopDispatch} = useContext(ShopsContext);
     const [modal, setModal] = useState(false);
     const [editId, setEditId] = useState('');
     const toggle = () => setModal(!modal);
+
+    const navigate = useNavigate()
 
     const handleRemove = async (id) => {
         const confirmation = window.confirm('Are you sure?');
@@ -18,6 +21,8 @@ export default function ShopsTable() {
                 const response = await axios.delete(`http://localhost:3009/api/shops/${id}`);
                 console.log(response.data);
                 shopDispatch({ type: 'DELETE_SHOP', payload: id });
+                // <Link to = '/customer' element = {<Customer}
+                // navigate('/customer')
             } catch (err) {
                 console.log(err);
             }

@@ -1,12 +1,14 @@
 import React, { useReducer, useEffect } from 'react'
 import axios from 'axios'
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { BrowserRouter, Routes, Route,Link } from 'react-router-dom'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import ChitsContainer from './Components/Chit/ChitsContainer'
 import CustomersContainer from './Components/Customer/CustomersContainer'
+import Home from './Components/Home/Home'
 import UsersContainer from './Components/Users/UsersContainer'
+import OtpVerificationForm from './Components/Users/OtpVerification'
 
 import LoginForm from './LoginForm'
 import { ChitsContext } from './Context/ChitsContext'
@@ -72,19 +74,25 @@ export default function App() {
             <CustomersContext.Provider value={{ customers, customerDispatch }}>
               <ShopsContext.Provider value={{ shops, shopDispatch }}>
                 <BrowserRouter>
+                <Link to = '/'>Home</Link> | <Link to = '/register'> register</Link> | <Link to = '/login'>login</Link>
                   <Routes>
+                 
+                    <>
+                    {/* <Route path='/shops' element={<ShopsContainer />} />
+                    <Route path = '/customers' element = {<CustomersContainer/>}/>
                     <Route path='/chits' element={<ChitsContainer />} />
-                    <Route path='/login' element={<LoginForm />} />
-                    <Route path='/customers' element={<CustomersContainer />} />
-                    <Route path='/register' element={<UsersContainer />} />
-                    {/* Add route for ShopsContainer */}
-                    <Route path='/shops' element={<ShopsContainer />} />
+                     <Route path='/' element={<Home />} />
+                     <Route path='/register' element={<UsersContainer />} />
+                     <Route path='/login' element={<LoginForm />} />
+                     <Route path = '/otp' element = {<OtpVerificationForm/>}/> */}
+                     </>
                   </Routes>
                   <ToastContainer />
                   <CustomersContainer/>
                   <ChitsContainer/>
                   <ShopsContainer/>
                   <UsersContainer/>
+                  <OtpVerificationForm/>
                 </BrowserRouter>
               </ShopsContext.Provider>
             </CustomersContext.Provider>

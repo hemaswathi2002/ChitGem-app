@@ -18,7 +18,7 @@ const reviewsCltr = require('./App/controllers/reviews-controller')
 
 const {authenticateUser,authorizeUser} = require('./App/middlewares/auth')
 
-const {userRegisterValidationSchema,loginValidationSchema} = require('./App/validators/user-validation')
+const {userRegisterValidationSchema,loginValidationSchema, userOtpValidationSchema} = require('./App/validators/user-validation')
 const shopRegisterValidationSchema=require('./App/validators/shop-validation')
 const chitRegisterValidationSchema = require('./App/validators/chit-validation')
 const customerValidationSchema = require('./App/validators/customer-validation')
@@ -50,6 +50,7 @@ const upload = multer({storage:storage})
 
 //api users
 app.post('/api/users',checkSchema(userRegisterValidationSchema),usersCltr.register)
+app.put('/api/verify/email',checkSchema(userOtpValidationSchema),usersCltr.verifyEmail)
 app.post('/api/users/customers',authenticateUser,authorizeUser(['owner']),checkSchema(userRegisterValidationSchema),usersCltr.register)
 // app.post('/api/create/customers',authenticateUser,authorizeUser(['owner']),usersCltr.register)
 app.post ('/api/login',checkSchema(loginValidationSchema),usersCltr.login)

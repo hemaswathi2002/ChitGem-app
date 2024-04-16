@@ -1,4 +1,4 @@
-import {useParams} from 'react-router-dom'
+import {useNavigate} from 'react-router-dom'
 import { CustomersContext } from "../../Context/CustomersContext";
 import CustomersForm from './CustomersForm'
 import { useContext } from "react";
@@ -10,7 +10,7 @@ export default function CustomersList(){
     const [modal, setModal] = useState(false);
     const [editId,setEditId] = useState('')
 
-    const {id} = useParams()
+    const navigate = useNavigate()
 
     const toggle = () => setModal(!modal);
 
@@ -20,6 +20,7 @@ export default function CustomersList(){
         try{
         const response = await axios.delete(`http://localhost:3009/api/customers/${id}`)
         customerDispatch({type:'REMOVE_CUSTOMERS', payload : id})
+        navigate('/chit')
         }
         catch(err){
             console.log(err)

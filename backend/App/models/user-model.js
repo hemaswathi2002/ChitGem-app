@@ -9,7 +9,12 @@ const userSchema = new Schema({
         type : String,
         enum : ['admin','owner','customer']
     },
-    password : String
+    password : String,
+    otp : Number,
+    isVerified : {
+        type : Boolean,
+        default : false
+    }
 },{timestamps:true})
 
 const User = model('User',userSchema)
