@@ -1,73 +1,76 @@
-import {useReducer,useEffect,useContext, createContext} from 'react'
-import axios from 'axios'
-import { UsersContext } from "./Context/UsersContext"
-import {BrowserRouter,Routes,Route} from 'react-router-dom'
-import {ToastContainer,toast} from 'react-toastify'
-import 'react-toastify/dist/ReactToastify.css'
-import 'bootstrap/dist/css/bootstrap.min.css'
-import { CustomersContext } from "./Context/CustomersContext"
-import CustomersContainer from "./Components/Customer/CustomersContainer"
-import UsersContainer from "./Components/Users/UsersContainer"
-import LoginForm from "./LoginForm"
-import CustomersReducer from "./Reducers/Customers"
-import UsersReducer from "./Reducers/Users"
-export default function App(){
-  const [users,usersDispatch] = useReducer(UsersReducer, {
-    userDetails : [],
-    isLoggedIn : false
-  })
-  const [customers,customerDispatch] = useReducer(CustomersReducer,{data:[],errors:[]})
+import React, { useReducer, useEffect } from 'react';
+import axios from 'axios';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import ChitsContainer from './Components/Chit/ChitsContainer';
+import { ChitContext } from './Context/root-contexts'
+import chitReducer from './Reducers/Chits'
+import { UsersContext } from './Context/UsersContext';
+import { CustomersContext } from './Context/CustomersContext';
+import CustomersContainer from './Components/Customer/CustomersContainer';
+import UsersContainer from './Components/Users/UsersContainer';
+import LoginForm from './LoginForm';
+import CustomersReducer from './Reducers/Customers';
+import UsersReducer from './Reducers/Users';
 
-  useEffect(()=>{
-    // (async()=>{
-    //   try{
-    //     const response = await axios.get()
-    //   }
-    //   catch(err){
-    //     console.log(err)
-    //   }
-    // })();
+export default function App() {
+  const initialChitData = {
+    data: [],
+    errors: [],
+  };
+  const [chits, chitDispatch] = useReducer(chitReducer, initialChitData);
 
-    (async()=>{
-      try{
-        const response = await axios.get('http://localhost:3009/api/customers')
-        console.log(response.data)
-        customerDispatch({type:'SET_CUSTOMERS',payload:response.data})
+  const initialUserData = {
+    userDetails: [],
+    isLoggedIn: false,
+  };
+  const [users, usersDispatch] = useReducer(UsersReducer, initialUserData);
+
+  const initialCustomerData = {
+    data: [],
+    errors: [],
+  };
+  const [customers, customerDispatch] = useReducer(CustomersReducer, initialCustomerData);
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const chitsResponse = await axios.get('http://localhost:3009/api/chits');
+        chitDispatch({ type: 'SET_CHIT', payload: chitsResponse.data });
+
+        const customersResponse = await axios.get('http://localhost:3009/api/customers');
+        customerDispatch({ type: 'SET_CUSTOMERS', payload: customersResponse.data });
+      } catch (err) {
+        console.log(err);
       }
-      catch(err){
-        console.log(err)
-      }
-      
     })();
-  },[])
+  }, []);
 
-  // const loginToast = () => {
-  //   toast.success('logged in successfully')
-  // }
-
-
-  return(
+  return (
     <div>
       <h1>App Component</h1>
       <>
-      <UsersContext.Provider value = {{users,usersDispatch}}>
-      <CustomersContext.Provider value = {{customers,customerDispatch}}>
-      <BrowserRouter>
-      <Routes>
-      <Route path = '/register' element = {<UsersContainer/>}/>
-      <Route path = '/login' element = {<LoginForm/>}/>
-      {users.isLoggedIn ? 
-      <Route path = '/customer' element = {<CustomersContainer/>}/>
-      : 
-      <Route path = '/register' element = {<UsersContainer/>}/>
-      }
-      </Routes>
-      <UsersContainer/>
-      <ToastContainer/>
-      </BrowserRouter>
-      </CustomersContext.Provider>
-      </UsersContext.Provider>
+        <ChitContext.Provider value={{ chits, chitDispatch }}>
+          <UsersContext.Provider value={{ users, usersDispatch }}>
+            <CustomersContext.Provider value={{ customers, customerDispatch }}>
+              <BrowserRouter>
+                <Routes>
+                  <Route path='/chits' element={<ChitsContainer />} />
+                  <Route path='/login' element={<LoginForm />} />
+                  <Route path='/customers' element={<CustomersContainer />} />
+                  <Route path='/register' element={<UsersContainer />} />
+                </Routes>
+                <ToastContainer />
+                <UsersContainer/>
+                <CustomersContainer/>
+                <ChitsContainer/>
+              </BrowserRouter>
+            </CustomersContext.Provider>
+          </UsersContext.Provider>
+        </ChitContext.Provider>
       </>
     </div>
-  )
+  );
 }
