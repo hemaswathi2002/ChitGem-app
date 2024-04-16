@@ -2,11 +2,11 @@
 import React, { useContext, useState } from 'react';
 import axios from 'axios';
 import ChitForm from './ChitsForm';
-import { ChitsContext } from '../../Context/ChitsContext'
+import { ChitContext } from '../../Context/root-contexts'
 import { Button, Modal, ModalHeader, ModalBody } from 'reactstrap';
 
 export default function ChitList() {
-    const {chits, chitDispatch} = useContext(ChitsContext);
+    const {chits, chitDispatch} = useContext(ChitContext);
     const [modal, setModal] = useState(false);
     const [editId, setEditId] = useState('');
     const toggle = () => setModal(!modal);
