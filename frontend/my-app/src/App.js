@@ -2,6 +2,7 @@ import React, { useReducer, useEffect } from 'react'
 import axios from 'axios'
 import { BrowserRouter, Routes, Route,Link } from 'react-router-dom'
 import { ToastContainer } from 'react-toastify'
+import { useDispatch } from 'react-redux'
 import 'react-toastify/dist/ReactToastify.css'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import ChitsContainer from './Components/Chit/ChitsContainer'
@@ -14,6 +15,7 @@ import LoginForm from './LoginForm'
 import { ChitsContext } from './Context/ChitsContext'
 import { UsersContext } from './Context/UsersContext'
 import { CustomersContext } from './Context/CustomersContext'
+import { startGetJewels } from './Components/Actions/Jewels'
 
 import chitReducer from './Reducers/Chits'
 import UsersReducer from './Reducers/Users'
@@ -24,29 +26,16 @@ import { ShopsContext } from './Context/ShopsContext'
 import shopReducer from "./Reducers/Shops"
 
 export default function App() {
-  const initialChitData = {
-    data: [],
-    errors: [],
-  };
-  const [chits, chitDispatch] = useReducer(chitReducer, initialChitData)
+  const [chits, chitDispatch] = useReducer(chitReducer, {data: []})
+  const [users, usersDispatch] = useReducer(UsersReducer, {userDetails : [], isLoggedIn : false});
+  const [customers, customerDispatch] = useReducer(CustomersReducer, {data:[]});
+  const [shops, shopDispatch] = useReducer(shopReducer, {data:[]});
 
-  const initialUserData = {
-    userDetails: [],
-    isLoggedIn: false,
-  };
-  const [users, usersDispatch] = useReducer(UsersReducer, initialUserData);
+  const dispatch = useDispatch()
 
-  const initialCustomerData = {
-    data: [],
-    errors: [],
-  };
-  const [customers, customerDispatch] = useReducer(CustomersReducer, initialCustomerData);
-
-  const initialShopData = {
-    data: [],
-    errors: [],
-  };
-  const [shops, shopDispatch] = useReducer(shopReducer, initialShopData);
+  useEffect(()=>{
+    dispatch(startGetJewels())
+  },[])
 
   useEffect(() => {
     (async () => {

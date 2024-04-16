@@ -68,10 +68,10 @@ app.put('/api/shops/update/:id',authenticateUser,authorizeUser(['admin']),checkS
 app.delete('/api/shops/:id',authenticateUser,shopsCltr.destroy)
 
 //api jewels
-app.post('/api/jewels',authenticateUser,authorizeUser(['owner']),upload.array('images', 2),jewelsCltr.create)
-app.get('/api/jewels',authenticateUser,authorizeUser(['owner','customer','admin']),jewelsCltr.get)
-app.put('/api/jewels/:id',authenticateUser,authorizeUser(['owner']),jewelsCltr.update)
-app.delete('/api/jewels/:id',authenticateUser,authorizeUser(['owner']),jewelsCltr.delete)
+app.post('/api/jewels',upload.array('images', 2),jewelsCltr.create)
+app.get('/api/jewels',jewelsCltr.get)
+app.put('/api/jewels/:id',jewelsCltr.update)
+app.delete('/api/jewels/:id',jewelsCltr.delete)
 
 //api chits
 app.post('/api/chits/:customerId',chitsCltr.register)
