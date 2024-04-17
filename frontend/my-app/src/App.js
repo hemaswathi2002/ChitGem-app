@@ -11,7 +11,7 @@ import ReviewsContainer from './Components/Review/ReviewsContainer'
 import Home from './Components/Home/Home'
 import UsersContainer from './Components/Users/UsersContainer'
 import OtpVerificationForm from './Components/Users/OtpVerification'
-
+import JewelContainer from './Components/Jewel/JewelContainer'
 import LoginForm from './LoginForm'
 import { ChitsContext } from './Context/ChitsContext'
 import { UsersContext } from './Context/UsersContext'
@@ -78,12 +78,13 @@ export default function App() {
                      </>
                   </Routes>
                   <ToastContainer />
+                  <UsersContainer/>
+                  <ShopsContainer/>
+                  <OtpVerificationForm/>
                   <CustomersContainer/>
                   <ChitsContainer/>
-                  <ShopsContainer/>
-                  <UsersContainer/>
+                  <JewelContainer/>
                   <ReviewsContainer/>
-                  <OtpVerificationForm/>
                 </BrowserRouter>
               </ShopsContext.Provider>
             </CustomersContext.Provider>
