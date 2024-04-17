@@ -60,7 +60,7 @@ jewelsCltr.update = async(req,res)=>{
     }
     catch(err){
         console.log(err)
-        res.statu(500).json({errors:'Internal Server Error'})
+        res.status(500).json({errors:'Internal Server Error'})
     }
 }
 

@@ -2,7 +2,7 @@ import React, { useReducer, useEffect } from 'react'
 import axios from 'axios'
 import { BrowserRouter, Routes, Route,Link } from 'react-router-dom'
 import { ToastContainer } from 'react-toastify'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector} from 'react-redux'
 import 'react-toastify/dist/ReactToastify.css'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import ChitsContainer from './Components/Chit/ChitsContainer'
@@ -33,10 +33,10 @@ export default function App() {
   const [shops, shopDispatch] = useReducer(shopReducer, {data:[]});
 
   const dispatch = useDispatch()
-
+  
   useEffect(()=>{
     dispatch(startGetJewels())
-  },[])
+  },[dispatch])
 
   useEffect(() => {
     (async () => {

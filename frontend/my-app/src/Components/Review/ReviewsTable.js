@@ -25,7 +25,7 @@ export default function ReviewsTable(props) {
         if (userConfirm) {
             dispatch(removeReview(id));
         }
-    };
+    }
 
     return (
         <>
