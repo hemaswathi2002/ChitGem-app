@@ -60,11 +60,11 @@ app.put('/api/forgotpassword',usersCltr.resetForgotPassword)
 app.get('/api/account',authenticateUser,authorizeUser(['admin','owner','customer']),usersCltr.account)
 
 //api shops
-app.post('/api/shops',authenticateUser,authorizeUser(['owner']),checkSchema(shopRegisterValidationSchema),shopsCltr.register)
-app.get('/api/shops',authenticateUser,authorizeUser(['owner']),shopsCltr.getAllshop)
-app.get('/api/shops/:id',authenticateUser,authorizeUser(['admin','owner','customer']),shopsCltr.getOneshop)
-app.put('/api/shops/:id',authenticateUser,authorizeUser(['owner']),checkSchema(shopRegisterValidationSchema),shopsCltr.update)
-app.put('/api/shops/update/:id',authenticateUser,authorizeUser(['admin']),checkSchema(shopRegisterValidationSchema),shopsCltr.updateStatus)
+app.post('/api/shops',shopsCltr.register)
+app.get('/api/shops',shopsCltr.getAllshop)
+app.get('/api/shops/:id',shopsCltr.getOneshop)
+app.put('/api/shops/:id',shopsCltr.update)
+app.put('/api/shops/update/:id',shopsCltr.updateStatus)
 app.delete('/api/shops/:id',authenticateUser,shopsCltr.destroy)
 
 //api jewels
@@ -80,19 +80,19 @@ app.get('/api/chits',chitsCltr.getAllchit)
 app.get('/api/chits/:id',chitsCltr.getOnechit)
 app.delete('/api/chits/:id',chitsCltr.destroy)
 
-//api customers
-app.post('/api/:customerId',authenticateUser,authorizeUser(['owner']),checkSchema(customerValidationSchema),customersCltr.register)
-app.get('/api/customers',authenticateUser,authorizeUser(['owner']),customersCltr.list)
-app.get('/api/customers/:id',authenticateUser,authorizeUser(['owner','customer']),customersCltr.getOneCustomer)
-app.put('/api/customers/:id',authenticateUser,authorizeUser(['owner']),checkSchema(customerValidationSchema),customersCltr.update)
-app.delete('/api/customers/:id',customersCltr.destroy)
+// //api customers
+// app.post('/api/:customerId',customersCltr.register)
+// app.get('/api/customers',customersCltr.list)
+// app.get('/api/customers/:id',customersCltr.getOneCustomer)
+// app.put('/api/customers/:id',customersCltr.update)
+// app.delete('/api/customers/:id',customersCltr.destroy)
 
-//api reviews
-app.post ('/api/reviews',authenticateUser,authorizeUser(['customer']),checkSchema(reviewsValidationSchema),reviewsCltr.create)
+// //api reviews
+app.post ('/api/reviews',reviewsCltr.create)
 app.get('/api/reviews',reviewsCltr.list)
-app.get('/api/reviews/:id',authenticateUser,authorizeUser(['customer','owner']),reviewsCltr.getOneReview)
-app.put('/api/reviews/:id',authenticateUser,authorizeUser(['customer']),checkSchema(reviewsValidationSchema),reviewsCltr.update)
-app.delete('/api/reviews/:id',authenticateUser,authorizeUser(['customer']),reviewsCltr.delete)
+app.get('/api/reviews/:id',reviewsCltr.getOneReview)
+app.put('/api/reviews/:id',reviewsCltr.update)
+app.delete('/api/reviews/:id',reviewsCltr.delete)
 
 
 app.listen(port,()=>{
