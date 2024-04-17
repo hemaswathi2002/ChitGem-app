@@ -7,6 +7,7 @@ import 'react-toastify/dist/ReactToastify.css'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import ChitsContainer from './Components/Chit/ChitsContainer'
 import CustomersContainer from './Components/Customer/CustomersContainer'
+import ReviewsContainer from './Components/Review/ReviewsContainer'
 import Home from './Components/Home/Home'
 import UsersContainer from './Components/Users/UsersContainer'
 import OtpVerificationForm from './Components/Users/OtpVerification'
@@ -43,8 +44,8 @@ export default function App() {
         const chitsResponse = await axios.get('http://localhost:3009/api/chits');
         chitDispatch({ type: 'SET_CHIT', payload: chitsResponse.data });
 
-        const customersResponse = await axios.get('http://localhost:3009/api/customers');
-        customerDispatch({ type: 'SET_CUSTOMERS', payload: customersResponse.data });
+        // const customersResponse = await axios.get('http://localhost:3009/api/customers');
+        // customerDispatch({ type: 'SET_CUSTOMERS', payload: customersResponse.data });
 
         const shopsResponse = await axios.get('http://localhost:3009/api/shops');
         shopDispatch({ type: 'SET_SHOP', payload: shopsResponse.data });
@@ -81,6 +82,7 @@ export default function App() {
                   <ChitsContainer/>
                   <ShopsContainer/>
                   <UsersContainer/>
+                  <ReviewsContainer/>
                   <OtpVerificationForm/>
                 </BrowserRouter>
               </ShopsContext.Provider>
