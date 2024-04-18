@@ -10,6 +10,11 @@ export default function invoicesReducer(state = initialState, action) {
         case 'ADD_INVOICE' : {
             return {...state, data: [...state.data, action.payload ]}
         }
+        case 'SET_ERRORS':
+            return {
+                ...state,
+                serverErrors: action.payload
+            };
         default: {
             return {...state}
         }

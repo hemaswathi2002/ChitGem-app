@@ -29,6 +29,12 @@ export const startCreateInvoice = (formData, redirect) => {
         }
     }
 }
+export const setServerErrors = (errors) => {
+    return { 
+        type: "SET_ERRORS",
+        payload: errors 
+    };
+};
 
 const addInvoice = (invoice) => {
     return { 
