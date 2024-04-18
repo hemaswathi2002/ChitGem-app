@@ -23,6 +23,7 @@ import UsersReducer from './Reducers/Users'
 import CustomersReducer from './Reducers/Customers'
 
 import ShopsContainer from './Components/Shop/ShopsContainer'
+// import InvoiceContainer from './Components/Invoice/InvoiceContainer'
 import { ShopsContext } from './Context/ShopsContext'
 import shopReducer from "./Reducers/Shops"
 
@@ -85,6 +86,7 @@ export default function App() {
                   <ChitsContainer/>
                   <JewelContainer/>
                   <ReviewsContainer/> */}
+                  {/* <InvoiceContainer/> */}
                 </BrowserRouter>
               </ShopsContext.Provider>
             </CustomersContext.Provider>
