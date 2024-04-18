@@ -8,7 +8,6 @@ export default function LoginForm(props){
     const [email,setEmail] = useState('')
     const [password,setPassword] = useState('')
     const [serverErrors,setServerErrors] = useState([])
-    console.log(serverErrors)
 
     const navigate = useNavigate()
 
@@ -25,8 +24,8 @@ export default function LoginForm(props){
             const token = response.data.token
             localStorage.setItem('token',token)
             usersDispatch({type:'SIGN_IN',payload : true});
-            // <Link to = '/shops' element = {<ShopForm/>}/>
-            // navigate('/shops')
+            setServerErrors([])
+            navigate('/shops')
             // loginToast();
         }
         catch(err){
@@ -40,6 +39,7 @@ export default function LoginForm(props){
         <div>
             {serverErrors && <p style = {{color:'red'}}>{serverErrors}</p>}
             <form onSubmit = {handleSubmit}>
+                <h2>Login</h2>
                <div>
                <input type='text'
                 placeholder='Enter email...'

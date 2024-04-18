@@ -10,7 +10,7 @@ const userSchema = new Schema({
         enum : ['admin','owner','customer']
     },
     password : String,
-    otp : Number,
+    otp : String,
     isVerified : {
         type : Boolean,
         default : false

@@ -7,12 +7,13 @@ import 'react-toastify/dist/ReactToastify.css'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import Home from './Components/Home/Home'
 import OtpVerificationForm from './Components/Users/OtpVerification'
+import LoginForm from './LoginForm'
+import ShopsForm from './Components/Shop/ShopsForm'
 import ChitsContainer from './Components/Chit/ChitsContainer'
 import CustomersContainer from './Components/Customer/CustomersContainer'
 import ReviewsContainer from './Components/Review/ReviewsContainer'
 import UsersContainer from './Components/Users/UsersContainer'
 import JewelContainer from './Components/Jewel/JewelContainer'
-import LoginForm from './LoginForm'
 import { ChitsContext } from './Context/ChitsContext'
 import { UsersContext } from './Context/UsersContext'
 import { CustomersContext } from './Context/CustomersContext'
@@ -22,7 +23,6 @@ import chitReducer from './Reducers/Chits'
 import UsersReducer from './Reducers/Users'
 import CustomersReducer from './Reducers/Customers'
 
-import ShopsContainer from './Components/Shop/ShopsContainer'
 import { ShopsContext } from './Context/ShopsContext'
 import shopReducer from "./Reducers/Shops"
 
@@ -71,11 +71,13 @@ export default function App() {
                     <Route path='/' element={<Home />} />
                     <Route path='/register' element={<UsersContainer />} />
                     <Route path = '/otp' element = {<OtpVerificationForm/>}/>
-                    {/* <Route path='/shops' element={<ShopsContainer />} />
+                    <Route path = '/login' element = {<LoginForm/>}/>
+                    <Route path= '/shops' element={<ShopsForm />}/>
+                    {/*  />
                     <Route path = '/customers' element = {<CustomersContainer/>}/>
                     <Route path='/chits' element={<ChitsContainer />} />
                      <Route path='/login' element={<LoginForm />} />
-                     <Route path = '/otp' element = {<OtpVerificationForm/>}/> */}
+                     <Route path = '/otp' element = {<OtpVerificationForm/>}/>  */}
                      </>
                   </Routes>
                   <ToastContainer />
