@@ -5,12 +5,12 @@ import { ToastContainer } from 'react-toastify'
 import { useDispatch, useSelector} from 'react-redux'
 import 'react-toastify/dist/ReactToastify.css'
 import 'bootstrap/dist/css/bootstrap.min.css'
+import Home from './Components/Home/Home'
+import OtpVerificationForm from './Components/Users/OtpVerification'
 import ChitsContainer from './Components/Chit/ChitsContainer'
 import CustomersContainer from './Components/Customer/CustomersContainer'
 import ReviewsContainer from './Components/Review/ReviewsContainer'
-import Home from './Components/Home/Home'
 import UsersContainer from './Components/Users/UsersContainer'
-import OtpVerificationForm from './Components/Users/OtpVerification'
 import JewelContainer from './Components/Jewel/JewelContainer'
 import LoginForm from './LoginForm'
 import { ChitsContext } from './Context/ChitsContext'
@@ -68,23 +68,23 @@ export default function App() {
                   <Routes>
                  
                     <>
+                    <Route path='/' element={<Home />} />
+                    <Route path='/register' element={<UsersContainer />} />
+                    <Route path = '/otp' element = {<OtpVerificationForm/>}/>
                     {/* <Route path='/shops' element={<ShopsContainer />} />
                     <Route path = '/customers' element = {<CustomersContainer/>}/>
                     <Route path='/chits' element={<ChitsContainer />} />
-                     <Route path='/' element={<Home />} />
-                     <Route path='/register' element={<UsersContainer />} />
                      <Route path='/login' element={<LoginForm />} />
                      <Route path = '/otp' element = {<OtpVerificationForm/>}/> */}
                      </>
                   </Routes>
                   <ToastContainer />
-                  <UsersContainer/>
-                  <ShopsContainer/>
-                  <OtpVerificationForm/>
+                  {/* <UsersContainer/> */}
+                  {/* <ShopsContainer/>
                   <CustomersContainer/>
                   <ChitsContainer/>
                   <JewelContainer/>
-                  <ReviewsContainer/>
+                  <ReviewsContainer/> */}
                 </BrowserRouter>
               </ShopsContext.Provider>
             </CustomersContext.Provider>

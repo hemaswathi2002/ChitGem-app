@@ -1,7 +1,7 @@
 import { useState,useContext } from "react"
 import axios from 'axios'
 import { UsersContext } from "../../Context/UsersContext"
-import { useNavigate } from "react-router-dom"
+import { useNavigate, Link } from "react-router-dom"
 export default function RegisterForm() {
     const [username, setUsername] = useState('')
     const [email, setEmail] = useState('')
@@ -56,6 +56,7 @@ export default function RegisterForm() {
                 const response = await axios.post('http://localhost:3009/api/users',formData)
                     console.log(response.data)
                     usersDispatch({type:'SET_USERS',payload:response.data})
+                    alert('registered successfully')
                     setServerErrors([])
                     setFormErrors({})
                     setUsername('')
@@ -63,12 +64,12 @@ export default function RegisterForm() {
                     setMobile('')
                     setRole('')
                     setPassword('')
-                    navigate('/login')
+                    navigate('/otp')
             }
             catch(err){
                 console.log(err)
                 console.log(err.response.data.errors)
-                setServerErrors(err.response.data.errors)
+                setServerErrors(err.response.data.errors || [{ msg: 'Unknown error occurred' }])
             }
         }
 
@@ -76,7 +77,7 @@ export default function RegisterForm() {
 
     return (
         <div>
-            {serverErrors && serverErrors.length > 0 &&  (
+            {Array.isArray(serverErrors) && serverErrors.length > 0 &&  (
                 <div>
                     {serverErrors.map((error, index) => (
                         <p key={index} style={{color : 'red'}}>{error.msg}</p>
