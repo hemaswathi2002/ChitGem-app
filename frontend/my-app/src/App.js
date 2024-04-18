@@ -24,6 +24,9 @@ import chitReducer from './Reducers/Chits'
 import UsersReducer from './Reducers/Users'
 import CustomersReducer from './Reducers/Customers'
 
+import ShopsContainer from './Components/Shop/ShopsContainer'
+// import InvoiceContainer from './Components/Invoice/InvoiceContainer'
+
 import { ShopsContext } from './Context/ShopsContext'
 import shopReducer from "./Reducers/Shops"
 import Main from './Components/Main/Main'
@@ -100,6 +103,7 @@ export default function App() {
                   <CustomersContainer/>
                   <JewelContainer/>
                   <ReviewsContainer/> */}
+                  {/* <InvoiceContainer/> */}
                 </BrowserRouter>
               </ShopsContext.Provider>
             </CustomersContext.Provider>
