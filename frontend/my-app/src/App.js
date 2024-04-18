@@ -6,13 +6,14 @@ import { useDispatch, useSelector} from 'react-redux'
 import 'react-toastify/dist/ReactToastify.css'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import Home from './Components/Home/Home'
-import OtpVerificationForm from './Components/Users/OtpVerification'
+import { startGetUserDetails } from './Components/Actions/Users/Users'
+import OtpVerificationForm from './Components/UsersAuthentication/OtpVerification'
 import LoginForm from './LoginForm'
 import ShopsForm from './Components/Shop/ShopsForm'
 import ChitsContainer from './Components/Chit/ChitsContainer'
 import CustomersContainer from './Components/Customer/CustomersContainer'
 import ReviewsContainer from './Components/Review/ReviewsContainer'
-import UsersContainer from './Components/Users/UsersContainer'
+import UsersContainer from './Components/UsersAuthentication/UsersContainer'
 import JewelContainer from './Components/Jewel/JewelContainer'
 import { ChitsContext } from './Context/ChitsContext'
 import { UsersContext } from './Context/UsersContext'
@@ -60,6 +61,13 @@ export default function App() {
     })();
   }, []);
 
+  useEffect(()=>{
+    if(localStorage.getItem('token')){
+      dispatch(startGetUserDetails())
+    }
+  },[dispatch])
+
+
   return (
     <div>
       <h1>App Component</h1>
@@ -69,9 +77,7 @@ export default function App() {
             <CustomersContext.Provider value={{ customers, customerDispatch }}>
               <ShopsContext.Provider value={{ shops, shopDispatch }}>
                 <BrowserRouter>
-                <Link to = '/'>Home</Link> | <Link to = '/register'> register</Link> | <Link to = '/login'>login</Link>
                   <Routes>
-                 
                     <>
                     <Route path='/' element={<Home />} />
                     <Route path='/signup' element={<UsersContainer />} />

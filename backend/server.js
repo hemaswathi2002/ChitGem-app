@@ -57,7 +57,7 @@ app.post ('/api/login',checkSchema(loginValidationSchema),usersCltr.login)
 app.put('/api/update/password',usersCltr.updatePassword)
 app.post('/api/forgotpassword',usersCltr.forgotPassword)
 app.put('/api/forgotpassword',usersCltr.resetForgotPassword)
-app.get('/api/account',authenticateUser,authorizeUser(['admin','owner','customer']),usersCltr.account)
+app.get('/api/users/account',authenticateUser,authorizeUser(['admin','owner','customer']),usersCltr.account)
 
 //api shops
 app.post('/api/shops',checkSchema(shopRegisterValidationSchema),shopsCltr.register)
