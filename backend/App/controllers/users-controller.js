@@ -68,9 +68,9 @@ usersCltr.register = async (req, res) => {
             user.role = 'admin'
         }
         else if (user.role == 'owner') {
-            user.role = 'customer'
-        } else {
             user.role = 'owner'
+        } else {
+            user.role = 'customer'
         }
         const response = await user.save()
         res.status(201).json(response)

@@ -25,7 +25,8 @@ export default function LoginForm(props){
             localStorage.setItem('token',token)
             usersDispatch({type:'SIGN_IN',payload : true});
             setServerErrors([])
-            navigate('/shops')
+            
+            navigate('/dashboard')
             // loginToast();
         }
         catch(err){
@@ -57,6 +58,12 @@ export default function LoginForm(props){
                 </div>
                 <div>
                     <input type = 'submit'/>
+                </div>
+                <div>
+                <Link to = '/forgotpassword'>forgot Password?</Link>
+                </div>
+                <div>
+                <Link to="/signup">Sign Up</Link>
                 </div>
             </form>
         </div>

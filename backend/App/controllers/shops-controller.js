@@ -8,9 +8,10 @@ shopsCltr.register = async (req, res) => {
     return res.status(400).json({ errors: errors.array() })
   }
     try {
+      // const {body}=req
     const body = _.pick(req.body,['shopName','address','location','contact','description'])
     body.approvalStatus = 'pending'
-    body.ownerId = req.user.id
+    // body.ownerId = req.user.id
     console.log(req.user)
     const shop = new Shop(body)
     const response = await shop.save()
@@ -20,9 +21,6 @@ shopsCltr.register = async (req, res) => {
     res.status(500).json({ error: 'Internal server error' })
 }
 }
-
-
-
 shopsCltr.getOneshop = async (req, res) => {
   try {
     const { id } = req.params

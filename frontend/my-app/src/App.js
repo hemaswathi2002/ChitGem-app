@@ -25,6 +25,7 @@ import CustomersReducer from './Reducers/Customers'
 
 import { ShopsContext } from './Context/ShopsContext'
 import shopReducer from "./Reducers/Shops"
+import Main from './Components/Main/Main'
 
 export default function App() {
   const [chits, chitDispatch] = useReducer(chitReducer, {data: []})
@@ -41,7 +42,11 @@ export default function App() {
   useEffect(() => {
     (async () => {
       try {
-        const chitsResponse = await axios.get('http://localhost:3009/api/chits');
+        const chitsResponse = await axios.get('http://localhost:3009/api/chits',{
+          headers : {
+            Authorization : localStorage.getItem('token')
+          }
+        });
         chitDispatch({ type: 'SET_CHIT', payload: chitsResponse.data });
 
         // const customersResponse = await axios.get('http://localhost:3009/api/customers');
@@ -69,22 +74,24 @@ export default function App() {
                  
                     <>
                     <Route path='/' element={<Home />} />
-                    <Route path='/register' element={<UsersContainer />} />
+                    <Route path='/signup' element={<UsersContainer />} />
                     <Route path = '/otp' element = {<OtpVerificationForm/>}/>
                     <Route path = '/login' element = {<LoginForm/>}/>
+                    <Route path = '/dashboard' element = {<Main/>}/>
                     <Route path= '/shops' element={<ShopsForm />}/>
-                    {/*  />
                     <Route path = '/customers' element = {<CustomersContainer/>}/>
+                    {/*  />
                     <Route path='/chits' element={<ChitsContainer />} />
                      <Route path='/login' element={<LoginForm />} />
                      <Route path = '/otp' element = {<OtpVerificationForm/>}/>  */}
+                     
                      </>
                   </Routes>
                   <ToastContainer />
+                  {/* <ChitsContainer/> */}
                   {/* <UsersContainer/> */}
                   {/* <ShopsContainer/>
                   <CustomersContainer/>
-                  <ChitsContainer/>
                   <JewelContainer/>
                   <ReviewsContainer/> */}
                 </BrowserRouter>
