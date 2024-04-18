@@ -1,4 +1,3 @@
-const Shop = require("../models/shop-model")
 
 const shopRegisterValidationSchema = {
   // ownerId : {

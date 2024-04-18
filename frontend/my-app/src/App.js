@@ -6,13 +6,15 @@ import { useDispatch, useSelector} from 'react-redux'
 import 'react-toastify/dist/ReactToastify.css'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import Home from './Components/Home/Home'
-import OtpVerificationForm from './Components/Users/OtpVerification'
+import { startGetUserDetails } from './Components/Actions/Users/Users'
+import OtpVerificationForm from './Components/UsersAuthentication/OtpVerification'
+import LoginForm from './LoginForm'
+import ShopsForm from './Components/Shop/ShopsForm'
 import ChitsContainer from './Components/Chit/ChitsContainer'
 import CustomersContainer from './Components/Customer/CustomersContainer'
 import ReviewsContainer from './Components/Review/ReviewsContainer'
-import UsersContainer from './Components/Users/UsersContainer'
+import UsersContainer from './Components/UsersAuthentication/UsersContainer'
 import JewelContainer from './Components/Jewel/JewelContainer'
-import LoginForm from './LoginForm'
 import { ChitsContext } from './Context/ChitsContext'
 import { UsersContext } from './Context/UsersContext'
 import { CustomersContext } from './Context/CustomersContext'
@@ -24,8 +26,10 @@ import CustomersReducer from './Reducers/Customers'
 
 import ShopsContainer from './Components/Shop/ShopsContainer'
 // import InvoiceContainer from './Components/Invoice/InvoiceContainer'
+
 import { ShopsContext } from './Context/ShopsContext'
 import shopReducer from "./Reducers/Shops"
+import Main from './Components/Main/Main'
 
 export default function App() {
   const [chits, chitDispatch] = useReducer(chitReducer, {data: []})
@@ -42,7 +46,11 @@ export default function App() {
   useEffect(() => {
     (async () => {
       try {
-        const chitsResponse = await axios.get('http://localhost:3009/api/chits');
+        const chitsResponse = await axios.get('http://localhost:3009/api/chits',{
+          headers : {
+            Authorization : localStorage.getItem('token')
+          }
+        });
         chitDispatch({ type: 'SET_CHIT', payload: chitsResponse.data });
 
         // const customersResponse = await axios.get('http://localhost:3009/api/customers');
@@ -56,6 +64,13 @@ export default function App() {
     })();
   }, []);
 
+  useEffect(()=>{
+    if(localStorage.getItem('token')){
+      dispatch(startGetUserDetails())
+    }
+  },[dispatch])
+
+
   return (
     <div>
       <h1>App Component</h1>
@@ -65,25 +80,27 @@ export default function App() {
             <CustomersContext.Provider value={{ customers, customerDispatch }}>
               <ShopsContext.Provider value={{ shops, shopDispatch }}>
                 <BrowserRouter>
-                <Link to = '/'>Home</Link> | <Link to = '/register'> register</Link> | <Link to = '/login'>login</Link>
                   <Routes>
-                 
                     <>
                     <Route path='/' element={<Home />} />
-                    <Route path='/register' element={<UsersContainer />} />
+                    <Route path='/signup' element={<UsersContainer />} />
                     <Route path = '/otp' element = {<OtpVerificationForm/>}/>
-                    {/* <Route path='/shops' element={<ShopsContainer />} />
+                    <Route path = '/login' element = {<LoginForm/>}/>
+                    <Route path = '/dashboard' element = {<Main/>}/>
+                    <Route path= '/shops' element={<ShopsForm />}/>
                     <Route path = '/customers' element = {<CustomersContainer/>}/>
+                    {/*  />
                     <Route path='/chits' element={<ChitsContainer />} />
                      <Route path='/login' element={<LoginForm />} />
-                     <Route path = '/otp' element = {<OtpVerificationForm/>}/> */}
+                     <Route path = '/otp' element = {<OtpVerificationForm/>}/>  */}
+                     
                      </>
                   </Routes>
                   <ToastContainer />
+                  {/* <ChitsContainer/> */}
                   {/* <UsersContainer/> */}
                   {/* <ShopsContainer/>
                   <CustomersContainer/>
-                  <ChitsContainer/>
                   <JewelContainer/>
                   <ReviewsContainer/> */}
                   {/* <InvoiceContainer/> */}

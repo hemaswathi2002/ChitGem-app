@@ -60,7 +60,7 @@ usersCltr.register = async (req, res) => {
         const encryptedPassword = await bcryptjs.hash(user.password, salt)
         user.password = encryptedPassword
 
-        const otp = generateOTP()
+        const otp = generateOTP().toString();
         user.otp = otp
         await sendMail(user.email, user.otp)
         const count = await User.countDocuments()
@@ -68,9 +68,9 @@ usersCltr.register = async (req, res) => {
             user.role = 'admin'
         }
         else if (user.role == 'owner') {
-            user.role = 'customer'
-        } else {
             user.role = 'owner'
+        } else {
+            user.role = 'customer'
         }
         const response = await user.save()
         res.status(201).json(response)

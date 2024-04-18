@@ -44,7 +44,7 @@ const storage = multer.diskStorage({
       cb(null, `${Date.now()}-${file.originalname}`)
     }
   });
-  
+            
 const upload = multer({storage:storage})
 
 //api users
@@ -56,15 +56,15 @@ app.post ('/api/login',checkSchema(loginValidationSchema),usersCltr.login)
 app.put('/api/update/password',usersCltr.updatePassword)
 app.post('/api/forgotpassword',usersCltr.forgotPassword)
 app.put('/api/forgotpassword',usersCltr.resetForgotPassword)
-app.get('/api/account',authenticateUser,authorizeUser(['admin','owner','customer']),usersCltr.account)
+app.get('/api/users/account',authenticateUser,authorizeUser(['admin','owner','customer']),usersCltr.account)
 
 //api shops
-app.post('/api/shops',shopsCltr.register)
+app.post('/api/shops',checkSchema(shopRegisterValidationSchema),shopsCltr.register)
 app.get('/api/shops',shopsCltr.getAllshop)
 app.get('/api/shops/:id',shopsCltr.getOneshop)
-app.put('/api/shops/:id',shopsCltr.update)
+app.put('/api/shops/:id',checkSchema(shopRegisterValidationSchema),shopsCltr.update)
 app.put('/api/shops/update/:id',shopsCltr.updateStatus)
-app.delete('/api/shops/:id',authenticateUser,shopsCltr.destroy)
+app.delete('/api/shops/:id',shopsCltr.destroy)
 
 //api jewels
 app.post('/api/jewels',upload.array('images', 2),jewelsCltr.create)

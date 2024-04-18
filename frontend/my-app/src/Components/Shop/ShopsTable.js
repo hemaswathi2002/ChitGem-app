@@ -18,7 +18,11 @@ export default function ShopsTable() {
         const confirmation = window.confirm('Are you sure?');
         if (confirmation) {
             try {
-                const response = await axios.delete(`http://localhost:3009/api/shops/${id}`);
+                const response = await axios.delete(`http://localhost:3009/api/shops/${id}`,{
+                    headers : {
+                        Authorization : localStorage.getItem('token')
+                    }
+                });
                 console.log(response.data);
                 shopDispatch({ type: 'DELETE_SHOP', payload: id });
                 // <Link to = '/customer' element = {<Customer}
