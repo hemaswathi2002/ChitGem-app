@@ -47,11 +47,13 @@ export default function App() {
   useEffect(() => {
     (async () => {
       try {
-        const chitsResponse = await axios.get('http://localhost:3009/api/chits',{
-          headers : {
-            Authorization : localStorage.getItem('token')
-          }
-        });
+        const chitsResponse = await axios.get('http://localhost:3009/api/chits')
+        // ,
+        // {
+        //   headers : {
+        //     Authorization : localStorage.getItem('token')
+        //   }
+        // });
         chitDispatch({ type: 'SET_CHIT', payload: chitsResponse.data });
 
         // const customersResponse = await axios.get('http://localhost:3009/api/customers');
@@ -98,7 +100,7 @@ export default function App() {
                      </>
                   </Routes>
                   <ToastContainer />
-                  {/* <ChitsContainer/> */}
+                  <ChitsContainer/>
                   {/* <UsersContainer/> */}
                   {/* <ShopsContainer/>
                   <CustomersContainer/>

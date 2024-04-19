@@ -38,6 +38,9 @@ const chitRegisterValidationSchema={
     totalAmount:{
         notEmpty:{
             errorMessage:"* total amount is required"
+        },
+        isNumeric:{
+            errorMessage:"*total amount should be number"
         }
     },
 
@@ -62,14 +65,14 @@ const chitRegisterValidationSchema={
             errorMessage:"* terms and conditions shouldnot be empty"
         }
     },
-    goldPrice:{
-        notEmpty:{
-            errorMessage:"* goldPrice should not be empty"
-        },
-        isNumeric: {
-            errorMessage: "* goldPrice should be a number"
-        }
-    },   
+    // goldPrice:{
+    //     notEmpty:{
+    //         errorMessage:"* goldPrice should not be empty"
+    //     },
+    //     isNumeric: {
+    //         errorMessage: "* goldPrice should be a number"
+    //     }
+    // },   
 }
 module.exports=chitRegisterValidationSchema
 

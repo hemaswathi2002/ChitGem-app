@@ -73,8 +73,8 @@ app.put('/api/jewels/:id',jewelsCltr.update)
 app.delete('/api/jewels/:id',jewelsCltr.delete)
 
 //api chits
-app.post('/api/chits/:customerId',chitsCltr.register)
-app.put('/api/chits/:id',chitsCltr.update)
+app.post('/api/chits/:customerId',checkSchema(chitRegisterValidationSchema),chitsCltr.register)
+app.put('/api/chits/:id',checkSchema(chitRegisterValidationSchema),chitsCltr.update)
 app.get('/api/chits',chitsCltr.getAllchit)
 app.get('/api/chits/:id',chitsCltr.getOnechit)
 app.delete('/api/chits/:id',chitsCltr.destroy)
