@@ -100,11 +100,19 @@ export default function ChitForm(props) {
 
             try {
                 if (editId) {
-                    const response = await axios.put(`http://localhost:3009/api/chits/${editId}`, formData);
+                    const response = await axios.put(`http://localhost:3009/api/chits/${editId}`, formData,{
+                        headers : {
+                            Authorization : localStorage.getItem('token')
+                        }
+                    });
                     chitDispatch({ type: 'UPDATE_CHIT', payload: response.data });
                     props.toggle();
                 } else {
-                    const response = await axios.post('http://localhost:3009/api/chits', formData);
+                    const response = await axios.post('http://localhost:3009/api/chits', formData,{
+                        headers : {
+                            Authorization : localStorage.getItem('token')
+                        }
+                    });
                     chitDispatch({ type: 'ADD_CHIT', payload: response.data });
                     setChitAmount(500);
                     setInstallments(12);

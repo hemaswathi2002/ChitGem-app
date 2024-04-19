@@ -15,7 +15,11 @@ export default function ChitList() {
         const confirmation = window.confirm('Are you sure?')
         if (confirmation) {
             try {
-                const response = await axios.delete(`http://localhost:3009/api/chits/${id}`)
+                const response = await axios.delete(`http://localhost:3009/api/chits/${id}`,{
+                    headers : {
+                        Authorization : localStorage.getItem('token')
+                    }
+                });
                 console.log(response.data)
                 chitDispatch({ type: 'DELETE_CHIT', payload: id })
             } catch (err) {
@@ -49,7 +53,7 @@ export default function ChitList() {
                         <th>Status</th>
                         <th>Benefits</th>
                         <th>Terms and Conditions</th>
-                        {/* <th>Gold Price</th> */}
+                        <th>Gold Price</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
@@ -64,7 +68,7 @@ export default function ChitList() {
                             <td>{chit.status}</td>
                             <td>{chit.benefits}</td>
                             <td>{chit.termsAndConditions}</td>
-                            {/* <td>{chit.goldPrice}</td> */}
+                            <td>{chit.goldPrice}</td>
                             <td>
                                 <button onClick={() => handleEdit(chit._id)}>Edit</button>
                                 <button onClick={() => handleRemove(chit._id)}>Remove</button>

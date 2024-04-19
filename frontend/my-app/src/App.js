@@ -102,8 +102,8 @@ export default function App() {
                   <ToastContainer />
                   <ChitsContainer/>
                   {/* <UsersContainer/> */}
-                  {/* <ShopsContainer/>
-                  <CustomersContainer/>
+                   <ShopsContainer/>
+                   {/* <CustomersContainer/>
                   <JewelContainer/>
                   <ReviewsContainer/> */}
                   {/* <InvoiceContainer/> */}
