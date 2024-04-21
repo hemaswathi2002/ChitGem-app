@@ -5,7 +5,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './index.css';
 import configureStore from './store/ConfigureStore';
 import {BrowserRouter} from 'react-router-dom'
-import { AuthProvider } from './Context/AuthContext';
+import { AuthProvider } from './Context/AuthrorizeContext';
 import App from './App';
 
 const store = configureStore();

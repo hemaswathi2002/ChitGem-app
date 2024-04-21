@@ -1,4 +1,4 @@
-import { useAuth } from "../context/AuthContext"
+import { useAuth } from '../Context/AuthrorizeContext'
 export default function Account() {
     const { user } = useAuth()
     return (

@@ -2,7 +2,7 @@ import React, { useReducer, useEffect } from 'react'
 import axios from 'axios'
 import {Routes, Route,Link } from 'react-router-dom'
 // import { ToastContainer } from 'react-toastify'
-import { useDispatch, useSelector} from 'react-redux'
+// import { useDispatch, useSelector} from 'react-redux'
 import 'react-toastify/dist/ReactToastify.css'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import Home from './Components/Home/Home'
@@ -18,17 +18,16 @@ import CustomersContainer from './Components/Customer/CustomersContainer'
 import ReviewsContainer from './Components/Review/ReviewsContainer'
 import UsersContainer from './Components/UsersAuthentication/UsersContainer'
 import JewelContainer from './Components/Jewel/JewelContainer'
-// import { useAuth } from './Context/AuthContext';
+import { useAuth } from './Context/AuthrorizeContext'
 import { ChitsContext } from './Context/ChitsContext'
 // import { UsersContext } from './Context/UsersContext'
-import { CustomersContext } from './Context/CustomersContext'
-import { startGetJewels } from './Components/Actions/Jewels'
-
+// import { CustomersContext } from './Context/CustomersContext'
+// import { startGetJewels } from './Components/Actions/Jewels'
 import chitReducer from './Reducers/Chits'
 import UsersReducer from './Reducers/Users'
 import CustomersReducer from './Reducers/Customers'
 
-import ShopsContainer from './Components/Shop/ShopsContainer'
+// import ShopsContainer from './Components/Shop/ShopsContainer'
 // import InvoiceContainer from './Components/Invoice/InvoiceContainer'
 
 import { ShopsContext } from './Context/ShopsContext'
@@ -175,7 +174,7 @@ export default function App() {
                   <ToastContainer />
                   <ChitsContainer/>
                   {/* <UsersContainer/> */}
-                   <ShopsContainer/>
+                   {/* <ShopsContainer/> */}
                    {/* <CustomersContainer/>
                   <JewelContainer/>
                   <ReviewsContainer/>

@@ -1,4 +1,4 @@
-import { useAuth } from "../context/AuthContext";
+import { useAuth } from '../Context/AuthrorizeContext'
 import { Navigate } from "react-router-dom";
 export default function PrivateRoute({ permittedRoles, children }) {
     const { user } = useAuth() 
