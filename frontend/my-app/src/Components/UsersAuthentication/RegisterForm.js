@@ -11,7 +11,6 @@ export default function RegisterForm() {
     const [formErrors, setFormErrors] = useState({})
     const [serverErrors, setServerErrors] = useState([])
     
-    const {users,usersDispatch} = useContext(UsersContext)
 
     const navigate = useNavigate()
 
@@ -55,7 +54,6 @@ export default function RegisterForm() {
             try{
                 const response = await axios.post('http://localhost:3009/api/users',formData)
                     console.log(response.data)
-                    usersDispatch({type:'SET_USERS',payload:response.data})
                     alert('registered successfully')
                     setServerErrors([])
                     setFormErrors({})
