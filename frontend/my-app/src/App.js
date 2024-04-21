@@ -18,7 +18,7 @@ import CustomersContainer from './Components/Customer/CustomersContainer'
 import ReviewsContainer from './Components/Review/ReviewsContainer'
 import UsersContainer from './Components/UsersAuthentication/UsersContainer'
 import JewelContainer from './Components/Jewel/JewelContainer'
-import { useAuth } from './Context/AuthContext';
+// import { useAuth } from './Context/AuthContext';
 import { ChitsContext } from './Context/ChitsContext'
 // import { UsersContext } from './Context/UsersContext'
 import { CustomersContext } from './Context/CustomersContext'
@@ -42,45 +42,45 @@ export default function App() {
   // const [shops, shopDispatch] = useReducer(shopReducer, {data:[]});
   const { user, handleLogin,  handleLogout } = useAuth() 
 
-  useEffect(() => {
+  // useEffect(() => {
 
-    if(localStorage.getItem('token')) {
-      (async () => {
-        const response = await axios.get('http://localhost:3009/api/users/account', { 
-          headers : {
-            Authorization: localStorage.getItem('token')
-          }
-        })
-        handleLogin(response.data)
-      })();
+  //   if(localStorage.getItem('token')) {
+  //     (async () => {
+  //       const response = await axios.get('http://localhost:3009/api/users/account', { 
+  //         headers : {
+  //           Authorization: localStorage.getItem('token')
+  //         }
+  //       })
+  //       handleLogin(response.data)
+  //     })();
 
-    (async () => {
-      try {
-        const chitsResponse = await axios.get('http://localhost:3009/api/chits')
-        // ,
-        // {
-        //   headers : {
-        //     Authorization : localStorage.getItem('token')
-        //   }
-        // });
-        chitDispatch({ type: 'SET_CHIT', payload: chitsResponse.data });
+  //   (async () => {
+  //     try {
+  //       const chitsResponse = await axios.get('http://localhost:3009/api/chits')
+  //       // ,
+  //       // {
+  //       //   headers : {
+  //       //     Authorization : localStorage.getItem('token')
+  //       //   }
+  //       // });
+  //       chitDispatch({ type: 'SET_CHIT', payload: chitsResponse.data });
 
-        // const customersResponse = await axios.get('http://localhost:3009/api/customers');
-        // customerDispatch({ type: 'SET_CUSTOMERS', payload: customersResponse.data });
+  //       // const customersResponse = await axios.get('http://localhost:3009/api/customers');
+  //       // customerDispatch({ type: 'SET_CUSTOMERS', payload: customersResponse.data });
 
-        const shopsResponse = await axios.get('http://localhost:3009/api/shops');
-        shopDispatch({ type: 'SET_SHOP', payload: shopsResponse.data });
-      } catch (err) {
-        console.log(err);
-      }
-    })();
-  }, []);
+  //       const shopsResponse = await axios.get('http://localhost:3009/api/shops');
+  //       shopDispatch({ type: 'SET_SHOP', payload: shopsResponse.data });
+  //     } catch (err) {
+  //       console.log(err);
+  //     }
+  //   })();
+  // },[handleLogin, chitDispatch, shopDispatch]);
 
-  useEffect(()=>{
-    if(localStorage.getItem('token')){
-      dispatch(startGetUserDetails())
-    }
-  }, [handleLogin])
+  // useEffect(()=>{
+  //   if(localStorage.getItem('token')){
+  //     dispatch(startGetUserDetails())
+  //   }
+  // }, [handleLogin])
 
   // const dispatch = useDispatch()
   
@@ -164,6 +164,7 @@ export default function App() {
                      
                      </>
                   </Routes>
+
 
                   {/* <ToastContainer />
                   <ChitsContainer/> 
