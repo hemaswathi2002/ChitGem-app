@@ -1,13 +1,15 @@
 import {useState,useContext} from 'react'
 import axios from 'axios'
 import { useNavigate,Link} from 'react-router-dom'
+import { useAuth } from './Context/AuthContext'
 import { UsersContext } from './Context/UsersContext'
 // import ShopForm from './Components/Shop/ShopsForm'
 export default function LoginForm(props){
-    const {users,usersDispatch} = useContext(UsersContext)
+    // const {users,usersDispatch} = useContext(UsersContext)
     const [email,setEmail] = useState('')
     const [password,setPassword] = useState('')
     const [serverErrors,setServerErrors] = useState([])
+    const { handleLogin} = useAuth() 
 
     const navigate = useNavigate()
 
@@ -23,10 +25,17 @@ export default function LoginForm(props){
             console.log(response.data.token)
             const token = response.data.token
             localStorage.setItem('token',token)
-            usersDispatch({type:'SIGN_IN',payload : true});
+            const userResponse = await axios.get('http://localhost:3009/api/users/account', { 
+                    headers: {
+                        Authorization: localStorage.getItem('token')
+                    }
+                })
+                handleLogin(userResponse.data)
+                navigate('/')
+            // usersDispatch({type:'SIGN_IN',payload : true});
             setServerErrors([])
             
-            navigate('/dashboard')
+            // navigate('/dashboard')
             // loginToast();
         }
         catch(err){

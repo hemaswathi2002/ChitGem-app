@@ -1,14 +1,10 @@
-
 const chitReducer = (state, action) => {
     switch (action.type) {
         case 'SET_CHIT' : {
             return {...state, data: action.payload }
         }
         case 'ADD_CHIT':
-            return {
-                ...state,
-                data: [...state.data, action.payload]
-            };
+                return {...state, data: [...state.data, action.payload ]}
         case 'UPDATE_CHIT':
             return {
                 ...state,

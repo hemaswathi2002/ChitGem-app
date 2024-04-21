@@ -1,10 +1,10 @@
-import { Link } from "react-router-dom"
-export default function Home(){
+import { useAuth } from "../../Context/AuthContext"
+export default function Home() {
+    const { user } = useAuth() 
     return (
         <div>
-            <h1>Home Component</h1>
-            <p>Please register, if registered please login</p>
-            <Link to = '/login'>Login</Link>
+            <h2>Home Component</h2>
+            { !user ? <p>user not logged in </p> : <p> Welecome { user.username }</p>}
         </div>
     )
 }

@@ -11,7 +11,7 @@ shopsCltr.register = async (req, res) => {
       // const {body}=req
     const body = _.pick(req.body,['shopName','address','location','contact','description'])
     body.approvalStatus = 'pending'
-    // body.ownerId = req.user.id
+    body.ownerId = req.user.id
     console.log(req.user)
     const shop = new Shop(body)
     const response = await shop.save()

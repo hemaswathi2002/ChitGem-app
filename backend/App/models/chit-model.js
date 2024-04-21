@@ -27,14 +27,14 @@ const chitSchema=new Schema({
     },
     status: {
         type: String,
-        enum: ['active', 'closed']
+        enum: ["active", "closed"],
     },
     benefits:String,
     termsAndConditions:String,
-    goldPrice: {
-        type: Object, 
-        required: true 
-      }
+    // goldPrice: {
+    //     type: Object, 
+    //     required: true 
+    //   }
 },{ timestamps: true })
 
 chitSchema.pre('save', function(next) {
