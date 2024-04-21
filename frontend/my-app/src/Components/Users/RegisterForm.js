@@ -1,7 +1,6 @@
-import { useState,useContext } from "react"
+import { useState} from "react"
 import axios from 'axios'
-import { UsersContext } from "../../Context/UsersContext"
-import { useNavigate, Link } from "react-router-dom"
+import { useNavigate} from "react-router-dom"
 export default function RegisterForm() {
     const [username, setUsername] = useState('')
     const [email, setEmail] = useState('')
@@ -10,8 +9,6 @@ export default function RegisterForm() {
     const [password, setPassword] = useState('')
     const [formErrors, setFormErrors] = useState({})
     const [serverErrors, setServerErrors] = useState([])
-    
-    const {users,usersDispatch} = useContext(UsersContext)
 
     const navigate = useNavigate()
 
@@ -41,8 +38,8 @@ export default function RegisterForm() {
     } 
     
     const handleSubmit = async (e) => {
-        validateErrors()
         e.preventDefault()
+        const validationErrors = validateErrors();
 
         const formData = {
             username,
@@ -51,19 +48,11 @@ export default function RegisterForm() {
             role,
             password
         }
-        if(Object.keys(errors).length==0){
+        if(Object.keys(validationErrors).length==0){
             try{
                 const response = await axios.post('http://localhost:3009/api/users',formData)
                     console.log(response.data)
-                    usersDispatch({type:'SET_USERS',payload:response.data})
                     alert('registered successfully')
-                    setServerErrors([])
-                    setFormErrors({})
-                    setUsername('')
-                    setEmail('')
-                    setMobile('')
-                    setRole('')
-                    setPassword('')
                     navigate('/otp')
             }
             catch(err){

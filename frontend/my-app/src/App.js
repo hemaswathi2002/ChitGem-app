@@ -6,11 +6,12 @@ import {Routes, Route,Link } from 'react-router-dom'
 import 'react-toastify/dist/ReactToastify.css'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import Home from './Components/Home/Home'
-import { startGetUserDetails } from './Components/Actions/Users/Users'
+// import { startGetUserDetails } from './Components/Actions/Users/Users'
 import OtpVerificationForm from './Components/UsersAuthentication/OtpVerification'
 import LoginForm from './LoginForm'
 import PrivateRoute from './Components/PrivateRoute'
 import Account from './Components/Account'
+import RegisterForm from './Components/UsersAuthentication/RegisterForm'
 import Unauthorized from './Components/Unauthorized'
 import ShopsForm from './Components/Shop/ShopsForm'
 import ChitsContainer from './Components/Chit/ChitsContainer'
@@ -20,11 +21,10 @@ import UsersContainer from './Components/UsersAuthentication/UsersContainer'
 import JewelContainer from './Components/Jewel/JewelContainer'
 import { useAuth } from './Context/AuthrorizeContext'
 import { ChitsContext } from './Context/ChitsContext'
-// import { UsersContext } from './Context/UsersContext'
 // import { CustomersContext } from './Context/CustomersContext'
 // import { startGetJewels } from './Components/Actions/Jewels'
 import chitReducer from './Reducers/Chits'
-import UsersReducer from './Reducers/Users'
+// import UsersReducer from './Reducers/Users'
 import CustomersReducer from './Reducers/Customers'
 
 // import ShopsContainer from './Components/Shop/ShopsContainer'
@@ -40,6 +40,19 @@ export default function App() {
   // const [customers, customerDispatch] = useReducer(CustomersReducer, {data:[]});
   // const [shops, shopDispatch] = useReducer(shopReducer, {data:[]});
   const { user, handleLogin,  handleLogout } = useAuth() 
+
+  useEffect(() => {
+    if(localStorage.getItem('token')) {
+      (async () => {
+        const response = await axios.get('http://localhost:3009/api/users/account', { 
+          headers : {
+            Authorization: localStorage.getItem('token')
+          }
+        })
+        handleLogin(response.data)
+      })() 
+    }
+  }, [handleLogin])
 
   // useEffect(() => {
 
@@ -73,6 +86,7 @@ export default function App() {
   //       console.log(err);
   //     }
   //   })();
+// }
   // },[handleLogin, chitDispatch, shopDispatch]);
 
   // useEffect(()=>{
@@ -121,7 +135,7 @@ export default function App() {
       <>
       { !user ? (
               <>
-                <Link to="/register">Register</Link> |
+                <Link to="/signup">Register</Link> |
                 <Link to="/login"> Login </Link> | 
               </> 
             ): (
@@ -145,7 +159,7 @@ export default function App() {
                   <Routes>
                     <>
                     <Route path='/' element={<Home />} />
-                    <Route path='/signup' element={<UsersContainer />} />
+                    <Route path='/signup' element={<RegisterForm />} />
                     <Route path = '/otp' element = {<OtpVerificationForm/>}/>
                     <Route path = '/login' element = {<LoginForm/>}/>
                     <Route path = '/account' element = {
@@ -153,6 +167,12 @@ export default function App() {
                         <Account/>
                       </PrivateRoute>
                     }/>
+                    <Route path = '/shops' element = {
+                      <PrivateRoute permittedRoles = {['admin','owner']}>
+                        <Account/>
+                      </PrivateRoute>
+                    }/>
+                    <Route path="/unauthorized" element={<Unauthorized /> } />
                     {/* <Route path = '/dashboard' element = {<Main/>}/>
                     <Route path= '/shops' element={<ShopsForm />}/>
                     <Route path = '/customers' element = {<CustomersContainer/>}/> */}
