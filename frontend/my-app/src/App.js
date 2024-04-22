@@ -1,25 +1,28 @@
 import React, { useReducer, useEffect } from 'react'
 import axios from 'axios'
 import {Routes, Route,Link } from 'react-router-dom'
-// import { ToastContainer } from 'react-toastify'
-// import { useDispatch, useSelector} from 'react-redux'
-import 'react-toastify/dist/ReactToastify.css'
-import 'bootstrap/dist/css/bootstrap.min.css'
+import { useDispatch } from 'react-redux'
+import { useAuth } from './Context/AuthrorizeContext'
 import Home from './Components/Home/Home'
-// import { startGetUserDetails } from './Components/Actions/Users/Users'
 import OtpVerificationForm from './Components/UsersAuthentication/OtpVerification'
 import LoginForm from './LoginForm'
 import PrivateRoute from './Components/PrivateRoute'
 import Account from './Components/Account'
 import RegisterForm from './Components/UsersAuthentication/RegisterForm'
 import Unauthorized from './Components/Unauthorized'
-import ShopsForm from './Components/Shop/ShopsForm'
+import ShopsForm from './Components/Shop/ShopsContainer'
+import { startGetShop } from './Components/Actions/shops'
+// import { ToastContainer } from 'react-toastify'
+// import { useDispatch, useSelector} from 'react-redux'
+import 'react-toastify/dist/ReactToastify.css'
+import 'bootstrap/dist/css/bootstrap.min.css'
+// import { startGetUserDetails } from './Components/Actions/Users/Users'
+
 import ChitsContainer from './Components/Chit/ChitsContainer'
 import CustomersContainer from './Components/Customer/CustomersContainer'
 import ReviewsContainer from './Components/Review/ReviewsContainer'
 import UsersContainer from './Components/UsersAuthentication/UsersContainer'
 import JewelContainer from './Components/Jewel/JewelContainer'
-import { useAuth } from './Context/AuthrorizeContext'
 import { ChitsContext } from './Context/ChitsContext'
 // import { CustomersContext } from './Context/CustomersContext'
 // import { startGetJewels } from './Components/Actions/Jewels'
@@ -31,15 +34,19 @@ import CustomersReducer from './Reducers/Customers'
 // import InvoiceContainer from './Components/Invoice/InvoiceContainer'
 
 import { ShopsContext } from './Context/ShopsContext'
-import shopReducer from "./Reducers/Shops"
+// import shopReducer from "./Reducers/Shops"
 import Main from './Components/Main/Main'
+import ChitForm from './Components/Chit/ChitsForm'
+import CustomersForm from './Components/Customer/CustomersForm'
 
 export default function App() {
   // const [chits, chitDispatch] = useReducer(chitReducer, {data: []})
   // const [users, usersDispatch] = useReducer(UsersReducer, {userDetails : [], isLoggedIn : false});
   // const [customers, customerDispatch] = useReducer(CustomersReducer, {data:[]});
-  // const [shops, shopDispatch] = useReducer(shopReducer, {data:[]});
+  // const [shops, shopDispatch] = useReducer(shopReducer, {data:[]})
   const { user, handleLogin,  handleLogout } = useAuth() 
+
+  const dispatch = useDispatch()
 
   useEffect(() => {
     if(localStorage.getItem('token')) {
@@ -52,19 +59,14 @@ export default function App() {
         handleLogin(response.data)
       })() 
     }
+
   }, [handleLogin])
 
-  // useEffect(() => {
+  useEffect (()=>{
+    dispatch(startGetShop())
+  },[])
 
-  //   if(localStorage.getItem('token')) {
-  //     (async () => {
-  //       const response = await axios.get('http://localhost:3009/api/users/account', { 
-  //         headers : {
-  //           Authorization: localStorage.getItem('token')
-  //         }
-  //       })
-  //       handleLogin(response.data)
-  //     })();
+  // useEffect(() => {
 
   //   (async () => {
   //     try {
@@ -135,15 +137,16 @@ export default function App() {
       <>
       { !user ? (
               <>
+              <Link to = '/'>Home</Link> |
                 <Link to="/signup">Register</Link> |
                 <Link to="/login"> Login </Link> | 
               </> 
             ): (
               <>
                   <Link to="/account">Account</Link> |
-                  { <Link to="/shops">Add new Job</Link>}
-                  { <Link to="/customers">customer</Link>}
-                  {<Link to = '/chit'>chit</Link>}
+                  <Link to="/shops">shop</Link> |
+                  <Link to="/customer">customer</Link> |
+                  <Link to = "/create-chit">chit</Link> |
                   <Link to="/" onClick={() => {
                     localStorage.removeItem('token')
                     handleLogout()
@@ -169,7 +172,17 @@ export default function App() {
                     }/>
                     <Route path = '/shops' element = {
                       <PrivateRoute permittedRoles = {['admin','owner']}>
-                        <Account/>
+                        <ShopsForm/>
+                      </PrivateRoute>
+                    }/>
+                    <Route path = '/customer' element = {
+                      <PrivateRoute permittedRoles={['owner']}>
+                        <CustomersForm/>
+                      </PrivateRoute>
+                    }/>
+                    <Route path = '/create-chit' element = {
+                      <PrivateRoute permittedRoles = {['owner']}>
+                        <ChitForm/>
                       </PrivateRoute>
                     }/>
                     <Route path="/unauthorized" element={<Unauthorized /> } />

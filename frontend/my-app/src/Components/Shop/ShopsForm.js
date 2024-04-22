@@ -1,11 +1,8 @@
 import {useEffect,useState,useContext} from 'react'
-import axios from 'axios';
-import {Link,useNavigate} from 'react-router-dom'
-import CustomersForm from '../Customer/CustomersForm';
-const { ShopsContext } = require('../../Context/ShopsContext');
+import {useDispatch, useSelector} from 'react-redux'
+import { startCreateShop, startUpdateShop } from '../Actions/shops';
 
 export default function ShopsForm(props) {
-    const {shops, shopDispatch} = useContext(ShopsContext);
     const [shopName, setShopname] = useState('');
     const [area, setArea] = useState('');
     const [pincode, setPincode] = useState(0);
@@ -20,9 +17,14 @@ export default function ShopsForm(props) {
     const [formErrors,setFormErrors] = useState({})
     const { editId } = props;
 
-    const navigate = useNavigate()
+    const dispatch = useDispatch()
+
+    const shops = useSelector((state)=>{
+        return state.shops
+    })
 
     useEffect(() => {
+        if(shop && shop.data){
         const shop = shops?.data.find(ele => ele._id === editId);
         setShop(shop);
         if (shop) {
@@ -49,6 +51,7 @@ export default function ShopsForm(props) {
           setMobile('');
           setDescription('');
           setApprovalStatus('');
+         }
         }
     }, [shops, editId]);
 
@@ -115,24 +118,12 @@ export default function ShopsForm(props) {
         };
         try {
             if (shop) {
-                const response = await axios.put(`http://localhost:3009/api/shops/${shop._id}`, formData,{
-                    headers : {
-                        Authorization : localStorage.getItem('token')
-                    }
-                });
-                console.log(response.data);
-                shopDispatch({ type: 'UPDATE_SHOP', payload: response.data })
+                dispatch(startUpdateShop(shop,formData))
                 props.toggle();
             } else {
-                const response = await axios.post('http://localhost:3009/api/shops', formData,{
-                    headers : {
-                        Authorization : localStorage.getItem('token')
-                    }
-                });
-                console.log(response.data);
-                console.log(formData);
+                
 
-                shopDispatch({ type: 'ADD_SHOP', payload: response.data });
+                dispatch(startCreateShop(formData))
                 setShopname('');
                 setArea('');
                 setPincode(0);

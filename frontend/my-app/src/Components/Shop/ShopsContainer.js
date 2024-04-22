@@ -8,7 +8,7 @@ export default function ChitsContainer(){
             <ShopsTable/>
         </div>
         <div className="col-md-4">
-        {/* <ShopsForm/> */}
+        <ShopsForm/>
         </div>
         </div>
     )

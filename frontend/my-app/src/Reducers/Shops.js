@@ -1,5 +1,7 @@
-
-const shopReducer = (state, action) => {
+const initialState = {
+    shops: []
+}
+const shopReducer = (state = initialState, action) => {
     switch (action.type) {
         case 'SET_SHOP' : {
             return {...state, data: action.payload }

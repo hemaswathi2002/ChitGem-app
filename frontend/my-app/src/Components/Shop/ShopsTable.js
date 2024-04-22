@@ -1,16 +1,21 @@
-
 import React, { useContext, useState } from 'react';
-import axios from 'axios';
-import ShopsForm from './ShopsForm';
-import { ShopsContext } from '../../Context/ShopsContext';
+import { useDispatch, useSelector } from 'react-redux';
 import { Button, Modal, ModalHeader, ModalBody } from 'reactstrap';
 import { useNavigate } from 'react-router-dom';
+import { startRemoveShop } from '../Actions/shops';
+import ShopsForm from './ShopsForm';
+
 
 export default function ShopsTable() {
-    const {shops, shopDispatch} = useContext(ShopsContext);
     const [modal, setModal] = useState(false);
     const [editId, setEditId] = useState('');
     const toggle = () => setModal(!modal);
+
+    const shops = useSelector((state)=>{
+        return state.shops
+    })
+
+    const dispatch = useDispatch()
 
     const navigate = useNavigate()
 
@@ -18,15 +23,7 @@ export default function ShopsTable() {
         const confirmation = window.confirm('Are you sure?');
         if (confirmation) {
             try {
-                const response = await axios.delete(`http://localhost:3009/api/shops/${id}`,{
-                    headers : {
-                        Authorization : localStorage.getItem('token')
-                    }
-                });
-                console.log(response.data);
-                shopDispatch({ type: 'DELETE_SHOP', payload: id });
-                // <Link to = '/customer' element = {<Customer}
-                // navigate('/customer')
+                dispatch(startRemoveShop(id));
             } catch (err) {
                 console.log(err);
             }
@@ -40,7 +37,7 @@ export default function ShopsTable() {
 
     return (
         <div>
-            <h2>shops - {shops.data.length}</h2>
+            <h2>shops - {shops && shops.data && shops.data.length}</h2>
             <table>
                 <thead>
                     <tr>
@@ -56,7 +53,7 @@ export default function ShopsTable() {
                     </tr>
                 </thead>
                 <tbody>
-                    {shops.data.map(shop => (
+                    {shops && shops.data && shops.data.map(shop => (
                         <tr key={shop._id}>
                            
                             <td>{shop.shopName}</td>
