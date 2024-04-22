@@ -120,8 +120,6 @@ export default function ShopsForm(props) {
                 dispatch(startUpdateShop(shop,formData))
                 props.toggle();
             } else {
-                
-
                 dispatch(startCreateShop(formData))
                 setShopname('');
                 setArea('');

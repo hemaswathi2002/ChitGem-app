@@ -16,7 +16,7 @@ const shopReducer = (state = initialState, action) => {
                 ...state,
                 data: state.data.map(shop => (shop._id === action.payload._id ? action.payload : shop))
             };
-        case 'DELETE_SHOP':
+        case 'REMOVE_SHOP':
             return {
                 ...state,
                 data: state.data.filter(shop => shop._id !== action.payload)
