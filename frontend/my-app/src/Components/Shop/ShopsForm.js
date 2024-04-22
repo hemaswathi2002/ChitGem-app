@@ -114,7 +114,7 @@ export default function ShopsForm(props) {
         };
         try {
             if (shop && shop._id) {
-                dispatch(startUpdateShop(shop._id,formData))
+                dispatch(startUpdateShop(shop,formData))
             } else {
                 dispatch(startCreateShop(formData))
                 setShopname('');
@@ -131,9 +131,8 @@ export default function ShopsForm(props) {
         catch (err) {
             if (err.response && err.response.data) {
                 dispatch(setServerErrors(err.response.data.errors || []));
-              }         }
-
-        
+              }         
+            } 
     }
 
     return (
@@ -219,9 +218,9 @@ export default function ShopsForm(props) {
             <div>
             <label>ApprovalStatus:</label>
                 <select value={approvalStatus} onChange={(e) => setApprovalStatus(e.target.value)}>
-                    <option value="pending">Active</option>
-                    <option value="rejected">Closed</option>
-                    <option value="approved">Approved</option>
+                    <option value="pending">pending</option>
+                    <option value="rejected">rejected</option>
+                    <option value="approved">pending</option>
                 </select>
             </div>
             {formErrors.ApprovalStatus && <p style = {{color:'red'}}>{formErrors.ApprovalStatus}</p>}

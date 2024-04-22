@@ -103,7 +103,7 @@ usersCltr.register = async (req, res) => {
 usersCltr.verifyEmail = async (req, res) => {
     const errors = validationResult(req)
     if (!errors.isEmpty()) {
-        res.status(401).json({ errors: errors.array() })
+        return res.status(401).json({ errors: errors.array() })
     }
     const { email, otp } = req.body
     try {

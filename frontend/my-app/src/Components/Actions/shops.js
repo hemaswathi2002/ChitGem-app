@@ -25,8 +25,8 @@ const setShops = (data)=>{
 }
 
 
-export const startCreateShop = () => {
-    return async (dispatch,formData) => {
+export const startCreateShop = (formData) => {
+    return async (dispatch) => {
         try{
             const response = await axios.post('http://localhost:3009/api/shops', formData,{
                     headers : {
@@ -34,10 +34,14 @@ export const startCreateShop = () => {
                     }
                 });
                 console.log(response.data);
+                console.log(formData)
                 dispatch(createShop(response.data))
         }
         catch(err){
-            console.log(err)
+            console.log(err);
+            if (err.response && err.response.data) {
+                dispatch(setServerErrors(err.response.data.errors || []));
+            }
         }
     }
 }
