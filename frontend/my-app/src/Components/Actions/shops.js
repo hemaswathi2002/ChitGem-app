@@ -7,6 +7,7 @@ export const startGetShop = ()=>{
                   Authorization : localStorage.getItem('token')
                 }
               })
+              console.log(response.data)
         dispatch(setShops(response.data));
         }
         catch(err){
@@ -40,10 +41,10 @@ export const startCreateShop = () => {
     }
 }
 
-const createShop = (shop) => {
+const createShop = (data) => {
     return {
         type : 'ADD_SHOP',
-        payload : shop
+        payload : data
     }
 }
 
@@ -65,10 +66,10 @@ export const startUpdateShop = (shop) => {
     }
 }
 
-const updateShop = (shop) =>{
+const updateShop = (data) =>{
     return{
         type : 'UPDATE_SHOP',
-        payload : shop
+        payload : data
     }
 }
 
