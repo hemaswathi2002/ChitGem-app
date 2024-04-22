@@ -41,15 +41,15 @@ export default function ShopsTable() {
             <table>
                 <thead>
                     <tr>
-                    <th>setShopname</th>
-                    <th>setArea</th>
-                    <th>setPincode</th>
-                    <th>setCity</th>
-                    <th>setState</th>
-                    <th>setEmail</th>
-                    <th>setMobile</th>
-                    <th>setDescription</th>
-                    <th>setApprovalStatus</th>
+                    <th>Shop</th>
+                    <th>Area</th>
+                    <th>Pincode</th>
+                    <th>City</th>
+                    <th>State</th>
+                    <th>Email</th>
+                    <th>Mobile</th>
+                    <th>Description</th>
+                    <th>ApprovalStatus</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -57,12 +57,12 @@ export default function ShopsTable() {
                         <tr key={shop._id}>
                            
                             <td>{shop.shopName}</td>
-                            <td>{shop.address.area}</td>
-                            <td>{shop.address.pincode}</td>
-                            <td>{shop.address.city}</td>
-                            <td>{shop.address.state}</td>
-                            <td>{shop.contact.email}</td>
-                            <td>{shop.contact.mobile}</td>
+                            <td>{shop.address?.area}</td>
+                            <td>{shop.address?.pincode}</td>
+                            <td>{shop.address?.city}</td>
+                            <td>{shop.address?.state}</td>
+                            <td>{shop.contact?.email}</td>
+                            <td>{shop.contact?.mobile}</td>
                             <td>{shop.description}</td>
                             <td>{shop.approvalStatus}</td>
                             <td>
@@ -76,7 +76,7 @@ export default function ShopsTable() {
            
 <Button color="danger" onClick={toggle}>Add shop</Button>
             <Modal isOpen={modal} toggle={toggle}>
-                <ModalHeader toggle={toggle}>Shoop Form</ModalHeader>
+                <ModalHeader toggle={toggle}>Shop Form</ModalHeader>
                 <ModalBody>
                     <ShopsForm editId={editId} toggle={toggle} />
                 </ModalBody>

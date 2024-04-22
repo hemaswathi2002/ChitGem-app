@@ -66,10 +66,6 @@ export default function ShopsForm(props) {
         if (area.trim().length==0) {
             errors.area = 'required';
         }
-        if (pincode.length==0) {
-            errors.pincode = 'required';
-        } 
-
         if (city.trim().length==0) {
             errors.city = 'required';
         }
@@ -119,7 +115,6 @@ export default function ShopsForm(props) {
         try {
             if (shop) {
                 dispatch(startUpdateShop(shop,formData))
-                props.toggle();
             } else {
                 dispatch(startCreateShop(formData))
                 setShopname('');
@@ -132,7 +127,8 @@ export default function ShopsForm(props) {
                 setDescription('');
                 setApprovalStatus('pending');
             }
-        } catch (err) {
+        } 
+        catch (err) {
             if (err.response && err.response.data) {
                 dispatch(setServerErrors(err.response.data.errors || []));
               }         }

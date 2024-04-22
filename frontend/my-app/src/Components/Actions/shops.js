@@ -58,7 +58,7 @@ export const startUpdateShop = (shop,formData) => {
                     }
                 });
                 console.log(response.data)
-                dispatch(updateShop(response.data))
+                dispatch(updateShop({ ...response.data, _id: shop._id }))
         }
         catch(err){
             console.log(err)
@@ -67,10 +67,10 @@ export const startUpdateShop = (shop,formData) => {
     }
 }
 
-const updateShop = (data) =>{
+const updateShop = (shop) =>{
     return{
         type : 'UPDATE_SHOP',
-        payload : data
+        payload : shop
     }
 }
 
