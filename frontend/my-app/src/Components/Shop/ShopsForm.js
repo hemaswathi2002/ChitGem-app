@@ -133,6 +133,7 @@ export default function ShopsForm(props) {
                 setDescription('');
                 setApprovalStatus('pending');
             }
+            props.toggle()
         } catch (err) {
             if (err.response && err.response.data) {
                 setServerErrors(err.response.data.errors || []);

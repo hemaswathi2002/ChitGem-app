@@ -18,11 +18,12 @@ export const startGetShop = ()=>{
 
 const setShops = (data)=>{
     return {
-        type : 'SET_CHIT',
+        type : 'SET_SHOP',
         payload : data
+
     }
-    
 }
+
 
 export const startCreateShop = () => {
     return async (dispatch,formData) => {
