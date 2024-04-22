@@ -5,10 +5,10 @@ export default function ChitsContainer(){
         <div className="row">
         <h2>Shop Conditainer</h2>
         <div className="col-md-8">
-            <ShopsTable/>
+            {/* <ShopsTable/> */}
         </div>
         <div className="col-md-4">
-        <ShopsForm/>
+        {/* <ShopsForm/> */}
         </div>
         </div>
     )

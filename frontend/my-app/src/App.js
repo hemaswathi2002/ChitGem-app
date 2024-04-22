@@ -47,17 +47,22 @@ export default function App() {
 
   const dispatch = useDispatch()
 
-  useEffect(() => {
-    if(localStorage.getItem('token')) {
-      (async () => {
-        const response = await axios.get('http://localhost:3009/api/users/account', { 
-          headers : {
-            Authorization: localStorage.getItem('token')
-          }
-        })
-        handleLogin(response.data)
-      })();
-    }
+    useEffect(() => {
+      if(localStorage.getItem('token')) {
+          (async () => {
+              try {
+                  const response = await axios.get('http://localhost:3009/api/users/account', { 
+                      headers: {
+                          Authorization: localStorage.getItem('token')
+                      }
+                  });
+                  handleLogin(response.data);
+              } catch (error) {
+                  console.error('Error fetching user account:', error);
+              }
+          })();
+      }
+  }, []); 
     
     // (async ()=>{
     //   try{
@@ -70,7 +75,7 @@ export default function App() {
     // })();
     
 
-  }, [handleLogin,customerDispatch])
+  // }, [handleLogin,customerDispatch])
 
   useEffect (()=>{
     dispatch(startGetShop())

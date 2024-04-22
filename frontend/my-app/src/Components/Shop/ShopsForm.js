@@ -95,8 +95,8 @@ export default function ShopsForm(props) {
     };
 
     const handleSubmit = async (e) => {
-        validateForm()
         e.preventDefault();
+        validateForm()
         const formData = {
           shopName: shopName,
           address: {
@@ -131,7 +131,6 @@ export default function ShopsForm(props) {
                 setDescription('');
                 setApprovalStatus('pending');
             }
-            props.toggle()
         } catch (err) {
             if (err.response && err.response.data) {
                 setServerErrors(err.response.data.errors || []);
