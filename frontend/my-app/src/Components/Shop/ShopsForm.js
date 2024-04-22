@@ -5,7 +5,7 @@ import { startCreateShop, startUpdateShop } from '../Actions/shops';
 export default function ShopsForm(props) {
     const [shopName, setShopname] = useState('');
     const [area, setArea] = useState('');
-    const [pincode, setPincode] = useState(0);
+    const [pincode, setPincode] = useState();
     const [city, setCity] = useState('');
     const [state, setState] = useState('');
     const [email, setEmail] = useState('');
@@ -65,7 +65,6 @@ export default function ShopsForm(props) {
         if (area.trim().length==0) {
             errors.area = 'required';
         }
-
         if (pincode.length==0) {
             errors.pincode = 'required';
         } 

@@ -81,15 +81,6 @@ const shopRegisterValidationSchema = {
       errorMessage : "* mobile must contain 10 digits"
     }
   },
-"contact.email":{
-  notEmpty: {
-    errorMessage: '* email is required',
-  },
-  isEmail:{
-    errorMessage:'*email should be valid'
-  },
-  normalizeEmail: true,
-},
 
 description: {
     notEmpty: {

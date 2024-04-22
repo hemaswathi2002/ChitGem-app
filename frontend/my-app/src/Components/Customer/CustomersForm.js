@@ -18,8 +18,8 @@ export default function CustomersForm(props){
         setCustomer(customer)
         if(customer){
             setName(customer.name || '')
-            setEmail(customer.contact.email || '')
-            setMobile(customer.contact.mobile || '')
+            setEmail(customer.contact?.email || '')
+            setMobile(customer.contact?.mobile || '')
             setDescription(customer.description || '')
         }else{
             setName('')

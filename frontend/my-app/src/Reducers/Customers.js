@@ -7,7 +7,10 @@ export default function CustomersReducer(state,action){
             return {...state, data: [...state.data,action.payload]}
         }
         case 'UPDATE_CUSTOMERS' : {
-            return {...state,data: state.data.map()}
+            const updatedData = state.data.map(customer =>
+                customer._id === action.payload._id ? action.payload : customer
+            );
+            return { ...state, data: updatedData };
         }
         case 'DELETE_CUSTOMERS' : {
             return {...state,data : state.data.filter(ele=>ele._id!==action.payload)}

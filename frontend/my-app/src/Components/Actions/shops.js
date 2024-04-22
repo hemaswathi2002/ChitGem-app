@@ -2,7 +2,7 @@ import axios from 'axios'
 export const startGetShop = ()=>{
     return async (dispatch) => {
         try{
-            const response = await axios.get('http://localhost:3009/api/chits',{
+            const response = await axios.get('http://localhost:3009/api/shops',{
                 headers : {
                   Authorization : localStorage.getItem('token')
                 }

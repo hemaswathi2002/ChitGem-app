@@ -12,19 +12,19 @@ import RegisterForm from './Components/UsersAuthentication/RegisterForm'
 import Unauthorized from './Components/Unauthorized'
 import ShopsForm from './Components/Shop/ShopsContainer'
 import { startGetShop } from './Components/Actions/shops'
+import CustomersForm from './Components/Customer/CustomersForm'
+import { CustomersContext } from './Context/CustomersContext'
 // import { ToastContainer } from 'react-toastify'
 // import { useDispatch, useSelector} from 'react-redux'
 import 'react-toastify/dist/ReactToastify.css'
 import 'bootstrap/dist/css/bootstrap.min.css'
 // import { startGetUserDetails } from './Components/Actions/Users/Users'
-
 import ChitsContainer from './Components/Chit/ChitsContainer'
 import CustomersContainer from './Components/Customer/CustomersContainer'
 import ReviewsContainer from './Components/Review/ReviewsContainer'
 import UsersContainer from './Components/UsersAuthentication/UsersContainer'
 import JewelContainer from './Components/Jewel/JewelContainer'
 import { ChitsContext } from './Context/ChitsContext'
-// import { CustomersContext } from './Context/CustomersContext'
 // import { startGetJewels } from './Components/Actions/Jewels'
 import chitReducer from './Reducers/Chits'
 // import UsersReducer from './Reducers/Users'
@@ -37,12 +37,11 @@ import { ShopsContext } from './Context/ShopsContext'
 // import shopReducer from "./Reducers/Shops"
 import Main from './Components/Main/Main'
 import ChitForm from './Components/Chit/ChitsForm'
-import CustomersForm from './Components/Customer/CustomersForm'
 
 export default function App() {
   // const [chits, chitDispatch] = useReducer(chitReducer, {data: []})
   // const [users, usersDispatch] = useReducer(UsersReducer, {userDetails : [], isLoggedIn : false});
-  // const [customers, customerDispatch] = useReducer(CustomersReducer, {data:[]});
+  const [customers, customerDispatch] = useReducer(CustomersReducer, {data:[]});
   // const [shops, shopDispatch] = useReducer(shopReducer, {data:[]})
   const { user, handleLogin,  handleLogout } = useAuth() 
 
@@ -57,10 +56,21 @@ export default function App() {
           }
         })
         handleLogin(response.data)
-      })() 
+      })();
     }
+    
+    // (async ()=>{
+    //   try{
+    //     const customersResponse = await axios.get('http://localhost:3009/api/customers');
+    //     customerDispatch({ type: 'SET_CUSTOMERS', payload: customersResponse.data });    
+    //   }
+    //   catch(err){
+    //     console.log(err)
+    //   }
+    // })();
+    
 
-  }, [handleLogin])
+  }, [handleLogin,customerDispatch])
 
   useEffect (()=>{
     dispatch(startGetShop())
@@ -145,7 +155,7 @@ export default function App() {
               <>
                   <Link to="/account">Account</Link> |
                   <Link to="/shops">shop</Link> |
-                  <Link to="/customer">customer</Link> |
+                  <Link to="/create-customer">customer</Link> |
                   <Link to = "/create-chit">chit</Link> |
                   <Link to="/" onClick={() => {
                     localStorage.removeItem('token')
@@ -159,6 +169,7 @@ export default function App() {
           {/* <UsersContext.Provider value={{ users, usersDispatch }}> */}
             {/* <CustomersContext.Provider value={{ customers, customerDispatch }}>
               <ShopsContext.Provider value={{ shops, shopDispatch }}> */}
+                    <CustomersContext.Provider value={{ customers, customerDispatch }}> 
                   <Routes>
                     <>
                     <Route path='/' element={<Home />} />
@@ -175,7 +186,7 @@ export default function App() {
                         <ShopsForm/>
                       </PrivateRoute>
                     }/>
-                    <Route path = '/customer' element = {
+                    <Route path = '/create-customer' element = {
                       <PrivateRoute permittedRoles={['owner']}>
                         <CustomersForm/>
                       </PrivateRoute>
@@ -196,6 +207,7 @@ export default function App() {
                      
                      </>
                   </Routes>
+                  </CustomersContext.Provider> 
 
 
                   {/* <ToastContainer />
