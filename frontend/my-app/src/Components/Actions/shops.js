@@ -49,8 +49,8 @@ const createShop = (data) => {
     }
 }
 
-export const startUpdateShop = (shop) => {
-    return async (dispatch,formData) => {
+export const startUpdateShop = (shop,formData) => {
+    return async (dispatch) => {
         try{
             const response = await axios.put(`http://localhost:3009/api/shops/${shop._id}`, formData,{
                     headers : {
@@ -97,3 +97,10 @@ const removeShop = (id) => {
         payload : id
     }
 }
+
+export const setServerErrors = (errors) => {
+    return {
+        type: 'SET_SERVER_ERRORS',
+        payload: errors
+    };
+};

@@ -1,6 +1,6 @@
 import {useEffect,useState,useContext} from 'react'
 import {useDispatch, useSelector} from 'react-redux'
-import { startCreateShop, startUpdateShop } from '../Actions/shops';
+import { startCreateShop, startUpdateShop, setServerErrors } from '../Actions/shops';
 
 export default function ShopsForm(props) {
     const [shopName, setShopname] = useState('');
@@ -13,7 +13,6 @@ export default function ShopsForm(props) {
     const [description, setDescription] = useState('');
     const [approvalStatus, setApprovalStatus] = useState('pending');
     const [shop, setShop] = useState({});
-    const [serverErrors,setServerErrors] = useState([])
     const [formErrors,setFormErrors] = useState({})
     const { editId } = props;
 
@@ -22,6 +21,8 @@ export default function ShopsForm(props) {
     const shops = useSelector((state)=>{
         return state.shops
     })
+    const serverErrors = useSelector(state => state.serverErrors);
+
 
     useEffect(() => {
         if(shop && shop.data){
@@ -133,11 +134,8 @@ export default function ShopsForm(props) {
             }
         } catch (err) {
             if (err.response && err.response.data) {
-                setServerErrors(err.response.data.errors || []);
-              } else {
-                console.error(err);
-              }
-        }
+                dispatch(setServerErrors(err.response.data.errors || []));
+              }         }
 
         
     }

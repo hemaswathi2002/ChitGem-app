@@ -4,11 +4,11 @@ export default function ChitsContainer(){
     return(
         <div className="row">
         <h2>Shop Conditainer</h2>
-        <div className="col-md-8">
-            {/* <ShopsTable/> */}
+        <div>
+            <ShopsTable/>
         </div>
-        <div className="col-md-4">
-        {/* <ShopsForm/> */}
+        <div>
+        <ShopsForm/>
         </div>
         </div>
     )

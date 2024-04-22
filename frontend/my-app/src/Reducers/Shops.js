@@ -22,6 +22,12 @@ const shopReducer = (state = initialState, action) => {
                 ...state,
                 data: state.data.filter(shop => shop._id !== action.payload)
             };
+        case 'SET_SERVER_ERRORS' : {
+            return {
+                ...state,
+                serverErrors: action.payload
+            };
+        }
         default:
             return state;
     }
