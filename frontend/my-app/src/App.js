@@ -62,17 +62,20 @@ export default function App() {
               }
           })();
       }
+
+      (async ()=>{
+        try{
+          const customersResponse = await axios.get('http://localhost:3009/api/customers');
+          customerDispatch({ type: 'SET_CUSTOMERS', payload: customersResponse.data });    
+        }
+        catch(err){
+          console.log(err)
+        }
+      })();
+
   }, []); 
     
-    // (async ()=>{
-    //   try{
-    //     const customersResponse = await axios.get('http://localhost:3009/api/customers');
-    //     customerDispatch({ type: 'SET_CUSTOMERS', payload: customersResponse.data });    
-    //   }
-    //   catch(err){
-    //     console.log(err)
-    //   }
-    // })();
+   
     
 
   // }, [handleLogin,customerDispatch])

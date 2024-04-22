@@ -113,8 +113,8 @@ export default function ShopsForm(props) {
           approvalStatus: approvalStatus
         };
         try {
-            if (shop) {
-                dispatch(startUpdateShop(shop,formData))
+            if (shop && shop._id) {
+                dispatch(startUpdateShop(shop._id,formData))
             } else {
                 dispatch(startCreateShop(formData))
                 setShopname('');
