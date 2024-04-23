@@ -1,31 +1,28 @@
 const initialState = {
     shops: [],
-    serverErrors : []
-}
+    serverErrors: []
+};
+
 const shopReducer = (state = initialState, action) => {
     switch (action.type) {
-        case 'SET_SHOP' : {
-            return {...state, data: action.payload }
-        }
-        case 'ADD_SHOP':{
+        case 'SET_SHOP':
+            return { ...state, shops: action.payload, loading: false, error: null };
+        case 'ADD_SHOP':
+            return { ...state, shops: [...state.shops, action.payload], loading: false, error: null };
+        
+               case 'UPDATE_SHOP': {
             return {
                 ...state,
-                data: [...state.data, action.payload]
-            }
+                shops: state.shops.map(shop => (shop._id === action.payload._id ? action.payload : shop))
+            };
         }
-        case 'UPDATE_SHOP':{
+        case 'REMOVE_SHOP': {
             return {
                 ...state,
-                data: state.data.map(shop => (shop._id === action.payload._id ? action.payload : shop))
-            }
+                shops: state.shops.filter(shop => shop._id !== action.payload)
+            };
         }
-        case 'REMOVE_SHOP':{
-            return {
-                ...state,
-                data: state.data.filter(shop => shop._id !== action.payload)
-            }
-        }
-        case 'SET_SERVER_ERRORS' : {
+        case 'SET_SERVER_ERRORS': {
             return {
                 ...state,
                 serverErrors: action.payload
@@ -36,9 +33,5 @@ const shopReducer = (state = initialState, action) => {
     }
 };
 
+
 export default shopReducer;
-
-
-
-
-
