@@ -106,7 +106,7 @@ export default function ShopsForm(props) {
                 dispatch(startCreateShop(formData))
             }
             resetForm()
-            props.toggle()
+              props.toggle()
         } catch (err) {
             console.error('Error:', err)
             if (err.response && err.response.data) {

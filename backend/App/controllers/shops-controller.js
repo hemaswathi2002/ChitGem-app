@@ -35,14 +35,14 @@ shopsCltr.getOneshop = async (req, res) => {
     res.status(500).json({ errors: "Internal Server Error" })
   }
 }
-
 shopsCltr.getAllshop = async (req, res) => {
   try {
-    const shop = await Shop.find()
-    res.json(shop)
+    const ownerId = req.query.ownerId;
+    const shops = await Shop.find({ ownerId: ownerId });
+    res.json(shops);
   } catch (error) {
-    console.log(error)
-    res.status(500).json({ errors: "Internal Server Error" })
+    console.log(error);
+    res.status(500).json({ errors: "Internal Server Error" });
   }
 }
 

@@ -1,21 +1,29 @@
 import axios from 'axios'
-export const startGetShop = ()=>{
+export const startGetShop = () => {
     return async (dispatch) => {
-        try{
-            const response = await axios.get('http://localhost:3009/api/shops',{
-                headers : {
-                  Authorization : localStorage.getItem('token')
-                }
-              })
-              console.log(response.data)
-        dispatch(setShops(response.data));
-        }
-        catch(err){
-            console.log(err)
-        }
-    }
-}
+        try {
+            const token = localStorage.getItem('token');
+            if (!token) {
+                throw new Error('Token not found');
+            }
+            const ownerId = localStorage.getItem('userId');
 
+            const response = await axios.get('http://localhost:3009/api/shops', {
+                headers: {
+                    Authorization: token
+                },   params: {
+                    ownerId: ownerId  // Pass the owner's ID as a query parameter
+                }
+            });
+
+            console.log(response.data);
+            dispatch(setShops(response.data));
+            
+        } catch (err) {
+            console.log(err);
+        }
+    };
+};
 const setShops = (data)=>{
     return {
         type : 'SET_SHOP',
