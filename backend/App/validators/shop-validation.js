@@ -23,6 +23,12 @@ const shopRegisterValidationSchema = {
       },
       trim: true,
     },
+    "address.landmark": {
+      notEmpty: {
+        errorMessage: '* Landmark is required',
+      },
+      trim: true,
+    },
     "address.pincode": {
       notEmpty: {
         errorMessage: '* Pincode is required',
@@ -48,7 +54,11 @@ const shopRegisterValidationSchema = {
       trim: true,
     },
 
-
+  location: {
+    notEmpty: {
+      errorMessage: '* location is required',
+    },
+  },
 
   "contact.email": {
     notEmpty: {

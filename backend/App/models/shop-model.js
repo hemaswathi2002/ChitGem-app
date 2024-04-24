@@ -9,9 +9,14 @@ const shopSchema = new Schema({
     shopName: String,
     address: {
         area: String,
+        landmark: String,
         pincode: Number,
         city: String,
         state: String
+    },
+    location: {
+      lat: String,
+      long: String,
     },
     contact: {
       mobile : Number,

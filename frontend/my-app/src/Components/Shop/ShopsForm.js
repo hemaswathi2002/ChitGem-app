@@ -1,291 +1,234 @@
-import { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { startCreateShop, startUpdateShop } from '../Actions/shops';
-import { useNavigate } from 'react-router-dom';
+import {useEffect,useState,useContext} from 'react'
+import {useDispatch, useSelector} from 'react-redux'
+import { startCreateShop, startUpdateShop, setServerErrors } from '../Actions/shops';
 
-export default function ShopsForm({ editId, toggle }) {
-    const [shopName, setShopName] = useState('');
+export default function ShopsForm(props) {
+    const [shopName, setShopname] = useState('');
     const [area, setArea] = useState('');
-    const [pincode, setPincode] = useState('');
+    const [pincode, setPincode] = useState();
     const [city, setCity] = useState('');
     const [state, setState] = useState('');
     const [email, setEmail] = useState('');
     const [mobile, setMobile] = useState('');
     const [description, setDescription] = useState('');
     const [approvalStatus, setApprovalStatus] = useState('pending');
-    const [formErrors, setFormErrors] = useState({});
-    const [serverErrors, setServerErrors] = useState([]);
+    const [shop, setShop] = useState({});
+    const [formErrors,setFormErrors] = useState({})
+    const { editId } = props;
 
-    const dispatch = useDispatch();
+    const dispatch = useDispatch()
 
-    const shops = useSelector((state) => state.shops);
+    const shops = useSelector((state)=>{
+        return state.shops
+    })
+    const serverErrors = useSelector(state => state.serverErrors);
+
 
     useEffect(() => {
-        if (editId) {
-            const shop = shops?.data.find((ele) => ele._id === editId);
-            if (shop) {
-                setShopName(shop.shopName || '');
-                setArea(shop.address?.area || '');
-                setPincode(shop.address?.pincode || '');
-                setCity(shop.address?.city || '');
-                setState(shop.address?.state || '');
-                setEmail(shop.contact?.email || '');
-                setMobile(shop.contact?.mobile || '');
-                setDescription(shop.description || '');
-                setApprovalStatus(shop.approvalStatus || 'pending');
-            }
+        if(shop && shop.data){
+        const shop = shops?.data.find(ele => ele._id === editId);
+        setShop(shop);
+        if (shop) {
+            setShopname(shop.shopName || '');
+            setArea(shop.area || '');
+            setPincode(shop.pincode || 0);
+            setCity(shop.status || '');
+            setState(shop.state || '');
+            setEmail(shop.email || '');
+            setMobile(shop.mobile || '');
+            setDescription(shop.description || '');
+            setApprovalStatus(shop.approvalStatus || 'pending');
+            // <Link to = '/customers/form' element ={CustomersForm}/>
+            // navigate('/customers/form')
+        } 
+        
+         else {
+          setShopname('');
+          setArea('');
+          setPincode(0);
+          setCity('');
+          setState('');
+          setEmail('');
+          setMobile('');
+          setDescription('');
+          setApprovalStatus('');
+         }
         }
-    }, [editId, shops]);
+    }, [shops, editId]);
 
-    const navigate = useNavigate();
+    const errors = {}
+    const validateForm = () => {
 
-    const validateErrors = () => {
-        const errors = {};
+        if (shopName.trim().length==0) {
+            errors.shopName = 'required';
+        }
 
-        if (!shopName) {
-            errors.shopName = 'Shop Name is required';
+        if (area.trim().length==0) {
+            errors.area = 'required';
         }
-        if (!area) {
-            errors.area = 'Area is required';
+        if (city.trim().length==0) {
+            errors.city = 'required';
         }
-        if (!pincode) {
-            errors.pincode = 'Pincode is required';
+
+        if (state.trim().length==0) {
+            errors.state = 'required';
         }
-        if (!city) {
-            errors.city = 'City is required';
-        }
-        if (!state) {
-            errors.state = 'State is required';
-        }
-        if (!email) {
+
+        if (email.trim().length==0) {
             errors.email = 'Email is required';
+      
         }
-        if (!mobile) {
-            errors.mobile = 'Mobile is required';
+
+        if (mobile.trim().length==0) {
+            errors.mobile = 'required';
         }
-        if (!description) {
-            errors.description = 'Description is required';
+
+        if (description.trim().length==0) {
+            errors.description = 'required';
         }
 
         setFormErrors(errors);
-        return Object.keys(errors).length === 0;
+        return Object.keys(errors).length === 0
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
-        if (!validateErrors()) return;
-
+        validateForm()
         const formData = {
-            shopName,
-            address: {
-                area,
-                pincode,
-                city,
-                state,
-            },
-            contact: {
-                mobile,
-                email,
-            },
-            description,
-            approvalStatus,
+          shopName: shopName,
+          address: {
+              area: area,
+              pincode: pincode,
+              city: city,
+              state: state
+              
+          },
+      
+          contact: {
+            mobile : mobile,
+            email : email
+            
+          },
+          description: description,
+          approvalStatus: approvalStatus
         };
-
-    
         try {
-            if (editId) {
-                await dispatch(startUpdateShop(editId, formData));
+            if (shop && shop._id) {
+                dispatch(startUpdateShop(shop,formData))
             } else {
-                await dispatch(startCreateShop(formData));
+                dispatch(startCreateShop(formData))
+                setShopname('');
+                setArea('');
+                setPincode(0);
+                setCity('');
+                setState('');
+                setEmail('');
+                setMobile('');
+                setDescription('');
+                setApprovalStatus('pending');
             }
-            toggle();
-            dispatch(setServerErrors([]));
-        }
+        } 
         catch (err) {
-            if (err.response && err.response.data && err.response.data.errors) {
-                setServerErrors(err.response.data.errors);
-            } else {
-                console.log(err);
-            }
-        }
-    };
+            if (err.response && err.response.data) {
+                dispatch(setServerErrors(err.response.data.errors || []));
+              }         
+            } 
+    }
 
     return (
-        <div>
-            {serverErrors && serverErrors.length > 0 && (
+        <>
+        <form onSubmit={handleSubmit}>
+        {Array.isArray(serverErrors) && serverErrors.length > 0 &&  (
                 <div>
-                    {serverErrors && serverErrors.map((error, index) => (
-                        <p key={index} style={{ color: 'red' }}>
-                            {error.msg}
-                        </p>
+                    {serverErrors.map((error, index) => (
+                        <p key={index} style={{color : 'red'}}>{error.msg}</p>
                     ))}
                 </div>
-            )}
-            <form onSubmit={handleSubmit}>
-                <div>
-                    <label>
-                        Shop Name:
-                        <input
-                            type="text"
-                            value={shopName}
-                            className="form-control"
-                            onChange={(e) => setShopName(e.target.value)}
-                        />
-                    </label>
-                    {formErrors.shopName && <p style={{ color: 'red' }}>{formErrors.shopName}</p>}
-                    {serverErrors.find((error) => error.param === 'shopName') && (
-                        <p style={{ color: 'red' }}>
-                            Server Error: {serverErrors.find((error) => error.param === 'shopName').msg}
-                        </p>
-                    )}
-                </div>
-
-                <div>
-                    <label>
-                        Area:
-                        <input
-                            type="text"
-                            value={area}
-                            className="form-control"
-                            onChange={(e) => setArea(e.target.value)}
-                        />
-                    </label>
-                    {formErrors.area && <p style={{ color: 'red' }}>{formErrors.area}</p>}
-                    {serverErrors.find((error) => error.param === 'area') && (
-                        <p style={{ color: 'red' }}>
-                            Server Error: {serverErrors.find((error) => error.param === 'area').msg}
-                        </p>
-                    )}
-                </div>
-
-                <div>
-                    <label>
-                        Pincode:
-                        <input
-                            type="number"
-                            value={pincode}
-                            className="form-control"
-                            onChange={(e) => setPincode(e.target.value)}
-                        />
-                    </label>
-                    {formErrors.pincode && <p style={{ color: 'red' }}>{formErrors.pincode}</p>}
-                    {serverErrors.find((error) => error.param === 'pincode') && (
-                        <p style={{ color: 'red' }}>
-                            Server Error: {serverErrors.find((error) => error.param === 'pincode').msg}
-                        </p>
-                    )}
-                </div>
-
-                <div>
-                    <label>
-                        City:
-                        <input
-                            type="text"
-                            value={city}
-                            className="form-control"
-                            onChange={(e) => setCity(e.target.value)}
-                        />
-                    </label>
-                    {formErrors.city && <p style={{ color: 'red' }}>{formErrors.city}</p>}
-                    {serverErrors.find((error) => error.param === 'city') && (
-                        <p style={{ color: 'red' }}>
-                            Server Error: {serverErrors.find((error) => error.param === 'city').msg}
-                        </p>
-                    )}
-                </div>
-
-                <div>
-                    <label>
-                        State:
-                        <input
-                            type="text"
-                            value={state}
-                            className="form-control"
-                            onChange={(e) => setState(e.target.value)}
-                        />
-                    </label>
-                    {formErrors.state && <p style={{ color: 'red' }}>{formErrors.state}</p>}
-                    {serverErrors.find((error) => error.param === 'state') && (
-                        <p style={{ color: 'red' }}>
-                            Server Error: {serverErrors.find((error) => error.param === 'state').msg}
-                        </p>
-                    )}
-                </div>
-
-                <div>
-                    <label>
-                        Email:
-                        <input
-                            type="text"
-                            value={email}
-                            className="form-control"
-                            onChange={(e) => setEmail(e.target.value)}
-                        />
-                    </label>
-                    {formErrors.email && <p style={{ color: 'red' }}>{formErrors.email}</p>}
-                    {serverErrors.find((error) => error.param === 'email') && (
-                        <p style={{ color: 'red' }}>
-                            Server Error: {serverErrors.find((error) => error.param === 'email').msg}
-                        </p>
-                    )}
-                </div>
-
-                <div>
-                    <label>
-                        Mobile:
-                        <input
-                            type="text"
-                            value={mobile}
-                            className="form-control"
-                            onChange={(e) => setMobile(e.target.value)}
-                        />
-                    </label>
-                    {formErrors.mobile && <p style={{ color: 'red' }}>{formErrors.mobile}</p>}
-                    {serverErrors.find((error) => error.param === 'mobile') && (
-                        <p style={{ color: 'red' }}>
-                            Server Error: {serverErrors.find((error) => error.param === 'mobile').msg}
-                        </p>
-                    )}
-                </div>
-
-                <div>
-                    <label>
-                        Description:
-                        <input
-                            type="text"
-                            value={description}
-                            className="form-control"
-                            onChange={(e) => setDescription(e.target.value)}
-                        />
-                    </label>
-                    {formErrors.description && <p style={{ color: 'red' }}>{formErrors.description}</p>}
-                    {serverErrors.find((error) => error.param === 'description') && (
-                        <p style={{ color: 'red' }}>
-                            Server Error: {serverErrors.find((error) => error.param === 'description').msg}
-                        </p>
-                    )}
-                </div>
-
-                <div>
-                    <label>
-                        Approval Status:
-                        <select value={approvalStatus} onChange={(e) => setApprovalStatus(e.target.value)}>
-                            <option value="pending">Pending</option>
-                            <option value="rejected">Rejected</option>
-                            <option value="approved">Approved</option>
-                        </select>
-                    </label>
-                    {formErrors.approvalStatus && <p style={{ color: 'red' }}>{formErrors.approvalStatus}</p>}
-                    {serverErrors.find((error) => error.param === 'approvalStatus') && (
-                        <p style={{ color: 'red' }}>
-                            Server Error: {serverErrors.find((error) => error.param === 'approvalStatus').msg}
-                        </p>
-                    )}
-                </div>
-
-                <button type="submit">Submit</button>
-            </form>
-        </div>
+            ) }
+            
+            <div>
+            <label>Shop Name:</label>
+                <input
+                 type="text"
+                 value={shopName}
+                 className='form-control'
+                 onChange={(e) => setShopname(e.target.value)} />
+            </div>
+            {formErrors.shopName && <p style = {{color:'red'}}>{formErrors.shopName}</p>}
+            <div>
+            <label>Area:</label>
+                <input type="text" 
+                value={area} 
+                className='form-control'
+                onChange={(e) => setArea(e.target.value)} />
+            </div>
+            {formErrors.area && <p style = {{color:'red'}}>{formErrors.area}</p>}
+            <div>
+            <label>Pincode:</label>
+                <input type="number" 
+                className='form-control'
+                value={pincode} 
+                onChange={(e) => setPincode(e.target.value)} />
+            </div>
+            {formErrors.Pincode && <p style = {{color:'red'}}>{formErrors.Pincode}</p>}
+            <div>
+            <label>City:</label>
+                <input 
+                type="text" 
+                className='form-control'
+                value={city} 
+                onChange={(e) => setCity(e.target.value)} />
+            
+            </div>
+            {formErrors.city && <p style = {{color:'red'}}>{formErrors.city}</p>}
+            <div>
+            <label>State:</label>
+                <input 
+                type="text"
+                className='form-control' 
+                value={state} 
+                onChange={(e) => setState(e.target.value)} />
+            </div>
+            {formErrors.state && <p style = {{color:'red'}}>{formErrors.state}</p>}
+            <div>
+            <label> Email:</label>
+                <input type="text"
+                className='form-control' 
+                value={email} 
+                onChange={(e) => setEmail(e.target.value)} />
+            </div>
+            {formErrors.email && <p style = {{color:'red'}}>{formErrors.email}</p>}
+            <div>
+            <label>Mobile:</label>
+                <input 
+                type="text" 
+                className='form-control' 
+                value={mobile} 
+                onChange={(e) => setMobile(e.target.value)} />
+            </div>
+            {formErrors.mobile && <p style = {{color:'red'}}>{formErrors.mobile}</p>}
+            <div>
+            <label>Description:</label>
+                <input type="text" 
+                value={description} 
+                className='form-control' 
+                onChange={(e) => setDescription(e.target.value)} />
+            </div>
+            {formErrors.description && <p style = {{color:'red'}}>{formErrors.description}</p>}
+            <div>
+            <label>ApprovalStatus:</label>
+                <select value={approvalStatus} onChange={(e) => setApprovalStatus(e.target.value)}>
+                    <option value="pending">pending</option>
+                    <option value="rejected">rejected</option>
+                    <option value="approved">pending</option>
+                </select>
+            </div>
+            {formErrors.ApprovalStatus && <p style = {{color:'red'}}>{formErrors.ApprovalStatus}</p>}
+            <div>
+            <button type="submit">Submit</button>
+            </div>
+        </form>
+        </>
     );
 }
+
