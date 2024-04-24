@@ -53,10 +53,10 @@ const createShop = (data) => {
     }
 }
 
-export const startUpdateShop = (shopId,formData) => {
+export const startUpdateShop = (id,formData) => {
     return async (dispatch) => {
         try{
-            const response = await axios.put(`http://localhost:3009/api/shops/${shopId}`, formData,{
+            const response = await axios.put(`http://localhost:3009/api/shops/${id}`, formData,{
                     headers : {
                         Authorization : localStorage.getItem('token')
                     }
