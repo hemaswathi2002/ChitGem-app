@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { startCreateShop, startUpdateShop, setServerErrors } from '../Actions/shops';
+import { startCreateShop, startUpdateShop } from '../Actions/shops';
 import { useNavigate } from 'react-router-dom';
 
 export default function ShopsForm({ editId, toggle }) {
@@ -17,6 +17,7 @@ export default function ShopsForm({ editId, toggle }) {
     const [serverErrors, setServerErrors] = useState([]);
 
     const dispatch = useDispatch();
+
     const shops = useSelector((state) => state.shops);
 
     useEffect(() => {
@@ -89,9 +90,9 @@ export default function ShopsForm({ editId, toggle }) {
             },
             description,
             approvalStatus,
-            ownerId: localStorage.getItem('ownerId'),
         };
 
+    
         try {
             if (editId) {
                 await dispatch(startUpdateShop(editId, formData));
@@ -99,15 +100,16 @@ export default function ShopsForm({ editId, toggle }) {
                 await dispatch(startCreateShop(formData));
             }
             toggle();
-            dispatch(setServerErrors([])); // Clear server errors on success
-        } catch (err) {
-            console.log(err);
+            dispatch(setServerErrors([]));
+        }
+        catch (err) {
             if (err.response && err.response.data && err.response.data.errors) {
-                dispatch(setServerErrors(err.response.data.errors)); // Set server errors on failure
+                setServerErrors(err.response.data.errors);
+            } else {
+                console.log(err);
             }
         }
-    }
- 
+    };
 
     return (
         <div>

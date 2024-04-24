@@ -2,10 +2,10 @@ const mongoose = require("mongoose")
 const { Schema, model } = mongoose
 
 const shopSchema = new Schema({
-  ownerId: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'User' // Reference to the User model
-},
+    ownerId : {
+      type : Schema.Types.ObjectId,
+      ref : 'User'
+    },
     shopName: String,
     address: {
         area: String,
