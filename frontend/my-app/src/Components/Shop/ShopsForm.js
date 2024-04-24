@@ -5,11 +5,11 @@ import { startCreateShop, startUpdateShop, setServerErrors } from '../Actions/sh
 export default function ShopsForm(props) {
     const [shopName, setShopname] = useState('')
     const [area, setArea] = useState('')
-    const [pincode, setPincode] = useState('')
+    const [pincode, setPincode] = useState(0)
     const [city, setCity] = useState('')
     const [state, setState] = useState('')
     const [email, setEmail] = useState('')
-    const [mobile, setMobile] = useState('')
+    const [mobile, setMobile] = useState(0)
     const [description, setDescription] = useState('')
     const [approvalStatus, setApprovalStatus] = useState('pending')
     const [formErrors, setFormErrors] = useState({})
@@ -19,17 +19,21 @@ export default function ShopsForm(props) {
     const shops = useSelector(state => state.shops)
     const serverErrors = useSelector(state => state.serverErrors)
 
+   
     useEffect(() => {
-        if (shops && shops.data) {
-            setShopname(shops.shopName || '')
-            setArea(shops.address?.area || '') // Handle optional chaining for nested properties
-            setPincode(shops.address?.pincode || '')
-            setCity(shops.address?.city || '')
-            setState(shops.address?.state || '')
-            setEmail(shops.contact?.email || '')
-            setMobile(shops.contact?.mobile || '')
-            setDescription(shops.description || '')
-            setApprovalStatus(shops.approvalStatus || 'pending')
+        if (editId && shops && shops.data) {
+            const shopToEdit = shops.data.find(shop => shop._id === editId);
+            if (shopToEdit) {
+                setShopname(shopToEdit.shopName || '');
+                setArea(shopToEdit.address?.area || '');
+                setPincode(shopToEdit.address?.pincode || '');
+                setCity(shopToEdit.address?.city || '');
+                setState(shopToEdit.address?.state || '');
+                setEmail(shopToEdit.contact?.email || '');
+                setMobile(shopToEdit.contact?.mobile || '');
+                setDescription(shopToEdit.description || '');
+                setApprovalStatus(shopToEdit.approvalStatus || 'pending');
+            }
         } else {
             setShopname('')
             setArea('')
@@ -54,7 +58,7 @@ export default function ShopsForm(props) {
             errors.area = 'Area is required'
         }
 
-        if (!pincode.trim()) {
+        if (!pincode) {
             errors.pincode = 'Pincode is required'
         } 
 
@@ -70,7 +74,7 @@ export default function ShopsForm(props) {
             errors.email = 'Email is required'
         }
 
-        if (!mobile.trim()) {
+        if (!mobile) {
             errors.mobile = 'Mobile number is required'
         } 
 
@@ -97,10 +101,12 @@ export default function ShopsForm(props) {
         try {
             if (editId) {
                 dispatch(startUpdateShop(editId, formData))
+
             } else {
                 dispatch(startCreateShop(formData))
             }
             resetForm()
+            props.toggle()
         } catch (err) {
             console.error('Error:', err)
             if (err.response && err.response.data) {
@@ -156,7 +162,7 @@ export default function ShopsForm(props) {
                 <div>
                     <label>Pincode:</label>
                     <input
-                        type="number"
+                        type="text"
                         className='form-control'
                         value={pincode}
                         onChange={(e) => setPincode(e.target.value)} />

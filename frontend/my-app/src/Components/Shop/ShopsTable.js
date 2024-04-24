@@ -78,7 +78,7 @@ export default function ShopsTable() {
             <Modal isOpen={modal} toggle={toggle}>
                 <ModalHeader toggle={toggle}>Shop Form</ModalHeader>
                 <ModalBody>
-                    <ShopsForm editId={editId} toggle={toggle} />
+                <ShopsForm editId={editId} toggle={toggle} />
                 </ModalBody>
                 </Modal>
         </div>
