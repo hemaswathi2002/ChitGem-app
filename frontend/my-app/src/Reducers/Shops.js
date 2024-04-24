@@ -1,7 +1,7 @@
 const initialState = {
     shops: [],
-    serverErrors : []
-}
+    serverErrors: []
+};
 const shopReducer = (state = initialState, action) => {
     switch (action.type) {
         case 'SET_SHOP' : {
@@ -27,11 +27,11 @@ const shopReducer = (state = initialState, action) => {
                 data: state.data.filter(shop => shop._id !== action.payload)
             }
         }
-        case 'SET_SERVER_ERRORS' : {
+        case 'SET_SERVER_ERRORS': {
             return {
                 ...state,
                 serverErrors: action.payload
-            };
+            }
         }
         default:
             return state;

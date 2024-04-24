@@ -18,6 +18,7 @@ export const startGetShop = () => {
 
             console.log(response.data);
             dispatch(setShops(response.data));
+            localStorage.setItem('shops', JSON.stringify(response.data));
             
         } catch (err) {
             console.log(err);
@@ -110,9 +111,7 @@ const removeShop = (id) => {
     }
 }
 
-export const setServerErrors = (errors) => {
-    return {
-        type: 'SET_SERVER_ERRORS',
-        payload: errors
-    };
-};
+export const setServerErrors = (errors) => ({
+    type: 'SET_SERVER_ERRORS',
+    payload: errors
+});
