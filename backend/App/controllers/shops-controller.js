@@ -53,7 +53,7 @@ shopsCltr.update = async (req, res) => {
   try {
     const id = req.params.id
     const body = _.pick(req.body,['shopName','address','contact','description'])
-    const shop = await Shop.findOneAndUpdate({ _id: id },body,{ new: true})
+    const shop = await Shop.findOneAndUpdate({ _id: id, ownerId : req.user.id },body,{ new: true})
     res.status(200).json(shop)
   } catch (err) {
     console.log(err)

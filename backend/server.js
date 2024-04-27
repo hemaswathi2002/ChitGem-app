@@ -62,7 +62,7 @@ app.get('/api/users/account',authenticateUser,authorizeUser(['admin','owner','cu
 app.post('/api/shops',authenticateUser,checkSchema(shopRegisterValidationSchema),shopsCltr.register)
 app.get('/api/shops',authenticateUser,authorizeUser(['admin','owner']),authenticateUser,shopsCltr.getAllshop)
 app.get('/api/shops/:ownerId',authenticateUser,authorizeUser(['admin','owner']),shopsCltr.getOneshop)
-app.put('/api/shops/:id',checkSchema(shopRegisterValidationSchema),shopsCltr.update)
+app.put('/api/shops/:id',authenticateUser,authorizeUser(['admin','owner']),checkSchema(shopRegisterValidationSchema),shopsCltr.update)
 // app.put('/api/shops/update/:id',shopsCltr.updateStatus)
 app.delete('/api/shops/:id',shopsCltr.destroy)
 

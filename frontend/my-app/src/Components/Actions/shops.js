@@ -65,7 +65,10 @@ export const startUpdateShop = (id,formData) => {
                 dispatch(updateShop(response.data))
         }
         catch(err){
-            console.log(err)
+            // console.log(err);
+            if (err.response && err.response.data) {
+                dispatch(setServerErrors(err.response.data.errors || []));
+            }
         }
         
     }
