@@ -61,10 +61,10 @@ app.get('/api/users/account',authenticateUser,authorizeUser(['admin','owner','cu
 //api shops
 app.post('/api/shops/',authenticateUser,authorizeUser(['owner']),checkSchema(shopRegisterValidationSchema),shopsCltr.register)
 app.get('/api/shops',shopsCltr.getAllshop)
-app.get('/api/shops/:id',shopsCltr.getOneshop)
+app.get('/api/shops/:id',authenticateUser,authorizeUser(['owner']),shopsCltr.getOneshop)
 app.put('/api/shops/:id',authenticateUser,authorizeUser(['owner']),checkSchema(shopRegisterValidationSchema),shopsCltr.update)
 app.put('/api/shops/update/:id',shopsCltr.updateStatus)
-app.delete('/api/shops/:id',shopsCltr.destroy)
+app.delete('/api/shops/:id',authenticateUser,authorizeUser(['owner']),shopsCltr.destroy)
 
 //api jewels
 app.post('/api/jewels',upload.array('images', 2),jewelsCltr.create)
