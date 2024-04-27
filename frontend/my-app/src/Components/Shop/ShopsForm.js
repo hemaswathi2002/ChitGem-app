@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { startCreateShop, startUpdateShop, clearServerErrors } from '../Actions/shops'
+import { startCreateShop, startUpdateShop, setServerErrors,clearServerErrors } from '../Actions/shops'
 
 export default function ShopsForm(props) {
     const [shopName, setShopname] = useState('')
@@ -14,11 +14,11 @@ export default function ShopsForm(props) {
     const [approvalStatus, setApprovalStatus] = useState('pending')
     const [formErrors, setFormErrors] = useState({})
     const [shop,setShop]= useState({})
-    const [serverErrors,setServerErrors]=useState([])
+    // const [serverErrors,setServerErrors]=useState([])
     const { editId } = props
 
     const dispatch = useDispatch()
-    // const serverErrors = useSelector((state) => state.shops.serverErrors);
+    const serverErrors = useSelector((state) => state.shops.serverErrors);
     const shops = useSelector(state => state.shops)
 
 
@@ -133,14 +133,19 @@ export default function ShopsForm(props) {
 
     return (
         <>
-            <form onSubmit={handleSubmit}>
-                {serverErrors && serverErrors.length > 0 && (
+             <form onSubmit={handleSubmit}>
+            {
+                serverErrors.length > 0 && (
                     <div>
-                        {serverErrors && serverErrors.map((error, index) => (
-                            <p key={index} style={{ color: 'red' }}>{error.msg}</p>
-                        ))}
+                        These errors prohibited the form from being saved:
+                        <ul>
+                            {serverErrors.map((ele, i) => (
+                                <li key={i}> {ele.msg}</li>
+                            ))}
+                        </ul>
                     </div>
-                )}
+                )
+            }
 
                 <div>
                     <label>Shop Name:</label>
