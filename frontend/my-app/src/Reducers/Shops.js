@@ -33,6 +33,13 @@ const shopReducer = (state = initialState, action) => {
                 serverErrors: action.payload
             }
         }
+
+        case 'CLEAR_SERVER_ERRORS': {
+            return {
+                ...state,
+                serverErrors: [] 
+            };
+        }
         default:
             return state;
     }

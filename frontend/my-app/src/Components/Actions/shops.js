@@ -87,6 +87,10 @@ const updateShop = (shop) =>{
     }
 }
 
+export const clearServerErrors = () => ({
+    type: 'CLEAR_SERVER_ERRORS'
+})
+
 export const startRemoveShop = (id) => {
     return async (dispatch) => {
         try{

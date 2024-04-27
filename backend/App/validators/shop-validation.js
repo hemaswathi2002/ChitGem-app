@@ -69,11 +69,11 @@ const shopRegisterValidationSchema = {
 description: {
     notEmpty: {
       errorMessage: 'enter the description',
-    },
-    isLength: {
-      options: {min: 25,max: 500},
-      errorMessage: 'description should have minimum of 50 words',
-    },
+    }
+    // isLength: {
+    //   options: {min: 25,max: 500},
+    //   errorMessage: 'description should have minimum of 50 words',
+    // },
   },
 
 }

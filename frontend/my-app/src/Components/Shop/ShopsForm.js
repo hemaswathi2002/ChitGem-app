@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { startCreateShop, startUpdateShop, setServerErrors } from '../Actions/shops'
+import { startCreateShop, startUpdateShop, setServerErrors, clearServerErrors } from '../Actions/shops'
 
 export default function ShopsForm(props) {
     const [shopName, setShopname] = useState('')
@@ -102,6 +102,7 @@ export default function ShopsForm(props) {
             } else {
                 dispatch(startCreateShop(formData))
             }
+            dispatch(clearServerErrors())
             resetForm()
         } catch (err) {
             console.error('Error:', err)
