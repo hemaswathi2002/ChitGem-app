@@ -9,7 +9,7 @@ shopsCltr.register = async (req, res) => {
   }
     try {
       // const {body}=req
-    const body = _.pick(req.body,['shopName','address','location','contact','description'])
+    const body = _.pick(req.body,['shopName','address','contact','description'])
     body.approvalStatus = 'pending'
     body.ownerId = req.user.id
     console.log(req.user)
@@ -23,8 +23,8 @@ shopsCltr.register = async (req, res) => {
 }
 shopsCltr.getOneshop = async (req, res) => {
   try {
-    const { id } = req.params
-    const shop = await Shop.findOne({ _id: id })
+    const { ownerId } = req.params
+    const shop = await Shop.findOne({ _id: ownerId, ownerId : req.user.id })
 
     if (!shop) {
       return res.status(404).json({ message: "Shop not found" })
@@ -37,8 +37,7 @@ shopsCltr.getOneshop = async (req, res) => {
 }
 shopsCltr.getAllshop = async (req, res) => {
   try {
-    const ownerId = req.query.ownerId;
-    const shops = await Shop.find({ ownerId: ownerId });
+    const shops = await Shop.find();
     res.json(shops);
   } catch (error) {
     console.log(error);

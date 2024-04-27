@@ -5,7 +5,6 @@ const initialState = {
 const shopReducer = (state = initialState, action) => {
     switch (action.type) {
         case 'SET_SHOP' : {
-            localStorage.setItem('shops', JSON.stringify(action.payload));
             return {...state, data: action.payload }
 
         }

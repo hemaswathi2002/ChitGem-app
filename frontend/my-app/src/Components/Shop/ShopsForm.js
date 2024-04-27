@@ -13,26 +13,31 @@ export default function ShopsForm(props) {
     const [description, setDescription] = useState('')
     const [approvalStatus, setApprovalStatus] = useState('pending')
     const [formErrors, setFormErrors] = useState({})
+    const [shop,setShop] = useState({})
     // const [serverErrors,setServerErrors]=useState([])
     const { editId } = props
 
     const dispatch = useDispatch()
     const serverErrors = useSelector((state) => state.shops.serverErrors);
-
     const shops = useSelector(state => state.shops)
 
+
     useEffect(() => {
+        setShop(shop)
         if (shops && shops.data) {
-            setShopname(shops.shopName || '')
-            setArea(shops.address?.area || '') // Handle optional chaining for nested properties
-            setPincode(shops.address?.pincode || '')
-            setCity(shops.address?.city || '')
-            setState(shops.address?.state || '')
-            setEmail(shops.contact?.email || '')
-            setMobile(shops.contact?.mobile || '')
-            setDescription(shops.description || '')
-            setApprovalStatus(shops.approvalStatus || 'pending')
-        } else {
+            const shopData = shops.data.find((shop) => shop._id === editId)
+        if (shopData) {
+            setShopname(shopData.shopName || '')
+            setArea(shopData.address?.area || '') // Handle optional chaining for nested properties
+            setPincode(shopData.address?.pincode || '')
+            setCity(shopData.address?.city || '')
+            setState(shopData.address?.state || '')
+            setEmail(shopData.contact?.email || '')
+            setMobile(shopData.contact?.mobile || '')
+            setDescription(shopData.description || '')
+            setApprovalStatus(shopData.approvalStatus || 'pending')
+        }
+        else {
             setShopname('')
             setArea('')
             setPincode('')
@@ -43,7 +48,8 @@ export default function ShopsForm(props) {
             setDescription('')
             setApprovalStatus('pending')
         }
-    }, [shops, editId])
+    }
+    }, [shop, editId])
 
     const validateForm = () => {
         const errors = {}

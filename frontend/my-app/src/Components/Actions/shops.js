@@ -1,24 +1,15 @@
 import axios from 'axios'
-export const startGetShop = () => {
+export const startGetShop = (ownerId) => {
     return async (dispatch) => {
         try {
-            const token = localStorage.getItem('token');
-            if (!token) {
-                throw new Error('Token not found');
-            }
-            const ownerId = localStorage.getItem('userId');
-
-            const response = await axios.get('http://localhost:3009/api/shops', {
+            const response = await axios.get(`http://localhost:3009/api/shops/${ownerId}`, {
                 headers: {
-                    Authorization: token
-                },   params: {
-                    ownerId: ownerId  // Pass the owner's ID as a query parameter
+                    Authorization: localStorage.getItem('token')
                 }
             });
-
             console.log(response.data);
             dispatch(setShops(response.data));
-            localStorage.setItem('shops', JSON.stringify(response.data));
+            // localStorage.setItem('shops', JSON.stringify(response.data));
             
         } catch (err) {
             console.log(err);
@@ -80,10 +71,10 @@ export const startUpdateShop = (id,formData) => {
     }
 }
 
-const updateShop = (shop) =>{
+const updateShop = (data) =>{
     return{
         type : 'UPDATE_SHOP',
-        payload : shop
+        payload : data
     }
 }
 

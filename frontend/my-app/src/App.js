@@ -1,7 +1,7 @@
-import React, { useReducer, useEffect } from 'react'
+import React, { useReducer, useEffect , useState} from 'react'
 import axios from 'axios'
 import {Routes, Route,Link } from 'react-router-dom'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { useAuth } from './Context/AuthrorizeContext'
 import Home from './Components/Home/Home'
 import OtpVerificationForm from './Components/UsersAuthentication/OtpVerification'
@@ -37,11 +37,13 @@ import { ShopsContext } from './Context/ShopsContext'
 // import shopReducer from "./Reducers/Shops"
 import Main from './Components/Main/Main'
 import ChitForm from './Components/Chit/ChitsForm'
+import ShopsTable from './Components/Shop/ShopsTable'
 
 export default function App() {
   // const [chits, chitDispatch] = useReducer(chitReducer, {data: []})
   // const [users, usersDispatch] = useReducer(UsersReducer, {userDetails : [], isLoggedIn : false});
-  const [customers, customerDispatch] = useReducer(CustomersReducer, {data:[]});
+  const [customers, customerDispatch] = useReducer(CustomersReducer, {data:[]})
+  const [ownerId,setOwnerId] = useState('')
   // const [shops, shopDispatch] = useReducer(shopReducer, {data:[]})
   const { user, handleLogin,  handleLogout } = useAuth() 
 
@@ -60,29 +62,37 @@ export default function App() {
               } catch (error) {
                   console.error('Error fetching user account:', error);
               }
+
           })();
       }
 
-      (async ()=>{
-        try{
-          const customersResponse = await axios.get('http://localhost:3009/api/customers');
-          customerDispatch({ type: 'SET_CUSTOMERS', payload: customersResponse.data });    
-        }
-        catch(err){
-          console.log(err)
-        }
-      })();
+      // (async ()=>{
+      //   try{
+      //     const customersResponse = await axios.get('http://localhost:3009/api/customers');
+      //     customerDispatch({ type: 'SET_CUSTOMERS', payload: customersResponse.data });    
+      //   }
+      //   catch(err){
+      //     console.log(err)
+      //   }
+      // })();
 
-  }, []); 
+  }, []);
+  useEffect(() => {
+    dispatch(startGetShop(ownerId));
+  }, [dispatch, ownerId]);
+ 
     
    
     
 
   // }, [handleLogin,customerDispatch])
 
-  useEffect (()=>{
-    dispatch(startGetShop())
-  },[])
+  // useEffect (()=>{
+  //   dispatch(startGetShop())
+  // },[dispatch])
+
+  const shops = useSelector((state) => state.shops)
+
 
   // useEffect(() => {
 
@@ -191,7 +201,7 @@ export default function App() {
                     }/>
                     <Route path = '/shops' element = {
                       <PrivateRoute permittedRoles = {['admin','owner']}>
-                        <ShopsForm/>
+                        <ShopsTable/>
                       </PrivateRoute>
                     }/>
                     <Route path = '/create-customer' element = {
