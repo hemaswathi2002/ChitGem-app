@@ -34,7 +34,10 @@ export default function ShopsTable() {
         setEditId(id);
         toggle();
     };
-
+    const handleAddShop = () => {
+        setEditId(''); // Reset editId to clear any previous edit state
+        toggle(); // Open the modal
+    };
     return (
         <div>
             <h2>shops - {shops && shops.data && shops.data.length}</h2>
@@ -74,7 +77,7 @@ export default function ShopsTable() {
                 </tbody>
             </table>
            
-<Button color="danger" onClick={toggle}>Add shop</Button>
+<Button color="danger" onClick={handleAddShop}>Add shop</Button>
             <Modal isOpen={modal} toggle={toggle}>
                 <ModalHeader toggle={toggle}>Shop Form</ModalHeader>
                 <ModalBody>
