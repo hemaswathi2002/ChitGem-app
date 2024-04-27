@@ -109,6 +109,7 @@ export default function ShopsForm(props) {
                 dispatch(startCreateShop(formData))
             }
             dispatch(clearServerErrors())
+            props.toggle()
             resetForm()
         } catch (err) {
             console.error('Error:', err)
@@ -140,7 +141,7 @@ export default function ShopsForm(props) {
                         These errors prohibited the form from being saved:
                         <ul>
                             {serverErrors.map((ele, i) => (
-                                <li key={i}> {ele.msg}</li>
+                                <li key={i} style = {{color : 'red'}}> {ele.msg}</li>
                             ))}
                         </ul>
                     </div>
