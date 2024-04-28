@@ -1,5 +1,7 @@
 import React, { useReducer, useEffect , useState} from 'react'
 import axios from 'axios'
+import 'react-toastify/dist/ReactToastify.css'
+import 'bootstrap/dist/css/bootstrap.min.css'
 import {Routes, Route,Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { useAuth } from './Context/AuthrorizeContext'
@@ -10,17 +12,15 @@ import PrivateRoute from './Components/PrivateRoute'
 import Account from './Components/Account'
 import RegisterForm from './Components/UsersAuthentication/RegisterForm'
 import Unauthorized from './Components/Unauthorized'
-import ShopsForm from './Components/Shop/ShopsContainer'
 import { startGetShop } from './Components/Actions/shops'
 import CustomersForm from './Components/Customer/CustomersForm'
 import { CustomersContext } from './Context/CustomersContext'
+import CustomersContainer from './Components/Customer/CustomersContainer'
 // import { ToastContainer } from 'react-toastify'
 // import { useDispatch, useSelector} from 'react-redux'
-import 'react-toastify/dist/ReactToastify.css'
-import 'bootstrap/dist/css/bootstrap.min.css'
+
 // import { startGetUserDetails } from './Components/Actions/Users/Users'
 import ChitsContainer from './Components/Chit/ChitsContainer'
-import CustomersContainer from './Components/Customer/CustomersContainer'
 import ReviewsContainer from './Components/Review/ReviewsContainer'
 import UsersContainer from './Components/UsersAuthentication/UsersContainer'
 import JewelContainer from './Components/Jewel/JewelContainer'
@@ -44,7 +44,6 @@ export default function App() {
   // const [users, usersDispatch] = useReducer(UsersReducer, {userDetails : [], isLoggedIn : false});
   const [customers, customerDispatch] = useReducer(CustomersReducer, {data:[]})
   const [ownerId,setOwnerId] = useState('')
-  // const [shops, shopDispatch] = useReducer(shopReducer, {data:[]})
   const { user, handleLogin,  handleLogout } = useAuth() 
 
   const dispatch = useDispatch()
@@ -66,17 +65,19 @@ export default function App() {
           })();
       }
 
-      // (async ()=>{
-      //   try{
-      //     const customersResponse = await axios.get('http://localhost:3009/api/customers');
-      //     customerDispatch({ type: 'SET_CUSTOMERS', payload: customersResponse.data });    
-      //   }
-      //   catch(err){
-      //     console.log(err)
-      //   }
-      // })();
+      (async ()=>{
+        try{
+          const customersResponse = await axios.get('http://localhost:3009/api/customers');
+          console.log(customersResponse.data)
+          customerDispatch({ type: 'SET_CUSTOMERS', payload: customersResponse.data });    
+        }
+        catch(err){
+          console.log(err)
+        }
+      })();
 
   }, []);
+
   useEffect(() => {
     dispatch(startGetShop(ownerId));
   }, [dispatch, ownerId]);
@@ -173,7 +174,7 @@ export default function App() {
               <>
                   <Link to="/account">Account</Link> |
                   <Link to="/shops">shop</Link> |
-                  <Link to="/create-customer">customer</Link> |
+                  <Link to="/customers">customer</Link> |
                   <Link to = "/create-chit">chit</Link> |
                   <Link to="/" onClick={() => {
                     localStorage.removeItem('token')
@@ -194,6 +195,7 @@ export default function App() {
                     <Route path='/signup' element={<RegisterForm />} />
                     <Route path = '/otp' element = {<OtpVerificationForm/>}/>
                     <Route path = '/login' element = {<LoginForm/>}/>
+                    <Route path = '/customers' element = {<CustomersContainer/>}/>
                     <Route path = '/account' element = {
                       <PrivateRoute permittedRoles = {['admin','owner','customer']}>
                         <Account/>

@@ -1,7 +1,7 @@
 const initialState={
     users:{}
 }
-const UersReducers=(state=initialState,action)=>{
+const UsersReducers=(state=initialState,action)=>{
       switch(action.type){
         case "SET_USERS_DETAIL":{
             return {...state,users:{...action.payload}}
@@ -11,4 +11,4 @@ const UersReducers=(state=initialState,action)=>{
         }
       }
 }
-export default usersReducers
+export default UsersReducers

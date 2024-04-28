@@ -12,8 +12,7 @@ customersCltr.register = async(req,res) => {
         return res.status(404).json({errors:errors.array()})
     }
     try{
-        const customerId = req.params.customerId
-        const body = _.pick(req.body,['username','contact','description','goldHarvested'])
+        const body = _.pick(req.body,['name','contact','description','goldHarvested'])
         const owner = req.user.id
         console.log(owner)
         const shop = await Shop.findOne({ownerId : owner})
@@ -22,7 +21,7 @@ customersCltr.register = async(req,res) => {
             return res.status(404).json({ errors: 'Shop not found' });
         }   
         console.log(shop) 
-        const customer = new Customers({ ...body, ownerId: owner , shopId:shop.id,customerId:customerId});
+        const customer = new Customers({ ...body, ownerId: owner , shopId:shop.id});
         const response = await customer.save()
         res.status(201).json(response)
     }
@@ -51,7 +50,7 @@ customersCltr.update = async(req,res) => {
     }
     try{
         const id = req.params.id
-        const body = _.pick(req.body,['username','contact','description','goldHarvested'])
+        const body = _.pick(req.body,['name','contact','description','goldHarvested'])
         const owner = req.user.id
         console.log(owner)
         const shop = await Shop.findOne({ownerId : owner})

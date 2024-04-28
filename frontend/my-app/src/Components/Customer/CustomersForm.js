@@ -55,14 +55,22 @@ export default function CustomersForm(props){
         }
         try{
             if(customer){
-                const response = await axios.put(`http://localhost:3009/api/customers/${customer._id}`,formData)
-                // console.log(response.data)
+                const response = await axios.put(`http://localhost:3009/api/customers/${customer._id}`,formData,{
+                    headers : {
+                        Authorization : localStorage.getItem('token')
+                    }
+                })
+                console.log(response.data)
                 customerDispatch({type:'UPDATE_CUSTOMERS', payload : response.data})
                 props.toggle()
 
             }else{
-            const response = await axios.post('http://localhost:3009/api/customers',formData)
-            // console.log(response.data)
+            const response = await axios.post('http://localhost:3009/api/customers',formData,{
+                headers : {
+                    Authorization : localStorage.getItem('token')
+                }
+            })
+            console.log(response.data)
             customerDispatch({type:'ADD_CUSTOMERS', payload: response.data})
             setName('')
             setEmail('')
