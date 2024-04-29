@@ -2,7 +2,7 @@ import axios from "axios";
 export const startGetUserDetails=()=>{
     return async(dispatch)=>{
         try{
-            const response=await axios.get('http://localhost:3009/api/users/accounts',{
+            const response=await axios.get('http://localhost:3009/api/users/account',{
                 headers:{
                     Authorization:localStorage.getItem('token') 
                 }
@@ -16,7 +16,19 @@ export const startGetUserDetails=()=>{
 }
 const setUser=(data)=>{
     return {
-        type:"SET_USERS_DETAILS",
+        type:"SET_USER_DETAILS",
+        payload:data
+    }
+}
+
+export const startSetUser=()=>{
+    return (dispatch)=>{
+        dispatch(setUserEmpty({}))
+    }
+}
+const setUserEmpty=(data)=>{
+    return {
+        type:"SET_USER_EMPTY",
         payload:data
     }
 }

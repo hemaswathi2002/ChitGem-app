@@ -5,24 +5,25 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import {Routes, Route,Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { useAuth } from './Context/AuthrorizeContext'
-import Home from './Components/Home/Home'
+import { toast } from 'react-toastify'
+import Home from './Components/usersControl/Home'
 import OtpVerificationForm from './Components/UsersAuthentication/OtpVerification'
-import LoginForm from './LoginForm'
+import LoginForm from './Components/UsersAuthentication/LoginForm'
 import PrivateRoute from './Components/PrivateRoute'
 import Account from './Components/Account'
 import RegisterForm from './Components/UsersAuthentication/RegisterForm'
+import { startGetUserDetails } from './Components/Actions/Users'
+import Admin from './Components/AdminDashboard/admin'
 import Unauthorized from './Components/Unauthorized'
 import { startGetShop } from './Components/Actions/shops'
 import CustomersForm from './Components/Customer/CustomersForm'
 import { CustomersContext } from './Context/CustomersContext'
 import CustomersContainer from './Components/Customer/CustomersContainer'
+import UsersControl from './Components/usersControl/usersControl'
 // import { ToastContainer } from 'react-toastify'
 // import { useDispatch, useSelector} from 'react-redux'
-
-// import { startGetUserDetails } from './Components/Actions/Users/Users'
 import ChitsContainer from './Components/Chit/ChitsContainer'
 import ReviewsContainer from './Components/Review/ReviewsContainer'
-import UsersContainer from './Components/UsersAuthentication/UsersContainer'
 import JewelContainer from './Components/Jewel/JewelContainer'
 import { ChitsContext } from './Context/ChitsContext'
 // import { startGetJewels } from './Components/Actions/Jewels'
@@ -50,31 +51,19 @@ export default function App() {
 
     useEffect(() => {
       if(localStorage.getItem('token')) {
-          (async () => {
-              try {
-                  const response = await axios.get('http://localhost:3009/api/users/account', { 
-                      headers: {
-                          Authorization: localStorage.getItem('token')
-                      }
-                  });
-                  handleLogin(response.data);
-              } catch (error) {
-                  console.error('Error fetching user account:', error);
-              }
-
-          })();
+              dispatch(startGetUserDetails())
       }
 
-      (async ()=>{
-        try{
-          const customersResponse = await axios.get('http://localhost:3009/api/customers');
-          console.log(customersResponse.data)
-          customerDispatch({ type: 'SET_CUSTOMERS', payload: customersResponse.data });    
-        }
-        catch(err){
-          console.log(err)
-        }
-      })();
+      // (async ()=>{
+      //   try{
+      //     const customersResponse = await axios.get('http://localhost:3009/api/customers');
+      //     console.log(customersResponse.data)
+      //     customerDispatch({ type: 'SET_CUSTOMERS', payload: customersResponse.data });    
+      //   }
+      //   catch(err){
+      //     console.log(err)
+      //   }
+      // })();
 
   }, []);
 
@@ -159,6 +148,26 @@ export default function App() {
   //   }
   // },[dispatch])
 
+  const loginToast = () => {
+    toast.success('Logged in successfully', {
+        position: "top-right",
+        autoClose: 2000,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true
+    })
+}
+
+const registerToast = () => {
+  toast.success('Successfully created account', {
+    position: "top-right",
+    autoClose: 2000,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true
+  })
+}
+
 
   return (
     <div>
@@ -173,9 +182,10 @@ export default function App() {
             ): (
               <>
                   <Link to="/account">Account</Link> |
-                  <Link to="/shops">shop</Link> |
-                  <Link to="/customers">customer</Link> |
-                  <Link to = "/create-chit">chit</Link> |
+                  {/* <Link to="/shops">shop</Link> | */}
+                  <Link to = '/admin'>admin</Link> |
+                  {/* <Link to="/customers">customer</Link> |
+                  <Link to = "/create-chit">chit</Link> | */}
                   <Link to="/" onClick={() => {
                     localStorage.removeItem('token')
                     handleLogout()
@@ -192,20 +202,22 @@ export default function App() {
                   <Routes>
                     <>
                     <Route path='/' element={<Home />} />
-                    <Route path='/signup' element={<RegisterForm />} />
+                    <Route path='/signup' element={<RegisterForm registerToast = {registerToast}/>} />
                     <Route path = '/otp' element = {<OtpVerificationForm/>}/>
-                    <Route path = '/login' element = {<LoginForm/>}/>
+                    <Route path = '/login' element = {<LoginForm loginToast = {loginToast}/>}/>
+                    <Route path = '/usersControl' element = {<UsersControl/>}/>
+                    <Route path='/admin' element={<Admin/>}/>
                     <Route path = '/customers' element = {<CustomersContainer/>}/>
                     <Route path = '/account' element = {
                       <PrivateRoute permittedRoles = {['admin','owner','customer']}>
                         <Account/>
                       </PrivateRoute>
                     }/>
-                    <Route path = '/shops' element = {
+                    {/* <Route path = '/shops' element = {
                       <PrivateRoute permittedRoles = {['admin','owner']}>
                         <ShopsTable/>
                       </PrivateRoute>
-                    }/>
+                    }/> */}
                     <Route path = '/create-customer' element = {
                       <PrivateRoute permittedRoles={['owner']}>
                         <CustomersForm/>

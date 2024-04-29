@@ -48,19 +48,19 @@ const storage = multer.diskStorage({
 const upload = multer({storage:storage})
 
 //api users
-app.post('/api/users',checkSchema(userRegisterValidationSchema),usersCltr.register)
+app.post('/api/users/register',checkSchema(userRegisterValidationSchema),usersCltr.register)
 app.put('/api/verify/email',checkSchema(userOtpValidationSchema),usersCltr.verifyEmail)
+app.get('/api/users/account',authenticateUser,authorizeUser(['admin','owner','customer']),usersCltr.account)
 app.post('/api/users/customers',authenticateUser,authorizeUser(['owner']),checkSchema(userRegisterValidationSchema),usersCltr.register)
 // app.post('/api/create/customers',authenticateUser,authorizeUser(['owner']),usersCltr.register)
 app.post ('/api/login',checkSchema(loginValidationSchema),usersCltr.login)
 app.put('/api/update/password',usersCltr.updatePassword)
 app.post('/api/forgotpassword',usersCltr.forgotPassword)
 app.put('/api/forgotpassword',usersCltr.resetForgotPassword)
-app.get('/api/users/account',authenticateUser,authorizeUser(['admin','owner','customer']),usersCltr.account)
 
 //api shops
 app.post('/api/shops/',authenticateUser,authorizeUser(['owner']),checkSchema(shopRegisterValidationSchema),shopsCltr.register)
-app.get('/api/shops',shopsCltr.getAllshop)
+app.get('/api/shops',authenticateUser,authorizeUser(['admin']),shopsCltr.getAllshop)
 app.get('/api/shops/:id',authenticateUser,authorizeUser(['owner']),shopsCltr.getOneshop)
 app.put('/api/shops/:id',authenticateUser,authorizeUser(['owner']),checkSchema(shopRegisterValidationSchema),shopsCltr.update)
 app.put('/api/shops/update/:id',shopsCltr.updateStatus)

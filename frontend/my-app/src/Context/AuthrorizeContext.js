@@ -20,15 +20,21 @@ export const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(() => {
         const storedUser = localStorage.getItem('user');
         return storedUser ? JSON.parse(storedUser) : null;
+
     });
 
     useEffect(() => {
-        // Save user data to localStorage whenever it changes
-        localStorage.setItem('user', JSON.stringify(user));
-    }, [user]);
+        const storedUser = localStorage.getItem('user');
+        if(storedUser){
+            setUser(JSON.parse(storedUser))
+        }else {
+            setUser(null);
+        }
+    }, []);
 
     const handleLogin = (userData) => {
-        setUser(userData);
+        setUser(userData)
+        localStorage.setItem('user', JSON.stringify(userData));
     };
 
     const handleLogout = () => {

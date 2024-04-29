@@ -1,5 +1,5 @@
 const initialState = {
-    shops: [],
+    data: [],
     serverErrors: []
 };
 const shopReducer = (state = initialState, action) => {
@@ -8,6 +8,7 @@ const shopReducer = (state = initialState, action) => {
             return {...state, data: action.payload }
 
         }
+        
         case 'ADD_SHOP':{
             return {
                 ...state,

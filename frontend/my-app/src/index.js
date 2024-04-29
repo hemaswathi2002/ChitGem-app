@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { Provider } from 'react-redux';
+import { ToastContainer } from 'react-toastify';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './index.css';
 import configureStore from './store/ConfigureStore';
@@ -25,6 +26,7 @@ root.render(
         <BrowserRouter>
              <Provider store={store}>
             <App />
+            <ToastContainer /> 
             </Provider>
         </BrowserRouter>
     </AuthProvider>

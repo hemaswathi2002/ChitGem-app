@@ -80,16 +80,6 @@ const loginValidationSchema = {
 }
 
 const userOtpValidationSchema={
-    email:{
-        notEmpty:{
-            errorMessage:"email is required"
-        },
-        trim:true,
-        normalizeEmail:true,
-        isEmail:{
-            errorMessage:"enter valid email"
-        }
-    },
     otp:{
         notEmpty:{
             errorMessage:"otp is required"

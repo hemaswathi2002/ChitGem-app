@@ -1,7 +1,10 @@
 import {useState} from 'react'
 import axios from 'axios'
 import { useNavigate,Link} from 'react-router-dom'
-import { useAuth } from './Context/AuthrorizeContext'
+import { useDispatch } from 'react-redux'
+import { useAuth } from '../../Context/AuthrorizeContext'
+import { startGetUserDetails } from '../Actions/Users'
+// import { useAuth } from '../Context/AuthrorizeContext'
 // import { UsersContext } from './Context/UsersContext'
 // import ShopForm from './Components/Shop/ShopsForm'
 export default function LoginForm(props){
@@ -9,9 +12,13 @@ export default function LoginForm(props){
     const [email,setEmail] = useState('')
     const [password,setPassword] = useState('')
     const [serverErrors,setServerErrors] = useState([])
+
+    const {loginToast} = props
     const { handleLogin} = useAuth() 
+    
 
     const navigate = useNavigate()
+    const dispatch = useDispatch()
 
     const handleSubmit = async(e)=>{
         e.preventDefault()
@@ -25,17 +32,20 @@ export default function LoginForm(props){
             console.log(response.data.token)
             const token = response.data.token
             localStorage.setItem('token',token)
-            const userResponse = await axios.get('http://localhost:3009/api/users/account', { 
-                    headers: {
-                        Authorization: localStorage.getItem('token')
-                    }
-                })
-                handleLogin(userResponse.data)
+            const responseData = await axios.get('http://localhost:3009/api/users/account',{
+                headers : {
+                    Authorization : localStorage.getItem('token')
+                }
+            })
+            console.log(responseData.data)
+            // navigate('/usersControl')
+                handleLogin(responseData.data)
+                loginToast()
                 navigate('/')
             // usersDispatch({type:'SIGN_IN',payload : true});
             setServerErrors([])
             
-            // navigate('/dashboard')
+            navigate('/usersControl')
             // loginToast();
         }
         catch(err){

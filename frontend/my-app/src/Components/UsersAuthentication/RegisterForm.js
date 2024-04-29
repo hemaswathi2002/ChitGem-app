@@ -1,8 +1,8 @@
 import { useState,useContext } from "react"
 import axios from 'axios'
-import { UsersContext } from "../../Context/UsersContext"
 import { useNavigate, Link } from "react-router-dom"
-export default function RegisterForm() {
+import { toast } from "react-toastify"
+export default function RegisterForm({ registerToast }) {
     const [username, setUsername] = useState('')
     const [email, setEmail] = useState('')
     const [mobile, setMobile] = useState('')
@@ -52,9 +52,8 @@ export default function RegisterForm() {
         }
         if(Object.keys(errors).length==0){
             try{
-                const response = await axios.post('http://localhost:3009/api/users',formData)
+                const response = await axios.post('http://localhost:3009/api/users/register',formData)
                     console.log(response.data)
-                    alert('registered successfully')
                     setServerErrors([])
                     setFormErrors({})
                     setUsername('')
@@ -63,6 +62,7 @@ export default function RegisterForm() {
                     setRole('')
                     setPassword('')
                     navigate('/otp')
+                    registerToast()
             }
             catch(err){
                 console.log(err)
@@ -131,6 +131,9 @@ export default function RegisterForm() {
                 {formErrors.password && <p style = {{color : 'red'}}>{formErrors.password}</p>}
                 <div>
                     <input type='submit' />
+                </div>
+                <div>
+                    <p>Already have an account? <Link to = '/login'>Login here</Link></p>
                 </div>
             </form>
         </div>

@@ -105,9 +105,9 @@ usersCltr.verifyEmail = async (req, res) => {
     if (!errors.isEmpty()) {
         return res.status(401).json({ errors: errors.array() })
     }
-    const { email, otp } = req.body
+    const {otp } = req.body
     try {
-        const user = await User.findOneAndUpdate({ email: email, otp: otp }, { $set: { isverified: true } }, { new: true })
+        const user = await User.findOneAndUpdate({ otp: otp }, { $set: { isverified: true } }, { new: true })
         console.log(user)
         if (!user) {
             return res.status(401).json("Invalid otp")
