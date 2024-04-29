@@ -176,8 +176,7 @@ const registerToast = () => {
       { !user ? (
               <>
               <Link to = '/'>Home</Link> |
-                <Link to="/signup">Register</Link> |
-                <Link to="/login"> Login </Link> | 
+              <Link to="/signup">Register</Link> 
               </> 
             ): (
               <>
