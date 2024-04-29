@@ -4,16 +4,16 @@ import { startCreateShop, startUpdateShop, setServerErrors,clearServerErrors } f
 
 export default function ShopsForm(props) {
     const [shopName, setShopname] = useState('')
-    const [area, setArea] = useState('')
+    const [email, setEmail] = useState('')
+    const [mobile, setMobile] = useState('')
     const [pincode, setPincode] = useState(0)
     const [city, setCity] = useState('')
     const [state, setState] = useState('')
-    const [email, setEmail] = useState(0)
-    const [mobile, setMobile] = useState('')
+    const [area, setArea] = useState('')
     const [description, setDescription] = useState('')
     const [approvalStatus, setApprovalStatus] = useState('pending')
     const [formErrors, setFormErrors] = useState({})
-    const [shop,setShop]= useState({})
+    const [shop,setShop]= useState([])
     // const [serverErrors,setServerErrors]=useState([])
     const { editId } = props
 
@@ -28,23 +28,23 @@ export default function ShopsForm(props) {
             const shopData = shops.data.find((shop) => shop._id === editId)
         if (shopData) {
             setShopname(shopData.shopName || '')
-            setArea(shopData.address?.area || '') // Handle optional chaining for nested properties
-            setPincode(shopData.address?.pincode || '')
-            setCity(shopData.address?.city || '')
-            setState(shopData.address?.state || '')
             setEmail(shopData.contact?.email || '')
             setMobile(shopData.contact?.mobile || '')
+            setArea(shopData.address?.area || '') // Handle optional chaining for nested properties
+            setCity(shopData.address?.city || '')
+            setState(shopData.address?.state || '')
+            setPincode(shopData.address?.pincode || '')
             setDescription(shopData.description || '')
             setApprovalStatus(shopData.approvalStatus || 'pending')
         }
         else {
             setShopname('')
-            setArea('')
-            setPincode('')
-            setCity('')
-            setState('')
             setEmail('')
             setMobile('')
+            setArea('')
+            setCity('')
+            setState('')
+            setPincode('')
             setDescription('')
             setApprovalStatus('pending')
         }
@@ -96,8 +96,8 @@ export default function ShopsForm(props) {
 
         const formData = {
             shopName,
-            address: { area, pincode, city, state },
             contact: { mobile, email },
+            address: { area, city, state, pincode },
             description,
             approvalStatus
         }
@@ -157,6 +157,25 @@ export default function ShopsForm(props) {
                         onChange={(e) => setShopname(e.target.value)} />
                     {formErrors.shopName && <p style={{ color: 'red' }}>{formErrors.shopName}</p>}
                 </div>
+                <div>
+                    <label>Email:</label>
+                    <input
+                        type="text"
+                        className='form-control'
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)} />
+                    {formErrors.email && <p style={{ color: 'red' }}>{formErrors.email}</p>}
+                </div>
+
+                <div>
+                    <label>Mobile:</label>
+                    <input
+                        type="text"
+                        className='form-control'
+                        value={mobile}
+                        onChange={(e) => setMobile(e.target.value)} />
+                    {formErrors.mobile && <p style={{ color: 'red' }}>{formErrors.mobile}</p>}
+                </div>
 
                 <div>
                     <label>Area:</label>
@@ -168,15 +187,7 @@ export default function ShopsForm(props) {
                     {formErrors.area && <p style={{ color: 'red' }}>{formErrors.area}</p>}
                 </div>
 
-                <div>
-                    <label>Pincode:</label>
-                    <input
-                        type="number"
-                        className='form-control'
-                        value={pincode}
-                        onChange={(e) => setPincode(e.target.value)} />
-                    {formErrors.pincode && <p style={{ color: 'red' }}>{formErrors.pincode}</p>}
-                </div>
+                
 
                 <div>
                     <label>City:</label>
@@ -197,26 +208,17 @@ export default function ShopsForm(props) {
                         onChange={(e) => setState(e.target.value)} />
                     {formErrors.state && <p style={{ color: 'red' }}>{formErrors.state}</p>}
                 </div>
-
                 <div>
-                    <label>Email:</label>
+                    <label>Pincode:</label>
                     <input
-                        type="text"
+                        type="number"
                         className='form-control'
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)} />
-                    {formErrors.email && <p style={{ color: 'red' }}>{formErrors.email}</p>}
+                        value={pincode}
+                        onChange={(e) => setPincode(e.target.value)} />
+                    {formErrors.pincode && <p style={{ color: 'red' }}>{formErrors.pincode}</p>}
                 </div>
 
-                <div>
-                    <label>Mobile:</label>
-                    <input
-                        type="text"
-                        className='form-control'
-                        value={mobile}
-                        onChange={(e) => setMobile(e.target.value)} />
-                    {formErrors.mobile && <p style={{ color: 'red' }}>{formErrors.mobile}</p>}
-                </div>
+                
 
                 <div>
                     <label>Description:</label>

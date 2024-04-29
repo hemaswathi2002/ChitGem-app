@@ -38,7 +38,8 @@ import { ShopsContext } from './Context/ShopsContext'
 // import shopReducer from "./Reducers/Shops"
 import Main from './Components/Main/Main'
 import ChitForm from './Components/Chit/ChitsForm'
-import ShopsTable from './Components/Shop/ShopsTable'
+import ShopsContainer from './Components/Shop/ShopsTable'
+import Owner from './Components/OwnerDashboard/Owner'
 
 export default function App() {
   // const [chits, chitDispatch] = useReducer(chitReducer, {data: []})
@@ -66,9 +67,19 @@ export default function App() {
       // })();
 
   }, []);
+  useEffect(() => {
+    if (user) {
+      console.log("User ID:", user._id);
+      setOwnerId(user._id); // Assuming user.id is the owner's ID
+    }
+  }, [user]);
 
   useEffect(() => {
-    dispatch(startGetShop(ownerId));
+    if(ownerId){
+      dispatch(startGetShop(ownerId));
+    }else {
+      console.log("User is undefined or doesn't have an ID property:", user);
+    }
   }, [dispatch, ownerId]);
  
     
@@ -180,8 +191,8 @@ const registerToast = () => {
             ): (
               <>
                   <Link to="/account">Account</Link> |
-                  {/* <Link to="/shops">shop</Link> | */}
-                  <Link to = '/admin'>admin</Link> |
+                  <Link to="/shop">shop</Link> |
+                  {/* <Link to = '/admin'>admin</Link> | */}
                   {/* <Link to="/customers">customer</Link> |
                   <Link to = "/create-chit">chit</Link> | */}
                   <Link to="/" onClick={() => {
@@ -205,15 +216,17 @@ const registerToast = () => {
                     <Route path = '/login' element = {<LoginForm loginToast = {loginToast}/>}/>
                     <Route path = '/usersControl' element = {<UsersControl/>}/>
                     <Route path='/admin' element={<Admin/>}/>
+                    <Route path='/owner' element={<Owner/>}/>
+                    <Route path = '/shop' element = {<ShopsContainer/>}/>
                     <Route path = '/customers' element = {<CustomersContainer/>}/>
                     <Route path = '/account' element = {
                       <PrivateRoute permittedRoles = {['admin','owner','customer']}>
                         <Account/>
                       </PrivateRoute>
                     }/>
-                    {/* <Route path = '/shops' element = {
-                      <PrivateRoute permittedRoles = {['admin','owner']}>
-                        <ShopsTable/>
+                    {/* <Route path = '/shop' element = {
+                      <PrivateRoute permittedRoles = {['owner']}>
+                        <ShopsContainer/>
                       </PrivateRoute>
                     }/> */}
                     <Route path = '/create-customer' element = {

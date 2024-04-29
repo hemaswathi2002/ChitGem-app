@@ -8,19 +8,19 @@ export const ownerReducer = (state = initialState,action)=> {
         case 'ADD_SHOP':{
             return {
                 ...state,
-                data: [...state.data, action.payload]
+                data: [...state.shop, action.payload]
             }
         }
         case 'UPDATE_SHOP':{
             return {
                 ...state,
-                data: state.data.map(shop => (shop._id === action.payload._id ? action.payload : shop))
+                data: state.shop.map(shop => (shop._id === action.payload._id ? action.payload : shop))
             }
         }
         case 'REMOVE_SHOP':{
             return {
                 ...state,
-                data: state.data.filter(shop => shop._id !== action.payload)
+                data: state.shop.filter(shop => shop._id !== action.payload)
             }
         }
         case 'SET_SERVER_ERRORS': {

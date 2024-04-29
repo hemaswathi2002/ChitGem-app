@@ -61,7 +61,7 @@ app.put('/api/forgotpassword',usersCltr.resetForgotPassword)
 //api shops
 app.post('/api/shops/',authenticateUser,authorizeUser(['owner']),checkSchema(shopRegisterValidationSchema),shopsCltr.register)
 app.get('/api/shops',authenticateUser,authorizeUser(['admin']),shopsCltr.getAllshop)
-app.get('/api/shops/:id',authenticateUser,authorizeUser(['owner']),shopsCltr.getOneshop)
+app.get('/api/shops/:ownerId',authenticateUser,authorizeUser(['owner']),shopsCltr.getOneshop)
 app.put('/api/shops/:id',authenticateUser,authorizeUser(['owner']),checkSchema(shopRegisterValidationSchema),shopsCltr.update)
 app.put('/api/shops/update/:id',authenticateUser,authorizeUser(['admin']),shopsCltr.updateStatus)
 app.delete('/api/shops/:id',authenticateUser,authorizeUser(['owner']),shopsCltr.destroy)

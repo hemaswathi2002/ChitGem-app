@@ -24,7 +24,7 @@ shopsCltr.register = async (req, res) => {
 shopsCltr.getOneshop = async (req, res) => {
   try {
     const { ownerId } = req.params
-    const shop = await Shop.findOne({ _id: ownerId, ownerId : req.user.id })
+    const shop = await Shop.find({ ownerId })
 
     if (!shop) {
       return res.status(404).json({ message: "Shop not found" })

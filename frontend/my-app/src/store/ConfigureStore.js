@@ -4,15 +4,15 @@ import JewelsReducer from '../Reducers/Jewels'
 import ReviewReducer from '../Reducers/Reviews'
 import shopReducer from '../Reducers/Shops'
 import UsersReducer from '../Reducers/UsersReducer'
-import {ownerReducer} from '../Reducers/ownerReducer'
+// import {ownerReducer} from '../Reducers/ownerReducer'
 import {adminReducer}  from '../Reducers/adminReducer'
 
 const configureStore = ()=>{
     const store = createStore(combineReducers({
         users : UsersReducer,
         admin : adminReducer,
-        owner : ownerReducer
-        // shops : shopReducer,
+        // owner : ownerReducer,
+        shops : shopReducer,
         // jewels : JewelsReducer,
         // reviews:ReviewReducer
 

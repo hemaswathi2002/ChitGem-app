@@ -5,7 +5,7 @@ export default function ChitsContainer(){
         <div className="row">
         <h2>Shop Conditainer</h2>
         <div>
-            <ShopsTable/>
+        <ShopsTable/>
         </div>
         <div>
         <ShopsForm/>

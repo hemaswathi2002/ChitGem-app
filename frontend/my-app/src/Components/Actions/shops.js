@@ -7,6 +7,8 @@ export const startGetShop = (ownerId) => {
                     Authorization: localStorage.getItem('token')
                 }
             });
+            console.log("Owner ID:", ownerId);
+            console.log("Token:", localStorage.getItem('token'));
             console.log(response.data);
             dispatch(setShops(response.data));
             // localStorage.setItem('shops', JSON.stringify(response.data));
@@ -16,11 +18,10 @@ export const startGetShop = (ownerId) => {
         }
     };
 };
-const setShops = (data)=>{
+const setShops = (shops)=>{
     return {
         type : 'SET_SHOP',
-        payload : data
-
+        payload : shops
     }
 }
 

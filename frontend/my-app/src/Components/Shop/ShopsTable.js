@@ -11,9 +11,9 @@ export default function ShopsTable() {
     const [editId, setEditId] = useState('');
     const toggle = () => setModal(!modal);
 
-    const shops = useSelector((state)=>{
-        return state.shops
-    })
+    const shops = useSelector((state) => state.shops)
+    console.log(shops,'shopData')
+
 
     const dispatch = useDispatch()
 
@@ -40,32 +40,34 @@ export default function ShopsTable() {
     };
     return (
         <div>
-            <h2>shops - {shops && shops.data && shops.data.length}</h2>
+            {shops && 
+            <div>
+                <h2>shops - {shops.shop?.length}</h2>
             <table>
                 <thead>
                     <tr>
                     <th>Shop</th>
-                    <th>Area</th>
-                    <th>Pincode</th>
-                    <th>City</th>
-                    <th>State</th>
                     <th>Email</th>
                     <th>Mobile</th>
+                    <th>Area</th>
+                    <th>City</th>
+                    <th>State</th>
+                    <th>Pincode</th>
                     <th>Description</th>
                     <th>ApprovalStatus</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {shops && shops.data && shops.data.map(shop => (
+                    {shops.shop.map(shop => (
                         <tr key={shop._id}>
                            
                             <td>{shop.shopName}</td>
-                            <td>{shop.address?.area}</td>
-                            <td>{shop.address?.pincode}</td>
-                            <td>{shop.address?.city}</td>
-                            <td>{shop.address?.state}</td>
                             <td>{shop.contact?.email}</td>
                             <td>{shop.contact?.mobile}</td>
+                            <td>{shop.address?.area}</td>
+                            <td>{shop.address?.city}</td>
+                            <td>{shop.address?.state}</td>
+                            <td>{shop.address?.pincode}</td>
                             <td>{shop.description}</td>
                             <td>{shop.approvalStatus}</td>
                             <td>
@@ -76,14 +78,19 @@ export default function ShopsTable() {
                     ))}
                 </tbody>
             </table>
-           
-<Button color="danger" onClick={handleAddShop}>Add shop</Button>
+            <Button color="danger" onClick={handleAddShop}>Add shop</Button>
             <Modal isOpen={modal} toggle={toggle}>
                 <ModalHeader toggle={toggle}>Shop Form</ModalHeader>
                 <ModalBody>
                 <ShopsForm editId={editId} toggle={toggle} />
                 </ModalBody>
                 </Modal>
+            </div>
+
+            }
+            
+           
+
         </div>
     );
 }

@@ -6,18 +6,19 @@ const shopSchema = new Schema({
       type : Schema.Types.ObjectId,
       ref : 'User'
     },
-    shopName: String,
-    address: {
-        area: String,
-        pincode: Number,
-        city: String,
-        state: String
-    },
     contact: {
       mobile : Number,
       email : String
       
     },
+    shopName: String,
+    address: {
+        area: String,
+        city: String,
+        state: String,
+        pincode: Number,
+    },
+    
     description: String,
     approvalStatus: {
       type: String,
