@@ -21,23 +21,35 @@ export default function ShopsForm(props) {
     const serverErrors = useSelector((state) => state.shops.serverErrors);
     const shops = useSelector(state => state.shops)
 
+
     useEffect(() => {
-        if (editId && shops && shops.data) {
-            const shopData = shops.data.find(shop => shop._id === editId);
-            if (shopData) {
-                setShopname(shopData.shopName || '');
-                setEmail(shopData.contact?.email || '');
-                setMobile(shopData.contact?.mobile || '');
-                setArea(shopData.address?.area || '');
-                setCity(shopData.address?.city || '');
-                setState(shopData.address?.state || '');
-                setPincode(shopData.address?.pincode || 0); // Set pincode to 0 as default value
-                setDescription(shopData.description || '');
-                setApprovalStatus(shopData.approvalStatus || 'pending');
-            }
+        setShop(shop)
+        if (shops && shops.data) {
+            const shopData = shops.data.find((shop) => shop._id === editId)
+        if (shopData) {
+            setShopname(shopData.shopName || '')
+            setEmail(shopData.contact?.email || '')
+            setMobile(shopData.contact?.mobile || '')
+            setArea(shopData.address?.area || '') // Handle optional chaining for nested properties
+            setCity(shopData.address?.city || '')
+            setState(shopData.address?.state || '')
+            setPincode(shopData.address?.pincode || '')
+            setDescription(shopData.description || '')
+            setApprovalStatus(shopData.approvalStatus || 'pending')
         }
-    }, [editId, shops]);
-    
+        else {
+            setShopname('')
+            setEmail('')
+            setMobile('')
+            setArea('')
+            setCity('')
+            setState('')
+            setPincode('')
+            setDescription('')
+            setApprovalStatus('pending')
+        }
+    }
+    }, [shop, editId])
 
     const validateForm = () => {
         const errors = {}
