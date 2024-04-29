@@ -63,7 +63,7 @@ app.post('/api/shops/',authenticateUser,authorizeUser(['owner']),checkSchema(sho
 app.get('/api/shops',authenticateUser,authorizeUser(['admin']),shopsCltr.getAllshop)
 app.get('/api/shops/:id',authenticateUser,authorizeUser(['owner']),shopsCltr.getOneshop)
 app.put('/api/shops/:id',authenticateUser,authorizeUser(['owner']),checkSchema(shopRegisterValidationSchema),shopsCltr.update)
-app.put('/api/shops/update/:id',shopsCltr.updateStatus)
+app.put('/api/shops/update/:id',authenticateUser,authorizeUser(['admin']),shopsCltr.updateStatus)
 app.delete('/api/shops/:id',authenticateUser,authorizeUser(['owner']),shopsCltr.destroy)
 
 //api jewels

@@ -6,7 +6,6 @@ const shopReducer = (state = initialState, action) => {
     switch (action.type) {
         case 'SET_SHOP' : {
             return {...state, data: action.payload }
-
         }
         
         case 'ADD_SHOP':{

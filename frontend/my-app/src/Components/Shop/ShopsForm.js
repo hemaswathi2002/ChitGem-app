@@ -231,13 +231,37 @@ export default function ShopsForm(props) {
                 {!props.editId && (  // Conditionally render the Approval Status field if not editing
                     <div>
                         <label>Approval Status:</label>
-                        <select
-                            value={approvalStatus}
-                            onChange={(e) => setApprovalStatus(e.target.value)}>
-                            <option value="pending">Pending</option>
-                            <option value="rejected">Rejected</option>
-                            <option value="approved">Approved</option>
-                        </select>
+                    <div>
+                        <input
+                            type="radio"
+                            id="pending"
+                            name="approvalStatus"
+                            value="pending"
+                            checked={approvalStatus === "pending"}
+                            onChange={(e) => setApprovalStatus(e.target.value)}
+                        />
+                        <label htmlFor="pending">Pending</label>
+
+                        <input
+                            type="radio"
+                            id="rejected"
+                            name="approvalStatus"
+                            value="rejected"
+                            checked={approvalStatus === "rejected"}
+                            onChange={(e) => setApprovalStatus(e.target.value)}
+                        />
+                        <label htmlFor="rejected">Rejected</label>
+
+                        <input
+                            type="radio"
+                            id="approved"
+                            name="approvalStatus"
+                            value="approved"
+                            checked={approvalStatus === "approved"}
+                            onChange={(e) => setApprovalStatus(e.target.value)}
+                        />
+                        <label htmlFor="approved">Approved</label>
+                    </div>
                         {formErrors.approvalStatus && <p style={{ color: 'red' }}>{formErrors.approvalStatus}</p>}
                     </div>
                 )}

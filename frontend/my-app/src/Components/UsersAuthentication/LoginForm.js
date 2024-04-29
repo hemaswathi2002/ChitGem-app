@@ -50,14 +50,16 @@ export default function LoginForm(props){
         }
         catch(err){
             console.log(err)
-            // console.log(err.response.data.errors)
+            console.log(err.response.data.errors)
             setServerErrors(err.response.data.errors)
         }
     }
 
     return(
         <div>
-            {serverErrors && <p style = {{color:'red'}}>{serverErrors}</p>}
+            {serverErrors.length>0 && <p style = {{color:'red'}}>{serverErrors.map((error,i)=>{
+                return <li key = {i}>{error.msg}</li>
+            })}</p>}
             <form onSubmit = {handleSubmit}>
                 <h2>Login</h2>
                <div>
