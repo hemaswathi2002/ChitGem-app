@@ -7,7 +7,7 @@ import Footer from '../../Components/Footer'
 export default function RegisterForm({ registerToast }) {
     const [username, setUsername] = useState('')
     const [email, setEmail] = useState('')
-    const [mobile, setMobile] = useState('')
+    const [mobile, setMobile] = useState('owner')
     const [role, setRole] = useState('')
     const [password, setPassword] = useState('')
     const [formErrors, setFormErrors] = useState({})
@@ -59,7 +59,7 @@ export default function RegisterForm({ registerToast }) {
                 setMobile('')
                 setRole('')
                 setPassword('')
-                navigate('/otp')
+                // navigate('/otp')
                 registerToast()
             } catch(err) {
                 console.log(err)
