@@ -42,7 +42,7 @@ import ShopsContainer from './Components/Shop/ShopsTable'
 import Owner from './Components/OwnerDashboard/Owner'
 
 export default function App() {
-  // const [chits, chitDispatch] = useReducer(chitReducer, {data: []})
+  const [chits, chitDispatch] = useReducer(chitReducer, {data: []})
   // const [users, usersDispatch] = useReducer(UsersReducer, {userDetails : [], isLoggedIn : false});
   const [customers, customerDispatch] = useReducer(CustomersReducer, {data:[]})
   const [ownerId,setOwnerId] = useState('')
@@ -88,7 +88,6 @@ export default function App() {
   useEffect(() => {
     (async () => {
       try {
-        console.log('Fetching customer data...');
         const customersResponse = await axios.get(`http://localhost:3009/api/customers/${ownerId}`,{
           headers : {
             Authorization : localStorage.getItem('token')
@@ -100,7 +99,23 @@ export default function App() {
         console.log(err);
       }
     })();
-  }, [customerDispatch,ownerId]);
+
+    (async () => {
+          try {
+            const chitsResponse = await axios.get('http://localhost:3009/api/chits',{
+              headers : {
+                Authorization : localStorage.getItem('token')
+              }
+            });
+            console.log(chitsResponse.data)
+            chitDispatch({ type: 'SET_CHIT', payload: chitsResponse.data });
+    
+          } catch (err) {
+            console.log(err);
+          }
+        })();
+
+  }, [customerDispatch,ownerId,chitDispatch]);
  
     
   const users = useSelector((state) => state.users)
@@ -217,8 +232,8 @@ const registerToast = () => {
                   <Link to="/shop">shop</Link> |
                   {/* <Link to="/register">Register</Link>|  */}
                   {/* <Link to = '/admin'>admin</Link> | */}
-                  {/* <Link to="/customers">customer</Link> | */}
-                  {/* <Link to = "/create-chit">chit</Link> | */}
+                  <Link to="/customers">customer</Link> |
+                  <Link to = "/chit">chit</Link> |
                   <Link to="/" onClick={() => {
                     localStorage.removeItem('token')
                     handleLogout()
@@ -227,7 +242,7 @@ const registerToast = () => {
             )}
                   </>
 
-        {/* <ChitsContext.Provider value={{ chits, chitDispatch }}> */}
+        <ChitsContext.Provider value={{ chits, chitDispatch }}>
           {/* <UsersContext.Provider value={{ users, usersDispatch }}> */}
             {/* <CustomersContext.Provider value={{ customers, customerDispatch }}> */}
                     <CustomersContext.Provider value={{ customers, customerDispatch }}> 
@@ -262,9 +277,9 @@ const registerToast = () => {
                         <CustomersForm/>
                       </PrivateRoute>
                     }/> */}
-                    <Route path = '/create-chit' element = {
+                    <Route path = '/chit' element = {
                       <PrivateRoute permittedRoles = {['owner']}>
-                        <ChitForm/>
+                        <ChitsContainer/>
                       </PrivateRoute>
                     }/>
                     <Route path="/unauthorized" element={<Unauthorized /> } />
@@ -298,7 +313,7 @@ const registerToast = () => {
               {/* </ShopsContext.Provider>
             </CustomersContext.Provider> */}
           {/* </UsersContext.Provider> */}
-        {/* </ChitsContext.Provider> */}
+        </ChitsContext.Provider>
     </div>
   );
 }

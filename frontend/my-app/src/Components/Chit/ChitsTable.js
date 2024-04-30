@@ -10,6 +10,7 @@ export default function ChitList() {
     const [editId, setEditId] = useState('')
     const [serverError, setServerError] = useState(null)
     const toggle = () => setModal(!modal)
+    console.log('customerTable',chits)
 
     const handleRemove = async (id) => {
         const confirmation = window.confirm('Are you sure?')

@@ -144,10 +144,12 @@ import React, { useState, useEffect, useContext } from 'react'
 import axios from 'axios'
 import { CustomersContext } from '../../Context/CustomersContext'
 import { useAuth } from '../../Context/AuthrorizeContext'
+import { useNavigate } from 'react-router-dom'
 
 export default function CustomersForm(props) {
     const { customers, customerDispatch } = useContext(CustomersContext)
     const { editId, toggle, users = [] } = props
+    const navigate = useNavigate()
 
     // Initialize the form state with an empty customer object
     const [customer, setCustomer] = useState({
@@ -197,6 +199,7 @@ export default function CustomersForm(props) {
                 })
                 console.log(response.data)
                 customerDispatch({ type: 'ADD_CUSTOMERS', payload: response.data })
+                navigate('/chit')
             }
             toggle()
         } catch (err) {
