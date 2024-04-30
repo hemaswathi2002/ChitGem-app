@@ -133,97 +133,94 @@
 //         </div>
 //     )
 // }
-// import { useState, useEffect, useContext } from 'react';
-// import axios from 'axios';
-// import { CustomersContext } from '../../Context/CustomersContext';
-// import { useAuth } from '../../Context/AuthrorizeContext';
+// import { useState, useEffect, useContext } from 'react'
+// import axios from 'axios'
+// import { CustomersContext } from '../../Context/CustomersContext'
+// import { useAuth } from '../../Context/AuthrorizeContext'import { useState, useEffect, useContext } from 'react'
 
-import { useState, useEffect, useContext } from 'react';
-import axios from 'axios';
-import { CustomersContext } from '../../Context/CustomersContext';
-import { useAuth } from '../../Context/AuthrorizeContext';
+
+
+import React, { useState, useEffect, useContext } from 'react'
+import axios from 'axios'
+import { CustomersContext } from '../../Context/CustomersContext'
+import { useAuth } from '../../Context/AuthrorizeContext'
 
 export default function CustomersForm(props) {
-    const { customers, customerDispatch } = useContext(CustomersContext);
-    const { editId, toggle, users = [] } = props;
+    const { customers, customerDispatch } = useContext(CustomersContext)
+    const { editId, toggle, users = [] } = props
 
     // Initialize the form state with an empty customer object
     const [customer, setCustomer] = useState({
         name: '',
         contact: { email: '', mobile: '' },
         description: ''
-    });
-    const [filteredUsers, setFilteredUsers] = useState(users)
+    })
+    const [filteredUsers, setFilteredUsers] = useState([])
 
-    console.log(filteredUsers)
+    useEffect(() => {
+        setFilteredUsers(Array.isArray(users) ? users : [])
+    }, [users])
+
     useEffect(() => {
         if (editId) {
-            const customer = customers?.data.find(ele => ele._id === editId);
+            const customer = customers?.data.find(ele => ele._id === editId)
             if (customer) {
-                // Update the form state with the fetched customer data
-                setCustomer(customer);
+                setCustomer(customer)
             }
         } else {
-            // Reset the form state when there's no editId
             setCustomer({
                 name: '',
                 contact: { email: '', mobile: '' },
                 description: ''
-            });
+            })
         }
-    }, [customers, editId]);
+    }, [customers, editId])
 
     const handleSubmit = async (e) => {
-        e.preventDefault();
+        e.preventDefault()
 
         try {
-            let response;
+            let response
             if (editId) {
                 response = await axios.put(`http://localhost:3009/api/customers/${editId}`, customer, {
                     headers: {
                         Authorization: localStorage.getItem('token')
                     }
-                });
-                customerDispatch({ type: 'UPDATE_CUSTOMERS', payload: response.data });
+                })
+                customerDispatch({ type: 'UPDATE_CUSTOMERS', payload: response.data })
             } else {
                 response = await axios.post('http://localhost:3009/api/customers', customer, {
                     headers: {
                         Authorization: localStorage.getItem('token')
                     }
-                });
-                customerDispatch({ type: 'ADD_CUSTOMERS', payload: response.data });
+                })
+                customerDispatch({ type: 'ADD_CUSTOMERS', payload: response.data })
             }
-            toggle(); // Close the form after submission
+            toggle()
         } catch (err) {
            console.log(err)
         }
-    };
+    }
 
-    // Function to update the form state when any field changes
     const handleChange = (e) => {
-        const { name, value } = e.target;
+        const { name, value } = e.target
 
-        // If the field is nested, update the nested state correctly
         if (name.includes('.')) {
-            const [fieldName, nestedField] = name.split('.');
+            const [fieldName, nestedField] = name.split('.')
             setCustomer(prevState => ({
                 ...prevState,
                 [fieldName]: {
                     ...prevState[fieldName],
                     [nestedField]: value
                 }
-            }));
+            }))
         } else {
             setCustomer(prevState => ({
                 ...prevState,
                 [name]: value
-            }));
+            }))
         }
-    };
-    useEffect(() => {
-            setFilteredUsers([users]);
-    }, [users]);
-    console.log(filteredUsers)
+    }
 
     return (
         <div>
@@ -240,10 +237,10 @@ export default function CustomersForm(props) {
                     />
                 </div>
                 <div>
-                <label htmlFor="email">Email</label>
+                    <label htmlFor="email">Email</label>
                     <input
                         type="text"
-                        value={customer.contact.email || customer.contact.ownerEmail} // Use email or ownerEmail depending on the role
+                        value={customer.contact.email} 
                         onChange={handleChange}
                         className="form-control"
                         name="contact.email"
@@ -252,7 +249,7 @@ export default function CustomersForm(props) {
                     />
                     <datalist id="emailSuggestions">
                         {filteredUsers.map((user) => (
-                            <option key={user._id} value={user._id ? user._id : user.email}>user.email</option>
+                            <option key={user._id} value={user.email}>{user.email}</option> 
                         ))}
                     </datalist>
                 </div>
@@ -283,5 +280,5 @@ export default function CustomersForm(props) {
                 </div>
             </form>
         </div>
-    );
+    )
 }
