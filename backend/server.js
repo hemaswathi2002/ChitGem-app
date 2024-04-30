@@ -82,7 +82,7 @@ app.delete('/api/chits/:id',chitsCltr.destroy)
 //api customers
 app.post('/api/customers',authenticateUser,authorizeUser(['owner']),customersCltr.register)
 app.get('/api/customers',authenticateUser,authorizeUser(['owner']),customersCltr.list)
-// app.get('/api/customers/:id',authenticateUser,authorizeUser(['owner']),customersCltr.getOneCustomer)
+app.get('/api/customers/:id',authenticateUser,authorizeUser(['owner']),customersCltr.getOneCustomer)
 app.put('/api/customers/:id',authenticateUser,authorizeUser(['owner']),checkSchema(chitRegisterValidationSchema),customersCltr.update)
 app.delete('/api/customers/:id',authenticateUser,authorizeUser(['owner']),customersCltr.destroy)
 

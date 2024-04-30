@@ -44,7 +44,7 @@ import Owner from './Components/OwnerDashboard/Owner'
 export default function App() {
   // const [chits, chitDispatch] = useReducer(chitReducer, {data: []})
   // const [users, usersDispatch] = useReducer(UsersReducer, {userDetails : [], isLoggedIn : false});
-  const [customers, customerDispatch] = useReducer(CustomersReducer, {data:{}})
+  const [customers, customerDispatch] = useReducer(CustomersReducer, {data:[]})
   const [ownerId,setOwnerId] = useState('')
   const { user, handleLogin,  handleLogout } = useAuth() 
 
@@ -82,7 +82,7 @@ export default function App() {
         console.log(err);
       }
     })();
-  }, []);
+  }, [customerDispatch]);
   useEffect(() => {
     if (user) {
       console.log("User ID:", user._id);

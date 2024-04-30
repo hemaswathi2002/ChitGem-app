@@ -57,7 +57,7 @@ customersCltr.update = async(req,res) => {
         const owner = req.user.id
         console.log(owner)
         const shop = await Shop.findOne({ownerId : owner})
-        // body.shopId = shop.id
+        body.shopId = shop.id
         if (!shop) {
             return res.status(404).json({ errors: 'Shop not found' });
         }
