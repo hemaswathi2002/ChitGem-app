@@ -71,7 +71,11 @@ export default function App() {
     (async () => {
       try {
         console.log('Fetching customer data...');
-        const customersResponse = await axios.get('http://localhost:3009/api/customers');
+        const customersResponse = await axios.get('http://localhost:3009/api/customers',{
+          headers : {
+            Authorization : localStorage.getItem('token')
+          }
+        });
         console.log('customer', customersResponse.data);
         customerDispatch({ type: 'SET_CUSTOMERS', payload: customersResponse.data });    
       } catch(err) {
@@ -198,14 +202,15 @@ const registerToast = () => {
       { !user ? (
               <>
               <Link to = '/'>Home</Link> |
-              <Link to="/signup">Register</Link> 
+              <Link to="/signup">Register</Link>| 
+              <Link to="/login">Log-in</Link>
               </> 
             ): (
               <>
                   <Link to="/account">Account</Link> |
-                  {/* <Link to="/shop">shop</Link> | */}
+                  <Link to="/shop">shop</Link> |
                   {/* <Link to = '/admin'>admin</Link> | */}
-                  {/* <Link to="/customers">customer</Link> | */}
+                  <Link to="/customers">customer</Link> |
                   {/* <Link to = "/create-chit">chit</Link> | */}
                   <Link to="/" onClick={() => {
                     localStorage.removeItem('token')
@@ -229,7 +234,7 @@ const registerToast = () => {
                     <Route path='/admin' element={<Admin/>}/>
                     <Route path='/owner' element={<Owner/>}/>
                     <Route path = '/shop' element = {<ShopsContainer/>}/>
-                    {/* <Route path = '/customers' element = {<CustomersContainer/>}/> */}
+                    <Route path = '/customers' element = {<CustomersContainer/>}/>
                     <Route path = '/account' element = {
                       <PrivateRoute permittedRoles = {['admin','owner','customer']}>
                         <Account/>

@@ -3,9 +3,9 @@ export default function CustomersReducer(state,action){
         case 'SET_CUSTOMERS' : {
             return {...state,data:action.payload}
         }
-        // case 'ADD_CUSTOMERS' :{
-        //     return {...state, data: [...state.data,action.payload]}
-        // }
+        case 'ADD_CUSTOMERS' :{
+            return {...state, data: [...state.data,action.payload]}
+        }
         // case 'UPDATE_CUSTOMERS' : {
         //     const updatedData = state.data.map(customer =>
         //         customer._id === action.payload._id ? action.payload : customer
