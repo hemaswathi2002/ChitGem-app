@@ -69,6 +69,22 @@ export default function App() {
       // })();
 
   }, []);
+  
+  useEffect(() => {
+    if (user) {
+      console.log("User ID:", user._id);
+      setOwnerId(user._id); 
+    }
+  }, [user]);
+
+  useEffect(() => {
+    if(ownerId){
+      dispatch(startGetShop(ownerId));
+    }else {
+      console.log("User is undefined or doesn't have an ID property:", user);
+    }
+  }, [dispatch, ownerId]);
+
   useEffect(() => {
     (async () => {
       try {
@@ -85,20 +101,6 @@ export default function App() {
       }
     })();
   }, [customerDispatch,ownerId]);
-  useEffect(() => {
-    if (user) {
-      console.log("User ID:", user._id);
-      setOwnerId(user._id); 
-    }
-  }, [user]);
-
-  useEffect(() => {
-    if(ownerId){
-      dispatch(startGetShop(ownerId));
-    }else {
-      console.log("User is undefined or doesn't have an ID property:", user);
-    }
-  }, [dispatch, ownerId]);
  
     
   const users = useSelector((state) => state.users)
