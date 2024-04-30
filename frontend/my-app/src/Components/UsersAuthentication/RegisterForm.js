@@ -2,6 +2,7 @@ import { useState } from "react"
 import axios from 'axios'
 import { useNavigate, Link } from "react-router-dom"
 import { Container, Form, Button } from 'react-bootstrap'
+import Footer from '../../Components/Footer'
 
 export default function RegisterForm({ registerToast }) {
     const [username, setUsername] = useState('')
@@ -134,8 +135,13 @@ export default function RegisterForm({ registerToast }) {
                     <div style={{ textAlign: 'center', marginTop: '10px' }}>
                         <p>Already have an account? <Link to="/login">Login here</Link></p>
                     </div>
+
                 </Form>
-            </div>
+                <Footer/>
+
+            </div>     
+
         </div>
+        
     )
 }

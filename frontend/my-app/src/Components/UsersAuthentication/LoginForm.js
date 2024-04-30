@@ -5,6 +5,7 @@ import { useDispatch } from 'react-redux'
 import { Form, FormGroup, Label, Input, Button, Container } from 'reactstrap' // Import Reactstrap components
 import { useAuth } from '../../Context/AuthrorizeContext'
 import { startGetUserDetails } from '../Actions/Users'
+import Footer from '../../Components/Footer'
 
 export default function LoginForm(props) {
     const [email, setEmail] = useState('')
@@ -46,7 +47,7 @@ export default function LoginForm(props) {
 
     return (
         <div>
-        <div style={{ backgroundColor: '#ffb6c1', height: '150px', width: '100%' }}></div>
+        {/* <div style={{ backgroundColor: '#ffb6c1', height: '150px', width: '100%' }}></div> */}
         <Container style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '60vh' }}>
           <div style={{ border: '2px solid pink', padding: '20px', borderRadius: '5px', width: '30%' }}>
             <h2 style={{ textAlign: 'center', marginBottom: '20px' }}>Log-in</h2>
@@ -86,6 +87,8 @@ export default function LoginForm(props) {
             </Form>
             </div>
         </Container>
+        <Footer/>
         </div>
+        
     )
 }
