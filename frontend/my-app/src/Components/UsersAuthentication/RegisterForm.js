@@ -2,6 +2,7 @@ import { useState } from "react"
 import axios from 'axios'
 import { useNavigate, Link } from "react-router-dom"
 import { Container, Form, Button } from 'react-bootstrap'
+import Footer from '../../Components/Footer'
 
 export default function RegisterForm({ registerToast }) {
     const [username, setUsername] = useState('')
@@ -69,72 +70,78 @@ export default function RegisterForm({ registerToast }) {
     }
 
     return (
-        
-        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '75vh' }}>
+        <div>
+        <div style={{ backgroundColor: '#ffb6c1', height: '10px', width: '100%' }}></div>
+        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '45vh', marginTop: '10px' }}>
             <div style={{ border: '2px solid pink', padding: '20px', borderRadius: '5px', width: '30%' }}>
 
-                <h2 style={{ textAlign: 'center', marginBottom: '20px' }}>Sign-up</h2>
-                <div>
-                    {Array.isArray(serverErrors) && serverErrors.length > 0 && (
-                        <div>
-                            {serverErrors.map((error, index) => (
-                                <small key={index} style={{ color: 'red', fontSize: '0.8rem' }}>{error.msg}</small>
-                            ))}
+                    <h2 style={{ textAlign: 'center', marginBottom: '20px' }}>Sign-up</h2>
+                    <div>
+                        {Array.isArray(serverErrors) && serverErrors.length > 0 && (
+                            <div>
+                                {serverErrors.map((error, index) => (
+                                    <small key={index} style={{ color: 'red', fontSize: '0.8rem' }}>{error.msg}</small>
+                                ))}
+                            </div>
+                        )}
+                    </div>
+
+                    <Form onSubmit={handleSubmit}>
+                        <Form.Group className="mb-3" controlId="floatingInputUsername">
+                            <Form.Control type="text" placeholder="Username" value={username} onChange={(e) => setUsername(e.target.value)} />
+                            {formErrors.username && <small style={{ color: 'red', fontSize: '0.7rem' }}>{formErrors.username}</small>}
+                        </Form.Group>
+                        <Form.Group className="mb-3" controlId="floatingInputEmail">
+                            <Form.Control type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
+                            {formErrors.email && <small style={{ color: 'red', fontSize: '0.7rem' }}>{formErrors.email}</small>}
+                        </Form.Group>
+                        <Form.Group className="mb-3" controlId="floatingInputMobile">
+                            <Form.Control type="text" placeholder="Mobile" value={mobile} onChange={(e) => setMobile(e.target.value)} />
+                            {formErrors.mobile && <small style={{ color: 'red', fontSize: '0.7rem' }}>{formErrors.mobile}</small>}
+                        </Form.Group>
+
+                        <Form.Group className="mb-3">
+                            <Form.Label>Role:</Form.Label>
+                            <div>
+                                <Form.Check
+                                    inline
+                                    type="radio"
+                                    id="owner-role"
+                                    label="Owner"
+                                    value="owner"
+                                    checked={role === 'owner'}
+                                    onChange={() => setRole('owner')}
+                                />
+                                <Form.Check
+                                    inline
+                                    type="radio"
+                                    id="customer-role"
+                                    label="Customer"
+                                    value="customer"
+                                    checked={role === 'customer'}
+                                    onChange={() => setRole('customer')}
+                                />
+                            </div>
+                            {formErrors.role && <small style={{ color: 'red', fontSize: '0.7rem' }}>{formErrors.role}</small>}
+                        </Form.Group>
+
+                        <Form.Group className="mb-3" controlId="floatingInputPassword">
+                            <Form.Control type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
+                            {formErrors.password && <small style={{ color: 'red', fontSize: '0.7rem' }}>{formErrors.password}</small>}
+                        </Form.Group>
+
+                        <div style={{ textAlign: 'center' }}>
+                            <Button type="submit" style={{ backgroundColor: '#ffb6c1' }}>Submit</Button>
                         </div>
-                    )}
-                </div>
+                        <div style={{ textAlign: 'center', marginTop: '10px' }}>
+                            <p>Already have an account? <Link to="/login">Login here</Link></p>
+                        </div>
 
-                <Form onSubmit={handleSubmit}>
-                    <Form.Group className="mb-3" controlId="floatingInputUsername">
-                        <Form.Control type="text" placeholder="Username" value={username} onChange={(e) => setUsername(e.target.value)} />
-                        {formErrors.username && <small style={{ color: 'red', fontSize: '0.7rem' }}>{formErrors.username}</small>}
-                    </Form.Group>
-                    <Form.Group className="mb-3" controlId="floatingInputEmail">
-                        <Form.Control type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
-                        {formErrors.email && <small style={{ color: 'red', fontSize: '0.7rem' }}>{formErrors.email}</small>}
-                    </Form.Group>
-                    <Form.Group className="mb-3" controlId="floatingInputMobile">
-                        <Form.Control type="text" placeholder="Mobile" value={mobile} onChange={(e) => setMobile(e.target.value)} />
-                        {formErrors.mobile && <small style={{ color: 'red', fontSize: '0.7rem' }}>{formErrors.mobile}</small>}
-                    </Form.Group>
+                    </Form>
+                    <Footer/>
 
-                    <Form.Group className="mb-3">
-    <Form.Label>Role:</Form.Label>
-    <div>
-        <Form.Check
-            inline
-            type="radio"
-            id="owner-role"
-            label="Owner"
-            value="owner"
-            checked={role === 'owner'}
-            onChange={() => setRole('owner')}
-        />
-        <Form.Check
-            inline
-            type="radio"
-            id="customer-role"
-            label="Customer"
-            value="customer"
-            checked={role === 'customer'}
-            onChange={() => setRole('customer')}
-        />
-    </div>
-    {formErrors.role && <small style={{ color: 'red', fontSize: '0.7rem' }}>{formErrors.role}</small>}
-</Form.Group>
+                </div>     
 
-                    <Form.Group className="mb-3" controlId="floatingInputPassword">
-                        <Form.Control type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
-                        {formErrors.password && <small style={{ color: 'red', fontSize: '0.7rem' }}>{formErrors.password}</small>}
-                    </Form.Group>
-
-                    <div style={{ textAlign: 'center' }}>
-                    <Button type="submit" style={{ backgroundColor: '#ffb6c1' }}>Submit</Button>
-                    </div>
-                    <div style={{ textAlign: 'center', marginTop: '10px' }}>
-                        <p>Already have an account? <Link to="/login">Login here</Link></p>
-                    </div>
-                </Form>
             </div>
         </div>
     )
