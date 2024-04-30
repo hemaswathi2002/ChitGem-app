@@ -80,12 +80,11 @@ app.get('/api/chits/:id',chitsCltr.getOnechit)
 app.delete('/api/chits/:id',chitsCltr.destroy)
 
 //api customers
-app.post('/api/customers',authenticateUser,authorizeUser(['owner']),customersCltr.register)
+app.post('/api/customers',authenticateUser,authorizeUser(['owner']),checkSchema(customerValidationSchema),customersCltr.register)
 app.get('/api/customers/:ownerId',authenticateUser,authorizeUser(['owner']),customersCltr.list)
 app.get('/api/customers/:id',authenticateUser,authorizeUser(['owner']),customersCltr.getOneCustomer)
-app.put('/api/customers/:id',authenticateUser,authorizeUser(['owner']),checkSchema(chitRegisterValidationSchema),customersCltr.update)
+app.put('/api/customers/:id',authenticateUser,authorizeUser(['owner']),checkSchema(customerValidationSchema),customersCltr.update)
 app.delete('/api/customers/:id',authenticateUser,authorizeUser(['owner']),customersCltr.destroy)
-
 //api reviews
 app.post ('/api/reviews',reviewsCltr.create)
 app.get('/api/reviews',reviewsCltr.list)

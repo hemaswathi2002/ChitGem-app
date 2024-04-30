@@ -1,56 +1,36 @@
-const customerValidationSchema = {
-    name : {
-        notEmpty : {
-            errorMessage : "* username is required"
-        },
-        trim : true
-    },
-    "contact.email" : {
-        notEmpty : {
-            errorMessage : "* email is required"
-        },
-        isEmail : {
-            errorMessage : "* email must be in email format"
-        }, 
-        normalizeEmail : true, trim : true
-    },
-    "contact.mobile" : {
-        notEmpty : {
-            errorMessage : "* mobile is required"
-        },
-        isNumeric : {
-            errorMessage : "* mobile must contain only numbers"
-        },
-        isLength : {
-            options : {min : 10, max:10},
-            errorMessage : "* mobile must containe 10 digits"
-        },
-        trim : true
-    },
-    // ownerId : {
-    //     notEmpty : {
-    //         errorMessage : "* ownerId is required"
-    //     },
-    //     isMongoId : {
-    //         errorMessage : "* enter valid mongoId"
-    //     },
-    //     trim : true
-    // },
-    // shopId:{
-    //     notEmpty : {
-    //         errorMessage : "* shopId is required"
-    //     },
-    //     isMongoId : {
-    //         errorMessage : "* enter valid mongoId"
-    //     },
-    //     trim : true
-    // }
-    // goldHarvested : {
-    //     notEmpty : {
-    //         errorMessage : "*"
-    //     }
-    // }
 
-}
+  //customer validation 
+  const customerValidationSchema = {
+    name: {
+        notEmpty: {
+            errorMessage: "* Username is required"
+        },
+        trim: true
+    },
+    "contact.email": {
+        notEmpty: {
+            errorMessage: "* Email is required"
+        },
+        isEmail: {
+            errorMessage: "* Email must be in email format"
+        },
+        normalizeEmail: true,
+        trim: true
+    },
+    "contact.mobile": {
+        notEmpty: {
+            errorMessage: "* Mobile is required"
+        },
+        isNumeric: {
+            errorMessage: "* Mobile must contain only numbers"
+        },
+        isLength: {
+            options: { min: 10, max: 10 },
+            errorMessage: "* Mobile must contain 10 digits"
+        },
+        trim: true
+    }
+};
 
-module.exports = customerValidationSchema
+module.exports = customerValidationSchema;
+

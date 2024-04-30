@@ -1,8 +1,9 @@
-import { useAuth } from '../Context/AuthrorizeContext';
+import { useAuth } from '../Context/AuthrorizeContext'
 import Footer from '../Components/Footer'
+import '../index.css'
 
 export default function Account() {
-    const { user } = useAuth();
+    const { user } = useAuth()
 
     return (
         <div className="account-details-wrapper">
@@ -18,5 +19,5 @@ export default function Account() {
             </div>
             <Footer />
         </div>
-    );
+    )
 }

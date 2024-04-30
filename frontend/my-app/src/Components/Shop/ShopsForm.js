@@ -130,7 +130,7 @@ export default function ShopsForm({ editId, toggle }) {
             <div>
                 <label>Shop Name:</label>
                 <input
-                    type="text"
+                    type="text"Z
                     name="shopName"
                     value={shopData.shopName}
                     onChange={handleChange}
