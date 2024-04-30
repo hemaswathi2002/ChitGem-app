@@ -195,6 +195,7 @@ export default function CustomersForm(props) {
                         Authorization: localStorage.getItem('token')
                     }
                 })
+                console.log(response.data)
                 customerDispatch({ type: 'ADD_CUSTOMERS', payload: response.data })
             }
             toggle()
@@ -246,13 +247,13 @@ export default function CustomersForm(props) {
                         className="form-control"
                         name="contact.email"
                         id="email"
-                        list="emailSuggestions"
+                        // list="emailSuggestions"
                     />
-                    <datalist id="emailSuggestions">
+                    {/* <datalist id="emailSuggestions">
                         {filteredUsers.map((user) => (
                             <option key={user._id} value={user.email}>{user.email}</option> 
                         ))}
-                    </datalist>
+                    </datalist> */}
                 </div>
                 <div>
                     <label htmlFor="mobile">Mobile</label>

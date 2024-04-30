@@ -136,6 +136,9 @@ export default function RegisterForm({ registerToast }) {
                         <div style={{ textAlign: 'center', marginTop: '10px' }}>
                             <p>Already have an account? <Link to="/login">Login here</Link></p>
                         </div>
+                        <div>
+                            <Link to = '/customers'>Add Customer</Link>
+                        </div>
 
                     </Form>
                     <Footer/>

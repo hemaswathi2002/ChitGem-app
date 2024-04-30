@@ -213,9 +213,9 @@ const registerToast = () => {
               <>
                   <Link to="/account">Account</Link> |
                   <Link to="/shop">shop</Link> |
-                  <Link to="/register">Register</Link>| 
+                  {/* <Link to="/register">Register</Link>|  */}
                   {/* <Link to = '/admin'>admin</Link> | */}
-                  <Link to="/customers">customer</Link> |
+                  {/* <Link to="/customers">customer</Link> | */}
                   {/* <Link to = "/create-chit">chit</Link> | */}
                   <Link to="/" onClick={() => {
                     localStorage.removeItem('token')

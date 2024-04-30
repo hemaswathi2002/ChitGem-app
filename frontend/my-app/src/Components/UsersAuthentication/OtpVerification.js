@@ -18,7 +18,7 @@ export default function OtpVerificationForm() {
       console.log(response.data)
       auth.handleLogin(response.data.user)
       alert('email verified')
-      navigate('/login')
+      // navigate('/login')
     } catch (err) {
       console.log(err)
     }
