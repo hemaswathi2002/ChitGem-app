@@ -44,7 +44,7 @@ import Owner from './Components/OwnerDashboard/Owner'
 export default function App() {
   // const [chits, chitDispatch] = useReducer(chitReducer, {data: []})
   // const [users, usersDispatch] = useReducer(UsersReducer, {userDetails : [], isLoggedIn : false});
-  const [customers, customerDispatch] = useReducer(CustomersReducer, {data:[]})
+  const [customers, customerDispatch] = useReducer(CustomersReducer, {data:{}})
   const [ownerId,setOwnerId] = useState('')
   const { user, handleLogin,  handleLogout } = useAuth() 
 
@@ -58,7 +58,7 @@ export default function App() {
       // (async ()=>{
       //   try{
       //     const customersResponse = await axios.get('http://localhost:3009/api/customers');
-      //     console.log(customersResponse.data)
+      //     console.log('customer',customersResponse.data)
       //     customerDispatch({ type: 'SET_CUSTOMERS', payload: customersResponse.data });    
       //   }
       //   catch(err){
@@ -68,9 +68,21 @@ export default function App() {
 
   }, []);
   useEffect(() => {
+    (async () => {
+      try {
+        console.log('Fetching customer data...');
+        const customersResponse = await axios.get('http://localhost:3009/api/customers');
+        console.log('customer', customersResponse.data);
+        customerDispatch({ type: 'SET_CUSTOMERS', payload: customersResponse.data });    
+      } catch(err) {
+        console.log(err);
+      }
+    })();
+  }, []);
+  useEffect(() => {
     if (user) {
       console.log("User ID:", user._id);
-      setOwnerId(user._id); // Assuming user.id is the owner's ID
+      setOwnerId(user._id); 
     }
   }, [user]);
 
@@ -191,10 +203,10 @@ const registerToast = () => {
             ): (
               <>
                   <Link to="/account">Account</Link> |
-                  <Link to="/shop">shop</Link> |
+                  {/* <Link to="/shop">shop</Link> | */}
                   {/* <Link to = '/admin'>admin</Link> | */}
-                  {/* <Link to="/customers">customer</Link> |
-                  <Link to = "/create-chit">chit</Link> | */}
+                  {/* <Link to="/customers">customer</Link> | */}
+                  {/* <Link to = "/create-chit">chit</Link> | */}
                   <Link to="/" onClick={() => {
                     localStorage.removeItem('token')
                     handleLogout()
@@ -205,8 +217,7 @@ const registerToast = () => {
 
         {/* <ChitsContext.Provider value={{ chits, chitDispatch }}> */}
           {/* <UsersContext.Provider value={{ users, usersDispatch }}> */}
-            {/* <CustomersContext.Provider value={{ customers, customerDispatch }}>
-              <ShopsContext.Provider value={{ shops, shopDispatch }}> */}
+            {/* <CustomersContext.Provider value={{ customers, customerDispatch }}> */}
                     <CustomersContext.Provider value={{ customers, customerDispatch }}> 
                   <Routes>
                     <>
@@ -218,7 +229,7 @@ const registerToast = () => {
                     <Route path='/admin' element={<Admin/>}/>
                     <Route path='/owner' element={<Owner/>}/>
                     <Route path = '/shop' element = {<ShopsContainer/>}/>
-                    <Route path = '/customers' element = {<CustomersContainer/>}/>
+                    {/* <Route path = '/customers' element = {<CustomersContainer/>}/> */}
                     <Route path = '/account' element = {
                       <PrivateRoute permittedRoles = {['admin','owner','customer']}>
                         <Account/>
@@ -229,11 +240,11 @@ const registerToast = () => {
                         <ShopsContainer/>
                       </PrivateRoute>
                     }/> */}
-                    <Route path = '/create-customer' element = {
+                    {/* <Route path = '/create-customer' element = {
                       <PrivateRoute permittedRoles={['owner']}>
                         <CustomersForm/>
                       </PrivateRoute>
-                    }/>
+                    }/> */}
                     <Route path = '/create-chit' element = {
                       <PrivateRoute permittedRoles = {['owner']}>
                         <ChitForm/>
@@ -251,13 +262,13 @@ const registerToast = () => {
                      </>
                   </Routes>
                   </CustomersContext.Provider> 
+                  {/* <CustomersContainer/> */}
 
 
                   {/* <ToastContainer />
                   <ChitsContainer/> 
                    <UsersContainer/> 
                    <ShopsContainer/>
-                  <CustomersContainer/>
 
                   <ToastContainer />
                   <ChitsContainer/>

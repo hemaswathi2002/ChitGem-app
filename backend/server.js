@@ -59,7 +59,7 @@ app.post('/api/forgotpassword',usersCltr.forgotPassword)
 app.put('/api/forgotpassword',usersCltr.resetForgotPassword)
 
 //api shops
-app.post('/api/shops/',authenticateUser,authorizeUser(['owner']),checkSchema(shopRegisterValidationSchema),shopsCltr.register)
+app.post('/api/shops',authenticateUser,authorizeUser(['owner']),checkSchema(shopRegisterValidationSchema),shopsCltr.register)
 app.get('/api/shops',authenticateUser,authorizeUser(['admin']),shopsCltr.getAllshop)
 app.get('/api/shops/:ownerId',authenticateUser,authorizeUser(['owner']),shopsCltr.getOneshop)
 app.put('/api/shops/:id',authenticateUser,authorizeUser(['owner']),checkSchema(shopRegisterValidationSchema),shopsCltr.update)
@@ -79,14 +79,14 @@ app.get('/api/chits',chitsCltr.getAllchit)
 app.get('/api/chits/:id',chitsCltr.getOnechit)
 app.delete('/api/chits/:id',chitsCltr.destroy)
 
-// //api customers
-// app.post('/api/:customerId',customersCltr.register)
-// app.get('/api/customers',customersCltr.list)
-// app.get('/api/customers/:id',customersCltr.getOneCustomer)
-// app.put('/api/customers/:id',customersCltr.update)
-// app.delete('/api/customers/:id',customersCltr.destroy)
+//api customers
+app.post('/api/customers',authenticateUser,authorizeUser(['owner']),customersCltr.register)
+app.get('/api/customers',authenticateUser,authorizeUser(['owner']),customersCltr.list)
+// app.get('/api/customers/:id',authenticateUser,authorizeUser(['owner']),customersCltr.getOneCustomer)
+app.put('/api/customers/:id',authenticateUser,authorizeUser(['owner']),checkSchema(chitRegisterValidationSchema),customersCltr.update)
+app.delete('/api/customers/:id',authenticateUser,authorizeUser(['owner']),customersCltr.destroy)
 
-// //api reviews
+//api reviews
 app.post ('/api/reviews',reviewsCltr.create)
 app.get('/api/reviews',reviewsCltr.list)
 app.get('/api/reviews/:id',reviewsCltr.getOneReview)
