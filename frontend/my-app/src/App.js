@@ -241,7 +241,12 @@ const registerToast = () => {
                     <Route path='/admin' element={<Admin/>}/>
                     <Route path='/owner' element={<Owner/>}/>
                     <Route path = '/shop' element = {<ShopsContainer/>}/>
-                    <Route path = '/customers' element = {<CustomersContainer users = {users}/>}/>
+                    {/* <Route path = '/customers' element = {<CustomersContainer users = {users}/>}/> */}
+                    <Route path = '/customers' element = {
+                      <PrivateRoute permittedRoles = {['owner']}>
+                        <CustomersContainer users = {users}/>
+                      </PrivateRoute>
+                    }/>
                     <Route path = '/account' element = {
                       <PrivateRoute permittedRoles = {['admin','owner','customer']}>
                         <Account/>
