@@ -72,7 +72,7 @@ export default function ShopsTable() {
                             <td>{shop.approvalStatus}</td>
                             <td>
                                 <button onClick={() => handleEdit(shop._id)}>Edit</button>
-                                <button onClick={() => handleRemove(shop._id)}>Remove</button>
+                                {/* <button onClick={() => handleRemove(shop._id)}>Remove</button> */}
                             </td>
                         </tr>
                     ))}
