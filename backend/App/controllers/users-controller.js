@@ -112,7 +112,7 @@ usersCltr.verifyEmail = async (req, res) => {
         if (!user) {
             return res.status(401).json("Invalid otp")
         }
-        res.status(201).json("email verified",user)
+        res.status(201).json({message:"email verified",user})
     } catch (err) {
         console.error("Error verifying email:", err);
         res.status(500).json({ error: "Internal Server Error" })
