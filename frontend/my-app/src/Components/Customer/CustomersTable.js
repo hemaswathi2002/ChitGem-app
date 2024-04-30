@@ -10,6 +10,7 @@ export default function CustomersList(){
     const [modal, setModal] = useState(false);
     const [editId,setEditId] = useState('')
 
+
     const navigate = useNavigate()
 
     const toggle = () => setModal(!modal);
