@@ -71,7 +71,7 @@ export default function App() {
     (async () => {
       try {
         console.log('Fetching customer data...');
-        const customersResponse = await axios.get('http://localhost:3009/api/customers',{
+        const customersResponse = await axios.get(`http://localhost:3009/api/customers/${ownerId}`,{
           headers : {
             Authorization : localStorage.getItem('token')
           }
@@ -82,7 +82,7 @@ export default function App() {
         console.log(err);
       }
     })();
-  }, [customerDispatch]);
+  }, [customerDispatch,ownerId]);
   useEffect(() => {
     if (user) {
       console.log("User ID:", user._id);

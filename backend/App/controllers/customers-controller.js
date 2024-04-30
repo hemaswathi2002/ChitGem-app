@@ -33,7 +33,8 @@ customersCltr.register = async(req,res) => {
 
 customersCltr.list = async(req,res)=>{
     try{
-        const customer = await Customers.findOne({ownerId : req.user.id})
+        const {ownerId} = req.params
+        const customer = await Customers.find({ownerId})
         if (!customer) { 
             return res.status(404).json({ errors: 'Customer not found' });
         }
