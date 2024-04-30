@@ -145,7 +145,7 @@ import { useAuth } from '../../Context/AuthrorizeContext';
 
 export default function CustomersForm(props) {
     const { customers, customerDispatch } = useContext(CustomersContext);
-    const { editId, toggle } = props;
+    const { editId, toggle, users = [] } = props;
 
     // Initialize the form state with an empty customer object
     const [customer, setCustomer] = useState({
@@ -153,7 +153,9 @@ export default function CustomersForm(props) {
         contact: { email: '', mobile: '' },
         description: ''
     });
+    const [filteredUsers, setFilteredUsers] = useState(users)
 
+    console.log(filteredUsers)
     useEffect(() => {
         if (editId) {
             const customer = customers?.data.find(ele => ele._id === editId);
@@ -218,6 +220,10 @@ export default function CustomersForm(props) {
             }));
         }
     };
+    useEffect(() => {
+            setFilteredUsers([users]);
+    }, [users]);
+    console.log(filteredUsers)
 
     return (
         <div>
@@ -234,15 +240,21 @@ export default function CustomersForm(props) {
                     />
                 </div>
                 <div>
-                    <label htmlFor="email">Email</label>
+                <label htmlFor="email">Email</label>
                     <input
-                        type="email"
-                        value={customer.contact.email}
+                        type="text"
+                        value={customer.contact.email || customer.contact.ownerEmail} // Use email or ownerEmail depending on the role
                         onChange={handleChange}
                         className="form-control"
                         name="contact.email"
                         id="email"
+                        list="emailSuggestions"
                     />
+                    <datalist id="emailSuggestions">
+                        {filteredUsers.map((user) => (
+                            <option key={user._id} value={user._id ? user._id : user.email}>user.email</option>
+                        ))}
+                    </datalist>
                 </div>
                 <div>
                     <label htmlFor="mobile">Mobile</label>

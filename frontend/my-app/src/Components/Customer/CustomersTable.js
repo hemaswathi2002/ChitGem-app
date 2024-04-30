@@ -89,14 +89,17 @@
 import { useNavigate } from 'react-router-dom';
 import { CustomersContext } from '../../Context/CustomersContext';
 import CustomersForm from './CustomersForm';
-import { useContext, useState } from 'react';
+import { useContext, useState, useEffect } from 'react';
 import axios from 'axios';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 
-export default function CustomersList() {
+export default function CustomersList(props) {
     const { customers, customerDispatch } = useContext(CustomersContext);
     const [modal, setModal] = useState(false);
     const [editId, setEditId] = useState('');
+    const {users = []} = props
+    console.log(users)
+    const [filteredUsers,setFilteredUsers] = useState(users)
 
     const navigate = useNavigate();
 
@@ -120,6 +123,23 @@ export default function CustomersList() {
         toggle();
     };
 
+    
+    useEffect(() => {
+        
+            setFilteredUsers([users]);
+    }, [users]);
+    console.log(filteredUsers)
+
+    const getCustomerEmail = (id)=>{
+            const user = filteredUsers.find(ele=> ele._id == id)
+            if(user){
+                return user.email
+            }else{
+                return 'N/A'
+            }
+            console.log(user)
+
+        }
     return (
         <div>
             <h2>Customers - {customers.data.length}</h2>
@@ -139,7 +159,7 @@ export default function CustomersList() {
                             return (
                                 <tr key={i}>
                                     <td>{ele.name}</td>
-                                    <td>{ele.contact && ele.contact.email}</td>
+                                    <td>{getCustomerEmail(ele.contact && ele.contact.email)}</td>
                                     <td>{ele.contact && ele.contact.mobile}</td>
                                     <td>{ele.description}</td>
                                     <td>
@@ -155,7 +175,7 @@ export default function CustomersList() {
                 <Button color="danger" onClick={toggle}>
                     Click Me
                 </Button>
-                <Modal isOpen={modal} toggle={toggle}>
+                <Modal isOpen={modal} toggle={toggle} users = {users}>
                     <ModalHeader toggle={toggle}>Edit Customer</ModalHeader>
                     <ModalBody>
                         <CustomersForm editId={editId} toggle={toggle} />

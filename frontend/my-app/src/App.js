@@ -50,6 +50,8 @@ export default function App() {
 
   const dispatch = useDispatch()
 
+  
+
     useEffect(() => {
       if(localStorage.getItem('token')) {
               dispatch(startGetUserDetails())
@@ -99,7 +101,9 @@ export default function App() {
   }, [dispatch, ownerId]);
  
     
-   
+  const users = useSelector((state) => state.users)
+
+  console.log(users)
     
 
   // }, [handleLogin,customerDispatch])
@@ -234,7 +238,7 @@ const registerToast = () => {
                     <Route path='/admin' element={<Admin/>}/>
                     <Route path='/owner' element={<Owner/>}/>
                     <Route path = '/shop' element = {<ShopsContainer/>}/>
-                    <Route path = '/customers' element = {<CustomersContainer/>}/>
+                    <Route path = '/customers' element = {<CustomersContainer users = {users}/>}/>
                     <Route path = '/account' element = {
                       <PrivateRoute permittedRoles = {['admin','owner','customer']}>
                         <Account/>
