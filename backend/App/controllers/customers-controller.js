@@ -23,7 +23,12 @@ customersCltr.register = async(req,res) => {
         console.log(shop) 
         const customer = new Customers({ ...body, ownerId: owner , shopId:shop.id});
         const response = await customer.save()
-        res.status(201).json(response)
+        const lastUser = await User.findOne().sort({ _id: -1 }).limit(1);
+        if (!lastUser) {
+            return res.status(404).json({ errors: 'No users found' });
+        }
+        const responseData = await Customers.findByIdAndUpdate(response._id, { customerId : lastUser._id });
+        res.status(201).json(responseData)
     }
     catch(err){
         console.log(err)

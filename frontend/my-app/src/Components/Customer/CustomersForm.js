@@ -160,6 +160,7 @@ export default function CustomersForm(props) {
     useEffect(() => {
         setFilteredUsers(Array.isArray(users) ? users : [])
     }, [users])
+    console.log(filteredUsers)
 
     useEffect(() => {
         if (editId) {
