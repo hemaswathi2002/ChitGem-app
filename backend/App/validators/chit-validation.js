@@ -1,22 +1,22 @@
 const Chit=require('../models/chit-model')
 
 const chitRegisterValidationSchema={
-    shopId:{
-        notEmpty : {
-            errorMessage : '* shopId should not be empty'
-        },
-        isMongoId : {
-            errorMessage : '* Enter a valid mongoId'
-        }
-    },
-    customerId:{
-        notEmpty:{
-            errorMessage:"* customerId should not be empty "
-        },
-        isMongoId:{
-            errorMessage:"*Enter a valid mongoId"
-        }
-    },
+    // shopId:{
+    //     notEmpty : {
+    //         errorMessage : '* shopId should not be empty'
+    //     },
+    //     isMongoId : {
+    //         errorMessage : '* Enter a valid mongoId'
+    //     }
+    // },
+    // customerId:{
+    //     notEmpty:{
+    //         errorMessage:"* customerId should not be empty "
+    //     },
+    //     isMongoId:{
+    //         errorMessage:"*Enter a valid mongoId"
+    //     }
+    // },
         chitAmount: {
           notEmpty: {
             errorMessage: "* chitAmount should not be empty"
@@ -65,14 +65,14 @@ const chitRegisterValidationSchema={
             errorMessage:"* terms and conditions shouldnot be empty"
         }
     },
-    goldPrice:{
-        notEmpty:{
-            errorMessage:"* goldPrice should not be empty"
-        },
-        isNumeric: {
-            errorMessage: "* goldPrice should be a number"
-        }
-    },   
+    // goldPrice:{
+    //     notEmpty:{
+    //         errorMessage:"* goldPrice should not be empty"
+    //     },
+    //     isNumeric: {
+    //         errorMessage: "* goldPrice should be a number"
+    //     }
+    // },   
 }
 module.exports=chitRegisterValidationSchema
 

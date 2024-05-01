@@ -151,7 +151,7 @@ export default function ChitForm(props) {
                
     <label>
         Chit Amount:
-        <input type="text" value={chitAmount} readOnly onChange={(e) => setChitAmount(e.target.value)} />
+        <input type="text" value={chitAmount}  onChange={(e) => setChitAmount(e.target.value)} />
     </label>
     {serverErrors.chitAmount && <p style={{ color: 'red' }}>{serverErrors.chitAmount}</p>}
 

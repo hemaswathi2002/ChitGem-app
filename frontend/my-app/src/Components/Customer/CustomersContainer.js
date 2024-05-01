@@ -5,7 +5,6 @@ export default function CustomersContainer(props){
     return(
         <div className="row">
             <div className="col-md-8">
-            <h2>Customer Container</h2>
             <CustomersTable users = {users}/>
             </div>
             <div className="col-md-4">

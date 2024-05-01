@@ -1,4 +1,6 @@
 const Chit = require("../models/chit-model")
+const Shop = require('../models/shop-model')
+const Customer = require('../models/customer-model')
 const axios = require('axios')
 const { validationResult } = require("express-validator")
 const chitsCltr = {}
@@ -8,19 +10,19 @@ chitsCltr.register = async (req, res) => {
     return res.status(400).json({ errors: errors.array() })
   }
   try {
-    const customerId=req.params.customerId
     const { body } = req
     const owner=req.user.id
-    console.log(owner)
-    const chit=await Chit.findOne({owerId:owner})
-    console.log(chit)
-    if(!chit){
+    const shop = await Shop.findOne({ownerId : owner})
+    if(!shop){
       return res.status(404).json({errors:'Shop not found'})
     }
-    console.log(chit)
-  
+    const lastUser = await Customer.findOne().sort({ _id: -1 }).limit(1);
+        if (!lastUser) {
+            return res.status(404).json({ errors: 'No users found' });
+        }
 
     const apiKey = process.env.GOLD_API_KEY
+    console.log(apiKey)
     const config = {
       headers: {
         'x-access-token': apiKey
@@ -28,17 +30,18 @@ chitsCltr.register = async (req, res) => {
     }
     const goldPriceResponse = await axios.get("https://www.goldapi.io/api/XAU/INR", config)
     const { price_gram_24k } = goldPriceResponse.data
+    console.log(goldPriceResponse.data)
 
     const chits = new Chit({
       ...body,
       ownerId: owner,
-      shopId: shopId.id,
-      customerId: customerId,
+      shopId: shop._id,
+      customerId: lastUser._id,
       goldPrice: price_gram_24k 
   });
   
 
-    const response = await Chit.save()
+    const response = await chits.save()
     console.log(response)
     res.status(201).json(chits)
   } catch (err) {
