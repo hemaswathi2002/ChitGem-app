@@ -2,9 +2,9 @@ const {Schema,mongoose} = require('mongoose')
 
 const invoiceSchema = new Schema({
  
-    customerId:{
+    userId:{
         type:Schema.Types.ObjectId,
-        ref:'Customer'
+        ref:'User'
     },
     lineItems:[
         { 
@@ -21,7 +21,7 @@ const invoiceSchema = new Schema({
         }
     ],
  
-    amount : Number,
+    amountPaid : Number,
     paymentMonth : String,
     date : Date
 })

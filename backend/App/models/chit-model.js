@@ -6,6 +6,10 @@ const chitSchema=new Schema({
         type:Schema.Types.ObjectId,
         ref:'Shop'
     },
+    userId : {
+        type:Schema.Types.ObjectId,
+        ref:'User'
+    },
     customerId:{
         type:Schema.Types.ObjectId,
         ref:'Customer'
@@ -35,10 +39,6 @@ const chitSchema=new Schema({
     },
     benefits:String,
     termsAndConditions:String,
-    goldPrice: {
-        type: Object, 
-        required: true 
-      }
 },{ timestamps: true })
 
 chitSchema.pre('save', function(next) {

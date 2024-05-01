@@ -1,19 +1,40 @@
-
-// const Invoice = require('../models/invoice-model')
 const Invoices= require('../models/invoice-model')
+const Chit = require('../models/chit-model')
 const {validationResult}=require('express-validator')
 const invoicesCltr={}
 
 invoicesCltr.create=async(req,res)=>{
     const errors = validationResult(req)
     if(!errors.isEmpty()){
-        return res.status(404).json({errors:errors.array()})
+        return res.status(400).json({errors:errors.array()})
     }
     try{
         const {body}=req
-        body.customerId=req.user.id
-        body.chit=Customer.chitId
-        const invoice=new Invoices(body)
+        body.userId=req.user.id
+        const chitUser = await Chit.findOne({userId : req.user.id})
+        if (!chitUser) {
+            return res.status(404).json({ errors: "Chit not found for this user" });
+        }
+        body.lineItems.forEach(item => {
+            item.chit = chitUser._id;
+            item.chitAmount = chitUser.chitAmount;
+            item.totalAmount = chitUser.totalAmount;
+        })
+        const apiKey = process.env.GOLD_API_KEY
+        console.log(apiKey)
+        const config = {
+        headers: {
+        'x-access-token': apiKey
+      }
+    }
+    const goldPriceResponse = await axios.get("https://www.goldapi.io/api/XAU/INR", config)
+    const { price_gram_24k } = goldPriceResponse.data
+    console.log(goldPriceResponse.data)
+    body.lineItems.forEach(item => {
+        item.goldPrice = price_gram_24k 
+    })
+
+        const invoice = new Invoices({ ...body,userId })
         const response=await invoice.save()
         res.status(201).json(response)
     }

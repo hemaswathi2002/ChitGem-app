@@ -24,14 +24,14 @@ const invoicevalidationSchema={
     //         errorMessage:"*Enter a valid mongoId"
     //     }
     // },
-    amount:{
-        notEmpty: {
-          errorMessage: "* chitAmount should not be empty"
-        },
-        isNumeric: {
-          errorMessage: "* chitAmount should be a number"
-        }
-    },
+    // amount:{
+    //     notEmpty: {
+    //       errorMessage: "* chitAmount should not be empty"
+    //     },
+    //     isNumeric: {
+    //       errorMessage: "* chitAmount should be a number"
+    //     }
+    // },
     paymentMonth :{
         notEmpty:{
             errorMessage:'*paymentMonth is required'

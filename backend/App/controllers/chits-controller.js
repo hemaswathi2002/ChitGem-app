@@ -24,23 +24,14 @@ chitsCltr.register = async (req, res) => {
         const installments = 12
         body.totalAmount = body.chitAmount * installments
 
-    const apiKey = process.env.GOLD_API_KEY
-    console.log(apiKey)
-    const config = {
-      headers: {
-        'x-access-token': apiKey
-      }
-    }
-    const goldPriceResponse = await axios.get("https://www.goldapi.io/api/XAU/INR", config)
-    const { price_gram_24k } = goldPriceResponse.data
-    console.log(goldPriceResponse.data)
+    
 
     const chits = new Chit({
       ...body,
       ownerId: owner,
       shopId: shop._id,
       customerId: lastUser._id,
-      goldPrice: price_gram_24k 
+      userId : lastUser.customerId,
   });
   
 
