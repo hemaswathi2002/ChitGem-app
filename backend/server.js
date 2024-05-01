@@ -36,14 +36,14 @@ const storage = multer.diskStorage({
     destination: (req, file, cb)=>{
         console.log(req.files)
         console.log(file)
-      return cb(null, "./public/Images");
+      return cb(null, "./public/Images")
     },
     filename: (req, file, cb)=>{
-      console.log(file);
+      console.log(file)
       console.log(req.files)
       cb(null, `${Date.now()}-${file.originalname}`)
     }
-  });
+  })
             
 const upload = multer({storage:storage})
 
@@ -99,6 +99,12 @@ app.get('/api/invoices',invoicesCltr.list)
 app.put('/api/invoices/:id',invoicesCltr.update)
 app.delete('/api/invoices/:id',invoicesCltr.delete)
 
+//payments
+app.get('/payments', paymentsCtrl.list)
+
+app.get('/payments/successful', paymentsCtrl.listSuccessfulPayments)
+
+app.get('/payments/failed', paymentsCtrl.listFailedPayments)
 app.listen(port,()=>{
     console.log(`ChitGem-app is successfully running on the ${port}`)
 })
