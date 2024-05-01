@@ -37,7 +37,11 @@ export default function CustomersForm(props) {
         }
     }, []);
 
-    
+    const resetForm = () => {
+        setCustomer(initialCustomerState);
+        setFormErrors({});
+        setServerErrors([]);
+    }
     const validateForm = () => {
         const errors = {}
     
@@ -82,7 +86,8 @@ export default function CustomersForm(props) {
                 console.log(response.data)
                 customerDispatch({ type: 'ADD_CUSTOMERS', payload: response.data })
             }
-            toggle()
+            resetForm();
+
         } catch (err) {
             if (err.response && err.response.data && err.response.data.errors) {
                 setFormErrors(err.response.data.errors)
