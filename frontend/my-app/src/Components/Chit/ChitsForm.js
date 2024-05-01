@@ -2,6 +2,8 @@ import axios from 'axios';
 import { useNavigate } from "react-router-dom";
 import React, { useEffect, useState, useContext } from 'react';
 import { ChitsContext } from '../../Context/ChitsContext';
+import { Form, Button } from "react-bootstrap";
+
 
 export default function ChitForm(props) {
     const { chits, chitDispatch } = useContext(ChitsContext);
@@ -137,96 +139,151 @@ export default function ChitForm(props) {
     };
 
 
+  
     return (
+        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '45vh', marginTop: '10px' }}>
+            <div style={{ border: '2px solid pink', padding: '20px', borderRadius: '5px', width: '30%' }}>
+
+                    <h2 style={{ textAlign: 'center', marginBottom: '20px' }}>Add Chit</h2>
         <div>
-      {serverErrors.length > 0 && (
-    <div>
-        {serverErrors.map((error, index) => (
-            <p key={index} style={{ color: 'red' }}>{error.msg}</p>
-        ))}
-    </div>
-)}
-            <form onSubmit={handleSubmit}>
-                <div>
-               
-    <label>
-        Chit Amount:
-        <input type="text" value={chitAmount}  onChange={(e) => setChitAmount(e.target.value)} />
-    </label>
-    {serverErrors.chitAmount && <p style={{ color: 'red' }}>{serverErrors.chitAmount}</p>}
+          {serverErrors.length > 0 && (
+            <div>
+              {serverErrors.map((error, index) => (
+                <p key={index} style={{ color: "red" }}>
+                  {error.msg}
+                </p>
+              ))}
+            </div>
+          )}
+          <Form onSubmit={handleSubmit}>
+            <Form.Group className="mb-3" controlId="chitAmount">
+              <Form.Label>Chit Amount:</Form.Label>
+              <Form.Control
+                type="text"
+                value={chitAmount}
+                onChange={(e) => setChitAmount(e.target.value)}
+              />
+              {serverErrors.chitAmount && (
+                <p style={{ color: "red" }}>{serverErrors.chitAmount}</p>
+              )}
+              {formErrors.chitAmount && (
+                <p style={{ color: "red" }}>{formErrors.chitAmount}</p>
+              )}
+            </Form.Group>
+    
+            <Form.Group className="mb-3" controlId="installments">
+              <Form.Label>Installments:</Form.Label>
+              <Form.Control
+                type="text"
+                value={installments}
+                onChange={(e) => setInstallments(e.target.value)}
+              />
+              {serverErrors.installments && (
+                <p style={{ color: "red" }}>{serverErrors.installments}</p>
+              )}
+              {formErrors.installments && (
+                <p style={{ color: "red" }}>{formErrors.installments}</p>
+              )}
+            </Form.Group>
+    
+            <Form.Group className="mb-3" controlId="totalAmount">
+              <Form.Label>Total Amount:</Form.Label>
+              <Form.Control
+                type="text"
+                value={totalAmount}
+                onChange={(e) => setTotalAmount(e.target.value)}
+              />
+              {serverErrors.totalAmount && (
+                <p style={{ color: "red" }}>{serverErrors.totalAmount}</p>
+              )}
+              {formErrors.totalAmount && (
+                <p style={{ color: "red" }}>{formErrors.totalAmount}</p>
+              )}
+            </Form.Group>
+    
+            <Form.Group className="mb-3" controlId="startDate">
+              <Form.Label>Start Date:</Form.Label>
+              <Form.Control
+                type="date"
+                value={startDate}
+                onChange={(e) => setStartDate(e.target.value)}
+              />
+              {serverErrors.startDate && (
+                <p style={{ color: "red" }}>{serverErrors.startDate}</p>
+              )}
+              {formErrors.startDate && (
+                <p style={{ color: "red" }}>{formErrors.startDate}</p>
+              )}
+            </Form.Group>
+    
+            <Form.Group className="mb-3" controlId="endDate">
+              <Form.Label>End Date:</Form.Label>
+              <Form.Control
+                type="date"
+                value={endDate}
+                onChange={(e) => setEndDate(e.target.value)}
+              />
+              {serverErrors.endDate && (
+                <p style={{ color: "red" }}>{serverErrors.endDate}</p>
+              )}
+              {formErrors.endDate && (
+                <p style={{ color: "red" }}>{formErrors.endDate}</p>
+              )}
+            </Form.Group>
+    
+            <Form.Group className="mb-3" controlId="status">
+              <Form.Label>Status:</Form.Label>
+              <Form.Select
+                value={status}
+                onChange={(e) => setStatus(e.target.value)}
+              >
+                <option value="">Select Status</option>
+                <option value="active">Active</option>
+                <option value="closed">Closed</option>
+              </Form.Select>
+              {serverErrors.status && (
+                <p style={{ color: "red" }}>{serverErrors.status}</p>
+              )}
+              {formErrors.status && (
+                <p style={{ color: "red" }}>{formErrors.status}</p>
+              )}
+            </Form.Group>
+    
+            <Form.Group className="mb-3" controlId="benefits">
+              <Form.Label>Benefits:</Form.Label>
+              <Form.Control
+                type="text"
+                value={benefits}
+                onChange={(e) => setBenefits(e.target.value)}
+              />
+              {serverErrors.benefits && (
+                <p style={{ color: "red" }}>{serverErrors.benefits}</p>
+              )}
+              {formErrors.benefits && (
+                <p style={{ color: "red" }}>{formErrors.benefits}</p>
+              )}
+            </Form.Group>
+    
+            <Form.Group className="mb-3" controlId="termsAndConditions">
+              <Form.Label>Terms and Conditions:</Form.Label>
+              <Form.Control
+                type="text"
+                value={termsAndConditions}
+                onChange={(e) => setTermsAndConditions(e.target.value)}
+              />
+              {serverErrors.termsAndConditions && (
+                <p style={{ color: "red" }}>{serverErrors.termsAndConditions}</p>
+              )}
+              {formErrors.termsAndConditions && (
+                <p style={{ color: "red" }}>{formErrors.termsAndConditions}</p>
+              )}
+            </Form.Group>
+    
+            <Button type="submit" style={{ backgroundColor: '#ffb6c1' }}>Submit</Button>
 
-    {formErrors.chitAmount && <p style={{ color: 'red' }}>{formErrors.chitAmount}</p>}
-                </div>
-                <div>
-                    <label>
-                        Installments:
-                        <input type="text" value={installments} readOnly onChange={(e) => setInstallments(e.target.value)} />
-                    </label>
-                    {serverErrors.installments && <p style={{ color: 'red' }}>{serverErrors.installments}</p>}
-
-                    {formErrors.installments && <p style={{ color: 'red' }}>{formErrors.installments}</p>}
-                </div>
-                <div>
-                    <label>
-                        Total Amount:
-                        <input type="text" value={totalAmount} onChange={(e) => setTotalAmount(e.target.value)} />
-                    </label>
-                    {serverErrors.totalAmount && <p style={{ color: 'red' }}>{serverErrors.totalAmount}</p>}
-
-                    {formErrors.totalAmount && <p style={{ color: 'red' }}>{formErrors.totalAmount}</p>}
-                </div>
-                <div>
-                    <label>
-                        Start Date:
-                        <input type="date" value={startDate} onChange={(e) => setStartDate(e.target.value)} />
-                    </label>
-                    {serverErrors.startDate && <p style={{ color: 'red' }}>{serverErrors.startDate}</p>}
-
-                    {formErrors.startDate && <p style={{ color: 'red' }}>{formErrors.startDate}</p>}
-                </div>
-                <div>
-                    <label>
-                        End Date:
-                        <input type="date" value={endDate} onChange={(e) => setEndDate(e.target.value)} />
-                    </label>
-                    {serverErrors.endDate && <p style={{ color: 'red' }}>{serverErrors.endDate}</p>}
-
-                    {formErrors.endDate && <p style={{ color: 'red' }}>{formErrors.endDate}</p>}
-                </div>
-                <div>
-                    <label>
-                        Status:
-                        <select value={status} onChange={(e) => setStatus(e.target.value)}>
-                        <option value="">select status</option>
-                            <option value="active">Active</option>
-                            <option value="closed">Closed</option>
-                        </select>
-                    </label>
-                    {serverErrors.status && <p style={{ color: 'red' }}>{serverErrors.status}</p>}
-
-                    {formErrors.status && <p style={{ color: 'red' }}>{formErrors.status}</p>}
-                </div>
-                <div>
-                    <label>
-                        Benefits:
-                        <input type="text" value={benefits} onChange={(e) => setBenefits(e.target.value)} />
-                    </label>
-                    {serverErrors.benefits && <p style={{ color: 'red' }}>{serverErrors.benefits}</p>}
-
-                    {formErrors.benefits && <p style={{ color: 'red' }}>{formErrors.benefits}</p>}
-                </div>
-                <div>
-                    <label>
-                        Terms and Conditions:
-                        <input type="text" value={termsAndConditions} onChange={(e) => setTermsAndConditions(e.target.value)} />
-                    </label>
-
-                    {serverErrors.termsAndConditions && <p style={{ color: 'red' }}>{serverErrors.termsAndConditions}</p>}
-
-                    {formErrors.termsAndConditions && <p style={{ color: 'red' }}>{formErrors.termsAndConditions}</p>}
-                </div>
-                <button type="submit">Submit</button>
-            </form>
+          </Form>
+          </div>
+          </div>
         </div>
-    );
+      )
 }

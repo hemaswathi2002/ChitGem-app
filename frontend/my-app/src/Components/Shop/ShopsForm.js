@@ -3,6 +3,8 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { startCreateShop, startUpdateShop, clearServerErrors, setServerErrors } from '../Actions/shops'
+import { Form, Button, Alert } from 'react-bootstrap';
+
 
 export default function ShopsForm({ editId, toggle }) {
     const [shopData, setShopData] = useState({
@@ -14,9 +16,10 @@ export default function ShopsForm({ editId, toggle }) {
     })
     const [formErrors, setFormErrors] = useState({})
     const serverErrors = useSelector(state => state.shops.serverErrors)
+    console.log(serverErrors)
+
     const shops = useSelector(state => state.shops.shop)
     const dispatch = useDispatch()
-
     useEffect(() => {
         if (editId) {
             const shopEdit = shops.find(shop => shop._id === editId)
@@ -67,7 +70,7 @@ export default function ShopsForm({ editId, toggle }) {
         } catch (error) {
             console.error('Error:', error)
             if (error.response && error.response.data) {
-                dispatch(setServerErrors(error.response.data.errors || []))
+                dispatch(setServerErrors(error.response.data))
             }
         }
     }
@@ -117,123 +120,82 @@ export default function ShopsForm({ editId, toggle }) {
         return Object.keys(errors).length === 0
     }
 //in jsx   in the nname field see  the chnge i have donne 
-    return (
-        <form onSubmit={handleSubmit}>
-            {serverErrors && serverErrors.length > 0 && (
-                <div>
-                    {serverErrors.map((error, index) => (
-                        <p key={index} style={{ color: 'red' }}>{error.msg}</p>
-                    ))}
-                </div>
-            )}
-
+return (
+    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '45vh', marginTop: '10px' }}>
+    <div style={{ border: '2px solid pink', padding: '20px', borderRadius: '5px', width: '30%' }}>
+        {serverErrors && serverErrors.length > 0 && (
             <div>
-                <label>Shop Name:</label>
-                <input
-                    type="text"Z
-                    name="shopName"
-                    value={shopData.shopName}
-                    onChange={handleChange}
-                />
-                {formErrors.shopName && <p style={{ color: 'red' }}>{formErrors.shopName}</p>}
+                {serverErrors.map((error, index) => (
+                    <Alert key={index} variant="danger">{error.msg}</Alert>
+                ))}
             </div>
+        )}
+    <Form onSubmit={handleSubmit}>
 
-            <div>
-                <label>Email:</label>
-                <input
-                    type="text"
-                    name="contact.email"
-                    value={shopData.contact.email}
-                    onChange={handleNestedChange}
-                />
-                {formErrors.email && <p style={{ color: 'red' }}>{formErrors.email}</p>}
-            </div>
+        <Form.Group controlId="formShopName">
+            <Form.Label>Shop Name</Form.Label>
+            <Form.Control type="text" placeholder="Shop Name" name="shopName" value={shopData.shopName} onChange={handleChange} />
+            {formErrors.shopName && <Alert variant="danger">{formErrors.shopName}</Alert>}
+        </Form.Group>
 
-            <div>
-                <label>Mobile:</label>
-                <input
-                    type="text"
-                    name="contact.mobile"
-                    value={shopData.contact.mobile}
-                    onChange={handleNestedChange}
-                />
-                {formErrors.mobile && <p style={{ color: 'red' }}>{formErrors.mobile}</p>}
-            </div>
+        <Form.Group controlId="formEmail">
+            <Form.Label>Email</Form.Label>
+            <Form.Control type="email" placeholder="Email" name="contact.email" value={shopData.contact.email} onChange={handleNestedChange} />
+            {formErrors.email && <Alert variant="danger">{formErrors.email}</Alert>}
+        </Form.Group>
 
-            <div>
-                <label>Area:</label>
-                <input
-                    type="text"
-                    name="address.area"
-                    value={shopData.address.area}
-                    onChange={handleNestedChange}
-                />
-                {formErrors.area && <p style={{ color: 'red' }}>{formErrors.area}</p>}
-            </div>
+        <Form.Group controlId="formMobile">
+            <Form.Label>Mobile</Form.Label>
+            <Form.Control type="text" placeholder="Mobile" name="contact.mobile" value={shopData.contact.mobile} onChange={handleNestedChange} />
+            {formErrors.mobile && <Alert variant="danger">{formErrors.mobile}</Alert>}
+        </Form.Group>
 
-            <div>
-                <label>City:</label>
-                <input
-                    type="text"
-                    name="address.city"
-                    value={shopData.address.city}
-                    onChange={handleNestedChange}
-                />
-                {formErrors.city && <p style={{ color: 'red' }}>{formErrors.city}</p>}
-            </div>
+        <Form.Group controlId="formArea">
+            <Form.Label>Area</Form.Label>
+            <Form.Control type="text" placeholder="Area" name="address.area" value={shopData.address.area} onChange={handleNestedChange} />
+            {formErrors.area && <Alert variant="danger">{formErrors.area}</Alert>}
+        </Form.Group>
 
-            <div>
-                <label>State:</label>
-                <input
-                    type="text"
-                    name="address.state"
-                    value={shopData.address.state}
-                    onChange={handleNestedChange}
-                />
-                {formErrors.state && <p style={{ color: 'red' }}>{formErrors.state}</p>}
-            </div>
+        <Form.Group controlId="formCity">
+            <Form.Label>City</Form.Label>
+            <Form.Control type="text" placeholder="City" name="address.city" value={shopData.address.city} onChange={handleNestedChange} />
+            {formErrors.city && <Alert variant="danger">{formErrors.city}</Alert>}
+        </Form.Group>
 
-            <div>
-                <label>Pincode:</label>
-                <input
-                    type="text"
-                    name="address.pincode"
-                    value={shopData.address.pincode}
-                    onChange={handleNestedChange}
-                />
-                {formErrors.pincode && <p style={{ color: 'red' }}>{formErrors.pincode}</p>}
-            </div>
+        <Form.Group controlId="formState">
+            <Form.Label>State</Form.Label>
+            <Form.Control type="text" placeholder="State" name="address.state" value={shopData.address.state} onChange={handleNestedChange} />
+            {formErrors.state && <Alert variant="danger">{formErrors.state}</Alert>}
+        </Form.Group>
 
-            <div>
-                <label>Description:</label>
-                <input
-                    type="text"
-                    name="description"
-                    value={shopData.description}
-                    onChange={handleChange}
-                />
-                {formErrors.description && <p style={{ color: 'red' }}>{formErrors.description}</p>}
-            </div>
+        <Form.Group controlId="formPincode">
+            <Form.Label>Pincode</Form.Label>
+            <Form.Control type="text" placeholder="Pincode" name="address.pincode" value={shopData.address.pincode} onChange={handleNestedChange} />
+            {formErrors.pincode && <Alert variant="danger">{formErrors.pincode}</Alert>}
+        </Form.Group>
 
-            {!editId && (
-                <div>
-                    <label>Approval Status:</label>
-                    <select
-                        name="approvalStatus"
-                        value={shopData.approvalStatus}
-                        onChange={handleChange}
-                    >
-                        <option value="pending">Pending</option>
-                        <option value="rejected">Rejected</option>
-                        <option value="approved">Approved</option>
-                    </select>
-                    {formErrors.approvalStatus && <p style={{ color: 'red' }}>{formErrors.approvalStatus}</p>}
-                </div>
-            )}
+        <Form.Group controlId="formDescription">
+            <Form.Label>Description</Form.Label>
+            <Form.Control type="text" placeholder="Description" name="description" value={shopData.description} onChange={handleChange} />
+            {formErrors.description && <Alert variant="danger">{formErrors.description}</Alert>}
+        </Form.Group>
 
-            <div>
-                <button type="submit">Submit</button>
-            </div>
-        </form>
-    )
+        {!editId && (
+            <Form.Group controlId="formApprovalStatus">
+                <Form.Label>Approval Status</Form.Label>
+                <Form.Control as="select" name="approvalStatus" value={shopData.approvalStatus} onChange={handleChange}>
+                    <option value="pending">Pending</option>
+                    <option value="rejected">Rejected</option>
+                    <option value="approved">Approved</option>
+                </Form.Control>
+                {formErrors.approvalStatus && <Alert variant="danger">{formErrors.approvalStatus}</Alert>}
+            </Form.Group>
+        )}
+
+<Button type="submit" style={{ backgroundColor: '#ffb6c1' }}>Submit</Button>
+    </Form>
+    </div>
+    </div>
+);
+
 }

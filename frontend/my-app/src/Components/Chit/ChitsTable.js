@@ -1,19 +1,18 @@
-import React, { useContext, useState } from 'react'
-import axios from 'axios'
-import ChitForm from './ChitsForm'
-import { ChitsContext } from '../../Context/ChitsContext'
-import { Button, Modal, ModalHeader, ModalBody } from 'reactstrap'
+import React, { useContext, useState } from 'react';
+import axios from 'axios';
+import ChitForm from './ChitsForm';
+import { ChitsContext } from '../../Context/ChitsContext';
+import { Button, Modal, ModalHeader, ModalBody } from 'reactstrap';
 
 export default function ChitList() {
-    const { chits, chitDispatch } = useContext(ChitsContext)
-    const [modal, setModal] = useState(false)
-    const [editId, setEditId] = useState('')
-    const [serverError, setServerError] = useState(null)
-    const toggle = () => setModal(!modal)
-    console.log('customerTable',chits)
+    const { chits, chitDispatch } = useContext(ChitsContext);
+    const [modal, setModal] = useState(false);
+    const [editId, setEditId] = useState('');
+    const [serverError, setServerError] = useState(null);
+    const toggle = () => setModal(!modal);
 
     const handleRemove = async (id) => {
-        const confirmation = window.confirm('Are you sure?')
+        const confirmation = window.confirm('Are you sure?');
         if (confirmation) {
             try {
                 const response = await axios.delete(`http://localhost:3009/api/chits/${id}`,{
@@ -21,29 +20,30 @@ export default function ChitList() {
                         Authorization : localStorage.getItem('token')
                     }
                 });
-                console.log(response.data)
-                chitDispatch({ type: 'DELETE_CHIT', payload: id })
+                console.log(response.data);
+                chitDispatch({ type: 'DELETE_CHIT', payload: id });
             } catch (err) {
-                console.log(err)
+                console.log(err);
                 if (err.response) {
-                    setServerError(err.response.data.message) 
+                    setServerError(err.response.data.message);
                 } else {
-                    setServerError('An error occurred. Please try again later.') 
+                    setServerError('An error occurred. Please try again later.');
                 }
             }
         }
-    }
+    };
 
     const handleEdit = (id) => {
-        setEditId(id)
-        toggle()
-    }
+        setEditId(id);
+        toggle();
+    };
 
     return (
         <div>
             <h2>Chits - {chits && chits.data && chits.data.length}</h2>
             {serverError && <p style={{ color: 'red' }}>{serverError}</p>}
-            <table>
+            <div className="table-container">
+                <table className="styled-table">
                 <thead>
                     <tr>
                         <th>Chit Amount</th>
@@ -71,15 +71,16 @@ export default function ChitList() {
                             <td>{chit.termsAndConditions}</td>
                             <td>{chit.goldPrice}</td>
                             <td>
-                                <button onClick={() => handleEdit(chit._id)}>Edit</button>
-                                <button onClick={() => handleRemove(chit._id)}>Remove</button>
-                            </td>
+                            <button onClick={() => handleEdit(chit._id)} style={{ backgroundColor: '#ffb6c1' }}>Edit</button>
+                                    <button onClick={() => handleRemove(chit._id)} style={{ backgroundColor: '#ffb6c1' }}>Remove</button>
+                                 </td>
                         </tr>
                     ))}
                 </tbody>
             </table>
+            </div>
            
-            <Button color="danger" onClick={toggle}>Add Chit</Button>
+            <Button color="success" onClick={toggle}>Add Chit</Button>
             <Modal isOpen={modal} toggle={toggle}>
                 <ModalHeader toggle={toggle}>Chit Form</ModalHeader>
                 <ModalBody>
@@ -87,5 +88,5 @@ export default function ChitList() {
                 </ModalBody>
             </Modal>
         </div>
-    )
+    );
 }
