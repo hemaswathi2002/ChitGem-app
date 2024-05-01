@@ -10,35 +10,32 @@ export default function CustomersForm(props) {
     const { customers, customerDispatch } = useContext(CustomersContext)
     const { editId, toggle, users = [] } = props
 
-    // Initialize the form state with an empty customer object
-    const [customer, setCustomer] = useState({
+    const initialCustomerState = {
         name: '',
         contact: { email: '', mobile: '' },
         description: ''
-    })
+    };
+    const [customer, setCustomer] = useState(initialCustomerState);
+
     const [filteredUsers, setFilteredUsers] = useState([])
     const [formErrors, setFormErrors] = useState({})
     const [serverErrors, setServerErrors] = useState([])
 
 
     useEffect(() => {
-        setFilteredUsers(Array.isArray(users) ? users : [])
-    }, [users])
+        setFilteredUsers(Array.isArray(users) ? users : []);
+    }, []);
 
     useEffect(() => {
         if (editId) {
-            const customer = customers?.data.find(ele => ele._id === editId)
+            const customer = customers?.data.find(ele => ele._id === editId);
             if (customer) {
-                setCustomer(customer)
+                setCustomer(customer);
             }
         } else {
-            setCustomer({
-                name: '',
-                contact: { email: '', mobile: '' },
-                description: ''
-            })
+            setCustomer(initialCustomerState);
         }
-    }, [customers, editId])
+    }, []);
 
     
     const validateForm = () => {
