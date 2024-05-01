@@ -35,14 +35,14 @@ const chitRegisterValidationSchema={
           }
         },
       
-    totalAmount:{
-        notEmpty:{
-            errorMessage:"* total amount is required"
-        },
-        isNumeric:{
-            errorMessage:"*total amount should be number"
-        }
-    },
+    // totalAmount:{
+    //     notEmpty:{
+    //         errorMessage:"* total amount is required"
+    //     },
+    //     isNumeric:{
+    //         errorMessage:"*total amount should be number"
+    //     }
+    // },
 
         "date.startDate": {
           notEmpty: {

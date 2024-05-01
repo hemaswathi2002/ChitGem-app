@@ -8,10 +8,9 @@ import { Form, Button } from "react-bootstrap";
 export default function ChitForm(props) {
     const { chits, chitDispatch } = useContext(ChitsContext);
 
-    const [chit, setChit] = useState(null); // Initialize with null instead of {}
+    const [chit, setChit] = useState(null); 
     const [chitAmount, setChitAmount] = useState(500);
     const [installments, setInstallments] = useState(12);
-    const [totalAmount, setTotalAmount] = useState(0);
     const [startDate, setStartDate] = useState('');
     const [endDate, setEndDate] = useState('');
     const [status, setStatus] = useState('');
@@ -28,7 +27,6 @@ export default function ChitForm(props) {
         if (chit) {
             setChitAmount(chit.chitAmount || 500);
             setInstallments(chit.installments || 12);
-            setTotalAmount(chit.totalAmount || 0);
             setStartDate(chit.date.startDate || '');
             setEndDate(chit.date.endDate || '');
             setStatus(chit.status || '');
@@ -36,7 +34,6 @@ export default function ChitForm(props) {
             setTermsAndConditions(chit.termsAndConditions || '');
         } else {
             setChitAmount(500);
-            setTotalAmount('');
             setInstallments(12);
             setStartDate('');
             setEndDate('');
@@ -56,9 +53,6 @@ export default function ChitForm(props) {
         }
         if (!installments) {
             formErrors.installments = 'Installments is required';
-        }
-        if (!totalAmount) {
-            formErrors.totalAmount = 'Total Amount is required';
         }
         if (!startDate) {
             formErrors.startDate = 'Start Date is required';
@@ -90,7 +84,6 @@ export default function ChitForm(props) {
             const formData = {
                 chitAmount,
                 installments,
-                totalAmount,
                 date: {
                     startDate: formattedStartDate,
                     endDate: formattedEndDate
@@ -118,7 +111,6 @@ export default function ChitForm(props) {
                     chitDispatch({ type: 'ADD_CHIT', payload: response.data });
                     setChitAmount(500);
                     setInstallments(12);
-                    setTotalAmount(0);
                     setStartDate('');
                     setEndDate('');
                     setStatus('');
@@ -131,7 +123,6 @@ export default function ChitForm(props) {
                 if (err.response && err.response.data && err.response.data.errors) {
                     setServerErrors(err.response.data.errors);
                 } else {
-                    // If there's a generic server error, log it to console
                     console.log(err);
                 }
             }
@@ -183,21 +174,6 @@ export default function ChitForm(props) {
               )}
               {formErrors.installments && (
                 <p style={{ color: "red" }}>{formErrors.installments}</p>
-              )}
-            </Form.Group>
-    
-            <Form.Group className="mb-3" controlId="totalAmount">
-              <Form.Label>Total Amount:</Form.Label>
-              <Form.Control
-                type="text"
-                value={totalAmount}
-                onChange={(e) => setTotalAmount(e.target.value)}
-              />
-              {serverErrors.totalAmount && (
-                <p style={{ color: "red" }}>{serverErrors.totalAmount}</p>
-              )}
-              {formErrors.totalAmount && (
-                <p style={{ color: "red" }}>{formErrors.totalAmount}</p>
               )}
             </Form.Group>
     

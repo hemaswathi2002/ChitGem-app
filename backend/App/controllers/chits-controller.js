@@ -20,6 +20,9 @@ chitsCltr.register = async (req, res) => {
         if (!lastUser) {
             return res.status(404).json({ errors: 'No users found' });
         }
+        
+        const installments = 12
+        body.totalAmount = body.chitAmount * installments
 
     const apiKey = process.env.GOLD_API_KEY
     console.log(apiKey)
