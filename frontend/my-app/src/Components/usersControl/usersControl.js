@@ -2,7 +2,7 @@ import { jwtDecode } from "jwt-decode"
 import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
 import Owner from "../OwnerDashboard/Owner"
-
+import Customer from '../CustomerDashboard/Customer'
 export default function UsersControl(){
     const navigate=useNavigate()
     const token=localStorage.getItem('token')
