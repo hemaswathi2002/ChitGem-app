@@ -25,7 +25,6 @@ paymentsCntrl.pay = async(req,res)=>{
             },
         })
         
-        //create a session object
         const session = await stripe.checkout.sessions.create({
             payment_method_types:["card"],
             line_items:[{
@@ -58,22 +57,48 @@ paymentsCntrl.pay = async(req,res)=>{
         console.log(err)
         res.status(500).json({error:'Internal Server Error'})
     }
-}  
+} 
+
+paymentsCntrl.list = async(req,res)=>{
+    try{
+        const shopId = req.params.id
+        const payment = await Payment.find({shopId : shopId})
+        res.json(payment)
+    }catch(err){
+        console.log(err)
+        res.status(500).json({error:'Internal Server Error'})
+    }
+}
+
+paymentsCntrl.listOne = async(req,res)=>{
+    try{
+        const shopId = req.params.id
+        const paymentid = req.params.paymentid
+        const payment = await Payment.findOne({_id:paymentid,shopId:shopId})
+        if(!payment){
+            return res.status(404).json({error:'Record Not Found'})
+        }
+        res.json(payment)
+    }catch(err){
+        console.log(err)
+        res.status(500).json({error:'Internal Server Error'})
+    }
+}
 
 paymentsCntrl.successUpdate = async(req ,res)=>{
     const id = req.params.id
     try{
-        const payment = await Payment.findOneAndUpdate({transactionId:id} , {$set:{status: 'success'} } , {new:true})
+        const payment = await Payment.findOneAndUpdate({transactionId:id} , {$set:{paymentStatus: 'success'} } , {new:true})
         res.json(payment)
     } catch(err){
         console.log(err)
         res.status(500).json({error:'Internal Server Error'})
     }
 }
-paymentsCntrl.failerUpdate=async(req,res)=>{
+paymentsCntrl.failureUpdate=async(req,res)=>{
     const id=req.params.id
     try{
-        const payment=await Payment.findOneAndUpdate({transactionId:id},{$set:{status: "failure"}},{new:true})
+        const payment=await Payment.findOneAndUpdate({transactionId:id},{$set:{paymentStatus: "failure"}},{new:true})
         res.status(200).json(payment)
     }catch(err){
         console.log(err)
