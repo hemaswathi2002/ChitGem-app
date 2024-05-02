@@ -6,6 +6,10 @@ const invoiceSchema = new Schema({
         type:Schema.Types.ObjectId,
         ref:'User'
     },
+    shopId : {
+        type:Schema.Types.ObjectId,
+        ref:'Shop'
+    },
     lineItems:[
         { 
             chit: {

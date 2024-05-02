@@ -15,6 +15,7 @@ const chitsCltr=require('./App/controllers/chits-controller')
 const customersCltr = require('./App/controllers/customers-controller')
 const reviewsCltr = require('./App/controllers/reviews-controller')
 const invoicesCltr=require('./App/controllers/invoice-controller')
+const paymentsCntrl = require('./App/controllers/payments-controller')
 
 const {authenticateUser,authorizeUser} = require('./App/middlewares/auth')
 
@@ -99,9 +100,11 @@ app.get('/api/invoices',invoicesCltr.list)
 app.delete('/api/invoices/:id',invoicesCltr.delete)
 
 // //payments
-// app.get('/payments', paymentsCtrl.list)
-// app.get('/payments/successful', paymentsCtrl.listSuccessfulPayments)
-// app.get('/payments/failed', paymentsCtrl.listFailedPayments)
+app.post('/api/create-checkout-session',authenticateUser,authorizeUser(['customer']),paymentsCntrl.pay)
+app.get('/api/:shopId/payments',authenticateUser,authorizeUser(['owner']),paymentsCntrl.list)
+app.get('/api/:shopId/payments/:paymentId',authenticateUser,authorizeUser(['owner']),paymentsCntrl.listOne)
+app.put('/api/payment/status/update/:id' , paymentsCntrl.successUpdate)
+app.put('/api/payment/failer/:id',paymentsCntrl.failureUpdate)
 app.listen(port,()=>{
     console.log(`ChitGem-app is successfully running on the ${port}`)
 })

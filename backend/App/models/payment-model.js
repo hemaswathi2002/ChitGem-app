@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const paymentSchema = new Schema({
-    paymentMethod: String,
+    paymentType: String,
     invoiceId: {
         type: Schema.Types.ObjectId,
         ref: 'Invoice'
@@ -16,10 +16,10 @@ const paymentSchema = new Schema({
         type: Number,
         required: true
     },
-    status: {
-        type: String,
-        enum: ['pending', 'success', 'failure'],
-        default: 'pending'
+    paymentStatus:{
+        type:String,
+        enum: ['pending', 'Successful','Failed'],
+        default:"pending"
     },
     paymentDate: {
         type: Date,

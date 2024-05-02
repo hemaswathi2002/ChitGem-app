@@ -1,5 +1,6 @@
 const Invoices= require('../models/invoice-model')
 const Chit = require('../models/chit-model')
+const axios = require('axios')
 const _ = require('lodash')
 const {validationResult}=require('express-validator')
 const invoicesCltr={}
@@ -16,10 +17,11 @@ invoicesCltr.create=async(req,res)=>{
         if (!chitUser) {
             return res.status(404).json({ errors: "Chit not found for this user" });
         }
+        body.shopId = chitUser.shopId
         body.lineItems.forEach(item => {
             item.chit = chitUser._id;
             item.chitAmount = chitUser.chitAmount;
-            item.totalAmount = chitUser.totalAmount;
+            item.totalAmount = chitUser.totalAmount
         })
         const apiKey = process.env.GOLD_API_KEY
         console.log(apiKey)
