@@ -1,5 +1,6 @@
 const Invoices= require('../models/invoice-model')
 const Chit = require('../models/chit-model')
+const _ = require('lodash')
 const {validationResult}=require('express-validator')
 const invoicesCltr={}
 
@@ -52,24 +53,7 @@ invoicesCltr.list=async(req,res)=>{
         res.status(201).json({errors:'Internal server errors'})
     }
 }
-invoicesCltr.update=async(req,res)=>{
-    const errors=validationResult(req)
-    if(!errors.isEmpty()){
-        return res.status(400).json({errors:errors.array()})
-    }
-    try{
-        const id =req.params.id
-        const {body}=req
-        body.customerId=req.user.id
-        body.chitId=Customer.chitId
-        const invoice=await Invoices.findOneAndUpdate({_id:id},body,{new:true})
-        res.status(200).json(invoice)
-    }
-    catch(err){
-        console.log(err)
-        res.status(500).json({errors:'Internal Server Errors'})
-    }
-}
+
 invoicesCltr.delete=async(req,res)=>{
     try{
         const id= req.params.id

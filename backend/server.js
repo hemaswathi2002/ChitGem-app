@@ -89,14 +89,14 @@ app.delete('/api/customers/:id',authenticateUser,authorizeUser(['owner']),custom
 app.post ('/api/reviews',reviewsCltr.create)
 app.get('/api/reviews',reviewsCltr.list)
 app.get('/api/reviews/:id',reviewsCltr.getOneReview)
+// app.get('/api/invoices/:id',invoicesCltr.getOneReview)
 app.put('/api/reviews/:id',reviewsCltr.update)
 app.delete('/api/reviews/:id',reviewsCltr.delete)
 
-// app.post ('/api/invoices',checkSchema(invoicevalidationSchema),invoicesCltr.create)
-// app.get('/api/invoices',invoicesCltr.list)
-// // app.get('/api/invoices/:id',invoicesCltr.getOneReview)
-// app.put('/api/invoices/:id',invoicesCltr.update)
-// app.delete('/api/invoices/:id',invoicesCltr.delete)
+app.post ('/api/invoices',authenticateUser,authorizeUser(['owner']),checkSchema(invoicevalidationSchema),invoicesCltr.create)
+app.get('/api/invoices',invoicesCltr.list)
+app.put('/api/invoices/:id',invoicesCltr.update)
+app.delete('/api/invoices/:id',invoicesCltr.delete)
 
 // //payments
 // app.get('/payments', paymentsCtrl.list)

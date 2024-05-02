@@ -1,4 +1,4 @@
-const {Schema,mongoose} = require('mongoose')
+const {Schema,model} = require('mongoose')
 
 const invoiceSchema = new Schema({
  
@@ -25,5 +25,5 @@ const invoiceSchema = new Schema({
     paymentMonth : String,
     date : Date
 })
-const Invoices=mongoose.model('Invoices',invoiceSchema)
+const Invoices=model('Invoices',invoiceSchema)
 module.exports=Invoices
