@@ -40,7 +40,7 @@ customersCltr.register = async(req,res) => {
 customersCltr.list = async(req,res)=>{
     try{
         const {ownerId} = req.params
-        const customer = await Customers.find({ownerId})
+        const customer = await Customers.findOne({ownerId:ownerId})
         if (!customer) { 
             return res.status(404).json({ errors: 'Customer not found' });
         }
@@ -84,7 +84,8 @@ customersCltr.update = async(req,res) => {
 customersCltr.getOneCustomer = async(req,res)=>{
     try{
         const id = req.params.id
-        const customer = await Customers.findOne({_id:id})
+        const userId = req.user.id
+        const customer = await Customers.findOne({_id:id,customerId:userId})
         res.status(200).json({customer})
     }
     catch(err){
