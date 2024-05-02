@@ -40,6 +40,7 @@ import Main from './Components/Main/Main'
 import ChitForm from './Components/Chit/ChitsForm'
 import ShopsContainer from './Components/Shop/ShopsTable'
 import Owner from './Components/OwnerDashboard/Owner'
+import CustomerDetails from './Components/CustomerDashboard/CustomerDetails'
 
 export default function App() {
   const [chits, chitDispatch] = useReducer(chitReducer, {data: []})
@@ -234,6 +235,7 @@ const registerToast = () => {
                   {/* <Link to = '/admin'>admin</Link> | */}
                   <Link to="/customers">customer</Link> |
                   <Link to = "/chit">chit</Link> |
+                  <Link to = '/customers-user'>customer details</Link>
                   <Link to="/" onClick={() => {
                     localStorage.removeItem('token')
                     handleLogout()
@@ -256,7 +258,12 @@ const registerToast = () => {
                     <Route path='/admin' element={<Admin/>}/>
                     <Route path='/owner' element={<Owner/>}/>
                     <Route path = '/shop' element = {<ShopsContainer/>}/>
+                    <Route path = '/customer/:id' element = {<CustomerDetails/>}/>
                     {/* <Route path = '/customers' element = {<CustomersContainer users = {users}/>}/> */}
+                    <Route path = '/customers-user' element = {
+                    <PrivateRoute permittedRoles = {['customer']}>
+                       <CustomerDetails/>
+                      </PrivateRoute>}/>
                     <Route path = '/customers' element = {
                       <PrivateRoute permittedRoles = {['owner']}>
                         <CustomersContainer users = {users}/>
@@ -295,7 +302,6 @@ const registerToast = () => {
                   </Routes>
                   </CustomersContext.Provider> 
                   {/* <CustomersContainer/> */}
-
 
                   {/* <ToastContainer />
                   <ChitsContainer/> 

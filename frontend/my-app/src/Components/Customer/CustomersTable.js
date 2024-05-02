@@ -8,6 +8,7 @@ import { Button, Modal, ModalHeader, ModalBody } from 'reactstrap';
 
 export default function CustomersList(props) {
     const { customers, customerDispatch } = useContext(CustomersContext);
+    console.log(customers)
     const [modal, setModal] = useState(false);
     const [editId, setEditId] = useState('');
     const [searchQuery, setSearchQuery] = useState('');
@@ -42,7 +43,7 @@ export default function CustomersList(props) {
             customer.contact && customer.contact.email.toLowerCase().includes(searchQuery.toLowerCase())
         );
     }, [customers.data, searchQuery]);
-
+   
     return (
         <div>
             <h2>Customers - {customers.data.length}</h2>
