@@ -14,7 +14,7 @@ const jewelsCltr = require('./App/controllers/jewels-controller')
 const chitsCltr=require('./App/controllers/chits-controller')
 const customersCltr = require('./App/controllers/customers-controller')
 const reviewsCltr = require('./App/controllers/reviews-controller')
-// const invoicesCltr=require('./App/controllers/invoice-controller')
+const invoicesCltr=require('./App/controllers/invoice-controller')
 
 const {authenticateUser,authorizeUser} = require('./App/middlewares/auth')
 
@@ -93,9 +93,9 @@ app.get('/api/reviews/:id',reviewsCltr.getOneReview)
 app.put('/api/reviews/:id',reviewsCltr.update)
 app.delete('/api/reviews/:id',reviewsCltr.delete)
 
-app.post ('/api/invoices',authenticateUser,authorizeUser(['owner']),checkSchema(invoicevalidationSchema),invoicesCltr.create)
+app.post ('/api/invoices',authenticateUser,authorizeUser(['owner']),invoicesCltr.create)
 app.get('/api/invoices',invoicesCltr.list)
-app.put('/api/invoices/:id',invoicesCltr.update)
+// app.put('/api/invoices/:id',invoicesCltr.update)
 app.delete('/api/invoices/:id',invoicesCltr.delete)
 
 // //payments
