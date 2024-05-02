@@ -1,7 +1,6 @@
 const Invoices= require('../models/invoice-model')
 const axios = require('axios')
 const Chit = require('../models/chit-model')
-const axios = require('axios')
 const _ = require('lodash')
 const {validationResult}=require('express-validator')
 const invoicesCltr={}
