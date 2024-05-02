@@ -116,3 +116,44 @@ img {
     align-items: center;
     height: 100vh;
   }
+  .dataTable-header {
+    background-color: lightpink;
+}
+.shop-details {
+    padding: 20px;
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+  }
+  .react-data-table-component .rdt_TableHeadRow {
+    background-color: lightpink;
+}
+/* index.css */
+
+.styled-table {
+    width: 100%;
+    border-collapse: collapse;
+    border-spacing: 0;
+  }
+  
+  .styled-table th,
+  .styled-table td {
+    padding: 8px;
+    border-bottom: 1px solid #ddd;
+    text-align: left;
+  }
+  
+  .styled-table th {
+    background-color: lightpink; 
+    color: white;
+  }
+  
+  .styled-table tbody tr:nth-of-type(even) {
+    background-color: #f3f3f3;
+  }
+  
+  .styled-table tbody tr:hover {
+    background-color: #ddd;
+  }
+  
+
+  

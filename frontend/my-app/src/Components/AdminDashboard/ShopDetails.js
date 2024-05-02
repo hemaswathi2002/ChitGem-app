@@ -1,12 +1,13 @@
-import DataTable from 'react-data-table-component'
-import {useDispatch, useSelector} from 'react-redux';
+import DataTable from 'react-data-table-component';
+import { useDispatch, useSelector } from 'react-redux';
 import { startUpdateStatus } from '../Actions/adminsAction';
-export default function ShopDetails(){
+
+export default function ShopDetails() {
     const allShops = useSelector((state) => {
         console.log("All Shops in useSelector:", state.admin.allShops);
         return state.admin.allShops;
     });
-    const dispatch = useDispatch()
+    const dispatch = useDispatch();
 
     const handleStatusChange = (shopId, status) => {
         if (shopId) {
@@ -15,7 +16,7 @@ export default function ShopDetails(){
             console.error('Invalid shop ID:', shopId);
         }
     };
-    
+
     const columns = [
         {
             name: 'Shop',
@@ -26,11 +27,11 @@ export default function ShopDetails(){
             cell: row => <div style={{ whiteSpace: 'pre-wrap' }}>{`${row.address.area}, ${row.address.city}, ${row.address.state} ${row.address.pincode}`}</div>
         },
         {
-            name: 'email',
+            name: 'Email',
             selector : row => row.contact.email
         },
         {
-            name: 'mobile',
+            name: 'Mobile',
             selector : row => row.contact.mobile
         },
         {
@@ -57,23 +58,28 @@ export default function ShopDetails(){
                 </div>
             )
         }
-    ]
+    ];
 
-    
-
-    
     return (
         <>
-            <h2>Shop List</h2>
-            <DataTable
-             columns={columns}
-             data={allShops}
-             pagination
-             highlightOnHover
-             striped
-             responsive
-            />
-            
+            <div className="shop-details">
+                <h2>Shop List</h2>
+                <DataTable
+                    columns={columns}
+                    data={allShops}
+                    pagination
+                    highlightOnHover
+                    striped
+                    responsive
+                    customStyles={{
+                        headRow: {
+                            style: {
+                                backgroundColor: 'lightpink' // Apply light pink background to header row
+                            }
+                        }
+                    }}
+                />
+            </div>
         </>
-    )
+    );
 }

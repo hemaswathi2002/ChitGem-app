@@ -36,7 +36,7 @@ export default function ShopsTable() {
         toggle();
     };
     const handleAddShop = () => {
-        setEditId(''); // Reset editId to clear any previous edit state
+        setEditId(''); 
         toggle(); // Open the modal
     };
  return (
@@ -45,7 +45,7 @@ export default function ShopsTable() {
                 <div>
                     <h2>shops - {shops.shop?.length}</h2>
                     <table className="styled-table">
-                        <thead>
+                        <thead style={{ backgroundColor: 'lightpink' }}> 
                             <tr>
                                 <th>Shop</th>
                                 <th>Email</th>
