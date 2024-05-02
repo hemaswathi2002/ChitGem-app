@@ -4,7 +4,7 @@ import React, { useState, useEffect, useContext } from 'react'
 import axios from 'axios'
 import { CustomersContext } from '../../Context/CustomersContext'
 import { useAuth } from '../../Context/AuthrorizeContext'
-import { Container, Form, Button } from 'react-bootstrap'; // Import Reactstrap components
+import { Container, Form, Button } from 'react-bootstrap'
 
 export default function CustomersForm(props) {
     const { customers, customerDispatch } = useContext(CustomersContext)
@@ -61,8 +61,8 @@ export default function CustomersForm(props) {
             errors.description = 'Description is required'
         }
     
-        setFormErrors(errors) // Update formErrors with the new errors
-        return Object.keys(errors).length === 0 // Return true if there are no errors
+        setFormErrors(errors)
+        return Object.keys(errors).length === 0 
     }
     
     const handleSubmit = async (e) => {
@@ -140,7 +140,7 @@ export default function CustomersForm(props) {
     <Form.Control
         type="text"
         placeholder="Name" 
-        name="name" // Add the name attribute
+        name="name"
         value={customer.name}
         onChange={handleChange}
     />
@@ -149,7 +149,7 @@ export default function CustomersForm(props) {
 <Form.Group className="mb-3" controlId="email">
     <Form.Control
         type="text"
-        name="contact.email" // Add the name attribute
+        name="contact.email" 
         placeholder="Email" 
         value={customer.contact.email}
         onChange={handleChange}

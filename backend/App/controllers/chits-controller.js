@@ -62,18 +62,24 @@ chitsCltr.update = async (req, res) => {
 }
 chitsCltr.getOnechit = async (req, res) => {
   try {
-    const { id } = req.params
-    const chit = await Chit.findOne({ _id: id })
+    const { id } = req.params;
+    const chit = await Chit.findOne({ _id: id });
 
     if (!chit) {
-      return res.status(404).json({ message: "Chit not found" })
+      return res.status(404).json({ message: "Chit not found" });
     }
-    res.json(chit)
+
+    if (chit.ownerId.toString() !== req.user._id.toString()) {
+      return res.status(403).json({ message: "Access denied." });
+    }
+
+    res.json(chit);
   } catch (error) {
-    console.error(error)
-    res.status(500).json({ errors: "Internal Server Error" })
+    console.error(error);
+    res.status(500).json({ errors: "Internal Server Error" });
   }
-}
+};
+
 
 chitsCltr.getAllchit = async (req, res) => {
   try {

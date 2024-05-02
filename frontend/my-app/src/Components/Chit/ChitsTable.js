@@ -2,7 +2,7 @@ import React, { useContext, useState } from 'react';
 import axios from 'axios';
 import ChitForm from './ChitsForm';
 import { ChitsContext } from '../../Context/ChitsContext';
-import { Button, Modal, ModalHeader, ModalBody } from 'reactstrap';
+import { Button, Modal, ModalHeader, ModalBody } from 'reactstrap'; // Import Reactstrap components
 
 export default function ChitList() {
     const { chits, chitDispatch } = useContext(ChitsContext);
@@ -44,42 +44,42 @@ export default function ChitList() {
             {serverError && <p style={{ color: 'red' }}>{serverError}</p>}
             <div className="table-container">
                 <table className="styled-table">
-                <thead>
-                    <tr>
-                        <th>Chit Amount</th>
-                        <th>Installments</th>
-                        <th>Total Amount</th>
-                        <th>Start Date</th>
-                        <th>End Date</th>
-                        <th>Status</th>
-                        <th>Benefits</th>
-                        <th>Terms and Conditions</th>
-                        <th>Gold Price</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {chits && chits.data && chits.data.map(chit => (
-                        <tr key={chit._id}>
-                            <td>{chit.chitAmount}</td>
-                            <td>{chit.installments}</td>
-                            <td>{chit.totalAmount}</td>
-                            <td>{chit.date?.startDate}</td> 
-                            <td>{chit.date?.endDate}</td> 
-                            <td>{chit.status}</td>
-                            <td>{chit.benefits}</td>
-                            <td>{chit.termsAndConditions}</td>
-                            <td>{chit.goldPrice}</td>
-                            <td>
-                            <button onClick={() => handleEdit(chit._id)} style={{ backgroundColor: '#ffb6c1' }}>Edit</button>
-                                    <button onClick={() => handleRemove(chit._id)} style={{ backgroundColor: '#ffb6c1' }}>Remove</button>
-                                 </td>
+                    <thead>
+                        <tr>
+                            <th>Chit Amount</th>
+                            <th>Installments</th>
+                            <th>Total Amount</th>
+                            <th>Start Date</th>
+                            <th>End Date</th>
+                            <th>Status</th>
+                            <th>Benefits</th>
+                            <th>Terms and Conditions</th>
+                            <th>Gold Price</th>
+                            <th>Actions</th>
                         </tr>
-                    ))}
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        {chits && chits.data && chits.data.map(chit => (
+                            <tr key={chit._id}>
+                                <td>{chit.chitAmount}</td>
+                                <td>{chit.installments}</td>
+                                <td>{chit.totalAmount}</td>
+                                <td>{chit.date?.startDate}</td> 
+                                <td>{chit.date?.endDate}</td> 
+                                <td>{chit.status}</td>
+                                <td>{chit.benefits}</td>
+                                <td>{chit.termsAndConditions}</td>
+                                <td>{chit.goldPrice}</td>
+                                <td>
+                                    <Button onClick={() => handleEdit(chit._id)} color="danger">Edit</Button>{' '}
+                                    <Button onClick={() => handleRemove(chit._id)} color="danger">Remove</Button>
+                                </td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
             </div>
-           
+            
             <Button color="success" onClick={toggle}>Add Chit</Button>
             <Modal isOpen={modal} toggle={toggle}>
                 <ModalHeader toggle={toggle}>Chit Form</ModalHeader>
