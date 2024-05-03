@@ -76,7 +76,7 @@ app.delete('/api/jewels/:id',jewelsCltr.delete)
 app.post('/api/chits',authenticateUser,authorizeUser(['owner']),checkSchema(chitRegisterValidationSchema),chitsCltr.register)
 app.put('/api/chits/:id',checkSchema(chitRegisterValidationSchema),chitsCltr.update)
 app.get('/api/chits',chitsCltr.getAllchit)
-app.get('/api/chits/:id',chitsCltr.getOnechit)
+app.get('/api/chits/:id',authenticateUser,authorizeUser(['owner','customer']),chitsCltr.getOnechit)
 app.delete('/api/chits/:id',chitsCltr.destroy)
 
 //api customers
@@ -94,7 +94,7 @@ app.put('/api/reviews/:id',reviewsCltr.update)
 app.delete('/api/reviews/:id',reviewsCltr.delete)
 
 // app.post ('/api/invoices',checkSchema(invoicevalidationSchema),invoicesCltr.create)
-app.post ('/api/invoices',authenticateUser,authorizeUser(['admin']),invoicesCltr.create)
+app.post ('/api/:chitId/generate-invoice',authenticateUser,authorizeUser(['owner']),invoicesCltr.create)
 app.get('/api/gold-price',invoicesCltr.get)
 app.get('/api/invoices',invoicesCltr.list)
 // app.put('/api/invoices/:id',invoicesCltr.update)

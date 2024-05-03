@@ -11,7 +11,7 @@ export default function LiveGoldPriceDisplay (){
             console.log("Fetched Gold Price:", GoldPrice); // Add this line to log fetched data
             setGoldPrice(GoldPrice)
         } catch (error) {
-            console.error('Error fetching gold price:', error)
+            console.log('Error fetching gold price:', error)
         }
     };
 

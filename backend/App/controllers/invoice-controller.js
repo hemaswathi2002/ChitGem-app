@@ -3,6 +3,7 @@ const axios = require('axios')
 const Chit = require('../models/chit-model')
 const _ = require('lodash')
 const {validationResult}=require('express-validator')
+const { chitAmount } = require('../validators/chit-validation')
 const invoicesCltr={}
 
 invoicesCltr.create=async(req,res)=>{
@@ -11,35 +12,52 @@ invoicesCltr.create=async(req,res)=>{
         return res.status(400).json({errors:errors.array()})
     }
     try{
-        const {body}=req
-        body.userId=req.user.id
-        const chitUser = await Chit.findOne({userId : req.user.id})
-        if (!chitUser) {
-            return res.status(404).json({ errors: "Chit not found for this user" });
+        const {chitId} = req.params
+        const chit = await Chit.findById(chitId);
+        if (!chit) {
+            return res.status(404).json({ error: "Chit not found" });
         }
-        body.shopId = chitUser.shopId
-        body.lineItems.forEach(item => {
-            item.chit = chitUser._id;
-            item.chitAmount = chitUser.chitAmount;
-            item.totalAmount = chitUser.totalAmount
-        })
-        const apiKey = process.env.GOLD_API_KEY
-        console.log(apiKey)
-        const config = {
-        headers: {
-        'x-access-token': apiKey
-      }
-    }
-    const goldPriceResponse = await axios.get("https://www.goldapi.io/api/XAU/INR", config)
-    const { price_gram_24k } = goldPriceResponse.data
-    console.log(goldPriceResponse.data)
-    body.lineItems.forEach(item => {
-        item.goldPrice = price_gram_24k 
-    })
+        if (chit.ownerId.toString() !== req.user.id) {
+            return res.status(403).json({ error: "Unauthorized access" });
+        }
 
-        const invoice = new Invoices({ ...body,userId })
-        const response=await invoice.save()
-        res.status(201).json(response)
+        const {body}=req
+        body.ownerId = req.user.id
+        body.shopId = chit.shopId
+    //     const apiKey = process.env.GOLD_API_KEY
+    //     console.log(apiKey)
+    //     const config = {
+    //     headers: {
+    //     'x-access-token': apiKey
+    //   }
+    // }
+    // const goldPriceResponse = await axios.get("https://www.goldapi.io/api/XAU/INR", config)
+    // const { price_gram_24k } = goldPriceResponse.data
+    // console.log(goldPriceResponse.data)
+    // body.lineItems.forEach(item => {
+    //     item.goldPrice = price_gram_24k 
+    // })
+    const startDate = new Date(chit.date.startDate);
+        const monthDifference = (new Date().getFullYear() - startDate.getFullYear()) * 12 + 
+                                 new Date().getMonth() - startDate.getMonth();
+
+
+    const invoices = [];
+
+    for (let i = 0; i < chit.installments; i++) {
+        const month = new Date(startDate.getFullYear(), startDate.getMonth() + monthDifference + i, 1);
+        const invoiceData = {
+            ...body,
+            chit: chit._id, 
+            chitAmount: chit.chitAmount,
+            totalAmount: chit.totalAmount,
+            date: new Date(),
+            paymentMonth: month.toLocaleString('default', { month: 'long' })
+        };
+        invoices.push(new Invoices(invoiceData));
+        }
+            const responses = await Promise.all(invoices.map(invoice => invoice.save()))
+            res.status(201).json(responses)
     }
     catch(err){
         console.log(err)
@@ -50,9 +68,9 @@ invoicesCltr.list = async(req,res)=>{
     try{
         // const id = req.params.id
         const invoice = await Invoices.find()
-    if(!invoice){
-        return res.status(404).json({ error: 'Invoice not found' });
-    }
+    // if(!invoice){
+    //     return res.status(404).json({ error: 'Invoice not found' });
+    // }
     res.json(invoice)
     }catch(err){
       console.log(err)

@@ -20,6 +20,7 @@ import CustomersForm from './Components/Customer/CustomersForm'
 import { CustomersContext } from './Context/CustomersContext'
 import CustomersContainer from './Components/Customer/CustomersContainer'
 import UsersControl from './Components/usersControl/usersControl'
+import InvoiceTable from './Components/OwnerDashboard/Invoice/InvoiceTable'
 // import { ToastContainer } from 'react-toastify'
 // import { useDispatch, useSelector} from 'react-redux'
 import ChitsContainer from './Components/Chit/ChitsContainer'
@@ -30,6 +31,7 @@ import { ChitsContext } from './Context/ChitsContext'
 import chitReducer from './Reducers/Chits'
 // import UsersReducer from './Reducers/Users'
 import CustomersReducer from './Reducers/Customers'
+import ChitsTable from './Components/Chit/ChitsTable'
 
 // import ShopsContainer from './Components/Shop/ShopsContainer'
 // import InvoiceContainer from './Components/Invoice/InvoiceContainer'
@@ -41,6 +43,8 @@ import ChitForm from './Components/Chit/ChitsForm'
 import ShopsContainer from './Components/Shop/ShopsTable'
 import Owner from './Components/OwnerDashboard/Owner'
 import CustomerDetails from './Components/CustomerDashboard/CustomerDetails'
+import InvoiceForm from './Components/OwnerDashboard/Invoice/InvoiceForm'
+import ChitDetails from './Components/Chit/ChitsDetails'
 
 export default function App() {
   const [chits, chitDispatch] = useReducer(chitReducer, {data: []})
@@ -49,27 +53,8 @@ export default function App() {
   const [ownerId,setOwnerId] = useState('')
   const { user, handleLogin,  handleLogout } = useAuth() 
 
-  // const dispatch = useDispatch()
+  const dispatch = useDispatch()
 
-  
-
-  //   useEffect(() => {
-  //     if(localStorage.getItem('token')) {
-  //             dispatch(startGetUserDetails())
-  //     }
-
-  //     (async ()=>{
-  //       try{
-  //         const customersResponse = await axios.get('http://localhost:3009/api/customers');
-  //         console.log('customer',customersResponse.data)
-  //         customerDispatch({ type: 'SET_CUSTOMERS', payload: customersResponse.data });    
-  //       }
-  //       catch(err){
-  //         console.log(err)
-  //       }
-  //     })();
-
-  // }, []);
     useEffect(() => {
       if(localStorage.getItem('token')) {
               dispatch(startGetUserDetails())
@@ -135,72 +120,24 @@ export default function App() {
   // },[dispatch])
 
 
-  const shops = useSelector((state) => state.shops)
+  // useEffect(()=>{
+  //   if(localStorage.getItem('token')){
+  //     dispatch(startGetUserDetails())
+  //   }
+  // }, [handleLogin])
 
-
-  useEffect(() => {
-
-    (async () => {
-      try {
-        const chitsResponse = await axios.get('http://localhost:3009/api/chits')
-        // ,
-        // {
-        //   headers : {
-        //     Authorization : localStorage.getItem('token')
-        //   }
-        // });
-        chitDispatch({ type: 'SET_CHIT', payload: chitsResponse.data });
-
-        // const customersResponse = await axios.get('http://localhost:3009/api/customers');
-        // customerDispatch({ type: 'SET_CUSTOMERS', payload: customersResponse.data });
-
-        const shopsResponse = await axios.get('http://localhost:3009/api/shops');
-        shopDispatch({ type: 'SET_SHOP', payload: shopsResponse.data });
-      } catch (err) {
-        console.log(err);
-      }
-    })();
-}
-,[handleLogin, chitDispatch, shopDispatch]);
-
-  useEffect(()=>{
-    if(localStorage.getItem('token')){
-      dispatch(startGetUserDetails())
-    }
-  }, [handleLogin])
-
-  const dispatch = useDispatch()
+  // const dispatch = useDispatch()
   
-  useEffect(()=>{
-    dispatch(startGetJewels())
-  },[dispatch])
+  // useEffect(()=>{
+  //   dispatch(startGetJewels())
+  // },[dispatch])
 
-  useEffect(() => {
-    (async () => {
-      try {
-        const chitsResponse = await axios.get('http://localhost:3009/api/chits',{
-          headers : {
-            Authorization : localStorage.getItem('token')
-          }
-        });
-        chitDispatch({ type: 'SET_CHIT', payload: chitsResponse.data });
 
-        // const customersResponse = await axios.get('http://localhost:3009/api/customers');
-        // customerDispatch({ type: 'SET_CUSTOMERS', payload: customersResponse.data });
-
-        const shopsResponse = await axios.get('http://localhost:3009/api/shops');
-        shopDispatch({ type: 'SET_SHOP', payload: shopsResponse.data });
-      } catch (err) {
-        console.log(err);
-      }
-    })();
-  }, []);
-
-  useEffect(()=>{
-    if(localStorage.getItem('token')){
-      dispatch(startGetUserDetails())
-    }
-  },[dispatch])
+  // useEffect(()=>{
+  //   if(localStorage.getItem('token')){
+  //     dispatch(startGetUserDetails())
+  //   }
+  // },[dispatch])
 
   const loginToast = () => {
     toast.success('Logged in successfully', {
@@ -224,10 +161,9 @@ const registerToast = () => {
 
 
   return (
-<div>
+    <div>
       <>
       { !user ? (
-
               <>
               <Link to = '/'>Home</Link> |
               <Link to="/register">Register</Link>| 
@@ -241,7 +177,8 @@ const registerToast = () => {
                   {/* <Link to = '/admin'>admin</Link> | */}
                   <Link to="/customers">customer</Link> |
                   <Link to = "/chit">chit</Link> |
-                  <Link to = '/customers-user'>customer details</Link>
+                  <Link to = '/customers-user'>customer details</Link>|
+                  <Link to = '/invoice'>invoice</Link>|
                   <Link to="/" onClick={() => {
                     localStorage.removeItem('token')
                     handleLogout()
@@ -265,6 +202,7 @@ const registerToast = () => {
                     <Route path = '/shop' element = {<ShopsContainer/>}/>
                     <Route path = '/customer/:id' element = {<CustomerDetails/>}/>
                     {/* <Route path = '/customers' element = {<CustomersContainer users = {users}/>}/> */}
+                    <Route path = '/invoice' element = {<InvoiceTable/>}/>
                     <Route path = '/customers-user' element = {
                     <PrivateRoute permittedRoles = {['customer']}>
                        <CustomerDetails/>
@@ -274,6 +212,7 @@ const registerToast = () => {
                         <CustomersContainer users = {users}/>
                       </PrivateRoute>
                     }/>
+                    <Route path = '/'/>
                     <Route path = '/account' element = {
                       <PrivateRoute permittedRoles = {['admin','owner','customer']}>
                         <Account/>
@@ -294,6 +233,7 @@ const registerToast = () => {
                         <ChitsContainer/>
                       </PrivateRoute>
                     }/>
+                    <Route path = '/chit/:id' element = {<ChitsTable />}/>
                     <Route path="/unauthorized" element={<Unauthorized /> } />
                     {/* <Route path = '/dashboard' element = {<Main/>}/>
                     <Route path= '/shops' element={<ShopsForm />}/>
@@ -307,6 +247,7 @@ const registerToast = () => {
                   </Routes>
                   </CustomersContext.Provider> 
                   {/* <CustomersContainer/> */}
+                  {/* <JewelContainer/> */}
 
                   {/* <ToastContainer />
                   <ChitsContainer/> 
@@ -320,10 +261,7 @@ const registerToast = () => {
                   <InvoiceContainer/>  */}
           {/* </UsersContext.Provider> */}
         </ChitsContext.Provider>
-        
-        </div>
-
-    
+    </div>
   );
-
 }
+
