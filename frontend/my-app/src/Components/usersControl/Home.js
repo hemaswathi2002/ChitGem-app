@@ -10,11 +10,11 @@ export default function Home() {
         <>
         <LiveGoldPriceDisplay/>
         <div style={{ minHeight: "100vh", display: "flex", flexDirection: "column", alignItems: "center" }}>
-            <div style={{ backgroundColor: "#FCDEDA", width: "100%", padding: "150px" }}>
+            <div style={{ backgroundColor: "#FCDEDA", width: "100%", padding: "90px" }}>
                 <h2>Home Component</h2>
                 {!user ? <p>User not logged in</p> : <p>Welcome { user.username }</p>}
             </div>
-            <div style={{ display: "flex", justifyContent: "center" }}>
+            <div style={{ display: "flex", justifyContent: "center", alignItems: "center", minHeight: "calc(100vh - 180px)" }}>
                 <img
                     src={img} 
                     alt="Your Image"

@@ -71,7 +71,7 @@ export default function RegisterForm({ registerToast }) {
 
     return (
         <div>
-        <div style={{ backgroundColor: '#ffb6c1', height: '10px', width: '100%' }}></div>
+        {/* <div style={{ backgroundColor: '#ffb6c1', height: '10px', width: '100%' }}></div> */}
         <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '45vh', marginTop: '10px' }}>
             <div style={{ border: '2px solid pink', padding: '20px', borderRadius: '5px', width: '30%' }}>
 
@@ -136,7 +136,7 @@ export default function RegisterForm({ registerToast }) {
                         <div style={{ textAlign: 'center', marginTop: '10px' }}>
                             <p>Already have an account? <Link to="/login">Login here</Link></p>
                         </div>
-                        <div>
+                        <div style={{ textAlign: 'center', marginTop: '10px' }}> 
                             <Link to = '/customers'>Add Customer</Link>
                         </div>
 

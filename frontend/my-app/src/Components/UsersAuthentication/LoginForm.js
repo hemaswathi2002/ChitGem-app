@@ -47,44 +47,45 @@ export default function LoginForm(props) {
 
     return (
         <div>
-        <div style={{ backgroundColor: '#ffb6c1', height: '25px', width: '100%' }}></div>
+        {/* <div style={{ backgroundColor: '#ffb6c1', height: '25px', width: '100%' }}></div> */}
         <Container style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '60vh' }}>
           <div style={{ border: '2px solid pink', padding: '20px', borderRadius: '5px', width: '30%' }}>
             <h2 style={{ textAlign: 'center', marginBottom: '20px' }}>Log-in</h2>
-         <Form onSubmit={handleSubmit}>
-                {serverErrors.length>0 && (
-                   <div>
-                    {serverErrors}
-                   </div>
-                )}
-                <FormGroup>
-                    <Label for="email">Email:</Label>
-                    <Input 
-                        type="email" 
-                        id="email" 
-                        placeholder="Enter email..." 
-                        value={email} 
-                        onChange={(e) => setEmail(e.target.value)} 
-                    />
-                </FormGroup>
-                <FormGroup>
-                    <Label for="password">Password:</Label>
-                    <Input 
-                        type="password" 
-                        id="password" 
-                        placeholder="Enter password..." 
-                        value={password} 
-                        onChange={(e) => setPassword(e.target.value)} 
-                    />
-                </FormGroup>
-                <Button type="submit" style={{ backgroundColor: '#ffb6c1' }}>Submit</Button>
-                <div>
-                    <Link to='/forgotpassword'>Forgot Password?</Link>
-                </div>
-                <div>
-                    <Link to="/signup">Sign Up</Link>
-                </div>
-            </Form>
+            <Form onSubmit={handleSubmit}>
+    {serverErrors.length > 0 && (
+        <div>
+            {serverErrors}
+        </div>
+    )}
+    <FormGroup>
+        <Label for="email">Email:</Label>
+        <Input 
+            type="email" 
+            id="email" 
+            placeholder="Enter email..." 
+            value={email} 
+            onChange={(e) => setEmail(e.target.value)} 
+        />
+    </FormGroup>
+    <FormGroup>
+        <Label for="password">Password:</Label>
+        <Input 
+            type="password" 
+            id="password" 
+            placeholder="Enter password..." 
+            value={password} 
+            onChange={(e) => setPassword(e.target.value)} 
+        />
+    </FormGroup>
+    <Button type="submit" style={{ backgroundColor: '#ffb6c1', display: 'block', margin: 'auto' }}>Submit</Button>
+    <div style={{ textAlign: 'center', marginTop: '10px' }}>
+        <Link to='/forgotpassword'>Forgot Password?</Link>
+    </div>
+    <div style={{ textAlign: 'center' }}>
+        <Link to="/signup">Sign Up</Link>
+    </div>
+</Form>
+
             </div>
         </Container>
         <Footer/>

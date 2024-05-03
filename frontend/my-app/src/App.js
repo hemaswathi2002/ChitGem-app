@@ -43,6 +43,8 @@ import ChitForm from './Components/Chit/ChitsForm'
 import ShopsContainer from './Components/Shop/ShopsTable'
 import Owner from './Components/OwnerDashboard/Owner'
 import CustomerDetails from './Components/CustomerDashboard/CustomerDetails'
+import Header from './Components/header/header'
+
 import InvoiceForm from './Components/OwnerDashboard/Invoice/InvoiceForm'
 import ChitDetails from './Components/Chit/ChitsDetails'
 
@@ -79,7 +81,7 @@ export default function App() {
   useEffect(() => {
     (async () => {
       try {
-        const customersResponse = await axios.get(`http://localhost:3009/api/customers/${ownerId}`,{
+        const customersResponse = await axios.get('http://localhost:3009/api/customers/${ownerId}',{
           headers : {
             Authorization : localStorage.getItem('token')
           }
@@ -161,6 +163,10 @@ const registerToast = () => {
 
 
   return (
+ <div>
+<Header/>
+      <>
+      {/* { !user ? (
     <div>
       <>
       { !user ? (
@@ -175,17 +181,17 @@ const registerToast = () => {
                   <Link to="/shop">shop</Link> |
                   {/* <Link to="/register">Register</Link>|  */}
                   {/* <Link to = '/admin'>admin</Link> | */}
-                  <Link to="/customers">customer</Link> |
+                  {/* <Link to="/customers">customer</Link> |
                   <Link to = "/chit">chit</Link> |
                   <Link to = '/customers-user'>customer details</Link>|
                   <Link to = '/invoice'>invoice</Link>|
                   <Link to="/" onClick={() => {
                     localStorage.removeItem('token')
                     handleLogout()
-                  }}> Logout </Link> | 
+                  }}> Logout </Link> |  */}
                 </> 
-            )}
-                  </>
+            {/* )}
+                  </> */} 
 
         <ChitsContext.Provider value={{ chits, chitDispatch }}>
           {/* <UsersContext.Provider value={{ users, usersDispatch }}> */}
@@ -260,6 +266,7 @@ const registerToast = () => {
                   <ReviewsContainer/>
                   <InvoiceContainer/>  */}
           {/* </UsersContext.Provider> */}
+
         </ChitsContext.Provider>
     </div>
   );
