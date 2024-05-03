@@ -41,7 +41,7 @@ import ChitForm from './Components/Chit/ChitsForm'
 import ShopsContainer from './Components/Shop/ShopsTable'
 import Owner from './Components/OwnerDashboard/Owner'
 import CustomerDetails from './Components/CustomerDashboard/CustomerDetails'
-
+import Header from './Components/header/header'
 export default function App() {
   const [chits, chitDispatch] = useReducer(chitReducer, {data: []})
   // const [users, usersDispatch] = useReducer(UsersReducer, {userDetails : [], isLoggedIn : false});
@@ -49,27 +49,8 @@ export default function App() {
   const [ownerId,setOwnerId] = useState('')
   const { user, handleLogin,  handleLogout } = useAuth() 
 
-  // const dispatch = useDispatch()
+  const dispatch = useDispatch()
 
-  
-
-  //   useEffect(() => {
-  //     if(localStorage.getItem('token')) {
-  //             dispatch(startGetUserDetails())
-  //     }
-
-  //     (async ()=>{
-  //       try{
-  //         const customersResponse = await axios.get('http://localhost:3009/api/customers');
-  //         console.log('customer',customersResponse.data)
-  //         customerDispatch({ type: 'SET_CUSTOMERS', payload: customersResponse.data });    
-  //       }
-  //       catch(err){
-  //         console.log(err)
-  //       }
-  //     })();
-
-  // }, []);
     useEffect(() => {
       if(localStorage.getItem('token')) {
               dispatch(startGetUserDetails())
@@ -94,7 +75,7 @@ export default function App() {
   useEffect(() => {
     (async () => {
       try {
-        const customersResponse = await axios.get(`http://localhost:3009/api/customers/${ownerId}`,{
+        const customersResponse = await axios.get('http://localhost:3009/api/customers/${ownerId}',{
           headers : {
             Authorization : localStorage.getItem('token')
           }
@@ -135,72 +116,24 @@ export default function App() {
   // },[dispatch])
 
 
-  const shops = useSelector((state) => state.shops)
+  // useEffect(()=>{
+  //   if(localStorage.getItem('token')){
+  //     dispatch(startGetUserDetails())
+  //   }
+  // }, [handleLogin])
 
-
-  useEffect(() => {
-
-    (async () => {
-      try {
-        const chitsResponse = await axios.get('http://localhost:3009/api/chits')
-        // ,
-        // {
-        //   headers : {
-        //     Authorization : localStorage.getItem('token')
-        //   }
-        // });
-        chitDispatch({ type: 'SET_CHIT', payload: chitsResponse.data });
-
-        // const customersResponse = await axios.get('http://localhost:3009/api/customers');
-        // customerDispatch({ type: 'SET_CUSTOMERS', payload: customersResponse.data });
-
-        const shopsResponse = await axios.get('http://localhost:3009/api/shops');
-        shopDispatch({ type: 'SET_SHOP', payload: shopsResponse.data });
-      } catch (err) {
-        console.log(err);
-      }
-    })();
-}
-,[handleLogin, chitDispatch, shopDispatch]);
-
-  useEffect(()=>{
-    if(localStorage.getItem('token')){
-      dispatch(startGetUserDetails())
-    }
-  }, [handleLogin])
-
-  const dispatch = useDispatch()
+  // const dispatch = useDispatch()
   
-  useEffect(()=>{
-    dispatch(startGetJewels())
-  },[dispatch])
+  // useEffect(()=>{
+  //   dispatch(startGetJewels())
+  // },[dispatch])
 
-  useEffect(() => {
-    (async () => {
-      try {
-        const chitsResponse = await axios.get('http://localhost:3009/api/chits',{
-          headers : {
-            Authorization : localStorage.getItem('token')
-          }
-        });
-        chitDispatch({ type: 'SET_CHIT', payload: chitsResponse.data });
 
-        // const customersResponse = await axios.get('http://localhost:3009/api/customers');
-        // customerDispatch({ type: 'SET_CUSTOMERS', payload: customersResponse.data });
-
-        const shopsResponse = await axios.get('http://localhost:3009/api/shops');
-        shopDispatch({ type: 'SET_SHOP', payload: shopsResponse.data });
-      } catch (err) {
-        console.log(err);
-      }
-    })();
-  }, []);
-
-  useEffect(()=>{
-    if(localStorage.getItem('token')){
-      dispatch(startGetUserDetails())
-    }
-  },[dispatch])
+  // useEffect(()=>{
+  //   if(localStorage.getItem('token')){
+  //     dispatch(startGetUserDetails())
+  //   }
+  // },[dispatch])
 
   const loginToast = () => {
     toast.success('Logged in successfully', {
@@ -224,10 +157,10 @@ const registerToast = () => {
 
 
   return (
-<div>
+ <div>
+<Header/>
       <>
-      { !user ? (
-
+      {/* { !user ? (
               <>
               <Link to = '/'>Home</Link> |
               <Link to="/register">Register</Link>| 
@@ -239,16 +172,16 @@ const registerToast = () => {
                   <Link to="/shop">shop</Link> |
                   {/* <Link to="/register">Register</Link>|  */}
                   {/* <Link to = '/admin'>admin</Link> | */}
-                  <Link to="/customers">customer</Link> |
+                  {/* <Link to="/customers">customer</Link> |
                   <Link to = "/chit">chit</Link> |
                   <Link to = '/customers-user'>customer details</Link>
                   <Link to="/" onClick={() => {
                     localStorage.removeItem('token')
                     handleLogout()
-                  }}> Logout </Link> | 
+                  }}> Logout </Link> |  */}
                 </> 
-            )}
-                  </>
+            {/* )}
+                  </> */} 
 
         <ChitsContext.Provider value={{ chits, chitDispatch }}>
           {/* <UsersContext.Provider value={{ users, usersDispatch }}> */}
@@ -319,11 +252,8 @@ const registerToast = () => {
                   <ReviewsContainer/>
                   <InvoiceContainer/>  */}
           {/* </UsersContext.Provider> */}
+
         </ChitsContext.Provider>
-        
-        </div>
-
-    
+    </div>
   );
-
 }
