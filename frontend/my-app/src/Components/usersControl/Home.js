@@ -1,11 +1,14 @@
 import { useAuth } from "../../Context/AuthrorizeContext";
 import React from "react";
 import img from '../homeimg/Jewellery_Banner_AH_1920.jpg';
+import LiveGoldPriceDisplay from "./LiveGoldPriceDisplay";
 
 export default function Home() {
     const { user } = useAuth();
 
     return (
+        <>
+        <LiveGoldPriceDisplay/>
         <div style={{ minHeight: "100vh", display: "flex", flexDirection: "column", alignItems: "center" }}>
             <div style={{ backgroundColor: "#FCDEDA", width: "100%", padding: "150px" }}>
                 <h2>Home Component</h2>
@@ -19,5 +22,6 @@ export default function Home() {
                 />
             </div>
         </div>
+        </>
     );
 }

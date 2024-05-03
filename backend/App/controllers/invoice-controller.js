@@ -48,8 +48,8 @@ invoicesCltr.create=async(req,res)=>{
 }
 invoicesCltr.list = async(req,res)=>{
     try{
-        const id = req.params.id
-        const invoice = await Invoices.findOne({_id:id})
+        // const id = req.params.id
+        const invoice = await Invoices.find()
     if(!invoice){
         return res.status(404).json({ error: 'Invoice not found' });
     }
@@ -57,6 +57,25 @@ invoicesCltr.list = async(req,res)=>{
     }catch(err){
       console.log(err)
       res.status(500).json({error:'Internal Server Error'})
+    }
+}
+
+
+invoicesCltr.get = async (req, res) => {
+    try {
+        const apiKey = process.env.GOLD_API_KEY;
+        const response = await axios.get("https://www.goldapi.io/api/XAU/INR", {
+            headers: {
+                'x-access-token': apiKey
+            }
+        });
+
+        const  price_gram_24k  = Math.round(response.data.price_gram_24k)
+        console.log(response.data.price_gram_24k)
+        res.json({ goldPrice: price_gram_24k });
+    } catch (error) {
+        console.error('Error fetching live gold price:', error);
+        res.status(500).json({ message: 'Internal server error' });
     }
 }
 

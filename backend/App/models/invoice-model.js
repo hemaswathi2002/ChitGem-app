@@ -2,11 +2,6 @@ const {Schema,model} = require('mongoose')
 
 const invoiceSchema = new Schema({
  
-    // userId:{
-    //     type:Schema.Types.ObjectId,
-    //     ref:'User'
-    // },
-
     userId:{
         type:Schema.Types.ObjectId,
         ref:'User'
@@ -17,10 +12,10 @@ const invoiceSchema = new Schema({
     },
     lineItems:[
         { 
-            // chit: {
-            //     type: Schema.Types.ObjectId, 
-            //     ref: 'Chit'
-            // },
+            chit: {
+                type: Schema.Types.ObjectId, 
+                ref: 'Chit'
+            },
             chitAmount: Number,
             totalAmount: Number,
             goldPrice: {

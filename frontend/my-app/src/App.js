@@ -70,6 +70,11 @@ export default function App() {
   //     })();
 
   // }, []);
+    useEffect(() => {
+      if(localStorage.getItem('token')) {
+              dispatch(startGetUserDetails())
+      }
+  }, []);
   
   useEffect(() => {
     if (user) {
@@ -124,11 +129,11 @@ export default function App() {
   console.log(users)
     
 
-  // }, [handleLogin,customerDispatch])
 
   // useEffect (()=>{
   //   dispatch(startGetShop())
   // },[dispatch])
+
 
   const shops = useSelector((state) => state.shops)
 
@@ -247,7 +252,6 @@ const registerToast = () => {
 
         <ChitsContext.Provider value={{ chits, chitDispatch }}>
           {/* <UsersContext.Provider value={{ users, usersDispatch }}> */}
-            {/* <CustomersContext.Provider value={{ customers, customerDispatch }}> */}
                     <CustomersContext.Provider value={{ customers, customerDispatch }}> 
                   <Routes>
                     <>
@@ -311,14 +315,9 @@ const registerToast = () => {
 
                   <ToastContainer />
                   <ChitsContainer/>
-                  {/* <UsersContainer/> */}
-                   {/* <ShopsContainer/> */}
-                   {/* <CustomersContainer/>
                   <JewelContainer/>
                   <ReviewsContainer/>
                   <InvoiceContainer/>  */}
-              {/* </ShopsContext.Provider>
-            </CustomersContext.Provider> */}
           {/* </UsersContext.Provider> */}
         </ChitsContext.Provider>
         
