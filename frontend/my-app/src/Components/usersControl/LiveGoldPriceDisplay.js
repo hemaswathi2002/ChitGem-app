@@ -13,6 +13,7 @@ export default function LiveGoldPriceDisplay() {
             // setGoldPrice(goldPrice)
         } catch (error) {
             console.error('Error fetching gold price:', error);
+            console.log('Error fetching gold price:', error)
         }
     };
 

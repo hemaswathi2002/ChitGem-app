@@ -4,10 +4,10 @@ const initialState = {
 
 export default function invoicesReducer(state = initialState, action) {
     switch(action.type){
-        case 'SET_INVOICES' : {
+        case 'START_GET_INVOICE' : {
             return {...state, data: action.payload }
         }
-        case 'ADD_INVOICE' : {
+        case 'GENERATE_VOICE' : {
             return {...state, data: [...state.data, action.payload ]}
         }
         case 'SET_ERRORS':

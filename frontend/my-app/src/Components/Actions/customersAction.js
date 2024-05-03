@@ -19,3 +19,25 @@ const getOneCustomer = (data) => ({
     type: 'GET_ONE_USER',
     payload: data
 })
+
+
+export const startGetInvoice = () => {
+    return async (dispatch) => {
+        try{
+            const response = await axios.get('http://localhost:3009/api/invoices')
+            console.log('invoice',response.data)
+            dispatch(getInvoice(response.data))
+        }
+        catch(err){
+            console.log('error fetching invoices:', err);
+
+        }
+    }
+}
+
+const getInvoice = (data)=>{
+    return {
+        type : 'START_GET_INVOICE',
+        payload : data
+    }
+}

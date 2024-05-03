@@ -20,6 +20,7 @@ import CustomersForm from './Components/Customer/CustomersForm'
 import { CustomersContext } from './Context/CustomersContext'
 import CustomersContainer from './Components/Customer/CustomersContainer'
 import UsersControl from './Components/usersControl/usersControl'
+import InvoiceTable from './Components/OwnerDashboard/Invoice/InvoiceTable'
 // import { ToastContainer } from 'react-toastify'
 // import { useDispatch, useSelector} from 'react-redux'
 import ChitsContainer from './Components/Chit/ChitsContainer'
@@ -30,6 +31,7 @@ import { ChitsContext } from './Context/ChitsContext'
 import chitReducer from './Reducers/Chits'
 // import UsersReducer from './Reducers/Users'
 import CustomersReducer from './Reducers/Customers'
+import ChitsTable from './Components/Chit/ChitsTable'
 
 // import ShopsContainer from './Components/Shop/ShopsContainer'
 // import InvoiceContainer from './Components/Invoice/InvoiceContainer'
@@ -42,6 +44,10 @@ import ShopsContainer from './Components/Shop/ShopsTable'
 import Owner from './Components/OwnerDashboard/Owner'
 import CustomerDetails from './Components/CustomerDashboard/CustomerDetails'
 import Header from './Components/header/header'
+
+import InvoiceForm from './Components/OwnerDashboard/Invoice/InvoiceForm'
+import ChitDetails from './Components/Chit/ChitsDetails'
+
 export default function App() {
   const [chits, chitDispatch] = useReducer(chitReducer, {data: []})
   // const [users, usersDispatch] = useReducer(UsersReducer, {userDetails : [], isLoggedIn : false});
@@ -161,6 +167,9 @@ const registerToast = () => {
 <Header/>
       <>
       {/* { !user ? (
+    <div>
+      <>
+      { !user ? (
               <>
               <Link to = '/'>Home</Link> |
               <Link to="/register">Register</Link>| 
@@ -174,7 +183,8 @@ const registerToast = () => {
                   {/* <Link to = '/admin'>admin</Link> | */}
                   {/* <Link to="/customers">customer</Link> |
                   <Link to = "/chit">chit</Link> |
-                  <Link to = '/customers-user'>customer details</Link>
+                  <Link to = '/customers-user'>customer details</Link>|
+                  <Link to = '/invoice'>invoice</Link>|
                   <Link to="/" onClick={() => {
                     localStorage.removeItem('token')
                     handleLogout()
@@ -198,6 +208,7 @@ const registerToast = () => {
                     <Route path = '/shop' element = {<ShopsContainer/>}/>
                     <Route path = '/customer/:id' element = {<CustomerDetails/>}/>
                     {/* <Route path = '/customers' element = {<CustomersContainer users = {users}/>}/> */}
+                    <Route path = '/invoice' element = {<InvoiceTable/>}/>
                     <Route path = '/customers-user' element = {
                     <PrivateRoute permittedRoles = {['customer']}>
                        <CustomerDetails/>
@@ -207,6 +218,7 @@ const registerToast = () => {
                         <CustomersContainer users = {users}/>
                       </PrivateRoute>
                     }/>
+                    <Route path = '/'/>
                     <Route path = '/account' element = {
                       <PrivateRoute permittedRoles = {['admin','owner','customer']}>
                         <Account/>
@@ -227,6 +239,7 @@ const registerToast = () => {
                         <ChitsContainer/>
                       </PrivateRoute>
                     }/>
+                    <Route path = '/chit/:id' element = {<ChitsTable />}/>
                     <Route path="/unauthorized" element={<Unauthorized /> } />
                     {/* <Route path = '/dashboard' element = {<Main/>}/>
                     <Route path= '/shops' element={<ShopsForm />}/>
@@ -240,6 +253,7 @@ const registerToast = () => {
                   </Routes>
                   </CustomersContext.Provider> 
                   {/* <CustomersContainer/> */}
+                  {/* <JewelContainer/> */}
 
                   {/* <ToastContainer />
                   <ChitsContainer/> 
@@ -257,3 +271,4 @@ const registerToast = () => {
     </div>
   );
 }
+

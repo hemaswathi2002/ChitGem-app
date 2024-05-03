@@ -62,14 +62,14 @@ chitsCltr.update = async (req, res) => {
 }
 chitsCltr.getOnechit = async (req, res) => {
   try {
-    const { id } = req.params;
-    const chit = await Chit.findOne({ _id: id });
+    const  id  = req.params.id
+    const chit = await Chit.findById( id )
 
     if (!chit) {
       return res.status(404).json({ message: "Chit not found" });
     }
 
-    if (chit.ownerId.toString() !== req.user._id.toString()) {
+    if (!chit.ownerId == req.user.id) {
       return res.status(403).json({ message: "Access denied." });
     }
 
