@@ -51,24 +51,10 @@ export default function App() {
 
   const dispatch = useDispatch()
 
-  
-
     useEffect(() => {
       if(localStorage.getItem('token')) {
               dispatch(startGetUserDetails())
       }
-
-      // (async ()=>{
-      //   try{
-      //     const customersResponse = await axios.get('http://localhost:3009/api/customers');
-      //     console.log('customer',customersResponse.data)
-      //     customerDispatch({ type: 'SET_CUSTOMERS', payload: customersResponse.data });    
-      //   }
-      //   catch(err){
-      //     console.log(err)
-      //   }
-      // })();
-
   }, []);
   
   useEffect(() => {
@@ -124,39 +110,11 @@ export default function App() {
   console.log(users)
     
 
-  // }, [handleLogin,customerDispatch])
 
   // useEffect (()=>{
   //   dispatch(startGetShop())
   // },[dispatch])
 
-  const shops = useSelector((state) => state.shops)
-
-
-  // useEffect(() => {
-
-  //   (async () => {
-  //     try {
-  //       const chitsResponse = await axios.get('http://localhost:3009/api/chits')
-  //       // ,
-  //       // {
-  //       //   headers : {
-  //       //     Authorization : localStorage.getItem('token')
-  //       //   }
-  //       // });
-  //       chitDispatch({ type: 'SET_CHIT', payload: chitsResponse.data });
-
-  //       // const customersResponse = await axios.get('http://localhost:3009/api/customers');
-  //       // customerDispatch({ type: 'SET_CUSTOMERS', payload: customersResponse.data });
-
-  //       const shopsResponse = await axios.get('http://localhost:3009/api/shops');
-  //       shopDispatch({ type: 'SET_SHOP', payload: shopsResponse.data });
-  //     } catch (err) {
-  //       console.log(err);
-  //     }
-  //   })();
-// }
-  // },[handleLogin, chitDispatch, shopDispatch]);
 
   // useEffect(()=>{
   //   if(localStorage.getItem('token')){
@@ -170,26 +128,6 @@ export default function App() {
   //   dispatch(startGetJewels())
   // },[dispatch])
 
-  // useEffect(() => {
-  //   (async () => {
-  //     try {
-  //       const chitsResponse = await axios.get('http://localhost:3009/api/chits',{
-  //         headers : {
-  //           Authorization : localStorage.getItem('token')
-  //         }
-  //       });
-  //       chitDispatch({ type: 'SET_CHIT', payload: chitsResponse.data });
-
-  //       // const customersResponse = await axios.get('http://localhost:3009/api/customers');
-  //       // customerDispatch({ type: 'SET_CUSTOMERS', payload: customersResponse.data });
-
-  //       const shopsResponse = await axios.get('http://localhost:3009/api/shops');
-  //       shopDispatch({ type: 'SET_SHOP', payload: shopsResponse.data });
-  //     } catch (err) {
-  //       console.log(err);
-  //     }
-  //   })();
-  // }, []);
 
   // useEffect(()=>{
   //   if(localStorage.getItem('token')){
@@ -246,7 +184,6 @@ const registerToast = () => {
 
         <ChitsContext.Provider value={{ chits, chitDispatch }}>
           {/* <UsersContext.Provider value={{ users, usersDispatch }}> */}
-            {/* <CustomersContext.Provider value={{ customers, customerDispatch }}> */}
                     <CustomersContext.Provider value={{ customers, customerDispatch }}> 
                   <Routes>
                     <>
@@ -310,14 +247,9 @@ const registerToast = () => {
 
                   <ToastContainer />
                   <ChitsContainer/>
-                  {/* <UsersContainer/> */}
-                   {/* <ShopsContainer/> */}
-                   {/* <CustomersContainer/>
                   <JewelContainer/>
                   <ReviewsContainer/>
                   <InvoiceContainer/>  */}
-              {/* </ShopsContext.Provider>
-            </CustomersContext.Provider> */}
           {/* </UsersContext.Provider> */}
         </ChitsContext.Provider>
     </div>
