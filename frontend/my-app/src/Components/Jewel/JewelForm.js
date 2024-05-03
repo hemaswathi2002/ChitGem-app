@@ -1,61 +1,55 @@
-import {useState,useEffect} from 'react'
-import { useDispatch,useSelector } from 'react-redux'
-import {startCreateJewels,startUpdateJewels} from '../Actions/Jewels'
-export default function JewelForm(props){
-    
-    const [images, setImages] = useState([]);
-    const [price, setPrice] = useState('');
-    const [caption, setCaption] = useState('');
-    const [jewels,setJewels] = useState({})
+import { useState, useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { startCreateJewels, startUpdateJewels } from '../Actions/Jewels'
+import { Form, Button } from 'react-bootstrap'
 
-    const jewel = useSelector((state)=>{
+export default function JewelsForm(props) {
+    const [images, setImages] = useState([])
+    const [price, setPrice] = useState('')
+    const [caption, setCaption] = useState('')
+    const [jewels, setJewels] = useState({})
+
+    const jewel = useSelector((state) => {
         return state.jewels
-      })
+    })
 
-
-
-    const {editId} = props
+    const { editId } = props
     const dispatch = useDispatch()
 
     useEffect(() => {
-        const editedJewel = jewel?.data?.find(ele=>ele._id == editId) 
+        const editedJewel = jewel?.data?.find((ele) => ele._id == editId)
         setJewels(editedJewel)
-        if(editedJewel){
+        if (editedJewel) {
             setImages(editedJewel.images || [])
-            setPrice (editedJewel.price || '')
+            setPrice(editedJewel.price || '')
             setCaption(editedJewel.caption || '')
         } else {
             setImages([])
             setPrice('')
             setCaption('')
         }
-    }, [jewels,editId]);
+    }, [jewels, editId])
 
+    const resetJewelForm = () => {
+        setImages([])
+        setPrice('')
+        setCaption('')
+    }
 
     const handleImageChange = (e) => {
         const files = Array.from(e.target.files);
-        setImages([...images, ...files]);
-    };
+        setImages(prevImages => [...prevImages, ...files]);
+    }
 
-    const resetJewelForm = () => {
-        setImages([]);
-        setPrice('');
-    setCaption('');
-    };
-
-
-
-
-    const handleSubmit = async (e)=>{
-        e.preventDefault()
+    const handleSubmit = async (e) => {
+        e.preventDefault();
 
         const formData = new FormData();
-        images.forEach((image, index) => {
-            formData.append(`image${index}`, image);
-        });
+        for (let i = 0; i < images.length; i++) {
+            formData.append('images', images[i]);
+        }
         formData.append('price', price);
         formData.append('caption', caption);
-
 
         if (editId) {
             dispatch(startUpdateJewels(editId, formData));
@@ -63,46 +57,31 @@ export default function JewelForm(props){
             dispatch(startCreateJewels(formData));
         }
         resetJewelForm()
-    
     }
 
-    return(
-        <div>
-            <h2>Jewel Form</h2>
-            {/* <form>
-                <div>
-                    <input type = "file"
-                    />
-                </div>
-            </form> */}
-             <form onSubmit={handleSubmit}>
-                <div>
-                <label htmlFor="image">Images</label>
-                <input 
-                type="file" 
-                id="image" 
-                onChange={handleImageChange} 
-                accept="image/*" 
-                multiple required />
-                </div>
-                <div>
-                <label htmlFor="price">Price:</label>
-                <input 
-                type="number" 
-                id="price" 
-                value={price} 
-                onChange={(e) => setPrice(e.target.value)} 
-                />
-                </div>
-                <div>
-                <label htmlFor="caption">Caption:</label>
-                <input type="text" 
-                id="caption" 
-                value={caption} 
-                onChange={(e) => setCaption(e.target.value)} />
-                </div>
-                <input type = 'submit'/>
-            </form>
+
+    return (
+        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '45vh', marginTop: '10px' }}>
+            <div style={{ border: '2px solid pink', padding: '20px', borderRadius: '5px', width: '60%' }}>
+                <h2>Jewel Form</h2>
+                <Form onSubmit={handleSubmit} encType="multipart/form-data">
+                    <Form.Group controlId="formImages">
+                        <Form.Label>Images</Form.Label>
+                        <Form.Control type="file" onChange={handleImageChange} accept="image/*" multiple required />
+                    </Form.Group>
+                    <Form.Group controlId="formPrice">
+                        <Form.Label>Price</Form.Label>
+                        <Form.Control type="number" value={price} onChange={(e) => setPrice(e.target.value)} />
+                    </Form.Group>
+                    <Form.Group controlId="formCaption">
+                        <Form.Label>Caption</Form.Label>
+                        <Form.Control type="text" value={caption} onChange={(e) => setCaption(e.target.value)} />
+                    </Form.Group>
+                    <Button variant="primary" type="submit">
+                        Submit
+                    </Button>
+                </Form>
+            </div>
         </div>
     )
 }

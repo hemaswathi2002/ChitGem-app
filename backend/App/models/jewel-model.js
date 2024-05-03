@@ -7,11 +7,11 @@ const jewelSchema = new Schema({
     //     type : Schema.Types.ObjectId,
     //     ref : 'Shop'
     // },
-    shopId:{
-        type : Schema.Types.ObjectId,
-        ref : 'Shop'
-    },
-    images : [String],
+    // shopId:{
+    //     type : Schema.Types.ObjectId,
+    //     ref : 'Shop'
+    // },
+    images : String,
     price : Number,
     caption : String
 

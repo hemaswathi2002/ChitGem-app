@@ -14,7 +14,7 @@ const configureStore = ()=>{
         admin : adminReducer,
         customer : customerReducer,
         shops : shopReducer,
-        // jewels : JewelsReducer,
+        jewels : JewelsReducer,
         // reviews:ReviewReducer
 
     }), applyMiddleware(thunk))

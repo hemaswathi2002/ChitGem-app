@@ -33,20 +33,19 @@ app.use(cors())
 const multer = require('multer')
 
 
-const storage = multer.diskStorage({
-    destination: (req, file, cb)=>{
-        console.log(req.files)
-        console.log(file)
-      return cb(null, "./public/Images")
-    },
-    filename: (req, file, cb)=>{
-      console.log(file)
-      console.log(req.files)
-      cb(null, `${Date.now()}-${file.originalname}`)
-    }
-  })
+app.use('/uploads',express.static('uploads'))
+ const storage=multer.diskStorage(
+   {
+       destination:function (req,file,cb){
+           return cb(null,"./uploads")
+       },
+       filename:function(req,file,cb){
+           return cb(null,`${Date.now()}-${file.originalname}`)
+       }
+   }
+)
+const upload=multer({storage})
             
-const upload = multer({storage:storage})
 
 //api users
 app.post('/api/users/register',checkSchema(userRegisterValidationSchema),usersCltr.register)
@@ -68,7 +67,7 @@ app.put('/api/shops/update/:id',authenticateUser,authorizeUser(['admin']),shopsC
 app.delete('/api/shops/:id',authenticateUser,authorizeUser(['owner']),shopsCltr.destroy)
 
 //api jewels
-app.post('/api/jewels',upload.array('images', 2),jewelsCltr.create)
+app.post('/api/jewels', upload.single('images'), jewelsCltr.create);
 app.get('/api/jewels',jewelsCltr.get)
 app.put('/api/jewels/:id',jewelsCltr.update)
 app.delete('/api/jewels/:id',jewelsCltr.delete)

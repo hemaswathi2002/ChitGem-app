@@ -1,10 +1,10 @@
-import JewelForm from "./JewelForm"
+// import JewelForm from "./JewelForm"
 import JewelsTable from "./JewelTable"
 export default function JewelContainer(){
     return (
         <>
         <div>
-        <JewelForm/>
+        {/* <JewelForm/> */}
         </div>
         <div>
         <JewelsTable/>

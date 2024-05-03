@@ -18,20 +18,19 @@ const setJewels = (data)=>{
         payload : data
     }
 }
-
-export const startCreateJewels = () => {
-    return async(dispatch,formData) => {
-        try{
-            const response = await axios.post('http://localhost:3009/api/jewels',formData)
-            console.log(response.data)
-            dispatch(createJewels(response.data))
+export const startCreateJewels = (formData) => {
+    return async (dispatch) => {
+        try {
+            const response = await axios.post('http://localhost:3009/api/jewels', formData);
+            dispatch(createJewels(response.data));
+            dispatch(startGetJewels());
+        } catch (err) {
+            console.log(err);
         }
-        catch(err){
-            console.log(err)
-        }
-    }
-}
+    };
+};
 
+    
 const createJewels = (data) => {
     return {
         type : 'CREATE_JEWELS',
@@ -59,17 +58,18 @@ const removeJewels = (id) => {
     }
 }
 
-export const startUpdateJewels = (id) => {
-    return async (dispatch,formData) => {
-        try{
-            const response = await axios.put(`http://localhost:3009/api/jewels/${id}`,formData)
-            console.log(response.data)
-            dispatch(updateJewels(response.data))
+export const startUpdateJewels = (id, formData) => {
+    return async (dispatch) => {
+        try {
+            const response = await axios.put(`http://localhost:3009/api/jewels/${id}`, formData);
+            console.log(response.data);
+            dispatch(updateJewels(response.data));
+            dispatch(startGetJewels());
+        } catch (err) {
+            console.log(err);
         }
-        catch(err){}
-    }
-}
-
+    };
+};
 const updateJewels = (data) => {
     return {
         type : 'UPDATE_JEWELS',
