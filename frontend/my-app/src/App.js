@@ -233,7 +233,7 @@ const registerToast = () => {
                         <ChitsContainer/>
                       </PrivateRoute>
                     }/>
-                    <Route path = '/chit/:id' element = {<ChitsTable />}/>
+                    <Route path = '/chits/:id' element = {<ChitDetails />}/>
                     <Route path="/unauthorized" element={<Unauthorized /> } />
                     {/* <Route path = '/dashboard' element = {<Main/>}/>
                     <Route path= '/shops' element={<ShopsForm />}/>
