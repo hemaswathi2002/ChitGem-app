@@ -114,7 +114,7 @@ export default function InvoicesForm(props) {
                         className="form-control"
                     />
                 </div>
-                <input type="submit" className="btn btn-primary" />
+                <Button type="submit" style={{ backgroundColor: '#ffb6c1' }}>Submit</Button>
             </form>
         </>
     );

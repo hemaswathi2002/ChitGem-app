@@ -1,5 +1,6 @@
 import { useDispatch } from "react-redux";
 import { startGenerateInvoice } from "../../Actions/Invoice";
+import { Button } from "react-bootstrap";
 export default function InvoiceForm(){
     const dispatch = useDispatch()
         const handleGenerateInvoice = async () => {
@@ -10,6 +11,8 @@ export default function InvoiceForm(){
             }
         };
     return (
-        <button onClick={handleGenerateInvoice}>Generate Invoice</button>
+        // <button onClick={handleGenerateInvoice}>Generate Invoice</button>
+        <Button onClick={handleGenerateInvoice}style={{ backgroundColor: 'maroon' }}>Generate Invoice</Button>
+
     )
 }

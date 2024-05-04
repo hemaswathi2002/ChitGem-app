@@ -16,7 +16,7 @@ export default function InvoiceTable({ invoices }) {
                     </tr>
                 </thead>
                 <tbody>
-                    {invoices.map((invoice) => {
+                        {invoices.map((invoice) => {
                         const customer = customers.find(customer => customer._id === invoice.customerId);
                         return (
                             <tr key={invoice._id}>
@@ -27,6 +27,7 @@ export default function InvoiceTable({ invoices }) {
                             </tr>
                         )
                     })}
+                      
                 </tbody>
             </table>
         </>

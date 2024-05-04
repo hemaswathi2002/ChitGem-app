@@ -18,7 +18,7 @@ export default function LiveGoldPriceDisplay() {
     };
 
     useEffect(() => {
-        const intervalId = setInterval(fetchGoldPrice, 60000);
+        const intervalId = setInterval(fetchGoldPrice, 200);
 
         return () => {
             clearInterval(intervalId);
@@ -33,9 +33,13 @@ export default function LiveGoldPriceDisplay() {
         <div className="gold-price-container"  >
             <div className="moving-strip"  style = {{padding:'50px'}} >
                 {goldPrice !== null ? (
-                    <p>Gold Price (per gram 24k): {goldPrice} INR</p>
+                  <div>  <p>!!!Live !!!!Gold Price (per gram 24k): {goldPrice} INR !!!Live !!!!Gold Price (per gram 24k): {goldPrice} INR</p>
+</div>
                 ) : (
-                    <p>'Updating gold price...'</p>
+                    <div>
+                    <p>'Updating gold price...' 'Updating gold price...''Updating gold price...'</p> 
+                   
+                    </div>
                 )}
             </div>
         </div>

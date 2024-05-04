@@ -45,7 +45,8 @@ export default function CustomersList(props) {
     }, [customers.data, searchQuery]);
    
     return (
-        <div>
+        <div style={{ marginTop: '80px' }}>
+  
             <h2>Customers - {customers.data.length}</h2>
             <input
                 type="text"

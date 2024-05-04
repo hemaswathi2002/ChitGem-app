@@ -46,7 +46,7 @@ export default function ChitList() {
     };
 
     return (
-        <div>
+        <div style={{ marginTop: '80px' }}>
             <h2>Chits - {chits && chits.data && chits.data.length}</h2>
             {serverError && <p style={{ color: 'red' }}>{serverError}</p>}
             <div className="table-container">
@@ -78,11 +78,12 @@ export default function ChitList() {
                                 <td>{chit.termsAndConditions}</td>
                                 <td>{chit.goldPrice}</td>
                                 <td>
-                                    <Link to={`/chits/${chit._id}`}>
-                                        <Button color="primary" onClick={() => handleViewDetails(chit._id)}>View Details</Button>
-                                    </Link>
-                                    <Button onClick={() => handleEdit(chit._id)} color="danger">Edit</Button>{' '}
-                                    <Button onClick={() => handleRemove(chit._id)} color="danger">Remove</Button>
+                                <Link to={`/chits/${chit._id}`}>
+    <Button style={{ border: '2px solid lightgreen', backgroundColor: 'white',color: 'deeppink' }} onClick={() => handleViewDetails(chit._id)}>View Details</Button>
+</Link>
+<Button style={{ border: '2px solid deeppink', backgroundColor: 'white',color: 'deeppink' }} onClick={() => handleEdit(chit._id)}>Edit</Button>{' '}
+<Button style={{ border: '2px solid lightbrown', backgroundColor: 'white',color: 'deeppink' }} onClick={() => handleRemove(chit._id)}>Remove</Button>
+
                                 </td>
                             </tr>
                         ))}

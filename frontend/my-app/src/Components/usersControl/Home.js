@@ -9,9 +9,9 @@ export default function Home() {
     return (
         <>
         <LiveGoldPriceDisplay/>
-        <div style={{ minHeight: "100vh", display: "flex", flexDirection: "column", alignItems: "center" }}>
-            <div style={{ backgroundColor: "#FCDEDA", width: "100%", padding: "90px" }}>
-                <h2>Home Component</h2>
+        <div style={{ minHeight: "120vh", display: "flex", flexDirection: "column", alignItems: "center" }}>
+            <div style={{ backgroundColor: "#FCDEDA", width: "100%", padding: "100px" }}>
+                <h2>Hellooooo...</h2>
                 {!user ? <p>User not logged in</p> : <p>Welcome { user.username }</p>}
             </div>
             <div style={{ display: "flex", justifyContent: "center", alignItems: "center", minHeight: "calc(100vh - 180px)" }}>
