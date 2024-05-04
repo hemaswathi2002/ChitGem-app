@@ -31,6 +31,7 @@ app.use(express.json())
 app.use(cors())
 
 const multer = require('multer')
+const Wishlistcltr = require('./App/controllers/wishlists-controller')
 
 
 app.use('/uploads',express.static('uploads'))
@@ -67,10 +68,16 @@ app.put('/api/shops/update/:id',authenticateUser,authorizeUser(['admin']),shopsC
 app.delete('/api/shops/:id',authenticateUser,authorizeUser(['owner']),shopsCltr.destroy)
 
 //api jewels
-app.post('/api/jewels', upload.single('images'), jewelsCltr.create);
+app.post('/api/jewels', upload.single('images'),authenticateUser,authorizeUser(['owner']),jewelsCltr.create);
 app.get('/api/jewels',jewelsCltr.get)
-app.put('/api/jewels/:id',jewelsCltr.update)
+app.put('/api/jewels/:id',authenticateUser,authorizeUser(['owner']),jewelsCltr.update)
 app.delete('/api/jewels/:id',jewelsCltr.delete)
+
+
+//wishlist
+app.post('/api/wishlists',authenticateUser,authorizeUser(['owner']),Wishlistcltr.create) 
+app.get('/api/wishlists',authenticateUser,authorizeUser(['owner','customer']),Wishlistcltr.list)
+app.delete('/api/wishlists',authenticateUser,authorizeUser(['owner','customer']),Wishlistcltr.destroy)
 
 //api chits
 app.post('/api/chits',authenticateUser,authorizeUser(['owner']),checkSchema(chitRegisterValidationSchema),chitsCltr.register)

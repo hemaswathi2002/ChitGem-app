@@ -1,71 +1,121 @@
-import { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { startRemoveJewels, startGetJewels } from '../Actions/Jewels';
-import JewelForm from './JewelForm';
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Container, Row, Col } from 'reactstrap'; // Import Reactstrap components
-import '../../index.css';
+import { useState, useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 
+import { startRemoveJewels, startGetJewels } from '../Actions/Jewels'
+import JewelForm from './JewelForm'
+import {
+    Card,
+    Button,
+    } from 'react-bootstrap'
+  import{Modal, ModalHeader,
+    ModalBody,
+    ModalFooter,} from 'reactstrap'
+  import '../../index.css'
+import axios from 'axios'
 export default function JewelsTable() {
-    const [modal, setModal] = useState(false);
-    const [editId, setEditId] = useState('');
+    const [modal, setModal] = useState(false)
+    const [editId, setEditId] = useState('')
+    const [wishlist, setWishlist] = useState([]);
 
-    const dispatch = useDispatch();
+    const dispatch = useDispatch()
     useEffect(() => {
-        dispatch(startGetJewels());
-    }, [dispatch]);
+        dispatch(startGetJewels())
+    }, [dispatch])
 
     const jewels = useSelector((state) => {
-        return state.jewels;
-    });
+        return state.jewels
+    })
 
-    const toggle = () => setModal(!modal);
+    const toggle = () => setModal(!modal)
 
     const handleRemove = (id) => {
-        const userConfirm = window.confirm("Are you sure?");
+        const userConfirm = window.confirm("Are you sure?")
         if (userConfirm) {
-            dispatch(startRemoveJewels(id));
+            dispatch(startRemoveJewels(id))
         }
-    };
+    }
+
+    const handleAddToWishlist = async (id,images,caption, price) => {
+        try {
+            await axios.post('http://localhost:3009/api/wishlists', { jewelId: id,images,caption, price })
+            console.log(`Added item with ID ${id} to wishlist.`)
+            setWishlist([...wishlist, id]);
+
+        } catch (error) {
+            console.error('Error adding item to wishlist:', error)
+        }
+    }    
+    const isItemInWishlist = (id) => wishlist.includes(id) // Check if the item is in the wishlist
 
     return (
-
-        <Container className="mt-4" style={{ paddingTop: '40px', paddingBottom: "60px" }}>
-            <Row>
+        <div style={{ paddingTop: '50px', paddingBottom: '100px' }}>
+            <div className="row" style={{ paddingTop: '200px' }}>
                 {jewels && jewels.data && jewels.data.map((ele, index) => (
-                    <Col lg="4" md="6" key={index} className="mb-4">
-                        <div className="card shadow-sm h-100 d-flex flex-column justify-content-between">
-                            <div className="card-body">
-                                <div className="text-center mb-2">
-                                    <img src={`http://localhost:3009/${ele.images}`} className="card-img-top" alt="..." style={{ width: '100%', maxWidth: '200px', height: 'auto' }} />
+                    <div key={index} className="col-md-4 mb-4">
+                        <Card style={{ marginTop: '220px', marginBottom: '230px' }}>
+                        <Card.Img variant="top" src={`http://localhost:3009/${ele.images}`}style={{ height: '500px' }} />
+                            <Card.Body>
+                                <Card.Title>{ele.caption}</Card.Title>
+                                <Card.Text>
+                                    Price: {ele.price}
+                                </Card.Text>
+                                <span
+                    className="wishlist-icon"
+                    onClick={() =>
+                      isItemInWishlist(ele._id)
+                        ? setWishlist(wishlist.filter((item) => item !== ele._id))
+                        : handleAddToWishlist(ele._id, ele.images, ele.caption, ele.price)
+                    }
+                    style={{
+                      position: 'absolute',
+                      top: '10px',
+                      right: '10px',
+                      color: isItemInWishlist(ele._id) ? 'red' : 'black', 
+                      
+                    }}
+                  >
+                    <i className="far fa-heart"></i>
+                  </span>
+
+                                <div className="buttons">
+                                    <Button
+                                        onClick={() => {
+                                            setEditId(ele._id)
+                                            toggle()
+                                        }}
+                                        color="primary"
+                                    >
+                                        Edit
+                                    </Button>{' '}
+                                    <Button
+                                        onClick={() => {
+                                            handleRemove(ele._id)
+                                        }}
+                                        color="danger"
+                                    >
+                                        Remove
+                                    </Button>
                                 </div>
-                                <div className="text-center">
-                                    <p className="card-text">{ele.caption}</p>
-                                    <p className="card-text">{ele.price}</p>
-                                </div>
-                            </div>
-                            <div className="text-center">
-                                <Button onClick={() => {
-                                    setEditId(ele._id);
-                                    toggle();
-                                }} color="primary">Edit</Button>{' '}
-                                <Button onClick={() => {
-                                    handleRemove(ele._id);
-                                }} color="danger">Remove</Button>
-                            </div>
-                        </div>
-                    </Col>
+                            </Card.Body>
+                        </Card>
+                    </div>
                 ))}
-            </Row>
+            </div>
+
             <Modal isOpen={modal} toggle={toggle}>
                 <ModalHeader toggle={toggle}>Edit Jewel</ModalHeader>
                 <ModalBody>
                     <JewelForm editId={editId} toggle={toggle} />
                 </ModalBody>
                 <ModalFooter>
-                    <Button color="primary" onClick={toggle}>Save Changes</Button>{' '}
-                    <Button color="secondary" onClick={toggle}>Cancel</Button>
+                    <Button color="primary" onClick={toggle}>
+                        Save Changes
+                    </Button>{' '}
+                    <Button color="secondary" onClick={toggle}>
+                        Cancel
+                    </Button>
                 </ModalFooter>
             </Modal>
-        </Container>
-    );
+        </div>
+    )
 }

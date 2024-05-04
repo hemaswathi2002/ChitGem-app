@@ -183,3 +183,17 @@ img {
     transform: translateX(-100%);
   }
 }
+@import '~@fortawesome/fontawesome-free/css/all.css';
+.card {
+  margin-bottom: 1rem;
+}
+
+.row {
+  margin-right: 0;
+  margin-left: 0;
+}
+
+.col-md-4 {
+  padding-right: 15px;
+  padding-left: 15px;
+}

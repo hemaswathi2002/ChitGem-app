@@ -5,7 +5,7 @@ import { Form, Button } from 'react-bootstrap'
 
 export default function JewelsForm(props) {
     const [images, setImages] = useState([])
-    const [price, setPrice] = useState('')
+    const [price, setPrice] = useState(0)
     const [caption, setCaption] = useState('')
     const [jewels, setJewels] = useState({})
 
@@ -21,40 +21,42 @@ export default function JewelsForm(props) {
         setJewels(editedJewel)
         if (editedJewel) {
             setImages(editedJewel.images || [])
-            setPrice(editedJewel.price || '')
+            setPrice(editedJewel.price || 0)
             setCaption(editedJewel.caption || '')
         } else {
             setImages([])
-            setPrice('')
+            setPrice(0)
             setCaption('')
         }
     }, [jewels, editId])
 
     const resetJewelForm = () => {
         setImages([])
-        setPrice('')
+        setPrice(0)
         setCaption('')
     }
 
     const handleImageChange = (e) => {
-        const files = Array.from(e.target.files);
-        setImages(prevImages => [...prevImages, ...files]);
+        const files = Array.from(e.target.files)
+        setImages(prevImages => [...prevImages, ...files])
     }
+    
 
     const handleSubmit = async (e) => {
-        e.preventDefault();
+        e.preventDefault()
 
-        const formData = new FormData();
+           const formData = new FormData()
         for (let i = 0; i < images.length; i++) {
-            formData.append('images', images[i]);
-        }
-        formData.append('price', price);
-        formData.append('caption', caption);
 
+            formData.append('images', images[i])
+        }
+        formData.append('price', price)
+        formData.append('caption', caption)
+    
         if (editId) {
-            dispatch(startUpdateJewels(editId, formData));
+            dispatch(startUpdateJewels(editId, formData))
         } else {
-            dispatch(startCreateJewels(formData));
+            dispatch(startCreateJewels(formData))
         }
         resetJewelForm()
     }
@@ -71,7 +73,7 @@ export default function JewelsForm(props) {
                     </Form.Group>
                     <Form.Group controlId="formPrice">
                         <Form.Label>Price</Form.Label>
-                        <Form.Control type="number" value={price} onChange={(e) => setPrice(e.target.value)} />
+                        <Form.Control type="text" value={price} onChange={(e) => setPrice(e.target.value)} />
                     </Form.Group>
                     <Form.Group controlId="formCaption">
                         <Form.Label>Caption</Form.Label>

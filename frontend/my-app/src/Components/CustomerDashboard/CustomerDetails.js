@@ -13,6 +13,7 @@ export default function CustomerDetails(){
     const customersArray = Object.keys(customers).map((customerId)=>({
         ...customers[customerId],
         id : customerId
+
     }))
     const customerNames = customersArray.map((customer) => customer.name).join(', ');
 

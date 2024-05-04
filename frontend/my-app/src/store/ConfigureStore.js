@@ -8,6 +8,7 @@ import UsersReducer from '../Reducers/UsersReducer'
 import {adminReducer}  from '../Reducers/adminReducer'
 import { customerReducer } from '../Reducers/customerReducer'
 import invoicesReducer from '../Reducers/Invoice'
+import wishlistReducer from '../Reducers/wishlists'
 
 const configureStore = ()=>{
     const store = createStore(combineReducers({
@@ -16,7 +17,8 @@ const configureStore = ()=>{
         customer : customerReducer,
         shops : shopReducer,
         jewels : JewelsReducer,
-        invoice : invoicesReducer
+        invoice : invoicesReducer,
+        wishlist:wishlistReducer
         // reviews:ReviewReducer
 
     }), applyMiddleware(thunk))

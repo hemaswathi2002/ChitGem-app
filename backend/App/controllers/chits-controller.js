@@ -62,8 +62,8 @@ chitsCltr.update = async (req, res) => {
 }
 chitsCltr.getOnechit = async (req, res) => {
   try {
-    const  id  = req.params.id
-    const chit = await Chit.findById( id )
+    const id = req.params.id
+    const chit = await Chit.findById(id)
 
     if (!chit) {
       return res.status(404).json({ message: "Chit not found" });

@@ -6,18 +6,23 @@ export default function ChitDetails({ chitId }) {
 
     useEffect(() => {
         const fetchChitDetails = async () => {
+            if (chitId) {
+                console.log("Chit ID:", chitId);
+
             try {
                 const response = await axios.get(`http://localhost:3009/api/chits/${chitId}`, {
                     headers: {
                         Authorization: localStorage.getItem('token')
                     }
                 });
+                console.log("Chit ID:", chitId);
+
                 setChit(response.data);
             } catch (error) {
                 console.log('Error fetching chit details:', error);
             }
         };
-
+    }
         fetchChitDetails();
     }, [chitId]);
 
@@ -27,7 +32,7 @@ export default function ChitDetails({ chitId }) {
 
     return (
         <div>
-            {/* <h2>Chit Details</h2>
+            <h2>Chit Details</h2>
             <p>Chit ID: {chit._id}</p>
             <p>Chit Amount: {chit.chitAmount}</p>
             <p>Installments: {chit.installments}</p>
@@ -37,7 +42,7 @@ export default function ChitDetails({ chitId }) {
             <p>Status: {chit.status}</p>
             <p>Benefits: {chit.benefits}</p>
             <p>Terms and Conditions: {chit.termsAndConditions}</p>
-            <p>Gold Price: {chit.goldPrice}</p> */}
+            <p>Gold Price: {chit.goldPrice}</p>
         </div>
     );
 }
