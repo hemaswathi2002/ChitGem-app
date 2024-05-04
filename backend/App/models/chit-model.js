@@ -2,6 +2,7 @@ const mongoose=require('mongoose')
 const{Schema,model}=mongoose
 
 const chitSchema=new Schema({
+    
     shopId:{
         type:Schema.Types.ObjectId,
         ref:'Shop'

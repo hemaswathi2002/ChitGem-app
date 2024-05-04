@@ -5,13 +5,18 @@ import ChitForm from './ChitsForm';
 import { ChitsContext } from '../../Context/ChitsContext';
 import { Button, Modal, ModalHeader, ModalBody } from 'reactstrap'; // Import Reactstrap components
 import { Link } from 'react-router-dom';
+
 export default function ChitList() {
     const { chits, chitDispatch } = useContext(ChitsContext);
     const [modal, setModal] = useState(false);
     const [editId, setEditId] = useState('');
     const [serverError, setServerError] = useState(null);
+    const [selectedChitId, setSelectedChitId] = useState(null); 
+
     const toggle = () => setModal(!modal);
-    
+    const handleViewDetails = (id) => {
+        setSelectedChitId(id); // Set the selected chit ID when "View Details" button is clicked
+    };
 
     const handleRemove = async (id) => {
         const confirmation = window.confirm('Are you sure?');
@@ -73,7 +78,9 @@ export default function ChitList() {
                                 <td>{chit.termsAndConditions}</td>
                                 <td>{chit.goldPrice}</td>
                                 <td>
-                                <Link to={`/chits/${chit._id}`}><Button color="primary">View Details</Button></Link>{' '}
+                                    <Link to={`/chits/${chit._id}`}>
+                                        <Button color="primary" onClick={() => handleViewDetails(chit._id)}>View Details</Button>
+                                    </Link>
                                     <Button onClick={() => handleEdit(chit._id)} color="danger">Edit</Button>{' '}
                                     <Button onClick={() => handleRemove(chit._id)} color="danger">Remove</Button>
                                 </td>
@@ -90,9 +97,9 @@ export default function ChitList() {
                     <ChitForm editId={editId} toggle={toggle} />
                 </ModalBody>
             </Modal>
-            {chits && chits.data && chits.data.map(chit => (
-                <ChitDetails key={chit._id} chitId={chit._id} />
-            ))}
+            {selectedChitId && (
+                <ChitDetails chitId={selectedChitId} />
+            )}
         </div>
     );
 }

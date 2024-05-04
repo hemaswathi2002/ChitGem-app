@@ -19,7 +19,7 @@ const jewelsCltr = {}
 //       const images = req.files.map(file => file.path)
 //       console.log(images)
 //       const body = _.pick(req.body,['image','price','caption'])
-//       const shop = await Shop.findOne({ownerId:req.user.id})
+//       const shop = await Shop.findOne({id:req.user.id})
 //       body.shopId = shop.id
 //       const jewel = new Jewels(body)
 //       jewel.images = result
@@ -34,7 +34,6 @@ const jewelsCltr = {}
 //   }
 
 
-
 jewelsCltr.create = async (req, res) => {
     const errors = validationResult(req)
     if (!errors.isEmpty()) {
@@ -44,21 +43,19 @@ jewelsCltr.create = async (req, res) => {
     try {
         const { body, file } = req
 
-        // const ownerId = req.user.id\
+        const id = req.id
         
-        // Check if the shop owner exists
-        // const shopOwner = await Shop.findById(ownerId)
+        // const shopOwner = await Shop.findById(id)
         // if (!shopOwner) {
         //     return res.status(404).json({ error: 'Shop owner not found' })
         // }
 
         const jewel = new Jewels({
             ...body,
-            // owner: ownerId,
-            images: file.path // Set image details
+            owner: id,
+            images: file.path 
         })
 
-        // Save jewel to the database
         await jewel.save()
 
         res.status(201).json(jewel)
@@ -78,6 +75,16 @@ jewelsCltr.get = async(req,res) =>{
         res.status(500).json({error:'Internal Server Error'})
     }
 }
+jewelsCltr.get = async(req,res) =>{
+    try{
+        const jewel = await Jewels.find()
+        res.json(jewel)
+    }
+    catch(err){
+        console.log(err)
+        res.status(500).json({error:'Internal Server Error'})
+    }
+}
 
 jewelsCltr.update = async(req,res)=>{
     const errors = validationResult(req)
@@ -86,9 +93,9 @@ jewelsCltr.update = async(req,res)=>{
     }
     try{
         const id = req.params.id
-        const body = _.pick(req.body,['image','price','caption'])
-        // const shop = await Shop.findOne({ownerId:req.user.id})
-        // body.shopId = shop.id
+        const body = _.pick(req.body,['images','price','caption'])
+        // const shop = await Shop.findOne({id:req.user.id})
+        // body.id = shop.id
         const jewel = await Jewels.findOneAndUpdate({_id:id},body,{new:true})
         res.json(jewel)
     }
