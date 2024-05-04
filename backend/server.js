@@ -68,7 +68,7 @@ app.put('/api/shops/update/:id',authenticateUser,authorizeUser(['admin']),shopsC
 app.delete('/api/shops/:id',authenticateUser,authorizeUser(['owner']),shopsCltr.destroy)
 
 //api jewels
-app.post('/api/jewels', upload.single('images'),authenticateUser,authorizeUser(['owner']),jewelsCltr.create);
+app.post('/api/jewels', upload.single('images'),jewelsCltr.create);
 app.get('/api/jewels',jewelsCltr.get)
 app.put('/api/jewels/:id',authenticateUser,authorizeUser(['owner']),jewelsCltr.update)
 app.delete('/api/jewels/:id',jewelsCltr.delete)

@@ -219,6 +219,7 @@ const registerToast = () => {
                         <Account/>
                       </PrivateRoute>
                     }/>
+                    <Route path = '/jewels' element = {<JewelContainer/>}/>
                     {/* <Route path = '/shop' element = {
                       <PrivateRoute permittedRoles = {['owner']}>
                         <ShopsContainer/>
@@ -248,7 +249,6 @@ const registerToast = () => {
                   </Routes>
                   </CustomersContext.Provider> 
                   {/* <CustomersContainer/> */}
-                  {/* <JewelContainer/> */}
 
                   {/* <ToastContainer />
                   <ChitsContainer/> 

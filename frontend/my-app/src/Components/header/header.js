@@ -142,7 +142,8 @@ export default function Header() {
                                     </Link>       
                                     <Link to="/customers" className="nav-link " style={{ color: '#fff' , marginLeft: '10px' }}>Customers</Link>
                                     <Link to="/chit" className="nav-link " style={{ color: '#fff', marginLeft: '10px' }}>chits</Link>
-                                    <Link to="/chit" className="nav-link " style={{ color: '#fff' , marginLeft: '10px' }}>chits</Link>
+                                    <Link to="/invoice" className="nav-link " style={{ color: '#fff' , marginLeft: '10px' }}>invoice</Link>
+                                    <Link to="/jewels" className="nav-link " style={{ color: '#fff' , marginLeft: '10px' }}>jewels</Link>
                                     </div>
                                 )}
                                 </Nav.Item>

@@ -43,7 +43,7 @@ jewelsCltr.create = async (req, res) => {
     try {
         const { body, file } = req
 
-        const id = req.id
+        // const id = req.id
         
         // const shopOwner = await Shop.findById(id)
         // if (!shopOwner) {
@@ -52,7 +52,7 @@ jewelsCltr.create = async (req, res) => {
 
         const jewel = new Jewels({
             ...body,
-            owner: id,
+            // owner: id,
             images: file.path 
         })
 
