@@ -18,10 +18,14 @@ import axios from 'axios'
 //     }
 // }
 
-export const startGenerateInvoice = (chitId) => {
+export const startGenerateInvoice = () => {
     return async (dispatch) => {
         try {
-            const response = await axios.post(`/api/${chitId}/generate-invoice`);
+            const response = await axios.post('http://localhost:3009/api/generate-invoice',null,{
+                headers : {
+                    Authorization : localStorage.getItem('token')
+                }
+            })
             console.log('Invoice generated:', response.data);            
             dispatch(generateInvoice(response.data))
         } catch(err) {

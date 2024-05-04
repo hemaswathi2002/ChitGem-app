@@ -4,7 +4,7 @@ export default function InvoiceForm(){
     const dispatch = useDispatch()
         const handleGenerateInvoice = async () => {
             try {
-                dispatch(startGenerateInvoice)
+                dispatch(startGenerateInvoice())
             } catch (error) {
                 console.error('Error generating invoice:', error);
             }

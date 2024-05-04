@@ -62,7 +62,7 @@ export default function ShopDetails() {
 
     return (
         <>
-            <div className="shop-details">
+            <div className="shop-details" style = {{paddingTop:'60px'}}>
                 <h2>Shop List</h2>
                 <DataTable
                     columns={columns}

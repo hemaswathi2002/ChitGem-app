@@ -12,17 +12,16 @@ invoicesCltr.create=async(req,res)=>{
         return res.status(400).json({errors:errors.array()})
     }
     try{
-        const {chitId} = req.params
-        const chit = await Chit.findById(chitId);
+        const chit = await Chit.findOne().sort({ createdAt: -1 });
         if (!chit) {
-            return res.status(404).json({ error: "Chit not found" });
+            return res.status(404).json({ error: "No chits found" });
         }
-        if (chit.ownerId.toString() !== req.user.id) {
-            return res.status(403).json({ error: "Unauthorized access" });
-        }
+        // if (chit.ownerId.toString() !== req.user.id) {
+        //     return res.status(403).json({ error: "Unauthorized access" });
+        // }
 
         const {body}=req
-        body.ownerId = req.user.id
+        body.ownerId = chit.shopId.ownerId
         body.shopId = chit.shopId
     //     const apiKey = process.env.GOLD_API_KEY
     //     console.log(apiKey)
@@ -46,11 +45,15 @@ invoicesCltr.create=async(req,res)=>{
 
     for (let i = 0; i < chit.installments; i++) {
         const month = new Date(startDate.getFullYear(), startDate.getMonth() + monthDifference + i, 1);
+        const lineItems = [{
+            chit: chit._id,
+            amount: chit.chitAmount,
+            totalAmount: chit.totalAmount,
+            goldPrice: 600 // Or you can set it dynamically based on your requirements
+        }]
         const invoiceData = {
             ...body,
-            chit: chit._id, 
-            chitAmount: chit.chitAmount,
-            totalAmount: chit.totalAmount,
+            lineItems,
             date: new Date(),
             paymentMonth: month.toLocaleString('default', { month: 'long' })
         };

@@ -94,7 +94,7 @@ app.put('/api/reviews/:id',reviewsCltr.update)
 app.delete('/api/reviews/:id',reviewsCltr.delete)
 
 // app.post ('/api/invoices',checkSchema(invoicevalidationSchema),invoicesCltr.create)
-app.post ('/api/:chitId/generate-invoice',authenticateUser,authorizeUser(['owner']),invoicesCltr.create)
+app.post ('/api/generate-invoice',authenticateUser,authorizeUser(['owner']),invoicesCltr.create)
 app.get('/api/gold-price',invoicesCltr.get)
 app.get('/api/invoices',invoicesCltr.list)
 // app.put('/api/invoices/:id',invoicesCltr.update)

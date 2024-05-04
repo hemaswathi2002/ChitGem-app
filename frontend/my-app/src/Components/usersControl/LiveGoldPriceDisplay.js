@@ -30,8 +30,8 @@ export default function LiveGoldPriceDisplay() {
     }, []);
 
     return (
-        <div className="gold-price-container">
-            <div className="moving-strip">
+        <div className="gold-price-container"  >
+            <div className="moving-strip"  style = {{padding:'50px'}} >
                 {goldPrice !== null ? (
                     <p>Gold Price (per gram 24k): {goldPrice} INR</p>
                 ) : (

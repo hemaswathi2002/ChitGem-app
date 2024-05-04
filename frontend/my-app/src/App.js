@@ -3,6 +3,7 @@ import axios from 'axios'
 import 'react-toastify/dist/ReactToastify.css'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import {Routes, Route,Link } from 'react-router-dom'
+import Header from './Components/header/header'
 import { useDispatch, useSelector } from 'react-redux'
 import { useAuth } from './Context/AuthrorizeContext'
 import { toast } from 'react-toastify'
@@ -43,8 +44,6 @@ import ChitForm from './Components/Chit/ChitsForm'
 import ShopsContainer from './Components/Shop/ShopsTable'
 import Owner from './Components/OwnerDashboard/Owner'
 import CustomerDetails from './Components/CustomerDashboard/CustomerDetails'
-import Header from './Components/header/header'
-
 import InvoiceForm from './Components/OwnerDashboard/Invoice/InvoiceForm'
 import ChitDetails from './Components/Chit/ChitsDetails'
 
@@ -53,6 +52,7 @@ export default function App() {
   // const [users, usersDispatch] = useReducer(UsersReducer, {userDetails : [], isLoggedIn : false});
   const [customers, customerDispatch] = useReducer(CustomersReducer, {data:[]})
   const [ownerId,setOwnerId] = useState('')
+  const [id,setId] = useState('')
   const { user, handleLogin,  handleLogout } = useAuth() 
 
   const dispatch = useDispatch()
@@ -81,7 +81,7 @@ export default function App() {
   useEffect(() => {
     (async () => {
       try {
-        const customersResponse = await axios.get('http://localhost:3009/api/customers/${ownerId}',{
+        const customersResponse = await axios.get(`http://localhost:3009/api/customers/${ownerId}`,{
           headers : {
             Authorization : localStorage.getItem('token')
           }
@@ -163,25 +163,19 @@ const registerToast = () => {
 
 
   return (
- <div>
-<Header/>
-      <>
-      {/* { !user ? (
     <div>
       <>
-      { !user ? (
+      <Header/>
+
+      {/* { !user ? (
               <>
-              <Link to = '/'>Home</Link> |
-              <Link to="/register">Register</Link>| 
-              <Link to="/login">Log-in</Link>
               </> 
             ): (
               <>
                   <Link to="/account">Account</Link> |
-                  <Link to="/shop">shop</Link> |
-                  {/* <Link to="/register">Register</Link>|  */}
-                  {/* <Link to = '/admin'>admin</Link> | */}
-                  {/* <Link to="/customers">customer</Link> |
+                  {/* <Link to="/shop">shop</Link> | */}
+{/*                   
+                  <Link to="/customers">customer</Link> |
                   <Link to = "/chit">chit</Link> |
                   <Link to = '/customers-user'>customer details</Link>|
                   <Link to = '/invoice'>invoice</Link>|
@@ -190,8 +184,9 @@ const registerToast = () => {
                     handleLogout()
                   }}> Logout </Link> |  */}
                 </> 
-            {/* )}
-                  </> */} 
+            {/* )} */}
+                  {/* </> */} 
+
 
         <ChitsContext.Provider value={{ chits, chitDispatch }}>
           {/* <UsersContext.Provider value={{ users, usersDispatch }}> */}
@@ -239,7 +234,7 @@ const registerToast = () => {
                         <ChitsContainer/>
                       </PrivateRoute>
                     }/>
-                    <Route path = '/chits/:id' element = {<ChitDetails />}/>
+                    <Route path = {'/chits/:id'} element = {<ChitDetails/>}/>
                     <Route path="/unauthorized" element={<Unauthorized /> } />
                     {/* <Route path = '/dashboard' element = {<Main/>}/>
                     <Route path= '/shops' element={<ShopsForm />}/>
@@ -266,9 +261,9 @@ const registerToast = () => {
                   <ReviewsContainer/>
                   <InvoiceContainer/>  */}
           {/* </UsersContext.Provider> */}
-
         </ChitsContext.Provider>
-    </div>
-  );
-}
+        {/* <JewelContainer/> */}
 
+ </div>
+);
+}

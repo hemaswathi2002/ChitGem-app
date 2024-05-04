@@ -20,7 +20,6 @@ const invoiceSchema = new Schema({
             totalAmount: Number,
             goldPrice: {
                 type: Object, 
-                required: true 
               } 
         }
     ],
