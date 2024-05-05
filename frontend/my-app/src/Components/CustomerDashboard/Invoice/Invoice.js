@@ -15,7 +15,7 @@ export default function Invoice(){
 
     return (
         <>
-            <Table striped bordered hover>
+             <Table striped bordered hover>
                 <thead>
                     <tr>
                         <th>Date</th>
@@ -34,7 +34,7 @@ export default function Invoice(){
                         </tr>
                     ))}
                 </tbody>
-            </Table>
+            </Table> 
            
         </>
     )

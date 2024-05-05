@@ -22,6 +22,7 @@ invoicesCltr.create=async(req,res)=>{
         const {body}=req
         body.ownerId = chit.shopId.ownerId
         body.shopId = chit.shopId
+        body.name = chit.customerId.name
     //     const apiKey = process.env.GOLD_API_KEY
     //     console.log(apiKey)
     //     const config = {
@@ -83,7 +84,7 @@ invoicesCltr.list = async(req,res)=>{
 
 invoicesCltr.listOneCustomer = async(req,res) => {
     try{
-        const invoice = await Invoice.find({userId : req.user.id})
+        const invoice = await Invoices.find({userId : req.user.id})
         res.status(200).json(invoice)
     }
     catch(err){

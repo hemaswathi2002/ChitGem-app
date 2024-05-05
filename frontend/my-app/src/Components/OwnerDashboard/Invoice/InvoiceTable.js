@@ -5,7 +5,10 @@ import { startGetInvoice } from "../../Actions/Invoice"
 import InvoiceForm from "./InvoiceForm";
 export default function Invoice(){
     const dispatch = useDispatch()
-    const invoices = useSelector(state => state.invoice.data) 
+    const invoices = useSelector(state => state.invoice.data)
+    // const customerName = invoices.length > 0 ? invoices[0].ownerId.name : '';
+
+     
     console.log(invoices)
     useEffect(()=>{
         dispatch(startGetInvoice())
@@ -14,6 +17,7 @@ export default function Invoice(){
 
     return (
         <>
+            {/* <h1>Customer Name: {customerName}</h1> */}
             <Table striped bordered hover style={{ marginTop: '80px'}}>
     
 

@@ -36,9 +36,8 @@ import ChitsTable from './Components/Chit/ChitsTable'
 
 // import ShopsContainer from './Components/Shop/ShopsContainer'
 // import InvoiceContainer from './Components/Invoice/InvoiceContainer'
-
+import ForgotPassword from './Components/UsersAuthentication/PasswordSettings'
 import { ShopsContext } from './Context/ShopsContext'
-// import shopReducer from "./Reducers/Shops"
 import Main from './Components/Main/Main'
 import ChitForm from './Components/Chit/ChitsForm'
 import ShopsContainer from './Components/Shop/ShopsTable'
@@ -46,7 +45,9 @@ import Owner from './Components/OwnerDashboard/Owner'
 import CustomerDetails from './Components/CustomerDashboard/CustomerDetails'
 import InvoiceForm from './Components/OwnerDashboard/Invoice/InvoiceForm'
 import ChitDetails from './Components/Chit/ChitsDetails'
-
+import Invoice from './Components/CustomerDashboard/Invoice/Invoice'
+import WishlistItems from './Components/Wishlists/WishlistItems'
+import JewelsTable from './Components/Jewel/JewelTable'
 export default function App() {
   const [chits, chitDispatch] = useReducer(chitReducer, {data: []})
   // const [users, usersDispatch] = useReducer(UsersReducer, {userDetails : [], isLoggedIn : false});
@@ -210,13 +211,15 @@ const registerToast = () => {
                         <CustomersContainer users = {users}/>
                       </PrivateRoute>
                     }/>
-                    <Route path = '/'/>
+                    <Route path = '/wishlist' element = {<WishlistItems/>}/>
                     <Route path = '/account' element = {
                       <PrivateRoute permittedRoles = {['admin','owner','customer']}>
                         <Account/>
                       </PrivateRoute>
                     }/>
-                    <Route path = '/jewels' element = {<JewelContainer/>}/>
+                    <Route path='/forgotpassword' element={<ForgotPassword/>}/>
+                    <Route path = '/invoices-user' element = {<Invoice/>}/>
+                    <Route path = '/jewels-user' element = {<JewelsTable/>}/>
                     {/* <Route path = '/shop' element = {
                       <PrivateRoute permittedRoles = {['owner']}>
                         <ShopsContainer/>
