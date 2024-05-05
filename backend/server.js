@@ -48,15 +48,14 @@ const upload=multer({storage})
             
 
 //api users
-app.post('/api/users/register',checkSchema(userRegisterValidationSchema),usersCltr.register)
+app.post('/api/users/register',checkSchema(userRegisterValidationSchema),authenticateUser,authorizeUser(['owner']),usersCltr.register)
 app.put('/api/verify/email',checkSchema(userOtpValidationSchema),usersCltr.verifyEmail)
 app.get('/api/users/account',authenticateUser,authorizeUser(['admin','owner','customer']),usersCltr.account)
-app.post('/api/users/customers',authenticateUser,authorizeUser(['owner']),checkSchema(userRegisterValidationSchema),usersCltr.register)
 // app.post('/api/create/customers',authenticateUser,authorizeUser(['owner']),usersCltr.register)
 app.post ('/api/login',checkSchema(loginValidationSchema),usersCltr.login)
 app.put('/api/update/password',usersCltr.updatePassword)
-app.post('/api/forgotpassword',usersCltr.forgotPassword)
-app.put('/api/forgotpassword',usersCltr.resetForgotPassword)
+app.post('/api/users/forgotpassword',usersCltr.forgotPassword)
+app.put('/api/users/setforgotpassword',usersCltr.resetForgotPassword)
 
 //api shops
 app.post('/api/shops',authenticateUser,authorizeUser(['owner']),checkSchema(shopRegisterValidationSchema),shopsCltr.register)
@@ -74,7 +73,7 @@ app.delete('/api/jewels/:id',jewelsCltr.delete)
 
 
 //wishlist
-app.post('/api/wishlists',authenticateUser,authorizeUser(['owner']),Wishlistcltr.create) 
+app.post('/api/wishlists',authenticateUser,authorizeUser(['owner','customer']),Wishlistcltr.create) 
 app.get('/api/wishlists',authenticateUser,authorizeUser(['owner','customer']),Wishlistcltr.list)
 app.delete('/api/wishlists',authenticateUser,authorizeUser(['owner','customer']),Wishlistcltr.destroy)
 
@@ -106,7 +105,7 @@ app.get('/api/goldprice',goldCltr.get)
 app.post ('/api/generate-invoice',authenticateUser,authorizeUser(['owner']),invoicesCltr.create)
 app.get('/api/gold-price',invoicesCltr.get)
 app.get('/api/invoices',invoicesCltr.list)
-// app.get('/api/invoices/users',authenticateUser,authorizeUser(['owner','customer']),invoicesCltr.getOneCustomer)
+app.get('/api/invoices/users',authenticateUser,authorizeUser(['owner','customer']),invoicesCltr.listOneCustomer)
 // app.put('/api/invoices/:id',invoicesCltr.update)
 app.delete('/api/invoices/:id',invoicesCltr.delete)
 

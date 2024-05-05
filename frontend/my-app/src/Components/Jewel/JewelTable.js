@@ -35,7 +35,11 @@ export default function JewelsTable() {
 
     const handleAddToWishlist = async (id, images, caption, price) => {
         try {
-            await axios.post('http://localhost:3009/api/wishlists', { jewelId: id, images, caption, price });
+            await axios.post('http://localhost:3009/api/wishlists', { jewelId: id, images, caption, price },{
+                headers : {
+                    Authorization : localStorage.getItem('token')
+                }
+            });
             console.log(`Added item with ID ${id} to wishlist.`);
             setWishlist([...wishlist, id]);
         } catch (error) {

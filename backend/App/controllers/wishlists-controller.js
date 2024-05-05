@@ -7,9 +7,9 @@ Wishlistcltr.create = async function(req, res) {
       if (!errors.isEmpty()) {
           return res.status(400).json({ errors: errors.array() });
       }
-
-      const { jewelId,images, caption, price } = req.body;
-      const wishlist = new Wishlist({ jewelId,images, caption, price })
+      const userId = req.user.id
+      const { jewelId} = req.body;
+      const wishlist = new Wishlist({ jewelId,userId})
       const savedWishlist = await wishlist.save()
 
       res.status(201).json(savedWishlist);
@@ -35,7 +35,7 @@ Wishlistcltr.create = async function(req, res) {
 //   }
   Wishlistcltr.list = async (req, res) => {
     try {
-      const wishlist = await Wishlist.find()
+      const wishlist = await Wishlist.find({userId:req.user.id})
       res.json(wishlist)
     } catch (error) {
       console.log(error)

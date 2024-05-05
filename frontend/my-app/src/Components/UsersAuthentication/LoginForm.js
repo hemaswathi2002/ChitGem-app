@@ -10,7 +10,7 @@ import Footer from '../../Components/Footer'
 export default function LoginForm(props) {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
-    const [serverErrors, setServerErrors] = useState('')
+    const [serverErrors, setServerErrors] = useState([])
 
     const { loginToast } = props
     const { handleLogin } = useAuth()
@@ -44,6 +44,8 @@ export default function LoginForm(props) {
             setServerErrors(err.response.data.errors)
         }
     }
+    console.log(serverErrors)
+
 
     return (
         <div>
@@ -54,7 +56,9 @@ export default function LoginForm(props) {
             <Form onSubmit={handleSubmit}>
     {serverErrors.length > 0 && (
         <div>
-            {serverErrors}
+            {serverErrors.map((ele,i)=>{
+                return <li key = {i} style = {{color : 'red'}}>{ele.msg}</li>
+            })}
         </div>
     )}
     <FormGroup>

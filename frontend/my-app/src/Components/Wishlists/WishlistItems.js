@@ -34,3 +34,4 @@ const WishlistItems = () => {
 }
 
 export default WishlistItems
+

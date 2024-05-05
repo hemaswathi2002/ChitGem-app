@@ -24,8 +24,12 @@ const getOneCustomer = (data) => ({
 export const startGetInvoice = () => {
     return async (dispatch) => {
         try{
-            const response = await axios.get('http://localhost:3009/api/invoices')
-            console.log('invoice',response.data)
+            const response = await axios.get('http://localhost:3009/api/invoices/users',{
+                headers :{
+                    Authorization : localStorage.getItem('token')
+                }
+            })
+            console.log('customerinvoice',response.data)
             dispatch(getInvoice(response.data))
         }
         catch(err){

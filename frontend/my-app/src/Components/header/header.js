@@ -132,7 +132,7 @@ export default function Header() {
                         </Link>
                     ) : (
                         <>
-                            {user?.role === 'owner' && (
+                            {user?.role === 'owner' ? (
                                 <>
                                     <Link to="/register" className="nav-link" style={{ color: '#fff', marginLeft: '10px' }}>
                                         <FontAwesomeIcon icon={faUserPlus} /> Register Customer
@@ -141,6 +141,17 @@ export default function Header() {
                                     <Link to="/chit" className="nav-link" style={{ color: '#fff', marginLeft: '10px' }}>Chits</Link>
                                     <Link to="/invoice" className="nav-link" style={{ color: '#fff', marginLeft: '10px' }}>Invoice</Link>
                                     <Link to="/jewels" className="nav-link" style={{ color: '#fff', marginLeft: '10px' }}>Jewels</Link>
+                                </>
+                            ) : (
+                                <>
+                                {user?.role == 'customer' && (
+                                    <>
+                                    <Link to="/customers-user" className="nav-link" style={{ color: '#fff', marginLeft: '10px' }}>Customers Details</Link>
+                                    <Link to="/invoices-user" className="nav-link" style={{ color: '#fff', marginLeft: '10px' }}>Invoice</Link> 
+                                    <Link to="/jewels-user" className="nav-link" style={{ color: '#fff', marginLeft: '10px' }}>jewels</Link> 
+                                    <Link to="/wishlist" className="nav-link" style={{ color: '#fff', marginLeft: '10px' }}>wishlist</Link> 
+                                    </>
+                                )}
                                 </>
                             )}
                             <NavDropdown alignRight title={<span style={{ color: '#fff' }}>My Account</span>} id="basic-nav-dropdown">

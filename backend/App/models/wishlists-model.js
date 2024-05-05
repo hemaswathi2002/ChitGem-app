@@ -10,10 +10,10 @@ const wishlistSchema = new Schema({
         type : Schema.Types.ObjectId,
         ref : 'Jewel'
       },
-    // customerId : {
-    //     type : Schema.Types.ObjectId,
-    //     ref : 'Customer'
-    //   },
+    userId : {
+        type : Schema.Types.ObjectId,
+        ref : 'User'
+      },
     images : String,
     price : Number,
     caption : String

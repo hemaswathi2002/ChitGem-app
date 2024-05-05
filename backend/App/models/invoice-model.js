@@ -16,6 +16,7 @@ const invoiceSchema = new Schema({
                 type: Schema.Types.ObjectId, 
                 ref: 'Chit'
             },
+           
             amount: Number,
             totalAmount: Number,
             goldPrice: {
@@ -26,6 +27,10 @@ const invoiceSchema = new Schema({
     userId :{
         type : Schema.Types.ObjectId,
         ref : 'User'
+    },
+    name : {
+        type: Schema.Types.ObjectId, 
+        ref: 'User'
     },
  
     // amountPaid : Number,

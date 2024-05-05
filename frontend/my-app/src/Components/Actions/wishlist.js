@@ -2,7 +2,11 @@ import axios from "axios"
 export const startGetWishlists = ()=>{
     return async (dispatch)=>{
         try{
-            const response = await axios.get('http://localhost:3009/api/wishlists')
+            const response = await axios.get('http://localhost:3009/api/wishlists',{
+                headers : {
+                    Authorization : localStorage.getItem('token')
+                }
+            })
             console.log(response.data)
             dispatch(setWishlists(response.data))
         }
@@ -22,7 +26,11 @@ const setWishlists = (data)=>{
 export const startRemoveWishlists = (id) => {
     return async(dispatch) => {
         try{
-            const response = await axios.delete(`http://localhost:3009/api/wishlists/${id}`)
+            const response = await axios.delete(`http://localhost:3009/api/wishlists/${id}`,{
+                headers : {
+                    Authorization : localStorage.getItem('token')
+                }
+            })
             dispatch(removeWishlists(id))
             return response.data
         }
