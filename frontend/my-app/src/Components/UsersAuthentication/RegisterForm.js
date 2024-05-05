@@ -3,6 +3,7 @@ import axios from 'axios'
 import { useNavigate, Link } from "react-router-dom"
 import { Container, Form, Button } from 'react-bootstrap'
 import Footer from '../../Components/Footer'
+import { useAuth } from "../../Context/AuthrorizeContext"
 
 export default function RegisterForm({ registerToast }) {
     const [username, setUsername] = useState('')
@@ -14,6 +15,7 @@ export default function RegisterForm({ registerToast }) {
     const [serverErrors, setServerErrors] = useState([])
 
     const navigate = useNavigate()
+    const {user} = useAuth()
 
     const errors = {}
 
@@ -59,7 +61,10 @@ export default function RegisterForm({ registerToast }) {
                 setMobile('')
                 setRole('')
                 setPassword('')
-                // navigate('/otp')
+                {user?.role == 'owner'?
+                navigate('/login') : 
+                navigate('/otp')
+                }
                 registerToast()
             } catch(err) {
                 console.log(err)
