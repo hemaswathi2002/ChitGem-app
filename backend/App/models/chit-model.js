@@ -2,7 +2,7 @@ const mongoose=require('mongoose')
 const{Schema,model}=mongoose
 
 const chitSchema=new Schema({
-    
+    name : String,
     shopId:{
         type:Schema.Types.ObjectId,
         ref:'Shop'

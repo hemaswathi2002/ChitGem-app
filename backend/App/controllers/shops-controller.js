@@ -78,6 +78,16 @@ shopsCltr.updateStatus = async(req,res)=>{
   }
 }
 
+shopsCltr.getAllApprovedShops = async (req, res) => {
+  try {
+      const shops = await Shop.find({ approvalStatus: "approved" });
+      res.json(shops);
+  } catch (error) {
+      console.log(error);
+      res.status(500).json({ errors: "Internal Server Error" });
+  }
+}
+
 shopsCltr.destroy = async (req, res) => {
   try {
     const id = req.params.id

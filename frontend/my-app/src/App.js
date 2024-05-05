@@ -17,44 +17,28 @@ import { startGetUserDetails } from './Components/Actions/Users'
 import Admin from './Components/AdminDashboard/admin'
 import Unauthorized from './Components/Unauthorized'
 import { startGetShop } from './Components/Actions/shops'
-import CustomersForm from './Components/Customer/CustomersForm'
 import { CustomersContext } from './Context/CustomersContext'
 import CustomersContainer from './Components/Customer/CustomersContainer'
 import UsersControl from './Components/usersControl/usersControl'
 import InvoiceTable from './Components/OwnerDashboard/Invoice/InvoiceTable'
-// import { ToastContainer } from 'react-toastify'
-// import { useDispatch, useSelector} from 'react-redux'
 import ChitsContainer from './Components/Chit/ChitsContainer'
-import ReviewsContainer from './Components/Review/ReviewsContainer'
 import JewelContainer from './Components/Jewel/JewelContainer'
 import { ChitsContext } from './Context/ChitsContext'
-// import { startGetJewels } from './Components/Actions/Jewels'
 import chitReducer from './Reducers/Chits'
-// import UsersReducer from './Reducers/Users'
 import CustomersReducer from './Reducers/Customers'
-import ChitsTable from './Components/Chit/ChitsTable'
-
-// import ShopsContainer from './Components/Shop/ShopsContainer'
-// import InvoiceContainer from './Components/Invoice/InvoiceContainer'
 import ForgotPassword from './Components/UsersAuthentication/PasswordSettings'
-import { ShopsContext } from './Context/ShopsContext'
-import Main from './Components/Main/Main'
-import ChitForm from './Components/Chit/ChitsForm'
 import ShopsContainer from './Components/Shop/ShopsTable'
 import Owner from './Components/OwnerDashboard/Owner'
 import CustomerDetails from './Components/CustomerDashboard/CustomerDetails'
-import InvoiceForm from './Components/OwnerDashboard/Invoice/InvoiceForm'
 import ChitDetails from './Components/Chit/ChitsDetails'
 import Invoice from './Components/CustomerDashboard/Invoice/Invoice'
 import WishlistItems from './Components/Wishlists/WishlistItems'
 import JewelsTable from './Components/Jewel/JewelTable'
 export default function App() {
   const [chits, chitDispatch] = useReducer(chitReducer, {data: []})
-  // const [users, usersDispatch] = useReducer(UsersReducer, {userDetails : [], isLoggedIn : false});
   const [customers, customerDispatch] = useReducer(CustomersReducer, {data:[]})
   const [ownerId,setOwnerId] = useState('')
-  const [id,setId] = useState('')
-  const { user, handleLogin,  handleLogout } = useAuth() 
+  const { user} = useAuth() 
 
   const dispatch = useDispatch()
 
@@ -115,32 +99,6 @@ export default function App() {
   const users = useSelector((state) => state.users)
 
   console.log(users)
-    
-
-
-  // useEffect (()=>{
-  //   dispatch(startGetShop())
-  // },[dispatch])
-
-
-  // useEffect(()=>{
-  //   if(localStorage.getItem('token')){
-  //     dispatch(startGetUserDetails())
-  //   }
-  // }, [handleLogin])
-
-  // const dispatch = useDispatch()
-  
-  // useEffect(()=>{
-  //   dispatch(startGetJewels())
-  // },[dispatch])
-
-
-  // useEffect(()=>{
-  //   if(localStorage.getItem('token')){
-  //     dispatch(startGetUserDetails())
-  //   }
-  // },[dispatch])
 
   const loginToast = () => {
     toast.success('Logged in successfully', {
@@ -164,33 +122,9 @@ const registerToast = () => {
 
 
   return (
-    <div>
       <>
       <Header/>
-
-      {/* { !user ? (
-              <>
-              </> 
-            ): (
-              <>
-                  <Link to="/account">Account</Link> |
-                  {/* <Link to="/shop">shop</Link> | */}
-{/*                   
-                  <Link to="/customers">customer</Link> |
-                  <Link to = "/chit">chit</Link> |
-                  <Link to = '/customers-user'>customer details</Link>|
-                  <Link to = '/invoice'>invoice</Link>|
-                  <Link to="/" onClick={() => {
-                    localStorage.removeItem('token')
-                    handleLogout()
-                  }}> Logout </Link> |  */}
-                </> 
-            {/* )} */}
-                  {/* </> */} 
-
-
         <ChitsContext.Provider value={{ chits, chitDispatch }}>
-          {/* <UsersContext.Provider value={{ users, usersDispatch }}> */}
                     <CustomersContext.Provider value={{ customers, customerDispatch }}> 
                   <Routes>
                     <>
@@ -203,7 +137,6 @@ const registerToast = () => {
                     <Route path='/owner' element={<Owner/>}/>
                     <Route path = '/shop' element = {<ShopsContainer/>}/>
                     <Route path = '/customer/:id' element = {<CustomerDetails/>}/>
-                    {/* <Route path = '/customers' element = {<CustomersContainer users = {users}/>}/> */}
                     <Route path = '/invoice' element = {<InvoiceTable/>}/>
                     <Route path = '/customers-user' element = {<CustomerDetails/>}/>
                     <Route path = '/customers' element = {
@@ -217,19 +150,10 @@ const registerToast = () => {
                         <Account/>
                       </PrivateRoute>
                     }/>
+                    <Route path = '/jewels' element = {<JewelContainer/>}/>
                     <Route path='/forgotpassword' element={<ForgotPassword/>}/>
                     <Route path = '/invoices-user' element = {<Invoice/>}/>
                     <Route path = '/jewels-user' element = {<JewelsTable/>}/>
-                    {/* <Route path = '/shop' element = {
-                      <PrivateRoute permittedRoles = {['owner']}>
-                        <ShopsContainer/>
-                      </PrivateRoute>
-                    }/> */}
-                    {/* <Route path = '/create-customer' element = {
-                      <PrivateRoute permittedRoles={['owner']}>
-                        <CustomersForm/>
-                      </PrivateRoute>
-                    }/> */}
                     <Route path = '/chit' element = {
                       <PrivateRoute permittedRoles = {['owner']}>
                         <ChitsContainer/>
@@ -237,33 +161,11 @@ const registerToast = () => {
                     }/>
                     <Route path = {'/chits/:id'} element = {<ChitDetails/>}/>
                     <Route path="/unauthorized" element={<Unauthorized /> } />
-                    {/* <Route path = '/dashboard' element = {<Main/>}/>
-                    <Route path= '/shops' element={<ShopsForm />}/>
-                    <Route path = '/customers' element = {<CustomersContainer/>}/> */}
-                    {/*  />
-                    <Route path='/chits' element={<ChitsContainer />} />
-                     <Route path='/login' element={<LoginForm />} />
-                     <Route path = '/otp' element = {<OtpVerificationForm/>}/>  */}
-                     
                      </>
                   </Routes>
                   </CustomersContext.Provider> 
-                  {/* <CustomersContainer/> */}
+                  </ChitsContext.Provider>
+        </> 
 
-                  {/* <ToastContainer />
-                  <ChitsContainer/> 
-                   <UsersContainer/> 
-                   <ShopsContainer/>
-
-                  <ToastContainer />
-                  <ChitsContainer/>
-                  <JewelContainer/>
-                  <ReviewsContainer/>
-                  <InvoiceContainer/>  */}
-          {/* </UsersContext.Provider> */}
-        </ChitsContext.Provider>
-        {/* <JewelContainer/> */}
-
- </div>
 );
 }
