@@ -23,6 +23,10 @@ const invoiceSchema = new Schema({
               } 
         }
     ],
+    userId :{
+        type : Schema.Types.ObjectId,
+        ref : 'User'
+    },
  
     // amountPaid : Number,
     paymentMonth : String,

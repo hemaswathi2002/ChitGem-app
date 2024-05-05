@@ -104,6 +104,7 @@ app.delete('/api/reviews/:id',reviewsCltr.delete)
 app.post ('/api/generate-invoice',authenticateUser,authorizeUser(['owner']),invoicesCltr.create)
 app.get('/api/gold-price',invoicesCltr.get)
 app.get('/api/invoices',invoicesCltr.list)
+// app.get('/api/invoices/users',authenticateUser,authorizeUser(['owner','customer']),invoicesCltr.getOneCustomer)
 // app.put('/api/invoices/:id',invoicesCltr.update)
 app.delete('/api/invoices/:id',invoicesCltr.delete)
 

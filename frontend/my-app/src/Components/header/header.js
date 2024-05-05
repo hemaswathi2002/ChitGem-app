@@ -146,6 +146,9 @@ export default function Header() {
                                     <Link to="/jewels" className="nav-link " style={{ color: '#fff' , marginLeft: '10px' }}>jewels</Link>
                                     </div>
                                 )}
+                                {user?.role == 'customer' && (
+                                    <Link to = '/customers-user' className="nav-link" style={{ color: '#fff', marginLeft : '10px' }}>Customer Details</Link>
+                                )}
                                 </Nav.Item>
                                 <NavDropdown title={<span style={{ color: '#fff'}}>My Account</span>} id="basic-nav-dropdown"  >
                                     {user?.role === 'owner' && (

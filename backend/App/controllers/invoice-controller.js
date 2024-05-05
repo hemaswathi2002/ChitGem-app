@@ -3,7 +3,6 @@ const axios = require('axios')
 const Chit = require('../models/chit-model')
 const _ = require('lodash')
 const {validationResult}=require('express-validator')
-const { chitAmount } = require('../validators/chit-validation')
 const invoicesCltr={}
 
 invoicesCltr.create=async(req,res)=>{
@@ -54,6 +53,7 @@ invoicesCltr.create=async(req,res)=>{
         const invoiceData = {
             ...body,
             lineItems,
+            userId : chit.userId,
             date: new Date(),
             paymentMonth: month.toLocaleString('default', { month: 'long' })
         };
@@ -78,6 +78,16 @@ invoicesCltr.list = async(req,res)=>{
     }catch(err){
       console.log(err)
       res.status(500).json({error:'Internal Server Error'})
+    }
+}
+
+invoicesCltr.listOneCustomer = async(req,res) => {
+    try{
+        const invoice = await Invoice.find({userId : req.user.id})
+        res.status(200).json(invoice)
+    }
+    catch(err){
+        console.log(err)
     }
 }
 

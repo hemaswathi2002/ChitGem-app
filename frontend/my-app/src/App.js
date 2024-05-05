@@ -144,7 +144,7 @@ export default function App() {
   const loginToast = () => {
     toast.success('Logged in successfully', {
         position: "top-right",
-        autoClose: 2000,
+        autoClose: 1000,
         closeOnClick: true,
         pauseOnHover: true,
         draggable: true
@@ -154,7 +154,7 @@ export default function App() {
 const registerToast = () => {
   toast.success('Successfully created account', {
     position: "top-right",
-    autoClose: 2000,
+    autoClose: 1000,
     closeOnClick: true,
     pauseOnHover: true,
     draggable: true
@@ -204,10 +204,7 @@ const registerToast = () => {
                     <Route path = '/customer/:id' element = {<CustomerDetails/>}/>
                     {/* <Route path = '/customers' element = {<CustomersContainer users = {users}/>}/> */}
                     <Route path = '/invoice' element = {<InvoiceTable/>}/>
-                    <Route path = '/customers-user' element = {
-                    <PrivateRoute permittedRoles = {['customer']}>
-                       <CustomerDetails/>
-                      </PrivateRoute>}/>
+                    <Route path = '/customers-user' element = {<CustomerDetails/>}/>
                     <Route path = '/customers' element = {
                       <PrivateRoute permittedRoles = {['owner']}>
                         <CustomersContainer users = {users}/>
