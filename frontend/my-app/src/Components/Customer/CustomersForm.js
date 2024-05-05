@@ -123,7 +123,7 @@ export default function CustomersForm(props) {
     return (
         <div>
         {/* <div style={{ backgroundColor: '#ffb6c1', height: '25px', width: '100%' }}></div> */}
-        <Container style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '100vh' }}>
+        <Container style={{ marginTop: '155px', display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '60vh' }}>
           <div style={{ border: '2px solid pink', padding: '20px', borderRadius: '5px', width: '100%' }}>
           <h2 style={{ textAlign: 'center', marginBottom: '20px' }}>Add Customer</h2>
 

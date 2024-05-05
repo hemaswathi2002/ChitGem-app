@@ -63,7 +63,7 @@ export default function JewelsForm(props) {
 
 
     return (
-        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '45vh', marginTop: '10px' }}>
+        <div style={{ marginTop: '80px', display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '60vh' }}>
             <div style={{ border: '2px solid pink', padding: '20px', borderRadius: '5px', width: '60%' }}>
                 <h2>Jewel Form</h2>
                 <Form onSubmit={handleSubmit} encType="multipart/form-data">
@@ -79,9 +79,8 @@ export default function JewelsForm(props) {
                         <Form.Label>Caption</Form.Label>
                         <Form.Control type="text" value={caption} onChange={(e) => setCaption(e.target.value)} />
                     </Form.Group>
-                    <Button variant="primary" type="submit">
-                        Submit
-                    </Button>
+                    <Button type="submit" style={{ backgroundColor: '#ffb6c1' }}>Submit</Button>
+                     
                 </Form>
             </div>
         </div>

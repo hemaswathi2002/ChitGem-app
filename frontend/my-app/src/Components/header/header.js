@@ -98,7 +98,7 @@
 
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../Context/AuthrorizeContext';
-import { Navbar, Nav, NavDropdown } from 'react-bootstrap'; // Import NavDropdown for dropdown menu
+import { Navbar, Nav, NavDropdown } from 'react-bootstrap';
 import { isEmpty } from 'lodash';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHomeUser, faUserPlus } from '@fortawesome/free-solid-svg-icons';
@@ -116,72 +116,64 @@ export default function Header() {
     return (
         <Navbar style={{ backgroundColor: 'rgb(94, 9, 9)' }} variant="dark" expand="lg" fixed="top">
             <Navbar.Brand href="#" style={{ color: '#fff' }}>
-                {/* <img src={logo} alt="Logo" className="logo" /> */}
                 ChitGem
             </Navbar.Brand>
             <Navbar.Toggle aria-controls="navbarNav" />
             <Navbar.Collapse id="navbarNav">
                 <Nav className="ml-auto">
-                    <Nav.Item>
-                        {isEmpty(localStorage.getItem('token')) && <Link to="/register" className="nav-link" style={{ color: '#fff' }}>
+                    {isEmpty(localStorage.getItem('token')) && (
+                        <Link to="/register" className="nav-link" style={{ color: '#fff' }}>
                             <FontAwesomeIcon icon={faUserPlus} /> Register
-                        </Link>}
-                    </Nav.Item>
-                    <Nav.Item>
-                        {isEmpty(localStorage.getItem('token')) ? (
-                            <Link className="nav-link" style={{ color: '#fff' }} to="/login">
-                                <FontAwesomeIcon icon={faHomeUser} /> Login
-                            </Link>
-                        ) : (
-                            <>
-                                <Nav.Item>
+                        </Link>
+                    )}
+                    {isEmpty(localStorage.getItem('token')) ? (
+                        <Link className="nav-link" style={{ color: '#fff' }} to="/login">
+                            <FontAwesomeIcon icon={faHomeUser} /> Login
+                        </Link>
+                    ) : (
+                        <>
+                            {user?.role === 'owner' && (
+                                <>
+                                    <Link to="/register" className="nav-link" style={{ color: '#fff', marginLeft: '10px' }}>
+                                        <FontAwesomeIcon icon={faUserPlus} /> Register Customer
+                                    </Link>
+                                    <Link to="/customers" className="nav-link" style={{ color: '#fff', marginLeft: '10px' }}>Customers</Link>
+                                    <Link to="/chit" className="nav-link" style={{ color: '#fff', marginLeft: '10px' }}>Chits</Link>
+                                    <Link to="/invoice" className="nav-link" style={{ color: '#fff', marginLeft: '10px' }}>Invoice</Link>
+                                    <Link to="/jewels" className="nav-link" style={{ color: '#fff', marginLeft: '10px' }}>Jewels</Link>
+                                </>
+                            )}
+                            <NavDropdown alignRight title={<span style={{ color: '#fff' }}>My Account</span>} id="basic-nav-dropdown">
                                 {user?.role === 'owner' && (
-                                    <div style={{ display: 'flex', alignItems: 'center' }}> 
-                                    <Link to="/register" className="nav-link" style={{ color: '#fff', marginLeft : '10px' }}>
-                                    <FontAwesomeIcon icon={faUserPlus} /> Register Customer
-                                    </Link>       
-                                    <Link to="/customers" className="nav-link " style={{ color: '#fff' , marginLeft: '10px' }}>Customers</Link>
-                                    <Link to="/chit" className="nav-link " style={{ color: '#fff', marginLeft: '10px' }}>chits</Link>
-                                    <Link to="/invoice" className="nav-link " style={{ color: '#fff' , marginLeft: '10px' }}>invoice</Link>
-                                    <Link to="/jewels" className="nav-link " style={{ color: '#fff' , marginLeft: '10px' }}>jewels</Link>
-                                    </div>
+                                    <>
+                                        <NavDropdown.Item as={Link} to="/account">My Account</NavDropdown.Item>
+                                        <NavDropdown.Item as={Link} to="/shop">Shop Details</NavDropdown.Item>
+                                        <NavDropdown.Item as={Link} to="/addparking">Add Space</NavDropdown.Item>
+                                        <NavDropdown.Item as={Link} to="/myspace">My Space</NavDropdown.Item>
+                                    </>
                                 )}
-                                {user?.role == 'customer' && (
-                                    <Link to = '/customers-user' className="nav-link" style={{ color: '#fff', marginLeft : '10px' }}>Customer Details</Link>
+                                {user?.role === 'admin' && (
+                                    <>
+                                        <NavDropdown.Item as={Link} to="/account">My Detail</NavDropdown.Item>
+                                        <NavDropdown.Item href="#">Customer</NavDropdown.Item>
+                                        <NavDropdown.Item as={Link} to="/bookings">Bookings</NavDropdown.Item>
+                                        <NavDropdown.Item as={Link} to="/ownerDetails">Owners</NavDropdown.Item>
+                                    </>
                                 )}
-                                </Nav.Item>
-                                <NavDropdown title={<span style={{ color: '#fff'}}>My Account</span>} id="basic-nav-dropdown"  >
-                                    {user?.role === 'owner' && (
-                                        <>
-                                            <NavDropdown.Item as={Link} to="/account" >My Account</NavDropdown.Item>
-                                            <NavDropdown.Item as={Link} to="/shop">shop Details</NavDropdown.Item>
-                                            <NavDropdown.Item as={Link} to="/addparking">Add Space</NavDropdown.Item>
-                                            <NavDropdown.Item as={Link} to="/myspace">My Space</NavDropdown.Item>
-                                        </>
-                                    )}
-                                    {user?.role === 'admin' && (
-                                        <>
-                                            <NavDropdown.Item as={Link} to="/account">My Detail</NavDropdown.Item>
-                                            <NavDropdown.Item href="#">Customer</NavDropdown.Item>
-                                            <NavDropdown.Item as={Link} to="/bookings">Bookings</NavDropdown.Item>
-                                            <NavDropdown.Item as={Link} to="/ownerDetails">Owners</NavDropdown.Item>
-                                        </>
-                                    )}
-                                    {user?.role === 'customer' && (
-                                        <>
-                                            <NavDropdown.Item as={Link} to="/">Home</NavDropdown.Item>
-                                            <NavDropdown.Item as={Link} to="/account">Account</NavDropdown.Item>
-                                            <NavDropdown.Item as={Link} to="/bookings">My bookings</NavDropdown.Item>
-                                            <NavDropdown.Item as={Link} to="/vehicles">My vehicles</NavDropdown.Item>
-                                            <NavDropdown.Item as={Link} to="/spaceCart">My spaceCart</NavDropdown.Item>
-                                        </>
-                                    )}
-                                    <NavDropdown.Divider />
-                                    <NavDropdown.Item onClick={handleChangeLogout}>Logout</NavDropdown.Item>
-                                </NavDropdown>
-                            </>
-                        )}
-                    </Nav.Item>
+                                {user?.role === 'customer' && (
+                                    <>
+                                        <NavDropdown.Item as={Link} to="/">Home</NavDropdown.Item>
+                                        <NavDropdown.Item as={Link} to="/account">Account</NavDropdown.Item>
+                                        <NavDropdown.Item as={Link} to="/bookings">My Bookings</NavDropdown.Item>
+                                        <NavDropdown.Item as={Link} to="/vehicles">My Vehicles</NavDropdown.Item>
+                                        <NavDropdown.Item as={Link} to="/spaceCart">My SpaceCart</NavDropdown.Item>
+                                    </>
+                                )}
+                                <NavDropdown.Divider />
+                                <NavDropdown.Item onClick={handleChangeLogout}>Logout</NavDropdown.Item>
+                            </NavDropdown>
+                        </>
+                    )}
                 </Nav>
             </Navbar.Collapse>
         </Navbar>

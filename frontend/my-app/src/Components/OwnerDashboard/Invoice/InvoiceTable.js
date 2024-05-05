@@ -1,6 +1,6 @@
 import { useEffect } from "react"
 import { useDispatch, useSelector} from "react-redux"
-import { Table } from 'react-bootstrap';
+import { Table,Button } from 'react-bootstrap';
 import { startGetInvoice } from "../../Actions/Invoice"
 import InvoiceForm from "./InvoiceForm";
 export default function Invoice(){
@@ -14,7 +14,9 @@ export default function Invoice(){
 
     return (
         <>
-            <Table striped bordered hover>
+            <Table striped bordered hover style={{ marginTop: '80px'}}>
+    
+
                 <thead>
                     <tr>
                         <th>Date</th>
@@ -25,6 +27,7 @@ export default function Invoice(){
                     </tr>
                 </thead>
                 <tbody>
+           
                     {invoices.map((invoice) => (
                         <tr key={invoice._id} value = {invoice._id}>
                             <td>{new Date(invoice.date).toLocaleDateString()}</td>
@@ -44,11 +47,14 @@ export default function Invoice(){
                                 ))}
                             </td>
                             <td>
-                                <button>pay</button>
+                            <Button type="submit" style={{ backgroundColor: 'maroon' }}>Pay</Button>
+
                             </td>
                         </tr>
                     ))}
-                </tbody>
+                   
+               
+                </tbody> 
             </Table>
             <InvoiceForm/>
            

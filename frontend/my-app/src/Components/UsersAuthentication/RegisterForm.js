@@ -72,7 +72,7 @@ export default function RegisterForm({ registerToast }) {
     return (
         <div>
         {/* <div style={{ backgroundColor: '#ffb6c1', height: '10px', width: '100%' }}></div> */}
-        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '45vh', marginTop: '10px' }}>
+        <div style={{ marginTop: '80px', display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '60vh' }}>
             <div style={{ border: '2px solid pink', padding: '20px', borderRadius: '5px', width: '30%' }}>
 
                     <h2 style={{ textAlign: 'center', marginBottom: '20px' }}>Sign-up</h2>
