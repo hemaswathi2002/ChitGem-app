@@ -16,9 +16,8 @@ const customersCltr = require('./App/controllers/customers-controller')
 const reviewsCltr = require('./App/controllers/reviews-controller')
 const invoicesCltr=require('./App/controllers/invoice-controller')
 const paymentsCntrl = require('./App/controllers/payments-controller')
-
 const {authenticateUser,authorizeUser} = require('./App/middlewares/auth')
-
+const goldCltr=require('./App/controllers/gold-controlller')
 const {userRegisterValidationSchema,loginValidationSchema, userOtpValidationSchema} = require('./App/validators/user-validation')
 const shopRegisterValidationSchema=require('./App/validators/shop-validation')
 const chitRegisterValidationSchema = require('./App/validators/chit-validation')
@@ -68,7 +67,7 @@ app.put('/api/shops/update/:id',authenticateUser,authorizeUser(['admin']),shopsC
 app.delete('/api/shops/:id',authenticateUser,authorizeUser(['owner']),shopsCltr.destroy)
 
 //api jewels
-app.post('/api/jewels', upload.single('images'),jewelsCltr.create);
+app.post('/api/jewels', upload.single('images'),jewelsCltr.create)
 app.get('/api/jewels',jewelsCltr.get)
 app.put('/api/jewels/:id',authenticateUser,authorizeUser(['owner']),jewelsCltr.update)
 app.delete('/api/jewels/:id',jewelsCltr.delete)
@@ -99,6 +98,9 @@ app.get('/api/reviews/:id',reviewsCltr.getOneReview)
 // app.get('/api/invoices/:id',invoicesCltr.getOneReview)
 app.put('/api/reviews/:id',reviewsCltr.update)
 app.delete('/api/reviews/:id',reviewsCltr.delete)
+
+//gold price
+app.get('/api/goldprice',goldCltr.get)
 
 // app.post ('/api/invoices',checkSchema(invoicevalidationSchema),invoicesCltr.create)
 app.post ('/api/generate-invoice',authenticateUser,authorizeUser(['owner']),invoicesCltr.create)
