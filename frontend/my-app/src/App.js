@@ -132,7 +132,10 @@ const registerToast = () => {
                     <Route path='/register' element={<RegisterForm registerToast = {registerToast}/>} />
                     <Route path = '/otp' element = {<OtpVerificationForm/>}/>
                     <Route path = '/login' element = {<LoginForm loginToast = {loginToast}/>}/>
-                    <Route path = '/usersControl' element = {<UsersControl/>}/>
+                    <>
+                    {user ? (
+                      <>
+                      <Route path = '/usersControl' element = {<UsersControl/>}/>
                     <Route path='/admin' element={<Admin/>}/>
                     <Route path='/owner' element={<Owner/>}/>
                     <Route path = '/shop' element = {<ShopsContainer/>}/>
@@ -160,6 +163,12 @@ const registerToast = () => {
                       </PrivateRoute>
                     }/>
                     <Route path = {'/chits/:id'} element = {<ChitDetails/>}/>
+                      </>
+                    ) : (
+                      <Route path='/' element = {<Home/>}/>
+                    )}
+                    
+                    </>
                     <Route path="/unauthorized" element={<Unauthorized /> } />
                      </>
                   </Routes>

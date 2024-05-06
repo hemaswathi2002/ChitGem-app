@@ -77,6 +77,7 @@ export default function CustomersForm(props) {
                     }
                 })
                 customerDispatch({ type: 'UPDATE_CUSTOMERS', payload: response.data })
+                toggle()
             } else {
                 response = await axios.post('http://localhost:3009/api/customers', customer, {
                     headers: {
@@ -85,6 +86,7 @@ export default function CustomersForm(props) {
                 })
                 console.log(response.data)
                 customerDispatch({ type: 'ADD_CUSTOMERS', payload: response.data })
+                toggle()
             }
             resetForm();
 

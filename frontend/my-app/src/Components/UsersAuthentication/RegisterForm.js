@@ -62,7 +62,7 @@ export default function RegisterForm({ registerToast }) {
                 setRole('')
                 setPassword('')
                 {user?.role == 'owner'?
-                navigate('/login') : 
+                navigate('/customers') : 
                 navigate('/otp')
                 }
                 registerToast()
