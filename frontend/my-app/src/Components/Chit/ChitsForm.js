@@ -109,7 +109,6 @@ export default function ChitForm(props) {
                         }
                     });
                     chitDispatch({ type: 'ADD_CHIT', payload: response.data });
-                    props.toggle()
                     setChitAmount(500);
                     setInstallments(12);
                     setStartDate('');

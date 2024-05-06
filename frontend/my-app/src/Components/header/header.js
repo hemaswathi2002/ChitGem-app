@@ -135,6 +135,9 @@ export default function Header() {
                             {user?.role === 'owner' && (
                                 <>
 
+                                    <Link to="/register" className="nav-link" style={{ color: '#fff', marginLeft: '10px' }}>
+                                        <FontAwesomeIcon icon={faUserPlus} /> Register Customer
+                                    </Link>
                                     <Link to="/customers" className="nav-link" style={{ color: '#fff', marginLeft: '10px' }}>Customers</Link>
                                     <Link to="/chit" className="nav-link" style={{ color: '#fff', marginLeft: '10px' }}>Chits</Link>
                                     <Link to="/invoice" className="nav-link" style={{ color: '#fff', marginLeft: '10px' }}>Invoice</Link>
@@ -162,8 +165,7 @@ export default function Header() {
                                     <>
                                         <NavDropdown.Item as={Link} to="/account">My Account</NavDropdown.Item>
                                         <NavDropdown.Item as={Link} to="/shop">Shop Details</NavDropdown.Item>
-                                        <NavDropdown.Item as={Link} to="/register">Add customer <FontAwesomeIcon icon={faUserPlus} /></NavDropdown.Item>
-                                       
+                                        <NavDropdown.Item as={Link} to="/addparking">Add Space</NavDropdown.Item>
                                         <NavDropdown.Item as={Link} to="/myspace">My Space</NavDropdown.Item>
                                     </>
                                 )}
