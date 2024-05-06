@@ -38,6 +38,11 @@ export default function CustomersList(props) {
         toggle();
     };
 
+    const handleAddCustomer = () => {
+        setEditId('');
+        toggle();
+    };
+
     const filteredCustomers = useMemo(() => {
         return customers.data.filter(customer =>
             customer.contact && customer.contact.email.toLowerCase().includes(searchQuery.toLowerCase())
@@ -82,6 +87,7 @@ export default function CustomersList(props) {
                 </table>
             </div>
             <div>
+            <Button color="danger" onClick={handleAddCustomer}>Add Customer</Button>
                 <Modal isOpen={modal} toggle={toggle}>
                     <ModalHeader toggle={toggle}>Customer Form</ModalHeader>
                     <ModalBody>

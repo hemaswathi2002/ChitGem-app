@@ -41,7 +41,11 @@ export default function LoginForm(props) {
             navigate('/usersControl')
         } catch (err) {
             console.log(err)
-            setServerErrors(err.response.data.errors)
+            if (err.response && err.response.data && err.response.data.error) {
+                setServerErrors({ error: err.response.data.error }) // Set error message
+            } else {
+                setServerErrors({ error: 'Invalid email/password' }) // Default error message
+            }
         }
     }
     console.log(serverErrors)
@@ -54,13 +58,11 @@ export default function LoginForm(props) {
           <div style={{ border: '2px solid pink', padding: '20px', borderRadius: '5px', width: '30%' }}>
             <h2 style={{ textAlign: 'center', marginBottom: '20px' }}>Log-in</h2>
             <Form onSubmit={handleSubmit}>
-    {serverErrors.length > 0 && (
-        <div>
-            {serverErrors.map((ele,i)=>{
-                return <li key = {i} style = {{color : 'red'}}>{ele.msg}</li>
-            })}
-        </div>
-    )}
+            {serverErrors.error && ( // Check if serverErrors.error exists
+                            <div style={{ color: 'red' }}> {/* Apply red color */}
+                                {serverErrors.error} {/* Display error message */}
+                            </div>
+                        )}
     <FormGroup>
         <Label for="email">Email:</Label>
         <Input 

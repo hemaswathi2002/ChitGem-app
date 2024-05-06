@@ -8,7 +8,7 @@ export default function CustomersContainer(props){
             <CustomersTable users = {users}/>
             </div>
             <div className="col-md-4">
-            <CustomersForm users = {users}/>
+            {/* <CustomersForm users = {users}/> */}
             </div>      
         </div>
     )
