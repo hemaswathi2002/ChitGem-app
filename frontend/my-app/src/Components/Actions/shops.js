@@ -6,18 +6,18 @@ export const startGetShop = (ownerId) => {
                 headers: {
                     Authorization: localStorage.getItem('token')
                 }
-            });
-            console.log("Owner ID:", ownerId);
-            console.log("Token:", localStorage.getItem('token'));
-            console.log(response.data);
-            dispatch(setShops(response.data));
-            // localStorage.setItem('shops', JSON.stringify(response.data));
+            })
+            console.log("Owner ID:", ownerId)
+            console.log("Token:", localStorage.getItem('token'))
+            console.log(response.data)
+            dispatch(setShops(response.data))
+            // localStorage.setItem('shops', JSON.stringify(response.data))
             
         } catch (err) {
-            console.log(err);
+            console.log(err)
         }
-    };
-};
+    }
+}
 const setShops = (shops)=>{
     return {
         type : 'SET_SHOP',
@@ -36,15 +36,15 @@ export const startCreateShop = (formData) => {
                     headers : {
                         Authorization : localStorage.getItem('token')
                     }
-                });
-                console.log(response.data);
+                })
+                console.log(response.data)
                 console.log(formData)
                 dispatch(createShop(response.data))
         }
         catch(err){
-            console.log(err);
+            console.log(err)
             if (err.response && err.response.data) {
-                dispatch(setServerErrors(err.response.data.errors || []));
+                dispatch(setServerErrors(err.response.data.errors || []))
             }
         }
     }
@@ -60,31 +60,49 @@ const createShop = (data) => {
 export const startUpdateShop = (id,formData) => {
     return async (dispatch) => {
         try{
-            const response = await axios.put(`http://localhost:3009/api/shops/${id}`, formData,{
-                    headers : {
-                        Authorization : localStorage.getItem('token')
-                    }
-                });
+            const response = await axios.put(`http://localhost:3009/api/shops/${id}`)
                 console.log(response.data)
                 dispatch(updateShop(response.data))
         }
         catch(err){
-            // console.log(err);
+            // console.log(err)
             if (err.response && err.response.data) {
-                dispatch(setServerErrors(err.response.data.errors || []));
+                dispatch(setServerErrors(err.response.data.errors || []))
             }
         }
         
     }
 }
 
-const updateShop = (data) =>{
+const updateShop = (shops) =>{
     return{
         type : 'UPDATE_SHOP',
-        payload : data
+        payload : shops
     }
 }
 
+
+export const fetchApprovedShops = () => {
+    return async (dispatch) => {
+        try {
+            const response = await axios.get('http://localhost:3009/api/shop/approved-status',{
+                headers : {
+                    Authorization : localStorage.getItem('token')
+                }
+            })
+            dispatch(setApprovedShops(response.data))
+        } catch (err) {
+            console.log(err)
+        }
+    }
+}
+
+const setApprovedShops = (data) => {
+    return {
+        type: 'SET_APPROVED_SHOPS',
+        payload: data
+    }
+}
 export const clearServerErrors = () => ({
     type: 'CLEAR_SERVER_ERRORS'
 })
@@ -96,7 +114,7 @@ export const startRemoveShop = (id) => {
                     headers : {
                         Authorization : localStorage.getItem('token')
                     }
-                });
+                })
                 console.log(response.data)
                 dispatch(removeShop(id))
         }
@@ -116,4 +134,4 @@ const removeShop = (id) => {
 export const setServerErrors = (errors) => ({
     type: 'SET_SERVER_ERRORS',
     payload: errors
-});
+})

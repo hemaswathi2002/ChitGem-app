@@ -1,16 +1,16 @@
-import React, { useContext, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { Button, Modal, ModalHeader, ModalBody } from 'reactstrap';
-import { useNavigate } from 'react-router-dom';
-import { startRemoveShop } from '../Actions/shops';
+import React, { useContext, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { Button, Modal, ModalHeader, ModalBody } from 'reactstrap'
+import { useNavigate } from 'react-router-dom'
+import { startRemoveShop } from '../Actions/shops'
 import'../../index.css'
-import ShopsForm from './ShopsForm';
+import ShopsForm from './ShopsForm'
 
 
 export default function ShopsTable() {
-    const [modal, setModal] = useState(false);
-    const [editId, setEditId] = useState('');
-    const toggle = () => setModal(!modal);
+    const [modal, setModal] = useState(false)
+    const [editId, setEditId] = useState('')
+    const toggle = () => setModal(!modal)
 
     const shops = useSelector((state) => state.shops)
     console.log(shops,'shopData')
@@ -21,24 +21,24 @@ export default function ShopsTable() {
     const navigate = useNavigate()
 
     const handleRemove = async (id) => {
-        const confirmation = window.confirm('Are you sure?');
+        const confirmation = window.confirm('Are you sure?')
         if (confirmation) {
             try {
-                dispatch(startRemoveShop(id));
+                dispatch(startRemoveShop(id))
             } catch (err) {
-                console.log(err);
+                console.log(err)
             }
         }
-    };
+    }
 
     const handleEdit = (id) => {
-        setEditId(id);
-        toggle();
-    };
+        setEditId(id)
+        toggle()
+    }
     const handleAddShop = () => {
-        setEditId(''); 
-        toggle(); // Open the modal
-    };
+        setEditId('') 
+        toggle() // Open the modal
+    }
  return (
         <div>
             {shops &&
@@ -89,5 +89,5 @@ export default function ShopsTable() {
                 </div>
             }
         </div>
-    );
+    )
 }
