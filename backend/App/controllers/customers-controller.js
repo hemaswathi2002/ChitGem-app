@@ -12,7 +12,7 @@ customersCltr.register = async(req,res) => {
         return res.status(404).json({errors:errors.array()})
     }
     try{
-        const body = _.pick(req.body,['name','contact','description','goldHarvested'])
+        const body = _.pick(req.body,['name','address','contact','goldHarvested'])
         const owner = req.user.id
         console.log(owner)
         const shop = await Shop.findOne({ownerId : owner})
@@ -60,7 +60,7 @@ customersCltr.update = async(req,res) => {
     }
     try{
         const id = req.params.id
-        const body = _.pick(req.body,['name','contact','description','goldHarvested'])
+        const body = _.pick(req.body,['name','address','contact','goldHarvested'])
         const owner = req.user.id
         console.log(owner)
         const shop = await Shop.findOne({ownerId : owner})

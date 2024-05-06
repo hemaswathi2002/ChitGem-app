@@ -12,6 +12,7 @@ export default function CustomersForm(props) {
 
     const initialCustomerState = {
         name: '',
+        address : '',
         contact: { email: '', mobile: '' },
         description: ''
     };
@@ -59,6 +60,8 @@ export default function CustomersForm(props) {
             errors.mobile = 'Mobile number must be a number'
         }  if (!customer.description.trim()) {
             errors.description = 'Description is required'
+        }if (!customer.address.trim()) {
+            errors.address = 'Description is required'
         }
     
         setFormErrors(errors)
@@ -77,6 +80,7 @@ export default function CustomersForm(props) {
                     }
                 })
                 customerDispatch({ type: 'UPDATE_CUSTOMERS', payload: response.data })
+                props.toggle()
             } else {
                 response = await axios.post('http://localhost:3009/api/customers', customer, {
                     headers: {
@@ -85,6 +89,7 @@ export default function CustomersForm(props) {
                 })
                 console.log(response.data)
                 customerDispatch({ type: 'ADD_CUSTOMERS', payload: response.data })
+                props.toggle()
             }
             resetForm();
 
@@ -146,6 +151,17 @@ export default function CustomersForm(props) {
     />
     {formErrors.name && <p style={{ color: 'red' }}>{formErrors.name}</p>}
 </Form.Group>
+<Form.Group className="mb-3" controlId="address">
+    <Form.Control
+        type="text"
+        name="address" 
+        placeholder="Address" 
+        value={customer.address}
+        onChange={handleChange}
+        
+    />
+    {formErrors.email && <p style={{ color: 'red' }}>{formErrors.email}</p>}
+</Form.Group>
 <Form.Group className="mb-3" controlId="email">
     <Form.Control
         type="text"
@@ -166,17 +182,17 @@ export default function CustomersForm(props) {
     />
     {formErrors.mobile && <p style={{ color: 'red' }}>{formErrors.mobile}</p>}
 </Form.Group>
-<Form.Group className="mb-3" controlId="description">
+{/* <Form.Group className="mb-3" controlId="goldHarvested">
     <Form.Label>Description</Form.Label>
     <Form.Control
         type="text"
-        placeholder="Description" 
+        placeholder="goldHarvested" 
         name="description" // Add the name attribute
         value={customer.description}
         onChange={handleChange}
     />
     {formErrors.description && <p style={{ color: 'red' }}>{formErrors.description}</p>}
-</Form.Group>
+</Form.Group> */}
 
                 <Button type="submit" style={{ backgroundColor: '#ffb6c1' }}>Submit</Button>
             </Form>

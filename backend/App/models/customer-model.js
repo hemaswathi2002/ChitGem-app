@@ -3,6 +3,7 @@ const {Schema,model} = mongoose
 
 const customerSchema = new Schema({
     name : String,
+    address : String,
     contact : {
         email : String,
         mobile : Number
@@ -19,7 +20,6 @@ const customerSchema = new Schema({
         type : Schema.Types.ObjectId,
         ref : 'User'
     },
-    description : String,
     goldHarversted : String
 }, {timestamps : true} )
 

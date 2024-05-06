@@ -64,9 +64,9 @@ export default function CustomersList(props) {
                     <thead>
                         <tr>
                             <th>Name</th>
+                            <th>Address</th>
                             <th>Email</th>
                             <th>Mobile</th>
-                            <th>Description</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
@@ -74,6 +74,7 @@ export default function CustomersList(props) {
                         {filteredCustomers.map((customer, index) => (
                             <tr key={index}>
                                 <td>{customer.name}</td>
+                                <td>{customer.address}</td>
                                 <td>{customer.contact && customer.contact.email}</td>
                                 <td>{customer.contact && customer.contact.mobile}</td>
                                 <td>{customer.description}</td>
