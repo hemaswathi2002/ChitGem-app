@@ -19,7 +19,7 @@ shopsCltr.register = async (req, res) => {
       return res.status(400).json({ errors: errors.array() });
   }
   try {
-      const body = _.pick(req.body,['shopName','address','contact','description']);
+      const body = _.pick(req.body,['shopName','address','contact','description','aadhar']);
       body.approvalStatus = 'pending';
       body.ownerId = req.user.id;
 
