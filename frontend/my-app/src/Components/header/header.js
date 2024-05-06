@@ -172,7 +172,6 @@ export default function Header() {
                                 {user?.role === 'admin' && (
                                     <>
                                         <NavDropdown.Item as={Link} to="/account">My Detail</NavDropdown.Item>
-                                        <NavDropdown.Item href="#">Customer</NavDropdown.Item>
                                         <NavDropdown.Item as={Link} to="/approved-status">Approved shops</NavDropdown.Item>
                                         <NavDropdown.Item as={Link} to="/ownerDetails">Owners</NavDropdown.Item>
                                     </>
