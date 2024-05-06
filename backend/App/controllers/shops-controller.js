@@ -1,45 +1,26 @@
 const Shop = require("../models/shop-model")
 const { validationResult } = require("express-validator")
 const _ = require('lodash')
-const nodemailer = require('nodemailer');
 const shopsCltr = {}
-
-const transporter = nodemailer.createTransport({
-  host: 'smtp.mailtrap.io',
-  port: 2525,
-  auth: {
-    user: process.env.ADMIN_SMTP_USERNAME,
-    pass: process.env.ADMIN_SMTP_PASSWORD
-  }
-})
-
 shopsCltr.register = async (req, res) => {
-  const errors = validationResult(req);
+  const errors = validationResult(req)
   if (!errors.isEmpty()) {
-      return res.status(400).json({ errors: errors.array() });
+    return res.status(400).json({ errors: errors.array() })
   }
-  try {
-      const body = _.pick(req.body,['shopName','address','contact','description']);
-      body.approvalStatus = 'pending';
-      body.ownerId = req.user.id;
-
-      const shop = new Shop(body);
-      const response = await shop.save();
-
-      await transporter.sendMail({
-          from: 'your_email@example.com', 
-          to: 'admin@example.com', 
-          subject: 'New Shop Registration', 
-          text: `A new shop with name ${body.shopName} has registered. Please review and approve it.` 
-      });
-
-      res.status(201).json(response);
-  } catch (err) {
-      console.error(err);
-      res.status(500).json({ error: 'Internal server error' });
-  }
-};
-
+    try {
+      // const {body}=req
+    const body = _.pick(req.body,['shopName','address','contact','description'])
+    body.approvalStatus = 'pending'
+    body.ownerId = req.user.id
+    console.log(req.user)
+    const shop = new Shop(body)
+    const response = await shop.save()
+    res.status(201).json(response)
+} catch (err) {
+    console.error(err)
+    res.status(500).json({ error: 'Internal server error' })
+}
+}
 shopsCltr.getOneshop = async (req, res) => {
   try {
     const { ownerId } = req.params
