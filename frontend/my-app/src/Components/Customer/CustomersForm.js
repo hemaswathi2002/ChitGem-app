@@ -61,7 +61,7 @@ export default function CustomersForm(props) {
         }  if (!customer.description.trim()) {
             errors.description = 'Description is required'
         }if (!customer.address.trim()) {
-            errors.address = 'Description is required'
+            errors.address = 'address is required'
         }
     
         setFormErrors(errors)

@@ -53,14 +53,14 @@ export default function ChitList() {
                 <table className="styled-table">
                     <thead>
                         <tr>
+                            <th>name</th>
+                            <th>email</th>
                             <th>Chit Amount</th>
                             <th>Installments</th>
                             <th>Total Amount</th>
                             <th>Start Date</th>
                             <th>End Date</th>
                             <th>Status</th>
-                            <th>Benefits</th>
-                            <th>Terms and Conditions</th>
                             <th>Gold Price</th>
                             <th>Actions</th>
                         </tr>
@@ -68,14 +68,14 @@ export default function ChitList() {
                     <tbody>
                         {chits && chits.data && chits.data.map(chit => (
                             <tr key={chit._id}>
+                                <td>{chit.name}</td>
+                                <td>{chit.email}</td>
                                 <td>{chit.chitAmount}</td>
                                 <td>{chit.installments}</td>
                                 <td>{chit.totalAmount}</td>
                                 <td>{chit.date?.startDate}</td> 
                                 <td>{chit.date?.endDate}</td> 
                                 <td>{chit.status}</td>
-                                <td>{chit.benefits}</td>
-                                <td>{chit.termsAndConditions}</td>
                                 <td>{chit.goldPrice}</td>
                                 <td>
                                 <Link to={`/chits/${chit._id}`}>

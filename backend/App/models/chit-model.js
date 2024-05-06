@@ -3,6 +3,7 @@ const{Schema,model}=mongoose
 
 const chitSchema=new Schema({
     name : String,
+    email : String,
     shopId:{
         type:Schema.Types.ObjectId,
         ref:'Shop'

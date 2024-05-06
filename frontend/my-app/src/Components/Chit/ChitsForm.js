@@ -1,5 +1,4 @@
 import axios from 'axios';
-import { useNavigate } from "react-router-dom";
 import React, { useEffect, useState, useContext } from 'react';
 import { ChitsContext } from '../../Context/ChitsContext';
 import { Form, Button } from "react-bootstrap";
@@ -9,13 +8,13 @@ export default function ChitForm(props) {
     const { chits, chitDispatch } = useContext(ChitsContext);
 
     const [chit, setChit] = useState(null); 
+    const [name,setName] = useState('')
+    const [email,setEmail] = useState('')
     const [chitAmount, setChitAmount] = useState(500);
     const [installments, setInstallments] = useState(12);
     const [startDate, setStartDate] = useState('');
     const [endDate, setEndDate] = useState('');
     const [status, setStatus] = useState('');
-    const [benefits, setBenefits] = useState('');
-    const [termsAndConditions, setTermsAndConditions] = useState('');
     const [serverErrors, setServerErrors] = useState([]);
     const [formErrors, setFormErrors] = useState({});
 
@@ -25,29 +24,33 @@ export default function ChitForm(props) {
         const chit = chits?.data.find(ele => ele._id === editId);
         setChit(chit);
         if (chit) {
+            setName(chit.name || '')
+            setEmail(chit.email || '')
             setChitAmount(chit.chitAmount || 500);
             setInstallments(chit.installments || 12);
             setStartDate(chit.date.startDate || '');
             setEndDate(chit.date.endDate || '');
             setStatus(chit.status || '');
-            setBenefits(chit.benefits || '');
-            setTermsAndConditions(chit.termsAndConditions || '');
         } else {
+            setChit('')
+            setEmail('')
             setChitAmount(500);
             setInstallments(12);
             setStartDate('');
             setEndDate('');
             setStatus('');
-            setBenefits('');
-            setTermsAndConditions('');
         }
     }, [chits, editId]);
 
-    const navigate = useNavigate();
 
     const validateErrors = () => {
         const formErrors = {};
-
+        if (!name) {
+          formErrors.name = 'name is required';
+        }
+        if (!email) {
+          formErrors.email = 'name is required';
+        }
         if (!chitAmount) {
             formErrors.chitAmount = 'Chit Amount is required';
         }
@@ -63,12 +66,6 @@ export default function ChitForm(props) {
         if (!status) {
             formErrors.status = 'Status is required';
         }
-        if (!benefits) {
-            formErrors.benefits = 'Benefits is required';
-        }
-        if (!termsAndConditions) {
-            formErrors.termsAndConditions = 'Terms and Conditions is required';
-        }
 
         setFormErrors(formErrors);
         return Object.keys(formErrors).length === 0;
@@ -82,15 +79,15 @@ export default function ChitForm(props) {
             const formattedStartDate = new Date(startDate).toISOString().split('T')[0];
             const formattedEndDate = new Date(endDate).toISOString().split('T')[0];
             const formData = {
+                name, 
+                email,
                 chitAmount,
                 installments,
                 date: {
                     startDate: formattedStartDate,
                     endDate: formattedEndDate
                 },
-                status,
-                benefits,
-                termsAndConditions
+                status
             };
 
             try {
@@ -109,13 +106,14 @@ export default function ChitForm(props) {
                         }
                     });
                     chitDispatch({ type: 'ADD_CHIT', payload: response.data });
+                    props.toggle()
+                    setName('')
+                    setEmail('')
                     setChitAmount(500);
                     setInstallments(12);
                     setStartDate('');
                     setEndDate('');
                     setStatus('');
-                    setBenefits('');
-                    setTermsAndConditions('');
                     setServerErrors([]);
                     setFormErrors({});
                 }
@@ -147,6 +145,34 @@ export default function ChitForm(props) {
             </div>
           )}
           <Form onSubmit={handleSubmit}>
+          <Form.Group className="mb-3" controlId="name">
+              <Form.Label>Name</Form.Label>
+              <Form.Control
+                type="text"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+              />
+              {serverErrors.name && (
+                <p style={{ color: "red" }}>{serverErrors.name}</p>
+              )}
+              {formErrors.installments && (
+                <p style={{ color: "red" }}>{formErrors.name}</p>
+              )}
+            </Form.Group>
+            <Form.Group className="mb-3" controlId="email">
+              <Form.Label>email</Form.Label>
+              <Form.Control
+                type="text"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
+              {serverErrors.chitAmount && (
+                <p style={{ color: "red" }}>{serverErrors.email}</p>
+              )}
+              {formErrors.chitAmount && (
+                <p style={{ color: "red" }}>{formErrors.email}</p>
+              )}
+            </Form.Group>
             <Form.Group className="mb-3" controlId="chitAmount">
               <Form.Label>Chit Amount:</Form.Label>
               <Form.Control
@@ -223,38 +249,7 @@ export default function ChitForm(props) {
               {formErrors.status && (
                 <p style={{ color: "red" }}>{formErrors.status}</p>
               )}
-            </Form.Group>
-    
-            <Form.Group className="mb-3" controlId="benefits">
-              <Form.Label>Benefits:</Form.Label>
-              <Form.Control
-                type="text"
-                value={benefits}
-                onChange={(e) => setBenefits(e.target.value)}
-              />
-              {serverErrors.benefits && (
-                <p style={{ color: "red" }}>{serverErrors.benefits}</p>
-              )}
-              {formErrors.benefits && (
-                <p style={{ color: "red" }}>{formErrors.benefits}</p>
-              )}
-            </Form.Group>
-    
-            <Form.Group className="mb-3" controlId="termsAndConditions">
-              <Form.Label>Terms and Conditions:</Form.Label>
-              <Form.Control
-                type="text"
-                value={termsAndConditions}
-                onChange={(e) => setTermsAndConditions(e.target.value)}
-              />
-              {serverErrors.termsAndConditions && (
-                <p style={{ color: "red" }}>{serverErrors.termsAndConditions}</p>
-              )}
-              {formErrors.termsAndConditions && (
-                <p style={{ color: "red" }}>{formErrors.termsAndConditions}</p>
-              )}
-            </Form.Group>
-    
+            </Form.Group>  
             <Button type="submit" style={{ backgroundColor: '#ffb6c1' }}>Submit</Button>
 
           </Form>
