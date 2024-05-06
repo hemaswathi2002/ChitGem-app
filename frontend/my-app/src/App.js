@@ -123,6 +123,60 @@ const registerToast = () => {
 
 
   return (
-    <ApprovedShopsTable/>
+
+      <>
+      <Header/>
+        <ChitsContext.Provider value={{ chits, chitDispatch }}>
+                    <CustomersContext.Provider value={{ customers, customerDispatch }}> 
+                  <Routes>
+                    <>
+                    <Route path='/' element={<Home />} />
+                    <Route path='/register' element={<RegisterForm registerToast = {registerToast}/>} />
+                    <Route path = '/otp' element = {<OtpVerificationForm/>}/>
+                    <Route path = '/login' element = {<LoginForm loginToast = {loginToast}/>}/>
+                    <>
+                    {user ? (
+                      <>
+                      <Route path = '/usersControl' element = {<UsersControl/>}/>
+                    <Route path='/admin' element={<Admin/>}/>
+                    <Route path='/owner' element={<Owner/>}/>
+                    <Route path = '/shop' element = {<ShopsContainer/>}/>
+                    <Route path = '/customer/:id' element = {<CustomerDetails/>}/>
+                    <Route path = '/invoice' element = {<InvoiceTable/>}/>
+                    <Route path = '/customers-user' element = {<CustomerDetails/>}/>
+                    <Route path = '/customers' element = {
+                      <PrivateRoute permittedRoles = {['owner']}>
+                        <CustomersContainer users = {users}/>
+                      </PrivateRoute>
+                    }/>
+                    <Route path = '/wishlist' element = {<WishlistItems/>}/>
+                    <Route path = '/account' element = {
+                      <PrivateRoute permittedRoles = {['admin','owner','customer']}>
+                        <Account/>
+                      </PrivateRoute>
+                    }/>
+                    <Route path = '/jewels' element = {<JewelContainer/>}/>
+                    <Route path='/forgotpassword' element={<ForgotPassword/>}/>
+                    <Route path = '/invoices-user' element = {<Invoice/>}/>
+                    <Route path = '/jewels-user' element = {<JewelsTable/>}/>
+                    <Route path = '/chit' element = {
+                      <PrivateRoute permittedRoles = {['owner']}>
+                        <ChitsContainer/>
+                      </PrivateRoute>
+                    }/>
+                    <Route path = {'/chits/:id'} element = {<ChitDetails/>}/>
+                      </>
+                    ) : (
+                      <Route path='/' element = {<Home/>}/>
+                    )}
+                    
+                    </>
+                    <Route path="/unauthorized" element={<Unauthorized /> } />
+                     </>
+                  </Routes>
+                  </CustomersContext.Provider> 
+                  </ChitsContext.Provider>
+        </> 
+
 );
 }

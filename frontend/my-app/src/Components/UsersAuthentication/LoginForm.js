@@ -40,11 +40,17 @@ export default function LoginForm(props) {
             setServerErrors([])
             navigate('/usersControl')
         } catch (err) {
-            console.log(err)
-            setServerErrors(err.response.data.errors)
+            console.log(err);
+            console.log(err);
+            if (err.response && err.response.data && err.response.data.errors) {
+                const errors = typeof err.response.data.errors === 'string' ? [{ msg: err.response.data.errors }] : err.response.data.errors;
+                setServerErrors(errors);
+            } else {
+                setServerErrors([{ msg: 'Invalid email or password' }]);
+            }
         }
     }
-    console.log(serverErrors)
+    // console.log(serverErrors)
 
 
     return (
@@ -56,7 +62,7 @@ export default function LoginForm(props) {
             <Form onSubmit={handleSubmit}>
     {serverErrors.length > 0 && (
         <div>
-            {serverErrors.map((ele,i)=>{
+            {serverErrors?.map((ele,i)=>{
                 return <li key = {i} style = {{color : 'red'}}>{ele.msg}</li>
             })}
         </div>
@@ -86,7 +92,7 @@ export default function LoginForm(props) {
         <Link to='/forgotpassword'>Forgot Password?</Link>
     </div>
     <div style={{ textAlign: 'center' }}>
-        <Link to="/signup">Sign Up</Link>
+        <Link to="/register">Sign Up</Link>
     </div>
 </Form>
 

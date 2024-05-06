@@ -82,6 +82,7 @@ export default function CustomersList(props) {
                 </table>
             </div>
             <div>
+            <Button color="success" onClick={toggle}>Add Form</Button>
                 <Modal isOpen={modal} toggle={toggle}>
                     <ModalHeader toggle={toggle}>Customer Form</ModalHeader>
                     <ModalBody>

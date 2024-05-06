@@ -48,7 +48,7 @@ const upload=multer({storage})
             
 
 //api users
-app.post('/api/users/register',checkSchema(userRegisterValidationSchema),authenticateUser,authorizeUser(['owner']),usersCltr.register)
+app.post('/api/users/register',checkSchema(userRegisterValidationSchema),usersCltr.register)
 app.put('/api/verify/email',checkSchema(userOtpValidationSchema),usersCltr.verifyEmail)
 app.get('/api/users/account',authenticateUser,authorizeUser(['admin','owner','customer']),usersCltr.account)
 // app.post('/api/create/customers',authenticateUser,authorizeUser(['owner']),usersCltr.register)

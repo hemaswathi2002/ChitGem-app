@@ -13,8 +13,8 @@ import wishlistReducer from '../Reducers/wishlists'
 const configureStore = ()=>{
     const store = createStore(combineReducers({
         users : UsersReducer,
-        admin : adminReducer,
-        customer : customerReducer,
+        admin : adminReducer, // admin dashboard
+        customer : customerReducer, // customer dashboard
         shops : shopReducer,
         jewels : JewelsReducer,
         invoice : invoicesReducer,
