@@ -34,6 +34,7 @@ import ChitDetails from './Components/Chit/ChitsDetails'
 import Invoice from './Components/CustomerDashboard/Invoice/Invoice'
 import WishlistItems from './Components/Wishlists/WishlistItems'
 import JewelsTable from './Components/Jewel/JewelTable'
+import ApprovedShopsTable from './Components/Shop/ApprovedShopsTable'
 export default function App() {
   const [chits, chitDispatch] = useReducer(chitReducer, {data: []})
   const [customers, customerDispatch] = useReducer(CustomersReducer, {data:[]})
@@ -122,6 +123,7 @@ const registerToast = () => {
 
 
   return (
+
       <>
       <Header/>
         <ChitsContext.Provider value={{ chits, chitDispatch }}>
@@ -142,11 +144,12 @@ const registerToast = () => {
                     <Route path = '/customer/:id' element = {<CustomerDetails/>}/>
                     <Route path = '/invoice' element = {<InvoiceTable/>}/>
                     <Route path = '/customers-user' element = {<CustomerDetails/>}/>
-                    <Route path = '/customers' element = {
+                    <Route path = '/customers' element = {    
                       <PrivateRoute permittedRoles = {['owner']}>
                         <CustomersContainer users = {users}/>
                       </PrivateRoute>
                     }/>
+                    <Route path = '/approved-status' element = {<ApprovedShopsTable/>}/>
                     <Route path = '/wishlist' element = {<WishlistItems/>}/>
                     <Route path = '/account' element = {
                       <PrivateRoute permittedRoles = {['admin','owner','customer']}>

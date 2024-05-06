@@ -1,6 +1,7 @@
 const initialState = {
     shop: [],
-    serverErrors: []
+    serverErrors: [],
+    shops:{}
 };
 const shopReducer = (state = initialState, action) => {
     switch (action.type) {
@@ -32,7 +33,12 @@ const shopReducer = (state = initialState, action) => {
                 serverErrors: action.payload
             }
         }
-
+          case 'SET_APPROVED_SHOPS': {
+            return {
+                ...state,
+                shops: action.payload
+            };
+        }
         case 'CLEAR_SERVER_ERRORS': {
             return {
                 ...state,

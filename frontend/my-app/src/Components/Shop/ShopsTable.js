@@ -96,7 +96,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Button, Modal, ModalHeader, ModalBody } from 'reactstrap';
 import { useNavigate } from 'react-router-dom';
 import { startRemoveShop } from '../Actions/shops';
-import DataTable from 'react-data-table-component'; // Import the DataTable component
+import DataTable from 'react-data-table-component';
 import ShopsForm from './ShopsForm';
 
 export default function ShopsTable() {
@@ -125,7 +125,7 @@ export default function ShopsTable() {
     };
 
     const handleAddShop = () => {
-        setEditId(''); 
+        setEditId('');
         toggle(); // Open the modal
     };
 

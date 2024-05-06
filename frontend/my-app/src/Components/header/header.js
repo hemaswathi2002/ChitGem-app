@@ -132,14 +132,15 @@ export default function Header() {
                         </Link>
                     ) : (
                         <>
-                            {user?.role === 'owner' ? (
+                            {user?.role === 'owner' && (
                                 <>
+
                                     <Link to="/customers" className="nav-link" style={{ color: '#fff', marginLeft: '10px' }}>Customers</Link>
                                     <Link to="/chit" className="nav-link" style={{ color: '#fff', marginLeft: '10px' }}>Chits</Link>
                                     <Link to="/invoice" className="nav-link" style={{ color: '#fff', marginLeft: '10px' }}>Invoice</Link>
                                     <Link to="/jewels" className="nav-link" style={{ color: '#fff', marginLeft: '10px' }}>Jewels</Link>
                                 </>
-                            ) : (
+                            )} 
                                 <>
                                 {user?.role == 'customer' && (
                                     <>
@@ -149,8 +150,13 @@ export default function Header() {
                                     <Link to="/wishlist" className="nav-link" style={{ color: '#fff', marginLeft: '10px' }}>wishlist</Link> 
                                     </>
                                 )}
+
+                               {user?.role == 'admin' && (
+                                    <>
+                                    <Link to="/admin" className="nav-link" style={{ color: '#fff', marginLeft: '10px' }}>shops</Link>
+                                    </>
+                                )}
                                 </>
-                            )}
                             <NavDropdown alignRight title={<span style={{ color: '#fff' }}>My Account</span>} id="basic-nav-dropdown">
                                 {user?.role === 'owner' && (
                                     <>
@@ -165,7 +171,7 @@ export default function Header() {
                                     <>
                                         <NavDropdown.Item as={Link} to="/account">My Detail</NavDropdown.Item>
                                         <NavDropdown.Item href="#">Customer</NavDropdown.Item>
-                                        <NavDropdown.Item as={Link} to="/bookings">Bookings</NavDropdown.Item>
+                                        <NavDropdown.Item as={Link} to="/approved-status">Approved shops</NavDropdown.Item>
                                         <NavDropdown.Item as={Link} to="/ownerDetails">Owners</NavDropdown.Item>
                                     </>
                                 )}

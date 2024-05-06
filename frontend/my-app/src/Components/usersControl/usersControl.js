@@ -21,9 +21,9 @@ export default function UsersControl(){
     },[token])
     return (
         <>
-           {role ==='admin' ? (
+           {/* {role ==='admin' ? (
             navigate('/admin')
-           ): null}
+           ): null} */}
            {role === 'owner' ? (
             <Owner/>
            ): null}
