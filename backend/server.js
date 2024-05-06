@@ -48,7 +48,7 @@ const upload=multer({storage})
             
 
 //api users
-app.post('/api/users/register',checkSchema(userRegisterValidationSchema),authenticateUser,authorizeUser(['owner']),usersCltr.register)
+app.post('/api/users/register',checkSchema(userRegisterValidationSchema),usersCltr.register)
 app.put('/api/verify/email',checkSchema(userOtpValidationSchema),usersCltr.verifyEmail)
 app.get('/api/users/account',authenticateUser,authorizeUser(['admin','owner','customer']),usersCltr.account)
 // app.post('/api/create/customers',authenticateUser,authorizeUser(['owner']),usersCltr.register)
@@ -82,7 +82,8 @@ app.delete('/api/wishlists',authenticateUser,authorizeUser(['owner','customer'])
 app.post('/api/chits',authenticateUser,authorizeUser(['owner']),checkSchema(chitRegisterValidationSchema),chitsCltr.register)
 app.put('/api/chits/:id',checkSchema(chitRegisterValidationSchema),chitsCltr.update)
 app.get('/api/chits',chitsCltr.getAllchit)
-app.get('/api/chits/:id',authenticateUser,authorizeUser(['owner','customer']),chitsCltr.getOnechit)
+app.get('/api/chits/:id',authenticateUser,authorizeUser(['owner']),chitsCltr.getOnechit)
+app.get('/api/user/chits',authenticateUser,authorizeUser(['customer']),chitsCltr.getUsersChit)
 app.delete('/api/chits/:id',chitsCltr.destroy)
 
 //api customers

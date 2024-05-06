@@ -30,7 +30,7 @@ import ForgotPassword from './Components/UsersAuthentication/PasswordSettings'
 import ShopsContainer from './Components/Shop/ShopsTable'
 import Owner from './Components/OwnerDashboard/Owner'
 import CustomerDetails from './Components/CustomerDashboard/CustomerDetails'
-import ChitDetails from './Components/Chit/ChitsDetails'
+import ChitDetails from './Components/CustomerDashboard/ChitDetails'
 import Invoice from './Components/CustomerDashboard/Invoice/Invoice'
 import WishlistItems from './Components/Wishlists/WishlistItems'
 import JewelsTable from './Components/Jewel/JewelTable'
@@ -126,6 +126,7 @@ const registerToast = () => {
 
       <>
       <Header/>
+
         <ChitsContext.Provider value={{ chits, chitDispatch }}>
                     <CustomersContext.Provider value={{ customers, customerDispatch }}> 
                   <Routes>
@@ -149,6 +150,7 @@ const registerToast = () => {
                         <CustomersContainer users = {users}/>
                       </PrivateRoute>
                     }/>
+                    <Route path = '/chit-users' element = {<ChitDetails/>}/>
                     <Route path = '/approved-status' element = {<ApprovedShopsTable/>}/>
                     <Route path = '/wishlist' element = {<WishlistItems/>}/>
                     <Route path = '/account' element = {

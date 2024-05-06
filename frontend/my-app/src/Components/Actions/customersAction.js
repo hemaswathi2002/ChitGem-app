@@ -45,3 +45,27 @@ const getInvoice = (data)=>{
         payload : data
     }
 }
+
+export const startGetUsersChit = () => {
+    return async (dispatch) => {
+        try{
+            const response = await axios.get('http://localhost:3009/api/user/chits',{
+                headers : {
+                    Authorization : localStorage.getItem('token')
+                }
+            })
+            console.log('chit',response.data)
+            dispatch(getUsersChit(response.data))
+        }
+        catch(err){
+            console.log(err)
+        }
+    }
+}
+
+const getUsersChit = (data) => {
+    return {
+        type : 'START_GET_USERS_CHIT',
+        payload : data
+    }
+}

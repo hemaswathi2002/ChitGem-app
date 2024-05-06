@@ -78,8 +78,18 @@ chitsCltr.getOnechit = async (req, res) => {
     console.error(error);
     res.status(500).json({ errors: "Internal Server Error" });
   }
-};
+}
 
+chitsCltr.getUsersChit = async(req,res) => {
+  try{
+    const userId = req.user.id
+    const chit = await Chit.find({userId})
+    res.status(200).json(chit)
+  }
+  catch(err){
+    console.log(err)
+  }
+}
 
 chitsCltr.getAllchit = async (req, res) => {
   try {

@@ -1,6 +1,7 @@
 const initialState = {
     data : {},
-    invoice : []
+    invoice : [],
+    chit : []
 }
 
 export const customerReducer = (state = initialState,action)=>{
@@ -10,6 +11,9 @@ export const customerReducer = (state = initialState,action)=>{
         } 
         case 'START_GET_INVOICE' : {
             return {...state, invoice : action.payload}
+        }
+        case 'START_GET_USERS_CHIT': {
+            return {...state, chit : action.payload}
         }
         default : {
             return {...state}
