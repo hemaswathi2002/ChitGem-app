@@ -144,9 +144,10 @@ export default function Header() {
                                 {user?.role == 'customer' && (
                                     <>
                                     <Link to="/customers-user" className="nav-link" style={{ color: '#fff', marginLeft: '10px' }}>Customers Details</Link>
-                                    <Link to="/chit-users" className="nav-link" style={{ color: '#fff', marginLeft: '10px' }}>Chit</Link> 
+                                    <Link to="/chit-users" className="nav-link" style={{ color: '#fff', marginLeft: '10px' }}>Chit</Link>
                                     <Link to="/jewels-user" className="nav-link" style={{ color: '#fff', marginLeft: '10px' }}>jewels</Link> 
                                     <Link to="/wishlist" className="nav-link" style={{ color: '#fff', marginLeft: '10px' }}>wishlist</Link> 
+                                    <Link to="/invoice" className="nav-link" style={{ color: '#fff', marginLeft: '10px' }}>Transaction</Link> 
                                     </>
                                 )}
 

@@ -35,6 +35,8 @@ import Invoice from './Components/CustomerDashboard/Invoice/Invoice'
 import WishlistItems from './Components/Wishlists/WishlistItems'
 import JewelsTable from './Components/Jewel/JewelTable'
 import ApprovedShopsTable from './Components/Shop/ApprovedShopsTable'
+import Success from './Components/paments/success'
+import Cancel from './Components/paments/cancel'
 export default function App() {
   const [chits, chitDispatch] = useReducer(chitReducer, {data: []})
   const [customers, customerDispatch] = useReducer(CustomersReducer, {data:[]})
@@ -143,7 +145,7 @@ const registerToast = () => {
                     <Route path='/owner' element={<Owner/>}/>
                     <Route path = '/shop' element = {<ShopsContainer/>}/>
                     <Route path = '/customer/:id' element = {<CustomerDetails/>}/>
-                    <Route path = '/invoice' element = {<InvoiceTable/>}/>
+                    <Route path = '/invoice' element = {<Invoice/>}/>
                     <Route path = '/customers-user' element = {<CustomerDetails/>}/>
                     <Route path = '/customers' element = {    
                       <PrivateRoute permittedRoles = {['owner']}>
@@ -159,8 +161,10 @@ const registerToast = () => {
                       </PrivateRoute>
                     }/>
                     <Route path = '/jewels' element = {<JewelContainer/>}/>
+                    <Route path = '/success' element = {<Success/>}/>
+                    <Route path = '/cancel' element = {<Cancel/>}/>
                     <Route path='/forgotpassword' element={<ForgotPassword/>}/>
-                    <Route path = '/invoices-user' element = {<Invoice/>}/>
+                    {/* <Route path = '/invoices-user' element = {<Invoice/>}/> */}
                     <Route path = '/jewels-user' element = {<JewelsTable/>}/>
                     <Route path = '/chit' element = {
                       <PrivateRoute permittedRoles = {['owner']}>

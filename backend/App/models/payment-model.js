@@ -18,7 +18,6 @@ const paymentSchema = new Schema({
     },
     paymentStatus:{
         type:String,
-        enum: ['pending', 'Successful','Failed'],
         default:"pending"
     },
     paymentDate: {
