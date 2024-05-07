@@ -18,28 +18,28 @@ import axios from 'axios'
 //     }
 // }
 
-export const startGenerateInvoice = () => {
-    return async (dispatch) => {
-        try {
-            const response = await axios.post('http://localhost:3009/api/generate-invoice',null,{
-                headers : {
-                    Authorization : localStorage.getItem('token')
-                }
-            })
-            console.log('Invoice generated:', response.data);            
-            dispatch(generateInvoice(response.data))
-        } catch(err) {
-            alert(err)
-        }
-    }
-}
+// export const startGenerateInvoice = () => {
+//     return async (dispatch) => {
+//         try {
+//             const response = await axios.post('http://localhost:3009/api/generate-invoice',null,{
+//                 headers : {
+//                     Authorization : localStorage.getItem('token')
+//                 }
+//             })
+//             console.log('Invoice generated:', response.data);            
+//             dispatch(generateInvoice(response.data))
+//         } catch(err) {
+//             alert(err)
+//         }
+//     }
+// }
 
-const generateInvoice = (invoice) => {
-    return { 
-        type: 'GENERATE_INVOICE',
-        payload: invoice
-    }
-}
+// const generateInvoice = (invoice) => {
+//     return { 
+//         type: 'GENERATE_INVOICE',
+//         payload: invoice
+//     }
+// }
 export const setServerErrors = (errors) => {
     return { 
         type: "SET_ERRORS",

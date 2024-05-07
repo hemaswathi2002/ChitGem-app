@@ -38,9 +38,7 @@ const chitSchema=new Schema({
     status: {
         type: String,
         enum: ["active", "closed"],
-    },
-    benefits:String,
-    termsAndConditions:String,
+    }
 },{ timestamps: true })
 
 chitSchema.pre('save', function(next) {

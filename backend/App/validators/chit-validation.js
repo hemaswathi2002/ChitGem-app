@@ -54,17 +54,7 @@ const chitRegisterValidationSchema={
             },
             errorMessage: "* Date should be in valid format (e.g., yyyy-mm-dd)"
           },
-        },    
-    benefits:{
-        notEmpty:{
-            errorMessage:"* benefits should not be empty"
         }
-    },
-    termsAndConditions:{
-        notEmpty:{
-            errorMessage:"* terms and conditions shouldnot be empty"
-        }
-    },
     // goldPrice:{
     //     notEmpty:{
     //         errorMessage:"* goldPrice should not be empty"

@@ -103,10 +103,11 @@ app.delete('/api/reviews/:id',reviewsCltr.delete)
 //gold price
 app.get('/api/goldprice',goldCltr.get)
 
+//invoice
 // app.post ('/api/invoices',checkSchema(invoicevalidationSchema),invoicesCltr.create)
-app.post ('/api/generate-invoice',authenticateUser,authorizeUser(['owner']),invoicesCltr.create)
+// app.post ('/api/generate-invoice',authenticateUser,authorizeUser(['customer']),invoicesCltr.create)
 app.get('/api/gold-price',invoicesCltr.get)
-app.get('/api/invoices',invoicesCltr.list)
+app.get('/api/invoices',authenticateUser,authorizeUser(['owner','customer']),invoicesCltr.list)
 app.get('/api/invoices/users',authenticateUser,authorizeUser(['owner','customer']),invoicesCltr.listOneCustomer)
 // app.put('/api/invoices/:id',invoicesCltr.update)
 app.delete('/api/invoices/:id',invoicesCltr.delete)
