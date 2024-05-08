@@ -109,7 +109,7 @@ app.get('/api/goldprice',goldCltr.get)
 app.get('/api/gold-price',invoicesCltr.get)
 app.get('/api/invoices',authenticateUser,authorizeUser(['owner','customer']),invoicesCltr.list)
 app.get('/api/invoices/users',authenticateUser,authorizeUser(['owner','customer']),invoicesCltr.listOneCustomer)
-// app.put('/api/invoices/:id',invoicesCltr.update)
+app.put('/api/invoices/:id',authenticateUser,authorizeUser(['customer']),invoicesCltr.update)
 app.delete('/api/invoices/:id',invoicesCltr.delete)
 
 // //payments

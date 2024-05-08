@@ -19,3 +19,27 @@ export const startPayment = (data) =>{
     }
 }
 
+export const startUpdateInvoice = (invoiceId) => {
+    return async (dispatch)=> {
+        try{
+            const response = await axios.put(`http://localhost:3009/api/invoices/${invoiceId}`,null,{
+                headers : {
+                    Authorization: localStorage.getItem('token')
+                }
+            })
+            console.log(response.data)
+            dispatch(updateInvoice(response.data))
+        }
+        catch(err){
+            console.log(err)
+        }
+    }
+}
+
+
+const updateInvoice = (id)=>{
+    return {
+        type : 'START_UPDATE_INVOICE',
+        payload : id
+    }
+}

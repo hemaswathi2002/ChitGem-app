@@ -145,6 +145,30 @@ invoicesCltr.list = async(req,res)=>{
     }
 }
 
+invoicesCltr.update = async(req,res)=> {
+    try {
+        const id = req.params.id;
+        // const apiKey = process.env.GOLD_API_KEY;
+        // console.log(apiKey);
+        // const config = {
+        //     headers: {
+        //         'x-access-token': apiKey
+        //     }
+        // };
+
+        // const goldPriceResponse = await axios.get("https://www.goldapi.io/api/XAU/INR", config);
+        // const { price_gram_24k } = goldPriceResponse.data;
+        // console.log(goldPriceResponse.data);
+
+        const updatedInvoice = await Invoices.findByIdAndUpdate(id,{paymentStatus:'PAID'}, { new: true });
+
+        res.status(200).json({ message: "Invoice updated successfully", invoice: updatedInvoice });
+    } catch (err) {
+        console.log(err);
+        res.status(500).json({ message: "Internal server error" });
+    }
+}
+
 invoicesCltr.listOneCustomer = async(req,res) => {
     try{
         const invoice = await Invoices.find({userId : req.user.id})

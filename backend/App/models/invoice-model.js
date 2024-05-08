@@ -26,6 +26,7 @@ const invoiceSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'User'
     },
+    paymentStatus : String,
    
 
     // amountPaid : Number,

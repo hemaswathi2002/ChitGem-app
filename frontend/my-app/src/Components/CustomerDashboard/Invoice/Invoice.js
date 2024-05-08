@@ -32,6 +32,7 @@ export default function Invoice() {
                     <tr>
                         <th>Name</th>
                         <th>Date</th>
+                        <th>paymentStatus</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
@@ -39,6 +40,7 @@ export default function Invoice() {
                     {invoices.map((invoice) => (
                         <tr key={invoice._id}>
                             <td>{invoice.name}</td>
+                            <td>{invoice.paymentStatus}</td>
                             <td>{new Date(invoice.date).toLocaleDateString()}</td>
                             <td>
                                 <Button onClick={() => handlePay(invoice._id,invoice.amount)}>Pay</Button>

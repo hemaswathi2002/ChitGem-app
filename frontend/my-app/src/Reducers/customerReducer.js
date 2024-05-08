@@ -15,6 +15,9 @@ export const customerReducer = (state = initialState,action)=>{
         case 'START_GET_USERS_CHIT': {
             return {...state, chit : action.payload}
         }
+        case 'START_UPDATE_INVOICE ': {
+            return {...state,invoice : action.payload}
+        } 
         default : {
             return {...state}
         }
