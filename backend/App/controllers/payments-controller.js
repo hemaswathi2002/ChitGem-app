@@ -62,7 +62,7 @@ paymentsCntrl.pay = async(req,res)=>{
 
 paymentsCntrl.list=async(req,res)=>{
     try{
-     const response=await Payment.find({user:req.user.id}).sort({createdAt:-1})
+     const response=await Payment.find({userId:req.user.id}).sort({createdAt:-1})
      res.json(response)
     }catch(err){
         console.log(err)

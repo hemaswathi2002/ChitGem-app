@@ -37,6 +37,7 @@ import JewelsTable from './Components/Jewel/JewelTable'
 import ApprovedShopsTable from './Components/Shop/ApprovedShopsTable'
 import Success from './Components/paments/success'
 import Cancel from './Components/paments/cancel'
+import PaymentHistory from './Components/CustomerDashboard/paymentHistory'
 export default function App() {
   const [chits, chitDispatch] = useReducer(chitReducer, {data: []})
   const [customers, customerDispatch] = useReducer(CustomersReducer, {data:[]})
@@ -164,6 +165,8 @@ const registerToast = () => {
                     <Route path = '/success' element = {<Success/>}/>
                     <Route path = '/cancel' element = {<Cancel/>}/>
                     <Route path='/forgotpassword' element={<ForgotPassword/>}/>
+                    <Route path='/payment-history' element={<PaymentHistory/>}/>
+
                     {/* <Route path = '/invoices-user' element = {<Invoice/>}/> */}
                     <Route path = '/jewels-user' element = {<JewelsTable/>}/>
                     <Route path = '/chit' element = {

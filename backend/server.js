@@ -114,7 +114,7 @@ app.delete('/api/invoices/:id',invoicesCltr.delete)
 
 // //payments
 app.post('/api/create-checkout-session',authenticateUser,authorizeUser(['customer']),paymentsCntrl.pay)
-app.get('/api/payments',authenticateUser,authorizeUser(['owner']),paymentsCntrl.list)
+app.get('/api/payments',authenticateUser,authorizeUser(['customer']),paymentsCntrl.list)
 // app.get('/api/:shopId/payments/:paymentId',authenticateUser,authorizeUser(['owner']),paymentsCntrl.listOne)
 app.put('/api/payments/status/update/:id', paymentsCntrl.successUpdate)
 // app.put('/api/payment/status/update/:id',paymentsCntrl.failureUpdate)

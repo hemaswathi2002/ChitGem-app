@@ -69,3 +69,27 @@ const getUsersChit = (data) => {
         payload : data
     }
 }
+
+export const startGetPaymentHistory=()=>{
+    return async (dispatch) => {
+        try{
+            const response = await axios.get('http://localhost:3009/api/payments',{
+                headers : {
+                    Authorization : localStorage.getItem('token')
+                }
+            })
+            console.log('paymentHistory',response.data)
+            dispatch(getPaymentHistory(response.data))
+        }
+        catch(err){
+            console.log(err)
+        }
+    }
+}
+ 
+const getPaymentHistory = (data) => {
+    return {
+        type : 'GET_PAYMENT_HISTORY',
+        payload : data
+    }
+}

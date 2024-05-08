@@ -148,6 +148,7 @@ export default function Header() {
                                     <Link to="/jewels-user" className="nav-link" style={{ color: '#fff', marginLeft: '10px' }}>jewels</Link> 
                                     <Link to="/wishlist" className="nav-link" style={{ color: '#fff', marginLeft: '10px' }}>wishlist</Link> 
                                     <Link to="/invoice" className="nav-link" style={{ color: '#fff', marginLeft: '10px' }}>Transaction</Link> 
+                                    <Link to="/payment-history" className="nav-link" style={{ color: '#fff', marginLeft: '10px' }}>payment history</Link> 
                                     </>
                                 )}
 
