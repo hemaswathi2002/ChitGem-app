@@ -1,59 +1,79 @@
-import React, { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { startRemoveJewels, startGetJewels } from '../Actions/Jewels';
-import JewelForm from './JewelForm';
-import { Card, Button } from 'react-bootstrap';
-import { Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
-import axios from 'axios';
+import React, { useState, useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { startRemoveJewels, startGetJewels } from '../Actions/Jewels'
+import{startRemoveWishlists} from '../Actions/wishlist'
+import JewelForm from './JewelForm'
+import { Card, Button } from 'react-bootstrap'
+import { Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap'
+import axios from 'axios'
 
 export default function JewelsTable() {
-    const [modal, setModal] = useState(false);
-    const [editId, setEditId] = useState('');
-    const [wishlist, setWishlist] = useState([]);
-    const [priceRange, setPriceRange] = useState([0, 10000]);
-    const [searchQuery, setSearchQuery] = useState('');
+    const [modal, setModal] = useState(false)
+    const [editId, setEditId] = useState('')
+    const [wishlist, setWishlist] = useState([])
+    const [priceRange, setPriceRange] = useState([0, 10000])
+    const [searchQuery, setSearchQuery] = useState('')
 
 
-    const dispatch = useDispatch();
+    const dispatch = useDispatch()
 
     useEffect(() => {
-        dispatch(startGetJewels());
-    }, [dispatch]);
+        dispatch(startGetJewels())
+        const storedWishlist = JSON.parse(localStorage.getItem('wishlist')) || []
+        setWishlist(storedWishlist)
+    }, [dispatch])
 
+    useEffect(() => {
+        localStorage.setItem('wishlist', JSON.stringify(wishlist))
+    }, [wishlist])
     const jewels = useSelector((state) => {
-        return state.jewels;
-    });
+        return state.jewels
+    })
 
-    const toggle = () => setModal(!modal);
+    const toggle = () => setModal(!modal)
 
     const handleRemove = (id) => {
-        const userConfirm = window.confirm("Are you sure?");
+        const userConfirm = window.confirm("Are you sure?")
         if (userConfirm) {
-            dispatch(startRemoveJewels(id));
+            dispatch(startRemoveJewels(id))
         }
-    };
-
+    }
+    const isItemInWishlist = (jewelId) => wishlist.includes(jewelId)
     const handleAddToWishlist = async (id, images, caption, price) => {
         try {
-            await axios.post('http://localhost:3009/api/wishlists', { jewelId: id, images, caption, price },{
-                headers : {
-                    Authorization : localStorage.getItem('token')
-                }
-            });
-            console.log(`Added item with ID ${id} to wishlist.`);
-            setWishlist([...wishlist, id]);
+            if (isItemInWishlist(id)) {
+                const updatedWishlist = wishlist.filter((item) => item !== id);
+                setWishlist(updatedWishlist);
+                localStorage.setItem('wishlist', JSON.stringify(updatedWishlist));
+    
+                await axios.delete(`http://localhost:3009/api/wishlists/${id}`, {
+                    headers: {
+                        Authorization: localStorage.getItem('token'),
+                    },
+                });
+    
+            } else {
+                await axios.post('http://localhost:3009/api/wishlists', { jewelId: id, images, caption, price }, {
+                    headers: {
+                        Authorization: localStorage.getItem('token'),
+                    },
+                });
+                console.log(`Added item with ID ${id} to wishlist.`);
+                const updatedWishlist = [...wishlist, id];
+                setWishlist(updatedWishlist);
+                localStorage.setItem('wishlist', JSON.stringify(updatedWishlist));
+            }
         } catch (error) {
-            console.error('Error adding item to wishlist:', error);
+            console.error('Error adding/removing item to/from wishlist:', error);
         }
     };
-
-    const isItemInWishlist = (id) => wishlist.includes(id);
-
+    
+    
     const filteredJewels = jewels.data.filter((jewel) => {
         return jewel.price >= priceRange[0] &&
             jewel.price <= priceRange[1] &&
-            jewel.caption.toLowerCase().includes(searchQuery.toLowerCase());
-    });
+            jewel.caption.toLowerCase().includes(searchQuery.toLowerCase())
+    })
     return (
         <div style={{ paddingTop: '50px', paddingBottom: '100px' }}>
             <div style={{ display: 'flex', justifyContent: 'left', marginBottom: '20px' }}>
@@ -80,11 +100,11 @@ export default function JewelsTable() {
                 />
             </div>
             <div className="row" style={{ paddingTop: '200px' }}>
-                {filteredJewels.map((ele, index) => (
+                {jewels.data.map((ele, index) => (
                     <div key={index} className="col-md-4 mb-4">
                         <Card style={{ marginTop: '220px', marginBottom: '230px' }}>
-                            <Card.Img variant="top" src={`http://localhost:3009/${ele.images}`} style={{ height: '500px' }} />
-                            <Card.Body>
+                            <Card.Img variant="top" src={`http://localhost:3009/${ele.images}`}style={{ height: '500px' }} />
+                         <Card.Body>
                                 <Card.Title>{ele.caption}</Card.Title>
                                 <Card.Text>Price: {ele.price}</Card.Text>
                                 <span
@@ -106,8 +126,8 @@ export default function JewelsTable() {
                                 <div>
                                     <Button
                                         onClick={() => {
-                                            setEditId(ele._id);
-                                            toggle();
+                                            setEditId(ele._id)
+                                            toggle()
                                         }}
                                         color="primary"
                                     >
@@ -115,7 +135,7 @@ export default function JewelsTable() {
                                     </Button>{' '}
                                     <Button
                                         onClick={() => {
-                                            handleRemove(ele._id);
+                                            handleRemove(ele._id)
                                         }}
                                         color="danger"
                                     >
@@ -142,5 +162,5 @@ export default function JewelsTable() {
                 </ModalFooter>
             </Modal>
         </div>
-    );
+    )
 }

@@ -1,8 +1,13 @@
 import axios from "axios"
+const getUserId = () => {
+   return localStorage.getItem('userId')
+}
 export const startGetWishlists = ()=>{
     return async (dispatch)=>{
         try{
-            const response = await axios.get('http://localhost:3009/api/wishlists',{
+            const userId = getUserId()
+
+            const response = await axios.get(`http://localhost:3009/api/wishlists/${userId}`,{
                 headers : {
                     Authorization : localStorage.getItem('token')
                 }

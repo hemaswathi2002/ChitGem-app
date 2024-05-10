@@ -7,6 +7,7 @@ const port = 3009
 
 const configureDB = require('./config/db')
 configureDB()
+const Wishlistcltr = require('./App/controllers/wishlists-controller')
 
 const usersCltr = require('./App/controllers/users-controller')
 const shopsCltr=require('./App/controllers/shops-controller')
@@ -30,7 +31,6 @@ app.use(express.json())
 app.use(cors())
 
 const multer = require('multer')
-const Wishlistcltr = require('./App/controllers/wishlists-controller')
 
 
 app.use('/uploads',express.static('uploads'))
@@ -75,7 +75,7 @@ app.delete('/api/jewels/:id',jewelsCltr.delete)
 
 //wishlist
 app.post('/api/wishlists',authenticateUser,authorizeUser(['owner','customer']),Wishlistcltr.create) 
-app.get('/api/wishlists',authenticateUser,authorizeUser(['owner','customer']),Wishlistcltr.list)
+app.get('/api/wishlists/:userId', authenticateUser, authorizeUser(['owner', 'customer']), Wishlistcltr.list);
 app.delete('/api/wishlists',authenticateUser,authorizeUser(['owner','customer']),Wishlistcltr.destroy)
 
 //api chits

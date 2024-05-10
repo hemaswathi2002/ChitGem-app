@@ -29,5 +29,3 @@ const JewelsReducer = (state = initialState, action) => {
 }
 
 export default JewelsReducer
-
-
