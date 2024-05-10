@@ -1,6 +1,5 @@
 import React, { useContext, useState } from 'react';
 import axios from 'axios';
-import ChitDetails from './ChitsDetails';
 import ChitForm from './ChitsForm';
 import { ChitsContext } from '../../Context/ChitsContext';
 import { Button, Modal, ModalHeader, ModalBody } from 'reactstrap'; // Import Reactstrap components
@@ -61,7 +60,6 @@ export default function ChitList() {
                             <th>Start Date</th>
                             <th>End Date</th>
                             <th>Status</th>
-                            <th>Gold Price</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
@@ -76,11 +74,8 @@ export default function ChitList() {
                                 <td>{chit.date?.startDate}</td> 
                                 <td>{chit.date?.endDate}</td> 
                                 <td>{chit.status}</td>
-                                <td>{chit.goldPrice}</td>
                                 <td>
-                                <Link to={`/chits/${chit._id}`}>
-    <Button style={{ border: '2px solid lightgreen', backgroundColor: 'white',color: 'deeppink' }} onClick={() => handleViewDetails(chit._id)}>View Details</Button>
-</Link>
+                                
 <Button style={{ border: '2px solid deeppink', backgroundColor: 'white',color: 'deeppink' }} onClick={() => handleEdit(chit._id)}>Edit</Button>{' '}
 <Button style={{ border: '2px solid lightbrown', backgroundColor: 'white',color: 'deeppink' }} onClick={() => handleRemove(chit._id)}>Remove</Button>
 
@@ -98,9 +93,6 @@ export default function ChitList() {
                     <ChitForm editId={editId} toggle={toggle} />
                 </ModalBody>
             </Modal>
-            {selectedChitId && (
-                <ChitDetails chitId={selectedChitId} />
-            )}
         </div>
     );
 }

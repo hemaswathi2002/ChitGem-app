@@ -6,7 +6,7 @@ export default function Account() {
     const { user } = useAuth()
 
     return (
-        <div className="account-details-wrapper">
+        <div className="account-details-wrapper" style = {{paddingTop:'80px'}}>
             <div className="account-details-container">
                 <h2>Account Info</h2>
                 {user && (

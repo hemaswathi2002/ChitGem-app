@@ -67,10 +67,11 @@ app.delete('/api/shops/:id',authenticateUser,authorizeUser(['owner']),shopsCltr.
 app.get('/api/shop/approved-status',shopsCltr.getAllApprovedShops)
 
 //api jewels
-app.post('/api/jewels', upload.single('images'),jewelsCltr.create)
+app.post('/api/jewels', upload.single('images'),authenticateUser,authorizeUser(['owner']),jewelsCltr.create)
 app.get('/api/jewels',jewelsCltr.get)
+// app.get('/api/jewels/all',authenticateUser,authorizeUser(['customer']),jewelsCltr.get)
 app.put('/api/jewels/:id',authenticateUser,authorizeUser(['owner']),jewelsCltr.update)
-app.delete('/api/jewels/:id',jewelsCltr.delete)
+app.delete('/api/jewels/:id',authenticateUser,authorizeUser(['owner']),jewelsCltr.delete)
 
 
 //wishlist

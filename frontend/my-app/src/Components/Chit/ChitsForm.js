@@ -131,7 +131,7 @@ export default function ChitForm(props) {
   
     return (
         <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '45vh', marginTop: '10px' }}>
-            <div style={{ border: '2px solid pink', padding: '20px', borderRadius: '5px', width: '30%' }}>
+            <div style={{ border: '2px solid pink', padding: '20px', borderRadius: '5px', width: '100%' }}>
 
                     <h2 style={{ textAlign: 'center', marginBottom: '20px' }}>Add Chit</h2>
         <div>

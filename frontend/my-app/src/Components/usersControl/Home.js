@@ -11,8 +11,8 @@ export default function Home() {
         <LiveGoldPriceDisplay/>
         <div style={{ minHeight: "120vh", display: "flex", flexDirection: "column", alignItems: "center" }}>
             <div style={{ backgroundColor: "#FCDEDA", width: "100%", padding: "100px" }}>
-                <h2>Hellooooo...</h2>
-                {!user ? <p>User not logged in</p> : <p>Welcome { user.username }</p>}
+                {/* <h2>Hellooooo...</h2>
+                {!user ? <p>User not logged in</p> : <p>Welcome { user.username }</p>} */}
             </div>
             <div style={{ display: "flex", justifyContent: "center", alignItems: "center", minHeight: "calc(100vh - 180px)" }}>
                 <img

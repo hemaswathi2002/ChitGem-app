@@ -3,14 +3,14 @@ const mongoose = require('mongoose')
 const {Schema,model} = mongoose
 
 const jewelSchema = new Schema({
-    // shopId : {
-    //     type : Schema.Types.ObjectId,
-    //     ref : 'Shop'
-    // },
-    // shopId:{
-    //     type : Schema.Types.ObjectId,
-    //     ref : 'Shop'
-    // },
+    ownerId : {
+        type : Schema.Types.ObjectId,
+        ref : 'User'
+    },
+    shopId:{
+        type : Schema.Types.ObjectId,
+        ref : 'Shop'
+    },
     images : String,
     price : Number,
     caption : String

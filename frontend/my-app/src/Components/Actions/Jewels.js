@@ -21,7 +21,11 @@ const setJewels = (data)=>{
 export const startCreateJewels = (formData) => {
     return async (dispatch) => {
         try {
-            const response = await axios.post('http://localhost:3009/api/jewels', formData);
+            const response = await axios.post('http://localhost:3009/api/jewels', formData,{
+                headers : {
+                    Authorization : localStorage.getItem('token')
+                }
+            });
             dispatch(createJewels(response.data));
             dispatch(startGetJewels());
         } catch (err) {
@@ -41,7 +45,11 @@ const createJewels = (data) => {
 export const startRemoveJewels = (id) => {
     return async(dispatch) => {
         try{
-            const response = await axios.delete(`http://localhost:3009/api/jewels/${id}`)
+            const response = await axios.delete(`http://localhost:3009/api/jewels/${id}`,{
+                headers : {
+                    Authorization : localStorage.getItem('token')
+                }
+            })
             dispatch(removeJewels(id))
             return response.data
         }

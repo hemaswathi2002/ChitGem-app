@@ -77,7 +77,6 @@ export default function CustomersList(props) {
                                 <td>{customer.address}</td>
                                 <td>{customer.contact && customer.contact.email}</td>
                                 <td>{customer.contact && customer.contact.mobile}</td>
-                                <td>{customer.description}</td>
                                 <td>
                                     <button onClick={() => handleEdit(customer._id)} style={{ backgroundColor: '#ffb6c1' }}>Edit</button>
                                     <button onClick={() => handleRemove(customer._id)} style={{ backgroundColor: '#ffb6c1' }}>Remove</button>

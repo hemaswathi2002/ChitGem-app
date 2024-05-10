@@ -41,6 +41,7 @@ import PaymentHistory from './Components/CustomerDashboard/paymentHistory'
 import OwnerInvoice from './Components/OwnerDashboard/Invoice/InvoiceTable'
 import PaymentTransactions from './Components/OwnerDashboard/Invoice/paymentTransactions'
 import GoldPriceGraph from './Components/GoldPriceGraph'
+import CustomersForm from './Components/Customer/CustomersForm'
 export default function App() {
   const [chits, chitDispatch] = useReducer(chitReducer, {data: []})
   const [customers, customerDispatch] = useReducer(CustomersReducer, {data:[]})
@@ -141,6 +142,7 @@ const registerToast = () => {
                     <Route path='/register' element={<RegisterForm registerToast = {registerToast}/>} />
                     <Route path = '/otp' element = {<OtpVerificationForm/>}/>
                     <Route path = '/login' element = {<LoginForm loginToast = {loginToast}/>}/>
+                    {/* <Route path = '/live-price' element ={<GoldPriceGraph/>} /> */}
                     <>
                     {user ? (
                       <>
@@ -148,14 +150,13 @@ const registerToast = () => {
                     <Route path='/admin' element={<Admin/>}/>
                     <Route path='/owner' element={<Owner/>}/>
                     <Route path = '/shop' element = {<ShopsContainer/>}/>
-                    <Route path = '/customer/:id' element = {<CustomerDetails/>}/>
                     <Route path = '/invoice' element = {<Invoice/>}/>
                     <Route path = '/customers-user' element = {<CustomerDetails/>}/>
-                    <Route path = '/customers' element = {    
+                    {/* <Route path = '/customers' element = {    
                       <PrivateRoute permittedRoles = {['owner']}>
                         <CustomersContainer users = {users}/>
                       </PrivateRoute>
-                    }/>
+                    }/> */}
                     <Route path = '/chit-users' element = {<ChitDetails/>}/>
                     <Route path = '/approved-status' element = {<ApprovedShopsTable/>}/>
                     <Route path = '/wishlist' element = {<WishlistItems/>}/>
@@ -165,16 +166,15 @@ const registerToast = () => {
                         <Account/>
                       </PrivateRoute>
                     }/>
-                    <Route path = '/live-price' element ={<GoldPriceGraph/>} />
+                    <Route path = '/customers' element ={<CustomersContainer/>} />
                     <Route path='/transaction-history' element={<PaymentTransactions/>}/>
                     <Route path = '/jewels' element = {<JewelContainer/>}/>
                     <Route path = '/success' element = {<Success/>}/>
                     <Route path = '/cancel' element = {<Cancel/>}/>
                     <Route path='/forgotpassword' element={<ForgotPassword/>}/>
                     <Route path='/payment-history' element={<PaymentHistory/>}/>
-                    <Route path = '/live-updates' element = {<GoldPriceGraph/>}/>
+                    {/* <Route path = '/live-updates' element = {<GoldPriceGraph/>}/> */}
 
-                    {/* <Route path = '/invoices-user' element = {<Invoice/>}/> */}
                     <Route path = '/jewels-user' element = {<JewelsTable/>}/>
                     <Route path = '/chit' element = {
                       <PrivateRoute permittedRoles = {['owner']}>

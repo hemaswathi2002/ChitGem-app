@@ -35,7 +35,7 @@ const GoldPriceGraph = () => {
 
     fetchGoldPrices()
 
-    const interval = setInterval(fetchGoldPrices, 3600000)
+    const interval = setInterval(fetchGoldPrices)
 
     fetchGoldPrices()
 
@@ -62,7 +62,7 @@ const GoldPriceGraph = () => {
   }
 
   return (
-    <div className="wrapper">
+    <div className="wrapper" style = {{paddingTop : '90px'}}>
       {goldPrices !== null ? (
         <Line data={goldPrices}options={options} />
       ) : (

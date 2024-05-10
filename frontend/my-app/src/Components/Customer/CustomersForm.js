@@ -1,9 +1,6 @@
-
-//customerForm
 import React, { useState, useEffect, useContext } from 'react'
 import axios from 'axios'
 import { CustomersContext } from '../../Context/CustomersContext'
-import { useAuth } from '../../Context/AuthrorizeContext'
 import { Container, Form, Button } from 'react-bootstrap'
 
 export default function CustomersForm(props) {
@@ -12,20 +9,13 @@ export default function CustomersForm(props) {
 
     const initialCustomerState = {
         name: '',
-        address : '',
-        contact: { email: '', mobile: '' },
-        description: ''
+        address: '',
+        contact: { email: '', mobile: '' }
     };
     const [customer, setCustomer] = useState(initialCustomerState);
 
-    const [filteredUsers, setFilteredUsers] = useState([])
     const [formErrors, setFormErrors] = useState({})
     const [serverErrors, setServerErrors] = useState([])
-
-
-    useEffect(() => {
-        setFilteredUsers(Array.isArray(users) ? users : []);
-    }, []);
 
     useEffect(() => {
         if (editId) {
@@ -36,16 +26,17 @@ export default function CustomersForm(props) {
         } else {
             setCustomer(initialCustomerState);
         }
-    }, []);
+    }, [editId]);
 
     const resetForm = () => {
         setCustomer(initialCustomerState);
         setFormErrors({});
         setServerErrors([]);
     }
+
     const validateForm = () => {
         const errors = {}
-    
+
         if (!customer.name.trim()) {
             errors.name = 'Name is required'
         }
@@ -58,16 +49,15 @@ export default function CustomersForm(props) {
             errors.mobile = 'Mobile is required'
         } else if (isNaN(customer.contact.mobile)) {
             errors.mobile = 'Mobile number must be a number'
-        }  if (!customer.description.trim()) {
-            errors.description = 'Description is required'
-        }if (!customer.address.trim()) {
-            errors.address = 'address is required'
         }
-    
+        if (!customer.address.trim()) {
+            errors.address = 'Address is required'
+        }
+
         setFormErrors(errors)
-        return Object.keys(errors).length === 0 
+        return Object.keys(errors).length === 0
     }
-    
+
     const handleSubmit = async (e) => {
         e.preventDefault()
         if (!validateForm()) return
@@ -80,16 +70,15 @@ export default function CustomersForm(props) {
                     }
                 })
                 customerDispatch({ type: 'UPDATE_CUSTOMERS', payload: response.data })
-                props.toggle()
+                toggle()
             } else {
                 response = await axios.post('http://localhost:3009/api/customers', customer, {
                     headers: {
                         Authorization: localStorage.getItem('token')
                     }
                 })
-                console.log(response.data)
                 customerDispatch({ type: 'ADD_CUSTOMERS', payload: response.data })
-                props.toggle()
+                toggle()
             }
             resetForm();
 
@@ -103,8 +92,7 @@ export default function CustomersForm(props) {
             }
         }
     }
-    
-    
+
     const handleChange = (e) => {
         const { name, value } = e.target
 
@@ -124,80 +112,82 @@ export default function CustomersForm(props) {
             }))
         }
     }
-   
+
     return (
         <div>
-        {/* <div style={{ backgroundColor: '#ffb6c1', height: '25px', width: '100%' }}></div> */}
-        <Container style={{ marginTop: '155px', display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '60vh' }}>
-          <div style={{ border: '2px solid pink', padding: '20px', borderRadius: '5px', width: '100%' }}>
-          <h2 style={{ textAlign: 'center', marginBottom: '20px' }}>Add Customer</h2>
+            <Container style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '60vh' }}>
+                <div style={{ border: '2px solid pink', padding: '20px', borderRadius: '5px', width: '100%' }}>
+                    <h2 style={{ textAlign: 'center', marginBottom: '20px' }}>{editId ? 'Edit Customer' : 'Add Customer'}</h2>
 
-            <Form onSubmit={handleSubmit}>
-                {serverErrors.length > 0 && (
-                    <div>
-                        {serverErrors.map((error, index) => (
-                            <p key={index} style={{ color: 'red' }}>{error.message}</p>
-                        ))}
-                    </div>
-                )}
-               <Form.Group className="mb-3" controlId="name">
-    <Form.Label>Name</Form.Label>
-    <Form.Control
-        type="text"
-        placeholder="Name" 
-        name="name"
-        value={customer.name}
-        onChange={handleChange}
-    />
-    {formErrors.name && <p style={{ color: 'red' }}>{formErrors.name}</p>}
-</Form.Group>
-<Form.Group className="mb-3" controlId="address">
-    <Form.Control
-        type="text"
-        name="address" 
-        placeholder="Address" 
-        value={customer.address}
-        onChange={handleChange}
-        
-    />
-    {formErrors.email && <p style={{ color: 'red' }}>{formErrors.email}</p>}
-</Form.Group>
-<Form.Group className="mb-3" controlId="email">
-    <Form.Control
-        type="text"
-        name="contact.email" 
-        placeholder="Email" 
-        value={customer.contact.email}
-        onChange={handleChange}
-    />
-    {formErrors.email && <p style={{ color: 'red' }}>{formErrors.email}</p>}
-</Form.Group>
-<Form.Group className="mb-3" controlId="mobile">
-    <Form.Control
-        type="text"
-        placeholder="Mobile" 
-        name="contact.mobile" // Add the name attribute
-        value={customer.contact.mobile}
-        onChange={handleChange}
-    />
-    {formErrors.mobile && <p style={{ color: 'red' }}>{formErrors.mobile}</p>}
-</Form.Group>
-{/* <Form.Group className="mb-3" controlId="goldHarvested">
-    <Form.Label>Description</Form.Label>
-    <Form.Control
-        type="text"
-        placeholder="goldHarvested" 
-        name="description" // Add the name attribute
-        value={customer.description}
-        onChange={handleChange}
-    />
-    {formErrors.description && <p style={{ color: 'red' }}>{formErrors.description}</p>}
-</Form.Group> */}
+                    <Form onSubmit={handleSubmit}>
+                        {serverErrors.length > 0 && (
+                            <div>
+                                {serverErrors.map((error, index) => (
+                                    <p key={index} style={{ color: 'red' }}>{error.message}</p>
+                                ))}
+                            </div>
+                        )}
+                        <Form.Group className="mb-3" controlId="name">
+                            <Form.Label>Name</Form.Label>
+                            <Form.Control
+                                type="text"
+                                placeholder="Name"
+                                name="name"
+                                value={customer.name}
+                                onChange={handleChange}
+                            />
+                            {formErrors.name && <p style={{ color: 'red' }}>{formErrors.name}</p>}
+                        </Form.Group>
+                        <Form.Group className="mb-3" controlId="address">
+                            <Form.Label>Address</Form.Label>
+                            <Form.Control
+                                type="text"
+                                name="address"
+                                placeholder="Address"
+                                value={customer.address}
+                                onChange={handleChange}
 
-                <Button type="submit" style={{ backgroundColor: '#ffb6c1' }}>Submit</Button>
-            </Form>
-            </div>
-        </Container>
+                            />
+                            {formErrors.address && <p style={{ color: 'red' }}>{formErrors.address}</p>}
+                        </Form.Group>
+                        <Form.Group className="mb-3" controlId="email">
+                            <Form.Label>Email</Form.Label>
+                            <Form.Control
+                                type="text"
+                                name="contact.email"
+                                placeholder="Email"
+                                value={customer.contact.email}
+                                onChange={handleChange}
+                            />
+                            {formErrors.email && <p style={{ color: 'red' }}>{formErrors.email}</p>}
+                        </Form.Group>
+                        <Form.Group className="mb-3" controlId="mobile">
+                            <Form.Label>Mobile</Form.Label>
+                            <Form.Control
+                                type="text"
+                                placeholder="Mobile"
+                                name="contact.mobile"
+                                value={customer.contact.mobile}
+                                onChange={handleChange}
+                            />
+                            {formErrors.mobile && <p style={{ color: 'red' }}>{formErrors.mobile}</p>}
+                        </Form.Group>
+                        {/* <Form.Group className="mb-3" controlId="description">
+                            <Form.Label>Description</Form.Label>
+                            <Form.Control
+                                as="textarea"
+                                placeholder="Description"
+                                name="description"
+                                value={customer.description}
+                                onChange={handleChange}
+                            />
+                            {formErrors.description && <p style={{ color: 'red' }}>{formErrors.description}</p>}
+                        </Form.Group> */}
+
+                        <Button type="submit" style={{ backgroundColor: '#ffb6c1' }}>{editId ? 'Update' : 'Submit'}</Button>
+                    </Form>
+                </div>
+            </Container>
         </div>
     );
 }

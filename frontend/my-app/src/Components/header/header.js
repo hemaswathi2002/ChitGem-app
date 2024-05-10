@@ -35,7 +35,7 @@ export default function Header() {
                         <Link className="nav-link" style={{ color: '#fff' }} to="/login">
                             <FontAwesomeIcon icon={faHomeUser} /> Login
                         </Link>
-                       <Link to="/live-price" className="nav-link" style={{ color: '#fff', marginLeft: '10px' }}>Live GoldPrice</Link>
+                       <Link to='/live-price' className="nav-link" style={{ color: '#fff', marginLeft: '10px' }}>Live GoldPrice</Link>
                        </>
                     ) : (
                         <>
@@ -50,11 +50,10 @@ export default function Header() {
                                 <>
                                 {user?.role == 'customer' && (
                                     <>
-                                    <Link to="/customers-user" className="nav-link" style={{ color: '#fff', marginLeft: '10px' }}>Customers Details</Link>
                                     <Link to="/chit-users" className="nav-link" style={{ color: '#fff', marginLeft: '10px' }}>Chit</Link>
                                     <Link to="/jewels-user" className="nav-link" style={{ color: '#fff', marginLeft: '10px' }}>jewels</Link> 
                                     <Link to="/wishlist" className="nav-link" style={{ color: '#fff', marginLeft: '10px' }}>wishlist</Link> 
-                                    <Link to="/invoice" className="nav-link" style={{ color: '#fff', marginLeft: '10px' }}>Transaction</Link> 
+                                    <Link to="/invoice" className="nav-link" style={{ color: '#fff', marginLeft: '10px' }}>Savings</Link> 
                                     {/* <Link to="/payment-history" className="nav-link" style={{ color: '#fff', marginLeft: '10px' }}>payment history</Link>  */}
                                     </>
                                 )}
@@ -86,6 +85,7 @@ export default function Header() {
                                     <>
                                         <NavDropdown.Item as={Link} to="/">Home</NavDropdown.Item>
                                         <NavDropdown.Item as={Link} to="/account">Account</NavDropdown.Item>
+                                        <NavDropdown.Item as={Link} to="/customers-user">My Details</NavDropdown.Item>
                                         <NavDropdown.Item as={Link} to="/payment-history">Transactions</NavDropdown.Item>
 
                                     </>

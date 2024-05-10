@@ -48,6 +48,7 @@ paymentsCntrl.pay = async(req,res)=>{
             ...body,
             userId,
             invoiceId: invoice._id, 
+            owenrId : invoice.ownerId,
             transactionId: session.id,
             amount: Number(body.amount),
             paymentType: "card"
@@ -62,7 +63,7 @@ paymentsCntrl.pay = async(req,res)=>{
 
 paymentsCntrl.list=async(req,res)=>{
     try{
-     const response=await Payment.find({userId:req.user.id}).sort({createdAt:-1})
+     const response=await Payment.find({userId:req.user.id})
      res.json(response)
     }catch(err){
         console.log(err)
@@ -115,7 +116,7 @@ paymentsCntrl.successUpdate = async(req ,res)=>{
         const goldPriceResponse = await axios.get("https://www.goldapi.io/api/XAU/INR", config)
         const { price_gram_24k } = goldPriceResponse.data
         console.log(goldPriceResponse.data)
-        payment.goldPrice = price_gram_24k
+        payment.goldPrice = (price_gram_24k).toFixed(0)
         const goldHarvested = (payment.amount /price_gram_24k).toFixed(3)
         payment.goldHarvested = goldHarvested
         await payment.save()
