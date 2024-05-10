@@ -7,8 +7,7 @@ const paymentsCntrl={}
 
 paymentsCntrl.pay = async(req,res)=>{
     const userId = req.user.id
-    const body = _.pick(req.body,['invoiceId','amount'])
-    // const {body} = req
+    const body = _.pick(req.body,['invoiceId','amount','ownerId'])
 
     try{
         const invoice = await Invoices.findOne({userId})
@@ -44,12 +43,11 @@ paymentsCntrl.pay = async(req,res)=>{
             cancel_url: 'http://localhost:3000/cancel',
             customer : customer.id
         })
-        
+        body.ownerId = invoice.ownerId
         const payment = new Payment({
             ...body,
             userId,
             invoiceId: invoice._id, 
-            ownerId : invoice.ownerId,
             transactionId: session.id,
             amount: Number(body.amount),
             paymentType: "card"

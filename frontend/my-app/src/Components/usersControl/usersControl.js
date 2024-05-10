@@ -3,6 +3,7 @@ import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
 import Owner from "../OwnerDashboard/Owner"
 import Customer from '../CustomerDashboard/Customer'
+import LiveGoldPriceDisplay from "./LiveGoldPriceDisplay"
 export default function UsersControl(){
     const navigate=useNavigate()
     const token=localStorage.getItem('token')
@@ -24,13 +25,14 @@ export default function UsersControl(){
            {/* {role ==='admin' ? (
             navigate('/admin')
            ): null} */}
-           {role === 'owner' ? (
+           {/* {role === 'owner' ? (
             <Owner/>
            ): null}
            {role === "customer" ? (
             <Customer/>
            )
-           :null}
+           :null} */}
+           {/* <LiveGoldPriceDisplay/> */}
         </>
     )
 }
