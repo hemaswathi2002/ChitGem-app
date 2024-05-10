@@ -11,6 +11,10 @@ const invoiceSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'User'
     },
+    customerId : {
+        type : Schema.Types.ObjectId,
+        ref: 'Customer'
+    },
 
     chit: {
         type: Schema.Types.ObjectId,
@@ -19,9 +23,12 @@ const invoiceSchema = new Schema({
 
     amount: Number,
     totalAmount: Number,
+    amountPaid : Number,
+    amountPending : Number,
     goldPrice: {
         type: Object,
     },
+    goldHarvested : Number,
     userId: {
         type: Schema.Types.ObjectId,
         ref: 'User'
@@ -29,7 +36,6 @@ const invoiceSchema = new Schema({
     paymentStatus : String,
    
 
-    // amountPaid : Number,
     paymentMonth: String
 })
 const Invoice = model('Invoice', invoiceSchema)

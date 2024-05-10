@@ -41,15 +41,15 @@ chitsCltr.register = async (req, res) => {
     console.log(createdAt)
     const dayOfMonth = createdAt.getDate();
     console.log(dayOfMonth)
-    cron.schedule(`*/2 * * * *`, async () => {
-        console.log('cron schedule')
-        try {
-          const monthDiff = Math.ceil((new Date() - chits.createdAt) / (1000 * 60 * 60 * 24 * 30))
-          if (monthDiff > 12) {
-            console.log('Chit has reached 12 months. Stopping invoice generation.')
-            return;
-          }
-          console.log('The cron job is functioning')
+    // cron.schedule(`*/2 * * * *`, async () => {
+    //     console.log('cron schedule')
+    //     try {
+    //       const monthDiff = Math.ceil((new Date() - chits.createdAt) / (1000 * 60 * 60 * 24 * 30))
+    //       if (monthDiff > 12) {
+    //         console.log('Chit has reached 12 months. Stopping invoice generation.')
+    //         return;
+    //       }
+    //       console.log('The cron job is functioning')
           const year = createdAt.getFullYear();
         const month = createdAt.getMonth() + 1;
         const invoice = new Invoice({
@@ -58,18 +58,22 @@ chitsCltr.register = async (req, res) => {
           ownerId: chits.ownerId,
           chit : chits._id,
           shopId: chits.shopId,
+          customerId : chits.customerId,
           amount : chits.chitAmount,
           totalAmount : chits.totalAmount,
+          goldHarvested : 0,
+          amountPaid : 0,
+          amountPending : chits.totalAmount,
           paymentMonth: `${year}-${month}`,
           userId: chits.userId,
         })
         await invoice.save()
         // res.status(200).json(invoice)
         console.log('Invoice generated', invoice)
-      } catch (error) {
-        console.error("Error generating invoice:", error);
-      }
-    });
+    //   } catch (error) {
+    //     console.error("Error generating invoice:", error);
+    //   }
+    // });
     
   } catch (err) {
     console.log(err)

@@ -1,5 +1,6 @@
 const initialState = {
-    data: []
+    data: [],
+    paymentHistory : []
 }
 
 export default function invoicesReducer(state = initialState, action) {
@@ -9,6 +10,9 @@ export default function invoicesReducer(state = initialState, action) {
         }
         case 'GENERATE_VOICE' : {
             return {...state, data: [...state.data, action.payload ]}
+        }
+        case 'GET_ALL_PAYMENT_HISTORY': {
+            return {...state, paymentHistory : action.payload}
         }
         case 'SET_ERRORS':
             return {

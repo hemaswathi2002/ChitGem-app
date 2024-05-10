@@ -136,7 +136,7 @@ export default function Header() {
                                 <>
                                     <Link to="/customers" className="nav-link" style={{ color: '#fff', marginLeft: '10px' }}>Customers</Link>
                                     <Link to="/chit" className="nav-link" style={{ color: '#fff', marginLeft: '10px' }}>Chits</Link>
-                                    <Link to="/invoice" className="nav-link" style={{ color: '#fff', marginLeft: '10px' }}>Invoice</Link>
+                                    <Link to="/all-invoice" className="nav-link" style={{ color: '#fff', marginLeft: '10px' }}>Invoice</Link>
                                     <Link to="/jewels" className="nav-link" style={{ color: '#fff', marginLeft: '10px' }}>Jewels</Link>
                                 </>
                             )} 
@@ -148,7 +148,7 @@ export default function Header() {
                                     <Link to="/jewels-user" className="nav-link" style={{ color: '#fff', marginLeft: '10px' }}>jewels</Link> 
                                     <Link to="/wishlist" className="nav-link" style={{ color: '#fff', marginLeft: '10px' }}>wishlist</Link> 
                                     <Link to="/invoice" className="nav-link" style={{ color: '#fff', marginLeft: '10px' }}>Transaction</Link> 
-                                    <Link to="/payment-history" className="nav-link" style={{ color: '#fff', marginLeft: '10px' }}>payment history</Link> 
+                                    {/* <Link to="/payment-history" className="nav-link" style={{ color: '#fff', marginLeft: '10px' }}>payment history</Link>  */}
                                     </>
                                 )}
 
@@ -164,6 +164,8 @@ export default function Header() {
                                         <NavDropdown.Item as={Link} to="/account">My Account</NavDropdown.Item>
                                         <NavDropdown.Item as={Link} to="/shop">Shop Details</NavDropdown.Item>
                                         <NavDropdown.Item as={Link} to="/register">Add Customer <FontAwesomeIcon icon={faUserPlus} /></NavDropdown.Item>
+                                        <NavDropdown.Item as={Link} to="/transaction-history">Transactions</NavDropdown.Item>
+
                                     </>
                                 )}
                                 {user?.role === 'admin' && (
@@ -177,9 +179,8 @@ export default function Header() {
                                     <>
                                         <NavDropdown.Item as={Link} to="/">Home</NavDropdown.Item>
                                         <NavDropdown.Item as={Link} to="/account">Account</NavDropdown.Item>
-                                        <NavDropdown.Item as={Link} to="/bookings">My Bookings</NavDropdown.Item>
-                                        <NavDropdown.Item as={Link} to="/vehicles">My Vehicles</NavDropdown.Item>
-                                        <NavDropdown.Item as={Link} to="/spaceCart">My SpaceCart</NavDropdown.Item>
+                                        <NavDropdown.Item as={Link} to="/payment-history">Transactions</NavDropdown.Item>
+
                                     </>
                                 )}
                                 <NavDropdown.Divider />

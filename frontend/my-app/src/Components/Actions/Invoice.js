@@ -50,7 +50,11 @@ export const setServerErrors = (errors) => {
 export const startGetInvoice = () => {
     return async (dispatch) => {
         try{
-            const response = await axios.get('http://localhost:3009/api/invoices')
+            const response = await axios.get('http://localhost:3009/api/invoices',{
+                headers : {
+                    Authorization : localStorage.getItem('token')
+                }
+            })
             console.log('invoice',response.data)
             dispatch(getInvoice(response.data))
         }
@@ -67,3 +71,29 @@ const getInvoice = (data)=>{
         payload : data
     }
 }
+
+export const GetAllPaymentHistory=()=>{
+    return async (dispatch) => {
+        try{
+            const response = await axios.get('http://localhost:3009/api/payments/owner',{
+                headers : {
+                    Authorization : localStorage.getItem('token')
+                }
+            })
+            console.log('paymentHistory',response.data)
+            dispatch(getPaymentHistory(response.data))
+        }
+        catch(err){
+            console.log(err)
+        }
+    }
+}
+ 
+const getPaymentHistory = (data) => {
+    return {
+        type : 'GET_ALL_PAYMENT_HISTORY',
+        payload : data
+    }
+}
+
+

@@ -40,7 +40,7 @@ export default function CustomerDetails(){
         },
     ];
     return(
-            <div>
+            <div style = {{paddingTop:'60px'}}>
             {customersArray && customersArray.length > 0 && (
                 <DataTable
                 title={`Hello! ${customerNames}`}

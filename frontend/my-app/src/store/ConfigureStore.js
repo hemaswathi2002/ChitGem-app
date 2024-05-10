@@ -7,7 +7,7 @@ import UsersReducer from '../Reducers/UsersReducer'
 // import {ownerReducer} from '../Reducers/ownerReducer'
 import {adminReducer}  from '../Reducers/adminReducer'
 import { customerReducer } from '../Reducers/customerReducer'
-// import invoicesReducer from '../Reducers/customerReducer'
+import invoicesReducer from '../Reducers/Invoice'
 import wishlistReducer from '../Reducers/wishlists'
 import paymentReducer from '../Reducers/paymentReducer'
 
@@ -19,7 +19,7 @@ const configureStore = ()=>{
         shops : shopReducer,
         jewels : JewelsReducer,
         payment : paymentReducer,
-        // invoice : invoicesReducer,
+        invoice : invoicesReducer,
         wishlist:wishlistReducer
         // reviews:ReviewReducer
 

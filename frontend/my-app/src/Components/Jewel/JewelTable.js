@@ -14,24 +14,24 @@ export default function JewelsTable() {
     const [searchQuery, setSearchQuery] = useState('');
 
 
-    const dispatch = useDispatch();
+    const dispatch = useDispatch()
 
     useEffect(() => {
-        dispatch(startGetJewels());
+        dispatch(startGetJewels())
     }, [dispatch]);
 
     const jewels = useSelector((state) => {
         return state.jewels;
     });
 
-    const toggle = () => setModal(!modal);
+    const toggle = () => setModal(!modal)
 
     const handleRemove = (id) => {
         const userConfirm = window.confirm("Are you sure?");
         if (userConfirm) {
-            dispatch(startRemoveJewels(id));
+            dispatch(startRemoveJewels(id))
         }
-    };
+    }
 
     const handleAddToWishlist = async (id, images, caption, price) => {
         try {
@@ -40,14 +40,14 @@ export default function JewelsTable() {
                     Authorization : localStorage.getItem('token')
                 }
             });
-            console.log(`Added item with ID ${id} to wishlist.`);
+            console.log(`Added item with ID ${id} to wishlist.`)
             setWishlist([...wishlist, id]);
         } catch (error) {
-            console.error('Error adding item to wishlist:', error);
+            console.error('Error adding item to wishlist:', error)
         }
-    };
+    }
 
-    const isItemInWishlist = (id) => wishlist.includes(id);
+    const isItemInWishlist = (id) => wishlist.includes(id)
 
     const filteredJewels = jewels.data.filter((jewel) => {
         return jewel.price >= priceRange[0] &&
@@ -142,5 +142,5 @@ export default function JewelsTable() {
                 </ModalFooter>
             </Modal>
         </div>
-    );
+    )
 }
