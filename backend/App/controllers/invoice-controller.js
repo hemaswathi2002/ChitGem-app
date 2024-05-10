@@ -1,6 +1,7 @@
 const Invoices= require('../models/invoice-model')
 const axios = require('axios')
 const Chit = require('../models/chit-model')
+const Payment = require('../models/payment-model')
 const _ = require('lodash')
 const {validationResult}=require('express-validator')
 const invoicesCltr={}
@@ -133,11 +134,11 @@ const invoicesCltr={}
 
 invoicesCltr.list = async(req,res)=>{
     try{
-        // const id = req.params.id
-        const invoice = await Invoices.find()
-    // if(!invoice){
-    //     return res.status(404).json({ error: 'Invoice not found' });
-    // }
+        const owner = req.user.id
+        const invoice = await Invoices.find({ownerId:owner})
+        if (!invoice || invoice.length === 0) {
+            return res.status(404).json({ error: 'Invoices not found' });
+        }
     res.json(invoice)
     }catch(err){
       console.log(err)
@@ -145,29 +146,88 @@ invoicesCltr.list = async(req,res)=>{
     }
 }
 
-invoicesCltr.update = async(req,res)=> {
+// invoicesCltr.update = async(req,res)=> {
+//     try {
+//         const id = req.params.id;
+//         // const apiKey = process.env.GOLD_API_KEY;
+//         // console.log(apiKey);
+//         // const config = {
+//         //     headers: {
+//         //         'x-access-token': apiKey
+//         //     }
+//         // };
+
+//         // const goldPriceResponse = await axios.get("https://www.goldapi.io/api/XAU/INR", config);
+//         // const { price_gram_24k } = goldPriceResponse.data;
+//         // console.log(goldPriceResponse.data);
+//         const payment = await Payment.findOne({ invoiceId: id }).sort({ paymentDate: -1 });
+
+//         const updatedInvoice = await Invoices.findByIdAndUpdate(id,{paymentStatus:'PAID'}, { new: true });
+
+//         res.status(200).json({ message: "Invoice updated successfully", invoice: updatedInvoice });
+//     } catch (err) {
+//         console.log(err);
+//         res.status(500).json({ message: "Internal server error" });
+//     }
+// }
+
+invoicesCltr.update = async (req, res) => {
     try {
-        const id = req.params.id;
-        // const apiKey = process.env.GOLD_API_KEY;
-        // console.log(apiKey);
-        // const config = {
-        //     headers: {
-        //         'x-access-token': apiKey
-        //     }
-        // };
+        const { id } = req.params;
+        const userId = req.user.id;
 
-        // const goldPriceResponse = await axios.get("https://www.goldapi.io/api/XAU/INR", config);
-        // const { price_gram_24k } = goldPriceResponse.data;
-        // console.log(goldPriceResponse.data);
+        const invoice = await Invoices.findById(id);
 
-        const updatedInvoice = await Invoices.findByIdAndUpdate(id,{paymentStatus:'PAID'}, { new: true });
+        if (!invoice || invoice.userId.toString() !== userId) {
+            return res.status(404).json({ message: "Invoice not found or unauthorized" });
+        }
 
-        res.status(200).json({ message: "Invoice updated successfully", invoice: updatedInvoice });
+        const payments = await Payment.find({ invoiceId: id, paymentStatus: 'Successful' });
+
+        let totalPaid = 0;
+        for (const payment of payments) {
+            totalPaid += payment.amount;
+        }
+
+        const amountPending = invoice.totalAmount - totalPaid;
+
+        let paymentStatus;
+        if (totalPaid <= 0) {
+            paymentStatus = 'COMPLETED';
+        } else {
+            paymentStatus = 'PARTIAL';
+        }
+
+        const updatedInvoice = await Invoices.findByIdAndUpdate(
+            id,
+            {
+                $set: {
+                    amountPaid: totalPaid,
+                    amountPending: amountPending,
+                    paymentStatus: paymentStatus
+                }
+            },
+            { new: true }
+        );
+
+        // Calculate total gold harvested for this invoice from previous successful payments
+        let totalGoldHarvested = 0;
+        for (const payment of payments) {
+            totalGoldHarvested += payment.goldHarvested;
+        }
+
+        updatedInvoice.goldHarvested = totalGoldHarvested;
+        await updatedInvoice.save();
+
+        res.status(200).json({ message: "Invoice updated successfully", updatedInvoice})
     } catch (err) {
-        console.log(err);
+        console.error(err);
         res.status(500).json({ message: "Internal server error" });
     }
 }
+
+
+
 
 invoicesCltr.listOneCustomer = async(req,res) => {
     try{

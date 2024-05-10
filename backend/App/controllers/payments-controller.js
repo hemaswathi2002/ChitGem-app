@@ -1,13 +1,13 @@
 const Payment=require('../models/payment-model')
 const Invoices = require('../models/invoice-model')
+const axios = require('axios')
 const _ = require('lodash')
 const stripe=require('stripe')(process.env.STRIPE_SECRET_KEY)
 const paymentsCntrl={}
 
 paymentsCntrl.pay = async(req,res)=>{
     const userId = req.user.id
-    const body = _.pick(req.body,['invoiceId','amount'])
-    // const {body} = req
+    const body = _.pick(req.body,['invoiceId','amount','ownerId'])
 
     try{
         const invoice = await Invoices.findOne({userId})
@@ -43,7 +43,7 @@ paymentsCntrl.pay = async(req,res)=>{
             cancel_url: 'http://localhost:3000/cancel',
             customer : customer.id
         })
-        
+        body.ownerId = invoice.ownerId
         const payment = new Payment({
             ...body,
             userId,
@@ -70,6 +70,19 @@ paymentsCntrl.list=async(req,res)=>{
     }
 }
 
+paymentsCntrl.listAll=async(req,res)=>{
+    try{
+        const owner = req.user.id
+     const response=await Payment.find({ownerId:owner}).sort({createdAt:-1})
+     res.json(response)
+    }catch(err){
+        console.log(err)
+        res.status(501).json({error:"internal server error"})
+    }
+}
+
+
+
 // paymentsCntrl.listOneChit = async(req,res)=>{
 //     try{
 //         const shopId = req.params.id
@@ -91,6 +104,22 @@ paymentsCntrl.successUpdate = async(req ,res)=>{
     try{
         const payment = await Payment.findOneAndUpdate({transactionId:id} , {$set:{paymentStatus: 'Successful'} } , {new:true})
         console.log('13423')
+        payment.goldPrice = 0;
+        const apiKey = process.env.GOLD_API_KEY;
+        console.log(apiKey);
+        const config = {
+            headers: {
+                'x-access-token': apiKey
+            }
+        };
+        const goldPriceResponse = await axios.get("https://www.goldapi.io/api/XAU/INR", config)
+        const { price_gram_24k } = goldPriceResponse.data
+        console.log(goldPriceResponse.data)
+        payment.goldPrice = price_gram_24k
+        const goldHarvested = (payment.amount /price_gram_24k).toFixed(3)
+        payment.goldHarvested = goldHarvested
+        await payment.save()
+        console.log('Payment with gold price updated:', payment)
         res.json(payment)
     } catch(err){
         console.log(err)

@@ -1,28 +1,25 @@
-import { useEffect } from "react"
-import { useDispatch, useSelector } from "react-redux"
-import { startGetPaymentHistory } from "../Actions/customersAction"
-export default function PaymentHistory(){
+import {useEffect} from 'react'
+import {useDispatch,useSelector} from 'react-redux'
+import {GetAllPaymentHistory} from '../../Actions/Invoice'
+export default function PaymentTransactions(){
     const dispatch = useDispatch()
-    const paymentHistory = useSelector((state)=>{
-        return state.payment.chitPayment
-    })
-    console.log(paymentHistory)
+    
     useEffect(()=>{
-        dispatch(startGetPaymentHistory())
-       },[dispatch])
-
-       const formatDateTime = (dateTimeString) => {
-        const dateTime = new Date(dateTimeString)
-        const formattedDate = dateTime.toLocaleDateString()
-        const formattedTime = dateTime.toLocaleTimeString()
-        return {
-            date: formattedDate,
-            time: formattedTime
-        }
-    }
-
-    return (
-        <>
+        dispatch(GetAllPaymentHistory())
+    },[dispatch])
+    const paymentHistory = useSelector((state)=>{
+        return state.invoice.paymentHistory
+    })
+    console.log(paymentHistory,'kjbjh')
+    const formatDateTime = (dateTimeStr) => {
+        const dateTime = new Date(dateTimeStr);
+        const date = dateTime.toLocaleDateString();
+        const time = dateTime.toLocaleTimeString();
+        return { date, time };
+    };
+    return(
+        <div>
+             <>
         <div style={{paddingTop : '70px'}}>
         <table>
             <thead>
@@ -54,5 +51,6 @@ export default function PaymentHistory(){
         </table>   
         </div>   
         </>
+        </div>
     )
 }

@@ -16,6 +16,14 @@ const paymentSchema = new Schema({
         type: Number,
         required: true
     },
+    goldPrice : {
+        type : Number,
+        default : 0
+    },
+    goldHarvested :{
+        type : Number,
+        default : 0
+    },
     paymentStatus:{
         type:String,
         default:"pending"
@@ -24,7 +32,7 @@ const paymentSchema = new Schema({
         type: Date,
         default: Date.now
     }
-});
+},{timestamps: true});
 
 const Payment = mongoose.model('Payment', paymentSchema);
 

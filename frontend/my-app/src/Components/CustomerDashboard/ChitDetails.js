@@ -14,7 +14,7 @@ export default function ChitDetails() {
     });
 
     return (
-        <div>
+        <div style = {{paddingTop: '60px'}}>
             <table>
                 <thead>
                     <tr>
@@ -25,7 +25,7 @@ export default function ChitDetails() {
                         <th>Chit Amount</th>
                         <th>Total</th>
                         <th>Installment</th>
-                        <th>Status</th>
+                        <th>status</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -44,5 +44,5 @@ export default function ChitDetails() {
                 </tbody>
             </table>
         </div>
-    );
+    )
 }
