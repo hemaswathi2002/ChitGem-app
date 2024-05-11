@@ -1,6 +1,7 @@
 const Chit = require("../models/chit-model")
 const Shop = require('../models/shop-model')
 const Invoice = require('../models/invoice-model')
+const nodemailer = require('nodemailer');
 const cron = require('node-cron')
 const Customer = require('../models/customer-model')
 const axios = require('axios')
@@ -8,6 +9,34 @@ const { validationResult } = require("express-validator")
 
 
 const chitsCltr = {}
+
+const sendRemainerMail = (userMail) => {
+  const transport = nodemailer.createTransport({
+      // host: 'smtp.gmail.com',
+      host : 'smtp.mailtrap.io',
+      port : 2525,
+      // port: 465,
+      secure: false,
+      auth: {
+          user: process.env.SMTP_USERNAME,
+          pass: process.env.SMTP_PASSWORD
+      }
+  })
+  
+  const html = 'Hi, This is a reminder for your chit payment today.'
+
+  async function sendMail() {
+    const info = await transport.sendMail({
+        from: 'sender@example.com', 
+        to: userMail, 
+        subject: 'Chit Payment Remainder', 
+        html: html,
+    })
+}
+sendMail().catch(console.error)
+}
+
+
 
 chitsCltr.register = async (req, res) => {
   const errors = validationResult(req)
@@ -36,20 +65,20 @@ chitsCltr.register = async (req, res) => {
   });
   const chits = await newChits.save()
     console.log('chit generated',chits)
+    const chitname = chits.email
     res.status(201).json(chits)
     const createdAt = new Date(chits.createdAt);
     console.log(createdAt)
     const dayOfMonth = createdAt.getDate();
     console.log(dayOfMonth)
-    // cron.schedule(`*/2 * * * *`, async () => {
-    //     console.log('cron schedule')
-    //     try {
-    //       const monthDiff = Math.ceil((new Date() - chits.createdAt) / (1000 * 60 * 60 * 24 * 30))
-    //       if (monthDiff > 12) {
-    //         console.log('Chit has reached 12 months. Stopping invoice generation.')
-    //         return;
-    //       }
-    //       console.log('The cron job is functioning')
+    cron.schedule('* * * * *', async () => {     
+      console.log('Sending chit reminder email...')
+      if(chitname){
+        await sendRemainerMail(chitname)
+      }else {
+        console.log('Email not found')
+      }
+  })
           const year = createdAt.getFullYear();
         const month = createdAt.getMonth() + 1;
         const invoice = new Invoice({
