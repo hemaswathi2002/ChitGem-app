@@ -1,5 +1,7 @@
 const Payment=require('../models/payment-model')
 const Invoices = require('../models/invoice-model')
+const fs = require('fs')
+const PDFDocument = require('pdfkit');
 const axios = require('axios')
 const _ = require('lodash')
 const stripe=require('stripe')(process.env.STRIPE_SECRET_KEY)
@@ -70,6 +72,54 @@ paymentsCntrl.list=async(req,res)=>{
         res.status(501).json({error:"internal server error"})
     }
 }
+
+paymentsCntrl.generatePdf = async (req, res) => {
+    const paymentId = req.params.id;
+
+    try {
+        const payment = await Payment.findById(paymentId);
+        if (!payment) {
+            return res.status(404).json({ error: 'Payment not found' });
+        }
+
+        // Create a new PDF document
+        const doc = new PDFDocument();
+
+        // Buffer to store the PDF data
+        let buffers = [];
+
+        // Write payment details to the PDF
+        doc.fontSize(10).text(`Date: ${payment.createdAt}\n`);
+        doc.fontSize(12).text(`Transaction ID: ${payment.transactionId}\n\n`);
+        doc.fontSize(10).text(`GoldPrice: ${payment.goldPrice}\n`);
+        doc.fontSize(10).text(`GoldHarvested: ${payment.goldHarvested}\n`);
+        doc.fontSize(10).text(`Amount: ${payment.amount}\n`);
+        doc.fontSize(10).text(`paymentType: ${payment.paymentType}\n`);
+        doc.fontSize(10).text(`Status: ${payment.paymentStatus}\n`);
+
+        // Handle PDF data as it is written
+        doc.on('data', (chunk) => {
+            buffers.push(chunk);
+        });
+
+        // Finalize the PDF and send it in the response
+        doc.on('end', () => {
+            const pdfData = Buffer.concat(buffers)
+            res.setHeader('Content-Type', 'application/pdf')
+            res.setHeader('Content-Disposition', `attachment; filename="payment_${paymentId}.pdf"`)
+            res.send(pdfData)
+        });
+
+        // Finalize the PDF
+        doc.end()
+    } catch (err) {
+        console.error('Failed to generate PDF:', err);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+}
+module.exports = paymentsCntrl;
+
+
 
 paymentsCntrl.listAll=async(req,res)=>{
     try{
