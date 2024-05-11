@@ -15,8 +15,8 @@ export default function ChitDetails() {
 
     return (
         <div style = {{paddingTop: '60px'}}>
-            <table>
-                <thead>
+            <table style={{ border: '2px solid darkpink', borderCollapse: 'collapse', width: '100%' }}>
+            <thead style={{ backgroundColor: 'lightpink', border: '2px solid darkpink' }}>
                     <tr>
                         <th>Name</th>
                         <th>Email</th>

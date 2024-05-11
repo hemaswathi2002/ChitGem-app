@@ -29,6 +29,22 @@ export default function JewelsTable() {
     const jewels = useSelector((state) => {
         return state.jewels
     })
+    
+    useEffect(() => {
+        console.log("Price Range:", priceRange)
+        console.log("Search Query:", searchQuery)
+        console.log("Jewels Data:", jewels.data)
+    }, [priceRange, searchQuery, jewels.data])
+
+    console.log("Initial jewels data:", jewels.data)
+
+    const filteredJewels = jewels.data.filter((jewel) => {
+        return jewel.price >= priceRange[0]&&
+        jewel.caption.toLowerCase().includes(searchQuery.toLowerCase())
+
+    })
+    console.log("Filtered jewels data:", filteredJewels)
+
 
     const toggle = () => setModal(!modal)
 
@@ -42,52 +58,47 @@ export default function JewelsTable() {
     const handleAddToWishlist = async (id, images, caption, price) => {
         try {
             if (isItemInWishlist(id)) {
-                const updatedWishlist = wishlist.filter((item) => item !== id);
-                setWishlist(updatedWishlist);
-                localStorage.setItem('wishlist', JSON.stringify(updatedWishlist));
+                const updatedWishlist = wishlist.filter((item) => item !== id)
+                setWishlist(updatedWishlist)
+                localStorage.setItem('wishlist', JSON.stringify(updatedWishlist))
     
                 await axios.delete(`http://localhost:3009/api/wishlists/${id}`, {
                     headers: {
                         Authorization: localStorage.getItem('token'),
                     },
-                });
+                })
     
             } else {
                 await axios.post('http://localhost:3009/api/wishlists', { jewelId: id, images, caption, price }, {
                     headers: {
                         Authorization: localStorage.getItem('token'),
                     },
-                });
-                console.log(`Added item with ID ${id} to wishlist.`);
-                const updatedWishlist = [...wishlist, id];
-                setWishlist(updatedWishlist);
-                localStorage.setItem('wishlist', JSON.stringify(updatedWishlist));
+                })
+                console.log(`Added item with ID ${id} to wishlist.`)
+                const updatedWishlist = [...wishlist, id]
+                setWishlist(updatedWishlist)
+                localStorage.setItem('wishlist', JSON.stringify(updatedWishlist))
             }
         } catch (error) {
-            console.error('Error adding/removing item to/from wishlist:', error);
+            console.error('Error adding/removing item to/from wishlist:', error)
         }
-    };
-    
-    
-    const filteredJewels = jewels.data.filter((jewel) => {
-        return jewel.price >= priceRange[0] &&
-            jewel.price <= priceRange[1] &&
-            jewel.caption.toLowerCase().includes(searchQuery.toLowerCase())
-    })
+    }
+
+
     return (
-        <div style={{ paddingTop: '50px', paddingBottom: '100px' }}>
+        <div style={{ paddingTop: '80px', paddingBottom: '100px' }}>
             <div style={{ display: 'flex', justifyContent: 'left', marginBottom: '20px' }}>
                 <input
                     type="range"
                     min="0"
-                    max="10000"
+                    max="10000000"
                     value={priceRange[0]}
                     onChange={(e) => setPriceRange([parseInt(e.target.value), priceRange[1]])}
                     style={{ backgroundColor: 'maroon', width: '300px', marginRight: '10px' }}
 
                 /><br/>
     <div style={{ fontSize: '14px', color: 'maroon', justifyContent: 'left' }}>
-        Price Range: {priceRange[0]} - {priceRange[1]}
+        Price Range:RS:{priceRange[0]}
     </div>
             </div>
             <div style={{ marginBottom: '20px' }}>
@@ -100,7 +111,7 @@ export default function JewelsTable() {
                 />
             </div>
             <div className="row" style={{ paddingTop: '200px' }}>
-                {jewels.data.map((ele, index) => (
+                {filteredJewels.map((ele, index) => (
                     <div key={index} className="col-md-4 mb-4">
                         <Card style={{ marginTop: '220px', marginBottom: '230px' }}>
                             <Card.Img variant="top" src={`http://localhost:3009/${ele.images}`}style={{ height: '500px' }} />

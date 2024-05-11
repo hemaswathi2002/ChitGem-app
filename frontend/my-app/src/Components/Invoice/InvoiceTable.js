@@ -1,13 +1,13 @@
 import React, { useContext } from 'react';
-import { CustomersContext } from '../../Context/CustomersContext'
-
+import { CustomersContext } from '../../Context/CustomersContext';
+import '../../index.css'
 export default function InvoiceTable({ invoices }) {
     const { customers } = useContext(CustomersContext);
 
     return (
-        <>
-            <table className="table">
-                <thead>
+        <div className="table-responsive">
+            <table className="table table-bordered table-striped custom-table">
+            <thead style={{ backgroundColor: 'lightpink', border: '2px solid darkpink' }}>
                     <tr>
                         <th>Customer</th>
                         <th>Amount</th>
@@ -16,7 +16,7 @@ export default function InvoiceTable({ invoices }) {
                     </tr>
                 </thead>
                 <tbody>
-                        {invoices.map((invoice) => {
+                    {invoices.map((invoice) => {
                         const customer = customers.find(customer => customer._id === invoice.customerId);
                         return (
                             <tr key={invoice._id}>
@@ -25,11 +25,10 @@ export default function InvoiceTable({ invoices }) {
                                 <td>{invoice.paymentMonth}</td>
                                 <td>{new Date(invoice.date).toLocaleDateString()}</td>
                             </tr>
-                        )
+                        );
                     })}
-                      
                 </tbody>
             </table>
-        </>
-    )
+        </div>
+    );
 }

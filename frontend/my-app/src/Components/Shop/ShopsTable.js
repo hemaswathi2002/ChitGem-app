@@ -182,8 +182,8 @@ export default function ShopsTable() {
     ];
 
     return (
-        <div>
-            {shops && shops.shop && (
+        <div style = {{paddingTop:'80px'}}>
+        {shops && shops.shop && (
                 <div>
                     <h2>shops - {shops.shop?.length}</h2>
                     <DataTable
@@ -192,6 +192,7 @@ export default function ShopsTable() {
                         pagination
                         paginationPerPage={5}
                         paginationRowsPerPageOptions={[5, 10, 20, 50]}
+                        
                     />
                     <Button color="danger" onClick={handleAddShop}>Add shop</Button>
                     <Modal isOpen={modal} toggle={toggle}>

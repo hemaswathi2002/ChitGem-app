@@ -1,48 +1,48 @@
-import React, { useContext, useState } from 'react';
-import axios from 'axios';
-import ChitForm from './ChitsForm';
-import { ChitsContext } from '../../Context/ChitsContext';
-import { Button, Modal, ModalHeader, ModalBody } from 'reactstrap'; // Import Reactstrap components
-import { Link } from 'react-router-dom';
+import React, { useContext, useState } from 'react'
+import axios from 'axios'
+import ChitForm from './ChitsForm'
+import { ChitsContext } from '../../Context/ChitsContext'
+import { Button, Modal, ModalHeader, ModalBody } from 'reactstrap' 
+import { Link } from 'react-router-dom'
 
 export default function ChitList() {
-    const { chits, chitDispatch } = useContext(ChitsContext);
-    const [modal, setModal] = useState(false);
-    const [editId, setEditId] = useState('');
-    const [serverError, setServerError] = useState(null);
-    const [selectedChitId, setSelectedChitId] = useState(null); 
+    const { chits, chitDispatch } = useContext(ChitsContext)
+    const [modal, setModal] = useState(false)
+    const [editId, setEditId] = useState('')
+    const [serverError, setServerError] = useState(null)
+    const [selectedChitId, setSelectedChitId] = useState(null) 
 
-    const toggle = () => setModal(!modal);
+    const toggle = () => setModal(!modal)
     const handleViewDetails = (id) => {
-        setSelectedChitId(id); // Set the selected chit ID when "View Details" button is clicked
-    };
+        setSelectedChitId(id) 
+    }
 
     const handleRemove = async (id) => {
-        const confirmation = window.confirm('Are you sure?');
+        const confirmation = window.confirm('Are you sure?')
         if (confirmation) {
             try {
                 const response = await axios.delete(`http://localhost:3009/api/chits/${id}`,{
                     headers : {
                         Authorization : localStorage.getItem('token')
                     }
-                });
-                console.log(response.data);
-                chitDispatch({ type: 'DELETE_CHIT', payload: id });
+                })
+                console.log(response.data)
+                chitDispatch({ type: 'DELETE_CHIT', payload: id })
             } catch (err) {
-                console.log(err);
+                console.log(err)
                 if (err.response) {
-                    setServerError(err.response.data.message);
+                    setServerError(err.response.data.message)
                 } else {
-                    setServerError('An error occurred. Please try again later.');
+                    setServerError('An error occurred. Please try again later.')
                 }
             }
         }
-    };
+    }
 
     const handleEdit = (id) => {
-        setEditId(id);
-        toggle();
-    };
+        setEditId(id)
+        toggle()
+    }
 
     return (
         <div style={{ marginTop: '80px' }}>
@@ -75,10 +75,8 @@ export default function ChitList() {
                                 <td>{chit.date?.endDate}</td> 
                                 <td>{chit.status}</td>
                                 <td>
-                                
-<Button style={{ border: '2px solid deeppink', backgroundColor: 'white',color: 'deeppink' }} onClick={() => handleEdit(chit._id)}>Edit</Button>{' '}
-<Button style={{ border: '2px solid lightbrown', backgroundColor: 'white',color: 'deeppink' }} onClick={() => handleRemove(chit._id)}>Remove</Button>
-
+                                    <Button style={{ border: '2px solid deeppink', backgroundColor: 'white',color: 'deeppink' }} onClick={() => handleEdit(chit._id)}>Edit</Button>{' '}
+                                    <Button style={{ border: '2px solid lightbrown', backgroundColor: 'white',color: 'deeppink' }} onClick={() => handleRemove(chit._id)}>Remove</Button>
                                 </td>
                             </tr>
                         ))}
@@ -94,5 +92,5 @@ export default function ChitList() {
                 </ModalBody>
             </Modal>
         </div>
-    );
+    )
 }

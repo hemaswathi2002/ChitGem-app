@@ -62,7 +62,7 @@ export default function ShopDetails() {
 
     return (
         <>
-            <div className="shop-details" style = {{paddingTop:'60px'}}>
+            <div className="shop-details" style = {{paddingTop:'80px'}}>
                 <h2>Shop List</h2>
                 <DataTable
                     columns={columns}
@@ -74,7 +74,7 @@ export default function ShopDetails() {
                     customStyles={{
                         headRow: {
                             style: {
-                                backgroundColor: 'lightpink' // Apply light pink background to header row
+                                backgroundColor: 'lightpink' 
                             }
                         }
                     }}
