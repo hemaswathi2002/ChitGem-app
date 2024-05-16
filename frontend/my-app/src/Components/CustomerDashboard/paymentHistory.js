@@ -1,42 +1,53 @@
-import { useEffect, useState } from "react"
-import { useDispatch, useSelector } from "react-redux"
-import { startGetPaymentHistory } from "../Actions/customersAction"
-import { Table, Button } from 'react-bootstrap'
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { startGetPaymentHistory } from "../Actions/customersAction";
+import { Table, Button } from 'react-bootstrap';
+import {PDFViewer, Document, Page, Text, View, StyleSheet, PDFDownloadLink } from '@react-pdf/renderer';
+
+const styles = StyleSheet.create({
+    page: {
+        flexDirection: 'row',
+        backgroundColor: '#E4E4E4'
+    },
+    section: {
+        margin: 10,
+        padding: 10,
+        flexGrow: 1
+    },
+    header: {
+        fontSize: 18,
+        marginBottom: 10
+    },
+    content: {
+        fontSize: 12
+    }
+});
+
+const generatePdfDocument = (payment) => (
+    <Document>
+        <Page size="A4" style={styles.page}>
+            <View style={styles.section}>
+                <Text style={styles.header}>Payment Details</Text>
+                <Text style={styles.content}>Date: {new Date(payment.paymentDate).toLocaleString()}</Text>
+                <Text style={styles.content}>Transaction ID: {payment.transactionId}</Text>
+                <Text style={styles.content}>Gold Price: {payment.goldPrice}</Text>
+                <Text style={styles.content}>Gold Harvested: {payment.goldHarvested}</Text>
+                <Text style={styles.content}>Payment Type: {payment.paymentType}</Text>
+                <Text style={styles.content}>Amount: {payment.amount}</Text>
+                <Text style={styles.content}>Status: {payment.paymentStatus}</Text>
+            </View>
+        </Page>
+    </Document>
+);
 
 export default function PaymentHistory() {
-    const dispatch = useDispatch()
-    const [pdfUrls, setPdfUrls] = useState({})
-    const paymentHistory = useSelector((state) => state.payment.chitPayment)
+    const dispatch = useDispatch();
+    const [selectedPayment, setSelectedPayment] = useState(null);
+    const paymentHistory = useSelector((state) => state.payment.chitPayment);
 
     useEffect(() => {
-        dispatch(startGetPaymentHistory())
-    }, [dispatch])
-
-    const formatDateTime = (dateTimeString) => {
-        const dateTime = new Date(dateTimeString)
-        const formattedDate = dateTime.toLocaleDateString()
-        const formattedTime = dateTime.toLocaleTimeString()
-        return {
-            date: formattedDate,
-            time: formattedTime,
-        }
-    }
-
-    const generatePdf = async (paymentId) => {
-        try {
-            const response = await fetch(`/api/payments/${paymentId}/pdf`, {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/pdf',
-                },
-            });
-            const blob = await response.blob()
-            const pdfUrl = URL.createObjectURL(blob)
-            setPdfUrls((prevUrls) => ({ ...prevUrls, [paymentId]: pdfUrl }));
-        } catch (err) {
-            console.error('Failed to generate PDF:', err)
-        }
-    }
+        dispatch(startGetPaymentHistory());
+    }, [dispatch]);
 
     return (
         <div style={{ paddingTop: '70px' }}>
@@ -57,8 +68,8 @@ export default function PaymentHistory() {
                 <tbody>
                     {paymentHistory.map((ele) => (
                         <tr key={ele._id}>
-                            <td>{formatDateTime(ele.paymentDate).date}</td>
-                            <td>{formatDateTime(ele.paymentDate).time}</td>
+                            <td>{new Date(ele.paymentDate).toLocaleDateString()}</td>
+                            <td>{new Date(ele.paymentDate).toLocaleTimeString()}</td>
                             <td>{ele.transactionId}</td>
                             <td>{ele.goldPrice}</td>
                             <td>{ele.goldHarvested}</td>
@@ -66,17 +77,25 @@ export default function PaymentHistory() {
                             <td>{ele.amount}</td>
                             <td>{ele.paymentStatus}</td>
                             <td>
-                                <Button variant="primary" onClick={() => generatePdf(ele._id)}>Download PDF</Button>
-                                {pdfUrls[ele._id] && (
-                                    <a href={pdfUrls[ele._id]} target="_blank" rel="noopener noreferrer">
-                                        <Button variant="success">Download PDF for Transaction {ele.transactionId}</Button>
-                                    </a>
-                                )}
+                                <Button variant="primary" onClick={() => setSelectedPayment(ele)}>View PDF</Button>
+                                <PDFDownloadLink document={generatePdfDocument(ele)} fileName={`payment_${ele._id}.pdf`}>
+                                    {({ blob, url, loading, error }) =>
+                                        loading ? 'Loading document...' : 'Download PDF'
+                                    }
+                                </PDFDownloadLink>
                             </td>
                         </tr>
                     ))}
                 </tbody>
             </Table>
+            {selectedPayment && (
+                <div style={{ width: "100%", height: "600px", marginTop: "20px" }}>
+                    <PDFViewer width="100%" height="100%">
+                        {generatePdfDocument(selectedPayment)}
+                    </PDFViewer>
+                </div>
+            )}
         </div>
     )
 }
+
