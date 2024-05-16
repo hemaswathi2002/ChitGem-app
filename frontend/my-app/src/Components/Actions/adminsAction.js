@@ -1,4 +1,18 @@
 import axios from 'axios'
+import Swal from 'sweetalert2'
+import ApprovedShopsTable from '../Shop/ApprovedShopsTable';
+const handleStatusChange = () => {
+    Swal.fire({
+        icon: 'success',
+        title: 'Approved',
+        confirmButtonText: 'OK',
+        confirmButtonColor: '#28a745',
+    }).then((result) => {
+        if (result) {
+            <ApprovedShopsTable/>
+        }
+    });
+}
 export const startGetAllShop = () => {
     return async (dispatch) => {
         try{
@@ -9,6 +23,8 @@ export const startGetAllShop = () => {
             })
             console.log(response.data)
             dispatch(setAllShops(response.data))
+            if(response.data.approvalStatus === 'approved')
+                handleStatusChange()
         }
         catch(err){
             console.log(err)
