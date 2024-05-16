@@ -35,7 +35,6 @@ export default function Header() {
                         <Link className="nav-link" style={{ color: '#fff' }} to="/login">
                             <FontAwesomeIcon icon={faHomeUser} /> Login
                         </Link>
-                       <Link to='/live-price' className="nav-link" style={{ color: '#fff', marginLeft: '10px' }}>Live GoldPrice</Link>
                        </>
                     ) : (
                         <>
@@ -45,6 +44,7 @@ export default function Header() {
                                     <Link to="/chit" className="nav-link" style={{ color: '#fff', marginLeft: '10px' }}>Chits</Link>
                                     <Link to="/all-invoice" className="nav-link" style={{ color: '#fff', marginLeft: '10px' }}>Invoice</Link>
                                     <Link to="/jewels" className="nav-link" style={{ color: '#fff', marginLeft: '10px' }}>Jewels</Link>
+                                    <Link to='/live-price' className="nav-link" style={{ color: '#fff', marginLeft: '10px' }}>Live GoldPrice</Link>
                                 </>
                             )} 
                                 <>
@@ -54,6 +54,7 @@ export default function Header() {
                                     <Link to="/jewels-user" className="nav-link" style={{ color: '#fff', marginLeft: '10px' }}>jewels</Link> 
                                     <Link to="/wishlist" className="nav-link" style={{ color: '#fff', marginLeft: '10px' }}>wishlist</Link> 
                                     <Link to="/invoice" className="nav-link" style={{ color: '#fff', marginLeft: '10px' }}>Savings</Link> 
+                                    <Link to='/live-price' className="nav-link" style={{ color: '#fff', marginLeft: '10px' }}>Live GoldPrice</Link>
                                     {/* <Link to="/payment-history" className="nav-link" style={{ color: '#fff', marginLeft: '10px' }}>payment history</Link>  */}
                                     </>
                                 )}
