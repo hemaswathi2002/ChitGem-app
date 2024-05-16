@@ -172,6 +172,8 @@ img {
   height: 5px;
   background-color: #90EE90;
   animation: moveText 12s linear infinite;
+  padding-bottom: 0;
+
 
 }
 

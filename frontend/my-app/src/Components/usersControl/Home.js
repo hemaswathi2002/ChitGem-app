@@ -1,27 +1,24 @@
 import React from "react";
-import { Card, CardBody, CardTitle, CardText } from 'reactstrap'; // Import Bootstrap card components
-import { useAuth } from "../../Context/AuthrorizeContext";
-import img from '../homeimg/Jewellery_Banner_AH_1920.jpg';
-import LiveGoldPriceDisplay from "./LiveGoldPriceDisplay";
+import { Card, CardBody, CardTitle, CardText,Container} from 'reactstrap'
+import { useAuth } from "../../Context/AuthrorizeContext"
+import img from '../homeimg/Jewellery_Banner_AH_1920.jpg'
+import LiveGoldPriceDisplay from "./LiveGoldPriceDisplay"
 import '../../index.css'
 export default function Home() {
-    const { user } = useAuth();
+    const { user } = useAuth()
 
     return (
         <>
-        <LiveGoldPriceDisplay/>
-      
-        <div style={{ minHeight: "120vh", display: "flex", flexDirection: "column", alignItems: "center",paddingTop:"80px"  }}>
-             <div style={{ backgroundColor: "#FCDEDA", width: "100%", padding: "100px" }}>
-            </div>  
-            <div style={{ display: "flex", justifyContent: "center", alignItems: "center", minHeight: "calc(60vh - 100px)" }}>
-                <img
-                    src={img} 
-                    alt="Your Image"
-                    style={{ maxWidth: "100%", height: "auto" }}
-                />
+            <Container style={{ paddingTop: "50px" }}>
+                <LiveGoldPriceDisplay />
+            </Container>
+            <div>
+                {/* <Container style={{ display: "flex", justifyContent: "center", alignItems: "center", paddingTop: "370px" }}>
+                    <img src={img} alt="Jewellery Banner" className="banner-image" style={{ width: "100vw" }} />
+                </Container> */}
             </div>
-            <div className="container mt-5">
+            <div>
+            <Container className="container mt-5">
     <div className="row">
         <div className="col-md-4 d-flex">
             <Card className="border border-4 border-darkpink flex-fill" style={{ borderColor: '#FFC0CB'}}>
@@ -54,9 +51,8 @@ export default function Home() {
             </Card>
         </div>
     </div>
+</Container>
 </div>
-
-        </div>
-        </>
+</>
     );
 }
