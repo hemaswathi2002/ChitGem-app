@@ -63,36 +63,36 @@ export default function Invoice() {
                     </Table>
                 </Col>
             </Row>
-            <Row style={{ border: '2px solid #e75480', borderRadius: '5px' }}> 
-                <Col>
-                    <div>
-                        <h2>
-                            SAVINGS -{" "}
-                            <CountUp
-                                start={0}
-                                end={invoices.reduce((acc, curr) => acc + curr.amountPaid, 0)}
-                                duration={4}
-                                separator=","
-                                decimal="."
-                                prefix="₹"
-                                suffix=""
-                            />
-                        </h2>
-                        <h2>
-                            GOLD HARVESTED -{" "}
-                            <CountUp
-                                start={0}
-                                end={invoices.reduce((acc, curr) => acc + curr.goldHarvested, 0)}
-                                duration={2}
-                                separator=","
-                                decimals={3}
-                                decimal="."
-                                suffix="gms"
-                            />
-                        </h2>
-                    </div>
-                </Col>
-            </Row>
+            <Row style={{ paddingTop: '50px',paddingBottom : '50px', justifyContent: 'center', backgroundColor: 'green', color: 'white', border: '2px solid white', borderRadius: '5px' , width : '500px' }}>
+            <Col>
+                <div style={{ textAlign: 'center' }}>
+                    <h2>
+                        SAVINGS -{" "}
+                        <CountUp
+                            start={0}
+                            end={invoices.reduce((acc, curr) => acc + curr.amountPaid, 0)}
+                            duration={4}
+                            separator=","
+                            decimal="."
+                            prefix="₹"
+                            suffix=""
+                        />
+                    </h2>
+                    <h2>
+                        GOLD HARVESTED -{" "}
+                        <CountUp
+                            start={0}
+                            end={invoices.reduce((acc, curr) => acc + curr.goldHarvested, 0)}
+                            duration={2}
+                            separator=","
+                            decimals={3}
+                            decimal="."
+                            suffix="gms"
+                        />
+                    </h2>
+                </div>
+            </Col>
+        </Row>
         </div>
     )
 }

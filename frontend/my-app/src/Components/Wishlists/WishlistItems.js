@@ -30,7 +30,7 @@ const WishlistItems = () => {
 
                 /><br/>
     <div style={{ fontSize: '14px', color: 'maroon', justifyContent: 'left' }}>
-        Price Range:RS:{priceRange[0]}
+        Price Range:₹{priceRange[0]}
     </div>
             </div>     
       <div className="row" style={{ paddingTop: '200px' }}>
