@@ -3,11 +3,13 @@ import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
 import Owner from "../OwnerDashboard/Owner"
 import Customer from '../CustomerDashboard/Customer'
-import LiveGoldPriceDisplay from "./LiveGoldPriceDisplay"
+import GoldPriceGraph from '../GoldPriceGraph'
+import { useAuth } from "../../Context/AuthrorizeContext"
 export default function UsersControl(){
     const navigate=useNavigate()
     const token=localStorage.getItem('token')
     const [role,setRole]=useState(null)
+    const {user} = useAuth()
     useEffect(()=>{
         try{
             const {role} = jwtDecode(token)
@@ -33,6 +35,15 @@ export default function UsersControl(){
            )
            :null} */}
            {/* <LiveGoldPriceDisplay/> */}
+           {user?.role == 'owner' ?(
+            <GoldPriceGraph/>
+           ):null}
+            {user?.role == 'customer' ?(
+            <GoldPriceGraph/>
+           ):null}
+           {user?.role == 'admin' ?(
+            navigate('/approved-status')
+           ):null}
         </>
     )
 }

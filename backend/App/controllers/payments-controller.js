@@ -156,19 +156,19 @@ paymentsCntrl.successUpdate = async(req ,res)=>{
         const payment = await Payment.findOneAndUpdate({transactionId:id} , {$set:{paymentStatus: 'Successful'} } , {new:true})
         console.log('13423')
         payment.goldPrice = 0;
-        const apiKey = process.env.GOLD_API_KEY;
-        console.log(apiKey);
-        const config = {
-            headers: {
-                'x-access-token': apiKey
-            }
-        };
-        const goldPriceResponse = await axios.get("https://www.goldapi.io/api/XAU/INR", config)
-        const { price_gram_24k } = goldPriceResponse.data
-        console.log(goldPriceResponse.data)
-        payment.goldPrice = (price_gram_24k).toFixed(0)
-        const goldHarvested = (payment.amount /price_gram_24k).toFixed(3)
-        payment.goldHarvested = goldHarvested
+        // const apiKey = process.env.GOLD_API_KEY;
+        // console.log(apiKey);
+        // const config = {
+        //     headers: {
+        //         'x-access-token': apiKey
+        //     }
+        // };
+        // const goldPriceResponse = await axios.get("https://www.goldapi.io/api/XAU/INR", config)
+        // const { price_gram_24k } = goldPriceResponse.data
+        // console.log(goldPriceResponse.data)
+        // payment.goldPrice = (price_gram_24k).toFixed(0)
+        // const goldHarvested = (payment.amount /price_gram_24k).toFixed(3)
+        // payment.goldHarvested = goldHarvested
         await payment.save()
         console.log('Payment with gold price updated:', payment)
         res.json(payment)
