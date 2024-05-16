@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import Header from '../header/header'
+import img from '../homeimg/Jewellery_Banner_AH_1920.jpg'
 
 export default function LiveGoldPriceDisplay() {
     const [goldPrice, setGoldPrice] = useState(null)
@@ -31,7 +32,7 @@ export default function LiveGoldPriceDisplay() {
 
     return (
         <div className="gold-price-container"  >
-            <div className="moving-strip"  style = {{padding:'50px'}} >
+            <div className="moving-strip"  style = {{padding:'20px'}} >
                 {goldPrice !== null ? (
     <div>
     <p style={{ fontSize: '20px' }}>
@@ -44,6 +45,12 @@ export default function LiveGoldPriceDisplay() {
                    
                     </div>
                 )}
+            </div>
+
+        <div>
+                <div style={{ display: "flex", justifyContent: "center", alignItems: "center" ,paddingTop:"340px"}}>
+                    <img src={img} alt="Jewellery Banner" className="banner-image" style={{ width: "100vw" }} />
+                </div>
             </div>
         </div>
     )
