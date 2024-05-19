@@ -106,8 +106,8 @@ export default function ShopsTable() {
                         placeholder="Search by shop name, email, phone, or approval status"
                         value={searchTerm}
                         onChange={(e) => setSearchTerm(e.target.value)}
-                        style={{ marginBottom: '20px' }}
-                    />
+                        style={{ marginBottom: '10px', padding: '5px',width:'50%' }}
+                        />
                     <DataTable
                         columns={columns}
                         data={filteredShops}
