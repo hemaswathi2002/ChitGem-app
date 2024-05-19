@@ -16,6 +16,15 @@ export default function LiveGoldPriceDisplay() {
         //     console.error('Error fetching gold price:', error)
         //     console.log('Error fetching gold price:', error)
         // }
+        try {
+        //     const response = await axios.get('http://localhost:3009/api/gold-price')
+        //     const goldPrice = response.data.goldPrice
+        //     console.log("Fetched Gold Price:", goldPrice) 
+        //     setGoldPrice(goldPrice)
+        } catch (error) {
+            console.error('Error fetching gold price:', error)
+            console.log('Error fetching gold price:', error)
+        }
     }
 
     useEffect(() => {

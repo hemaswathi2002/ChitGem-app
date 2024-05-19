@@ -211,3 +211,6 @@ img {
 .border-darkpink {
   border-color: #FFC0CB !important;
 }
+.custom-card {
+  border: 2px solid darkpink;
+}
