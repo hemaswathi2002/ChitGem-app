@@ -87,22 +87,22 @@ export default function App() {
       }
     })();
 
-    // (async () => {
-    //       try {
-    //         const chitsResponse = await axios.get('http://localhost:3009/api/chits',{
-    //           headers : {
-    //             Authorization : localStorage.getItem('token')
-    //           }
-    //         });
-    //         console.log(chitsResponse.data)
-    //         chitDispatch({ type: 'SET_CHIT', payload: chitsResponse.data });
+    (async () => {
+          try {
+            const chitsResponse = await axios.get('http://localhost:3009/api/chits',{
+              headers : {
+                Authorization : localStorage.getItem('token')
+              }
+            });
+            console.log(chitsResponse.data)
+            chitDispatch({ type: 'SET_CHIT', payload: chitsResponse.data });
     
-    //       } catch (err) {
-    //         console.log(err);
-    //       }
-    //     })();
+          } catch (err) {
+            console.log(err);
+          }
+        })();
 
-  }, [customerDispatch,ownerId])
+  }, [customerDispatch,ownerId,chitDispatch])
  
     
   const users = useSelector((state) => state.users)
