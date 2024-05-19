@@ -1,4 +1,5 @@
 const Chit = require("../models/chit-model")
+const mongoose = require('mongoose')
 const Shop = require('../models/shop-model')
 const Invoice = require('../models/invoice-model')
 const nodemailer = require('nodemailer');
@@ -159,15 +160,37 @@ chitsCltr.getUsersChit = async(req,res) => {
   }
 }
 
-chitsCltr.getAllchit = async (req, res) => {
-  try {
-    const chit = await Chit.find()
+// chitsCltr.getAllchit = async (req, res) => {
+//   try {
+//     const chit = await Chit.find()
+//     res.json(chit)
+//   } catch (error) {
+//     console.log(error)
+//     res.status(500).json({ errors: "Internal Server Error" })
+//   }
+// }
+
+chitsCltr.getCustomersChit = async(req,res) =>{
+  try{
+    const { id: customerId } = req.params
+        const ownerId = req.user.id
+    console.log(customerId)
+    if (!customerId || !mongoose.Types.ObjectId.isValid(customerId)) {
+      return res.status(400).json({ error: 'Invalid customerId' });
+    }
+   
+    const chit = await Chit.find({customerId,ownerId})
+    console.log('customerId:', customerId);
+    console.log('ownerId:', ownerId);
+
     res.json(chit)
-  } catch (error) {
-    console.log(error)
-    res.status(500).json({ errors: "Internal Server Error" })
+  }
+  catch(err){
+    console.log(err)
+    res.status(500).json({errors:'Internal Server Error'})
   }
 }
+
 chitsCltr.destroy = async (req, res) => {
   try {
     const id = req.params.id

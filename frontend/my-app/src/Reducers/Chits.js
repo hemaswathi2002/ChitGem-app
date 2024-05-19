@@ -3,6 +3,9 @@ const chitReducer = (state, action) => {
         case 'SET_CHIT' : {
             return {...state, data: action.payload }
         }
+        case 'SET_ONE_CHIT' : {
+            return {...state, data: action.payload }
+        }
         case 'ADD_CHIT':
                 return {...state, data: [...state.data, action.payload ]}
         case 'UPDATE_CHIT':

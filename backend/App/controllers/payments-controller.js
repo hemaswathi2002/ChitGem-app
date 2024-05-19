@@ -1,6 +1,6 @@
 const Payment=require('../models/payment-model')
 const Invoices = require('../models/invoice-model')
-const PDFDocument = require('pdfkit');
+const PDFDocument = require('pdfkit')
 const fs = require('fs')
 const axios = require('axios')
 const _ = require('lodash')
@@ -77,7 +77,7 @@ paymentsCntrl.generatePdf = async(req, res) => {
     const paymentId = req.params.id;
 
     try {
-        const payment = await Payment.findById(paymentId);
+        const payment = await Payment.findById(paymentId)
         if (!payment) {
             return res.status(404).json({ error: 'Payment not found' });
         }
@@ -91,26 +91,25 @@ paymentsCntrl.generatePdf = async(req, res) => {
             buffers.push(chunk);
         });
 
-        doc.fontSize(12).text(`Date: ${payment.createdAt}`);
-        doc.fontSize(12).text(`Transaction ID: ${payment.transactionId}`);
-        doc.fontSize(12).text(`Gold Price: ${payment.goldPrice}`);
-        doc.fontSize(12).text(`Gold Harvested: ${payment.goldHarvested}`);
-        doc.fontSize(12).text(`Amount: ${payment.amount}`);
-        doc.fontSize(12).text(`Payment Type: ${payment.paymentType}`);
-        doc.fontSize(12).text(`Status: ${payment.paymentStatus}`);
+        doc.fontSize(12).text(`Date: ${payment.createdAt}`)
+        doc.fontSize(12).text(`Transaction ID: ${payment.transactionId}`)
+        doc.fontSize(12).text(`Gold Price: ${payment.goldPrice}`)
+        doc.fontSize(12).text(`Gold Harvested: ${payment.goldHarvested}`)
+        doc.fontSize(12).text(`Amount: ${payment.amount}`)
+        doc.fontSize(12).text(`Payment Type: ${payment.paymentType}`)
+        doc.fontSize(12).text(`Status: ${payment.paymentStatus}`)
 
-        doc.end();
+        doc.end()
 
-        // Wait for the PDF document to finish and send it in the response
         doc.on('end', () => {
-            const pdfData = Buffer.concat(buffers);
-            res.setHeader('Content-Type', 'application/pdf');
-            res.setHeader('Content-Disposition', `attachment; filename="payment_${paymentId}.pdf"`);
-            res.send(pdfData);
+            const pdfData = Buffer.concat(buffers)
+            res.setHeader('Content-Type', 'application/pdf')
+            res.setHeader('Content-Disposition', `attachment; filename="payment_${paymentId}.pdf"`)
+            res.send(pdfData)
         });
     } catch (err) {
-        console.error('Failed to generate PDF:', err);
-        res.status(500).json({ error: 'Internal Server Error' });
+        console.error('Failed to generate PDF:', err)
+        res.status(500).json({ error: 'Internal Server Error' })
     }
 };
 
@@ -152,19 +151,19 @@ paymentsCntrl.successUpdate = async(req ,res)=>{
         const payment = await Payment.findOneAndUpdate({transactionId:id} , {$set:{paymentStatus: 'Successful'} } , {new:true})
         console.log('13423')
         payment.goldPrice = 0;
-        // const apiKey = process.env.GOLD_API_KEY;
-        // console.log(apiKey);
-        // const config = {
-        //     headers: {
-        //         'x-access-token': apiKey
-        //     }
-        // };
-        // const goldPriceResponse = await axios.get("https://www.goldapi.io/api/XAU/INR", config)
-        // const { price_gram_24k } = goldPriceResponse.data
-        // console.log(goldPriceResponse.data)
-        // payment.goldPrice = (price_gram_24k).toFixed(0)
-        // const goldHarvested = (payment.amount /price_gram_24k).toFixed(3)
-        // payment.goldHarvested = goldHarvested
+        const apiKey = process.env.GOLD_API_KEY;
+        console.log(apiKey);
+        const config = {
+            headers: {
+                'x-access-token': apiKey
+            }
+        };
+        const goldPriceResponse = await axios.get("https://www.goldapi.io/api/XAU/INR", config)
+        const { price_gram_24k } = goldPriceResponse.data
+        console.log(goldPriceResponse.data)
+        payment.goldPrice = (price_gram_24k).toFixed(0)
+        const goldHarvested = (payment.amount /price_gram_24k).toFixed(3)
+        payment.goldHarvested = goldHarvested
         await payment.save()
         console.log('Payment with gold price updated:', payment)
         res.json(payment)

@@ -47,7 +47,11 @@ export default function CustomersList(props) {
         return customers.data.filter(customer =>
             customer.contact && customer.contact.email.toLowerCase().includes(searchQuery.toLowerCase())
         );
-    }, [customers.data, searchQuery]);
+    }, [customers.data, searchQuery])
+
+    const handleView = (customerId)=>{
+        navigate(`/customers/${customerId}/chits`)
+    }
    
     return (
         <div style={{ marginTop: '80px' }}>
@@ -71,8 +75,8 @@ export default function CustomersList(props) {
                         </tr>
                     </thead>
                     <tbody>
-                        {filteredCustomers.map((customer, index) => (
-                            <tr key={index}>
+                        {filteredCustomers.map((customer) => (
+                            <tr key={customer._id}>
                                 <td>{customer.name}</td>
                                 <td>{customer.address}</td>
                                 <td>{customer.contact && customer.contact.email}</td>
@@ -80,6 +84,7 @@ export default function CustomersList(props) {
                                 <td>
                                     <button onClick={() => handleEdit(customer._id)} style={{ backgroundColor: '#ffb6c1' }}>Edit</button>
                                     <button onClick={() => handleRemove(customer._id)} style={{ backgroundColor: '#ffb6c1' }}>Remove</button>
+                                    <button onClick={() => handleView(customer._id)} style={{ backgroundColor: '#87CEEB' }}>View</button>
                                 </td>
                             </tr>
                         ))}

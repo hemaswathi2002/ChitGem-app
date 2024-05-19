@@ -6,33 +6,33 @@ import img from '../homeimg/Jewellery_Banner_AH_1920.jpg'
 export default function LiveGoldPriceDisplay() {
     const [goldPrice, setGoldPrice] = useState(null)
 
-    // const fetchGoldPrice = async () => {
-    //     try {
-    //         const response = await axios.get('http://localhost:3009/api/gold-price')
-    //         const goldPrice = response.data.goldPrice
-    //         console.log("Fetched Gold Price:", goldPrice) // Add this line to log fetched data
-    //         setGoldPrice(goldPrice)
-    //     } catch (error) {
-    //         console.error('Error fetching gold price:', error)
-    //         console.log('Error fetching gold price:', error)
-    //     }
-    // }
+    const fetchGoldPrice = async () => {
+        // try {
+        //     const response = await axios.get('http://localhost:3009/api/gold-price')
+        //     const goldPrice = response.data.goldPrice
+        //     console.log("Fetched Gold Price:", goldPrice) // Add this line to log fetched data
+        //     setGoldPrice(goldPrice)
+        // } catch (error) {
+        //     console.error('Error fetching gold price:', error)
+        //     console.log('Error fetching gold price:', error)
+        // }
+    }
 
-    // useEffect(() => {
-    //     const intervalId = setInterval(fetchGoldPrice, 200)
+    useEffect(() => {
+        const intervalId = setInterval(fetchGoldPrice, 200000)
 
-    //     return () => {
-    //         clearInterval(intervalId)
-    //     }
-    // }, [])
+        return () => {
+            clearInterval(intervalId)
+        }
+    }, [])
 
-    // useEffect(() => {
-    //     fetchGoldPrice()
-    // }, [])
+    useEffect(() => {
+        fetchGoldPrice()
+    }, [])
 
     return (
         <div className="gold-price-container"  >
-            <div className="moving-strip"  style = {{padding:'20px'}} >
+            <div className="moving-strip"  style = {{padding:'30px'}} >
                 {goldPrice !== null ? (
     <div>
     <p style={{ fontSize: '20px' }}>

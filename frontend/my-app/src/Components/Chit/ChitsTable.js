@@ -1,9 +1,9 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useState,useEffect } from 'react'
 import axios from 'axios'
 import ChitForm from './ChitsForm'
 import { ChitsContext } from '../../Context/ChitsContext'
 import { Button, Modal, ModalHeader, ModalBody } from 'reactstrap' 
-import { Link } from 'react-router-dom'
+import { Link, useParams} from 'react-router-dom'
 
 export default function ChitList() {
     const { chits, chitDispatch } = useContext(ChitsContext)
@@ -11,11 +11,28 @@ export default function ChitList() {
     const [editId, setEditId] = useState('')
     const [serverError, setServerError] = useState(null)
     const [selectedChitId, setSelectedChitId] = useState(null) 
-
+    const {customerId} = useParams()
     const toggle = () => setModal(!modal)
-    const handleViewDetails = (id) => {
-        setSelectedChitId(id) 
+    const handleViewDetails = (customerId) => {
+        setSelectedChitId(customerId) 
     }
+
+    useEffect(()=>{
+        (async () => {
+            try {
+              const chitsResponse = await axios.get(`http://localhost:3009/api/customers/${customerId}/chits`,{
+                headers : {
+                    Authorization : localStorage.getItem('token')
+                }
+              })
+              console.log(chitsResponse.data)
+              chitDispatch({ type: 'SET_ONE_CHIT', payload: chitsResponse.data });
+      
+            } catch (err) {
+              console.log(err);
+            }
+          })();
+    },[customerId,chitDispatch])
 
     const handleRemove = async (id) => {
         const confirmation = window.confirm('Are you sure?')

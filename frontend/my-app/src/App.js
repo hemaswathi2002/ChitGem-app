@@ -39,6 +39,7 @@ import Success from './Components/paments/success'
 import Cancel from './Components/paments/cancel'
 import PaymentHistory from './Components/CustomerDashboard/paymentHistory'
 import OwnerInvoice from './Components/OwnerDashboard/Invoice/InvoiceTable'
+import ChitList from './Components/Chit/ChitsTable'
 import PaymentTransactions from './Components/OwnerDashboard/Invoice/paymentTransactions'
 import GoldPriceGraph from './Components/GoldPriceGraph'
 import CustomersForm from './Components/Customer/CustomersForm'
@@ -86,22 +87,22 @@ export default function App() {
       }
     })();
 
-    (async () => {
-          try {
-            const chitsResponse = await axios.get('http://localhost:3009/api/chits',{
-              headers : {
-                Authorization : localStorage.getItem('token')
-              }
-            });
-            console.log(chitsResponse.data)
-            chitDispatch({ type: 'SET_CHIT', payload: chitsResponse.data });
+    // (async () => {
+    //       try {
+    //         const chitsResponse = await axios.get('http://localhost:3009/api/chits',{
+    //           headers : {
+    //             Authorization : localStorage.getItem('token')
+    //           }
+    //         });
+    //         console.log(chitsResponse.data)
+    //         chitDispatch({ type: 'SET_CHIT', payload: chitsResponse.data });
     
-          } catch (err) {
-            console.log(err);
-          }
-        })();
+    //       } catch (err) {
+    //         console.log(err);
+    //       }
+    //     })();
 
-  }, [customerDispatch,ownerId,chitDispatch]);
+  }, [customerDispatch,ownerId])
  
     
   const users = useSelector((state) => state.users)
@@ -147,16 +148,16 @@ const registerToast = () => {
                     {user ? (
                       <>
                       <Route path = '/usersControl' element = {<UsersControl/>}/>
-                    <Route path='/admin' element={<Admin/>}/>
+                    <Route path='/admin' element={<Admin/>}/>+
                     <Route path='/owner' element={<Owner/>}/>
                     <Route path = '/shop' element = {<ShopsContainer/>}/>
                     <Route path = '/invoice' element = {<Invoice/>}/>
                     <Route path = '/customers-user' element = {<CustomerDetails/>}/>
-                    {/* <Route path = '/customers' element = {    
+                    <Route path = '/customers' element = {    
                       <PrivateRoute permittedRoles = {['owner']}>
                         <CustomersContainer users = {users}/>
                       </PrivateRoute>
-                    }/> */}
+                    }/>
                     <Route path = '/chit-users' element = {<ChitDetails/>}/>
                     <Route path = '/approved-status' element = {<ApprovedShopsTable/>}/>
                     <Route path = '/wishlist' element = {<WishlistItems/>}/>
@@ -181,7 +182,8 @@ const registerToast = () => {
                         <ChitsContainer/>
                       </PrivateRoute>
                     }/>
-                    <Route path = {'/chits/:id'} element = {<ChitDetails/>}/>
+                    {/* <Route path = {'/chits/:id'} element = {<ChitDetails/>}/> */}
+                    <Route path='/customers/:customerId/chits' element={<ChitList />} />
                       </>
                     ) : (
                       <Route path='/' element = {<Home/>}/>

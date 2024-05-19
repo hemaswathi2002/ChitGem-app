@@ -49,5 +49,5 @@ chitSchema.pre('save', function(next) {
     this.date.endDate = endDate
     next()
   })
-const Chit=mongoose.model('Chit',chitSchema)
+const Chit=model('Chit',chitSchema)
 module.exports=Chit
