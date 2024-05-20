@@ -1,7 +1,8 @@
 import { useEffect,useState } from "react"
 import { useDispatch, useSelector} from "react-redux"
-import { Table,Button } from 'react-bootstrap';
-import { useParams } from "react-router-dom";
+import { Table,Button } from 'react-bootstrap'
+import { useParams } from "react-router-dom"
+import CountUp from 'react-countup'
 import { startGetInvoice } from "../../Actions/Invoice"
 export default function OwnerInvoice(){
     const dispatch = useDispatch()
@@ -52,6 +53,32 @@ export default function OwnerInvoice(){
                
                 </tbody> 
             </Table>
+            <div style={{ paddingTop: '50px', paddingBottom: '50px', justifyContent: 'center', backgroundColor: 'green', color: 'white', border: '2px solid white', borderRadius: '5px', width: '500px', margin: 'auto' }}>
+                <h2>
+                    SAVINGS -{" "}
+                    <CountUp
+                        start={0}
+                        end={invoices.reduce((acc, curr) => acc + curr.amountPaid, 0)}
+                        duration={4}
+                        separator=","
+                        decimal="."
+                        prefix="₹"
+                        suffix=""
+                    />
+                </h2>
+                <h2>
+                    GOLD HARVESTED -{" "}
+                    <CountUp
+                        start={0}
+                        end={invoices.reduce((acc, curr) => acc + curr.goldHarvested, 0)}
+                        duration={2}
+                        separator=","
+                        decimals={3}
+                        decimal="."
+                        suffix="gms"
+                    />
+                </h2>
+            </div>
             {/* <InvoiceForm/> */}
            
         </>
