@@ -63,10 +63,9 @@ export default function Invoice() {
                     </Table>
                 </Col>
             </Row>
-            <Row style={{ paddingTop: '50px',paddingBottom : '50px', justifyContent: 'center', backgroundColor: 'green', color: 'white', border: '2px solid white', borderRadius: '5px' , width : '500px' }}>
+            <Row style={{ paddingTop: '50px', paddingBottom: '50px', justifyContent: 'center', backgroundColor: 'green', color: 'white', border: '2px solid white', borderRadius: '5px', width: '500px', margin: 'auto' }}>
             <Col>
-                <div style={{ textAlign: 'center' }}>
-                    <h2>
+                    <h2 style={{textAlign:'center'}}>
                         SAVINGS -{" "}
                         <CountUp
                             start={0}
@@ -90,7 +89,6 @@ export default function Invoice() {
                             suffix="gms"
                         />
                     </h2>
-                </div>
             </Col>
         </Row>
         </div>
