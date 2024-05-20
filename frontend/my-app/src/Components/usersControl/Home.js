@@ -14,7 +14,7 @@ export default function Home() {
                 <Container style={{ paddingTop: "50px",justifyContent: "center" }}>
                     <LiveGoldPriceDisplay />
                 </Container>
-                <Container className="mt-5" style={{ position: "fixed", top: "350px", left: "50%", transform: "translateX(-50%)" }}>
+                <Container className="mt-5" style={{ position: "fixed", top: "420px", left: "50%", transform: "translateX(-50%)" }}>
                     <div className="row">
                         <div className="col-md-4 d-flex">
                             <Card className="border border-4 border-darkpink flex-fill" style={{ borderColor: '#FFC0CB' }}>

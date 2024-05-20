@@ -49,7 +49,7 @@ export default function LiveGoldPriceDisplay() {
                 </div>
          
             <div style={{ flexGrow: 1 }}>
-                <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', paddingTop: '340px' }}>
+                <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', paddingTop: '480px' }}>
                     <img src={img} alt="Jewellery Banner" className="banner-image" style={{ width: '100vw' }} />
                 </div>
             </div>
