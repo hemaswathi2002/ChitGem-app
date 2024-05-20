@@ -1,6 +1,7 @@
 const Invoices= require('../models/invoice-model')
 const axios = require('axios')
 const Chit = require('../models/chit-model')
+const mongoose = require('mongoose');
 const Payment = require('../models/payment-model')
 const _ = require('lodash')
 const {validationResult}=require('express-validator')
@@ -134,8 +135,12 @@ const invoicesCltr={}
 
 invoicesCltr.list = async(req,res)=>{
     try{
-        const owner = req.user.id
-        const invoice = await Invoices.find({ownerId:owner})
+        const chitId = req.params.chitId
+        const ownerId = req.user.id
+        if (!mongoose.Types.ObjectId.isValid(chitId)) {
+            return res.status(400).json({ error: 'Invalid chitId' });
+        }
+        const invoice = await Invoices.find({chit:chitId,ownerId})
         if (!invoice || invoice.length === 0) {
             return res.status(404).json({ error: 'Invoices not found' });
         }

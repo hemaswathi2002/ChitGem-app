@@ -3,7 +3,7 @@ import axios from 'axios'
 import ChitForm from './ChitsForm'
 import { ChitsContext } from '../../Context/ChitsContext'
 import { Button, Modal, ModalHeader, ModalBody } from 'reactstrap' 
-import { Link, useParams} from 'react-router-dom'
+import { Link, useParams,useNavigate} from 'react-router-dom'
 
 export default function ChitList() {
     const { chits, chitDispatch } = useContext(ChitsContext)
@@ -13,8 +13,11 @@ export default function ChitList() {
     const [selectedChitId, setSelectedChitId] = useState(null) 
     const {customerId} = useParams()
     const toggle = () => setModal(!modal)
-    const handleViewDetails = (customerId) => {
-        setSelectedChitId(customerId) 
+    const navigate = useNavigate()
+    
+
+    const handleViewDetails = (chitId) =>{
+        navigate(`/chits/${chitId}/invoices`);
     }
 
     useEffect(()=>{
@@ -94,6 +97,7 @@ export default function ChitList() {
                                 <td>
                                     <Button style={{ border: '2px solid deeppink', backgroundColor: 'white',color: 'deeppink' }} onClick={() => handleEdit(chit._id)}>Edit</Button>{' '}
                                     <Button style={{ border: '2px solid lightbrown', backgroundColor: 'white',color: 'deeppink' }} onClick={() => handleRemove(chit._id)}>Remove</Button>
+                                    <Button style={{ border: '2px solid lightblue', backgroundColor: 'white', color: 'deeppink' }} onClick={() => handleViewDetails(chit._id)}>View Invoices</Button>
                                 </td>
                             </tr>
                         ))}

@@ -47,10 +47,10 @@ export const setServerErrors = (errors) => {
     };
 };
 
-export const startGetInvoice = () => {
+export const startGetInvoice = (chitId) => {
     return async (dispatch) => {
         try{
-            const response = await axios.get('http://localhost:3009/api/invoices',{
+            const response = await axios.get(`http://localhost:3009/api/chits/${chitId}/invoices`,{
                 headers : {
                     Authorization : localStorage.getItem('token')
                 }
@@ -59,7 +59,7 @@ export const startGetInvoice = () => {
             dispatch(getInvoice(response.data))
         }
         catch(err){
-            console.log('error fetching invoices:', err);
+            console.log('error fetching invoices:', err)
 
         }
     }

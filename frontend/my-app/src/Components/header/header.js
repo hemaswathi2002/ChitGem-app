@@ -10,10 +10,10 @@ export default function Header() {
     const navigate = useNavigate();
 
     const handleChangeLogout = () => {
-        localStorage.removeItem('token');
-        handleLogout();
-        navigate('/');
-    };
+        localStorage.removeItem('token')
+        handleLogout()
+        navigate('/')
+    }
 
     return (
         <Navbar style={{ backgroundColor: 'rgb(94, 9, 9)' }} variant="dark" expand="lg" fixed="top">

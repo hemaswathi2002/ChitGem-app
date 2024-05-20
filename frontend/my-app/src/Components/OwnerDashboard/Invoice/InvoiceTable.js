@@ -1,18 +1,20 @@
-import { useEffect } from "react"
+import { useEffect,useState } from "react"
 import { useDispatch, useSelector} from "react-redux"
 import { Table,Button } from 'react-bootstrap';
+import { useParams } from "react-router-dom";
 import { startGetInvoice } from "../../Actions/Invoice"
-// import InvoiceForm from "./InvoiceForm";
 export default function OwnerInvoice(){
     const dispatch = useDispatch()
+    const { chitId } = useParams()
     const invoices = useSelector(state => state.invoice.data)
     console.log(invoices,"ownerinvoice")
 
      
     console.log(invoices)
     useEffect(()=>{
-        dispatch(startGetInvoice())
-    },[dispatch])
+        if (chitId) {
+            dispatch(startGetInvoice(chitId));
+        }    },[dispatch,chitId])
 
 
     return (
