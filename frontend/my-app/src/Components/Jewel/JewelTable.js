@@ -1,88 +1,88 @@
-import React, { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { startRemoveJewels, startGetJewels } from '../Actions/Jewels';
-import JewelForm from './JewelForm';
-import { Card, Button } from 'react-bootstrap';
-import { Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
-import axios from 'axios';
+import React, { useState, useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { startRemoveJewels, startGetJewels } from '../Actions/Jewels'
+import JewelForm from './JewelForm'
+import { Card, Button } from 'react-bootstrap'
+import { Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap'
+import axios from 'axios'
 import { startGetUserDetails } from '../Actions/Users'
 
 export default function JewelsTable() {
-    const [modal, setModal] = useState(false);
-    const [editId, setEditId] = useState('');
-    const [wishlist, setWishlist] = useState([]);
-    const [priceRange, setPriceRange] = useState([0, 10000]);
-    const [searchQuery, setSearchQuery] = useState('');
+    const [modal, setModal] = useState(false)
+    const [editId, setEditId] = useState('')
+    const [wishlist, setWishlist] = useState([])
+    const [priceRange, setPriceRange] = useState([0, 10000])
+    const [searchQuery, setSearchQuery] = useState('')
 
-    const dispatch = useDispatch();
-
-    useEffect(() => {
-        dispatch(startGetJewels());
-        dispatch(startGetUserDetails());
-        const storedWishlist = JSON.parse(localStorage.getItem('wishlist')) || [];
-        setWishlist(storedWishlist);
-    }, [dispatch]);
+    const dispatch = useDispatch()
 
     useEffect(() => {
-        localStorage.setItem('wishlist', JSON.stringify(wishlist));
-    }, [wishlist]);
-
-    const jewels = useSelector((state) => state.jewels);
-    const userRole = useSelector((state) => state.users.users.role); // Accessing user role
+        dispatch(startGetJewels())
+        dispatch(startGetUserDetails())
+        const storedWishlist = JSON.parse(localStorage.getItem('wishlist')) || []
+        setWishlist(storedWishlist)
+    }, [dispatch])
 
     useEffect(() => {
-        console.log("Price Range:", priceRange);
-        console.log("Search Query:", searchQuery);
-        console.log("Jewels Data:", jewels.data);
-    }, [priceRange, searchQuery, jewels.data]);
+        localStorage.setItem('wishlist', JSON.stringify(wishlist))
+    }, [wishlist])
 
-    console.log("Initial jewels data:", jewels.data);
+    const jewels = useSelector((state) => state.jewels)
+    const userRole = useSelector((state) => state.users.users.role)
+
+    useEffect(() => {
+        console.log("Price Range:", priceRange)
+        console.log("Search Query:", searchQuery)
+        console.log("Jewels Data:", jewels.data)
+    }, [priceRange, searchQuery, jewels.data])
+
+    console.log("Initial jewels data:", jewels.data)
 
     const filteredJewels = jewels.data.filter((jewel) => {
         return jewel.price >= priceRange[0] &&
-            jewel.caption.toLowerCase().includes(searchQuery.toLowerCase());
-    });
-    console.log("Filtered jewels data:", filteredJewels);
+            jewel.caption.toLowerCase().includes(searchQuery.toLowerCase())
+    })
+    console.log("Filtered jewels data:", filteredJewels)
 
-    const toggle = () => setModal(!modal);
+    const toggle = () => setModal(!modal)
 
     const handleRemove = (id) => {
-        const userConfirm = window.confirm("Are you sure?");
+        const userConfirm = window.confirm("Are you sure?")
         if (userConfirm) {
-            dispatch(startRemoveJewels(id));
+            dispatch(startRemoveJewels(id))
         }
-    };
+    }
 
-    const isItemInWishlist = (jewelId) => wishlist.includes(jewelId);
+    const isItemInWishlist = (jewelId) => wishlist.includes(jewelId)
 
     const handleAddToWishlist = async (id, images, caption, price) => {
         try {
             if (isItemInWishlist(id)) {
-                const updatedWishlist = wishlist.filter((item) => item !== id);
-                setWishlist(updatedWishlist);
-                localStorage.setItem('wishlist', JSON.stringify(updatedWishlist));
+                const updatedWishlist = wishlist.filter((item) => item !== id)
+                setWishlist(updatedWishlist)
+                localStorage.setItem('wishlist', JSON.stringify(updatedWishlist))
 
                 await axios.delete(`http://localhost:3009/api/wishlists/${id}`, {
                     headers: {
                         Authorization: localStorage.getItem('token'),
                     },
-                });
+                })
 
             } else {
                 await axios.post('http://localhost:3009/api/wishlists', { jewelId: id, images, caption, price }, {
                     headers: {
                         Authorization: localStorage.getItem('token'),
                     },
-                });
-                console.log(`Added item with ID ${id} to wishlist.`);
-                const updatedWishlist = [...wishlist, id];
-                setWishlist(updatedWishlist);
-                localStorage.setItem('wishlist', JSON.stringify(updatedWishlist));
+                })
+                console.log(`Added item with ID ${id} to wishlist.`)
+                const updatedWishlist = [...wishlist, id]
+                setWishlist(updatedWishlist)
+                localStorage.setItem('wishlist', JSON.stringify(updatedWishlist))
             }
         } catch (error) {
-            console.error('Error adding/removing item to/from wishlist:', error);
+            console.error('Error adding/removing item to/from wishlist:', error)
         }
-    };
+    }
 
     return (
         <div style={{ paddingTop: '80px', paddingBottom: '100px' }}>
@@ -136,8 +136,8 @@ export default function JewelsTable() {
                                     <div>
                                         <Button
                                             onClick={() => {
-                                                setEditId(ele._id);
-                                                toggle();
+                                                setEditId(ele._id)
+                                                toggle()
                                             }}
                                             color="primary"
                                         >
@@ -145,7 +145,7 @@ export default function JewelsTable() {
                                         </Button>{' '}
                                         <Button
                                             onClick={() => {
-                                                handleRemove(ele._id);
+                                                handleRemove(ele._id)
                                             }}
                                             color="danger"
                                         >
@@ -173,5 +173,5 @@ export default function JewelsTable() {
                 </ModalFooter>
             </Modal>
         </div>
-    );
+    )
 }

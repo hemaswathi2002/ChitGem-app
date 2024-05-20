@@ -166,26 +166,15 @@ img {
   position: relative;
 }
 .moving-strip {
-  position: absolute;
+  position: static;
   top: 0;
   width: 100%;
   height: 5px;
   background-color: #90EE90;
-  animation: moveText 12s linear infinite;
   padding-bottom: 0;
-
-
 }
 
 
-@keyframes moveText {
-  0% {
-      transform: translateX(190%);
-  }
-  100% {
-      transform: translateX(-100%);
-  }
-}
 @import '~@fortawesome/fontawesome-free/css/all.css';
 .card {
   margin-bottom: 1rem;
@@ -214,3 +203,40 @@ img {
 .custom-card {
   border: 2px solid darkpink;
 }
+.moving-strip {
+  position: static;
+  width: 400%;
+  background-color: #90EE90;
+  overflow: hidden;
+  padding: 30px 0;
+}
+.moving-strip-container {
+  overflow-x: hidden; /* Hide horizontal overflow */
+  width: 150%; /* Ensure it takes full width */
+}
+
+
+
+@keyframes moveStrip {
+  0% {
+      transform: translateX(0);
+  }
+  100% {
+      transform: translateX(-100%); /* Move strip to the left by its width */
+  }
+}
+.moving-text {
+  display: inline-block;
+  white-space: nowrap;
+  animation: moveText 25s linear infinite
+}
+
+@keyframes moveText {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
