@@ -54,7 +54,7 @@ export default function OwnerInvoice(){
                 </tbody> 
             </Table>
             <div style={{ paddingTop: '50px', paddingBottom: '50px', justifyContent: 'center', backgroundColor: 'green', color: 'white', border: '2px solid white', borderRadius: '5px', width: '500px', margin: 'auto' }}>
-                <h2>
+            <h2 style={{textAlign:'center'}}>
                     SAVINGS -{" "}
                     <CountUp
                         start={0}
