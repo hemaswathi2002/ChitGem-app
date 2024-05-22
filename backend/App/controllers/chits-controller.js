@@ -88,6 +88,7 @@ chitsCltr.register = async (req, res) => {
           ownerId: chits.ownerId,
           chit : chits._id,
           shopId: chits.shopId,
+          // shopName : invoice.shopName,
           customerId : chits.customerId,
           amount : chits.chitAmount,
           totalAmount : chits.totalAmount,

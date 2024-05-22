@@ -15,6 +15,11 @@ const paymentSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'User'
     },
+    chit: {
+        type: Schema.Types.ObjectId,
+        ref: 'Chit'
+    },
+    shopName : String,
     transactionId : String,
     amount: {
         type: Number,

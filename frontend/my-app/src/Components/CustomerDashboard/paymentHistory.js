@@ -57,6 +57,7 @@ export default function PaymentHistory() {
                         <th>Date</th>
                         <th>Time</th>
                         <th>TransactionId</th>
+                        <th>Shop</th>
                         <th>GoldPrice</th>
                         <th>GoldHarvested</th>
                         <th>Payment Type</th>
@@ -71,6 +72,7 @@ export default function PaymentHistory() {
                             <td>{new Date(ele.paymentDate).toLocaleDateString()}</td>
                             <td>{new Date(ele.paymentDate).toLocaleTimeString()}</td>
                             <td>{ele.transactionId}</td>
+                            <td>{ele.shop}</td>
                             <td>{ele.goldPrice}</td>
                             <td>{ele.goldHarvested}</td>
                             <td>{ele.paymentType}</td>

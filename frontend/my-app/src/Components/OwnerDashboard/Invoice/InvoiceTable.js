@@ -1,7 +1,7 @@
 import { useEffect,useState } from "react"
 import { useDispatch, useSelector} from "react-redux"
 import { Table,Button } from 'react-bootstrap'
-import { useParams } from "react-router-dom"
+import { useParams,useNavigate} from "react-router-dom"
 import CountUp from 'react-countup'
 import { startGetInvoice } from "../../Actions/Invoice"
 export default function OwnerInvoice(){
@@ -12,10 +12,16 @@ export default function OwnerInvoice(){
 
      
     console.log(invoices)
+    const navigate = useNavigate()
     useEffect(()=>{
         if (chitId) {
             dispatch(startGetInvoice(chitId));
-        }    },[dispatch,chitId])
+        }   
+    },[dispatch,chitId])
+
+    const handleTransactions = (chitId)=>{
+        navigate(`/chits/${chitId}/transactions`)
+    }
 
 
     return (
@@ -33,6 +39,7 @@ export default function OwnerInvoice(){
                         <th>amount</th>
                         <th>GoldHarvested(gms)</th>
                         <th>paymentStatus</th>
+                        <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -47,6 +54,9 @@ export default function OwnerInvoice(){
                             <td>{invoice.amount}</td>
                             <td>{invoice.goldHarvested}</td>
                             <td>{invoice.paymentStatus}</td>
+                            <td>
+                                <button onClick = {()=>handleTransactions(invoice.chit)}>view Transactions</button>
+                            </td>
                         </tr>
                     ))}
                    

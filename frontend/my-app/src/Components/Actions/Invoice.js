@@ -96,4 +96,26 @@ const getPaymentHistory = (data) => {
     }
 }
 
+export const getChitTransaction = (chitId) => {
+    return async (dispatch) => {
+        try {
+            const response = await axios.get(`http://localhost:3009/api/payments/chits/${chitId}`, {
+                headers: {
+                    Authorization: localStorage.getItem('token'),
+                },
+            });
+            dispatch(setChitTransaction(response.data));
+        } catch (err) {
+            console.error(err)
+        }
+    };
+};
+
+export const setChitTransaction = (data) => ({
+    type: 'SET_CHIT_TRANSACTION',
+    payload: data,
+});
+
+
+
 
