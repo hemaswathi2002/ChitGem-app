@@ -44,6 +44,7 @@ import PaymentTransactions from './Components/OwnerDashboard/Invoice/paymentTran
 import GoldPriceGraph from './Components/GoldPriceGraph'
 import CustomersForm from './Components/Customer/CustomersForm'
 import InvoiceOwner from './Components/CustomerDashboard/Invoice/Invoice'
+import ChitsNotPaidPerMonth from './Components/OwnerDashboard/Invoice/chitNotPaid'
 import ChitTransaction from './Components/OwnerDashboard/Invoice/chitTransaction'
 export default function App() {
   const [chits, chitDispatch] = useReducer(chitReducer, {data: []})
@@ -165,6 +166,7 @@ const registerToast = () => {
                     <Route path = '/wishlist' element = {<WishlistItems/>}/>
                     <Route path = '/all-invoice' element ={<OwnerInvoice/>} />
                     <Route path="/chits/:chitId/invoices" element={<OwnerInvoice/>} />
+                    <Route path="/chit-not-paid" element={<ChitsNotPaidPerMonth/>} />
                     <Route path="/chits/:chitId/transactions" element={<ChitTransaction/>} />
                     <Route path = '/account' element = {
                       <PrivateRoute permittedRoles = {['admin','owner','customer']}>

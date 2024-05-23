@@ -38,6 +38,6 @@ const invoiceSchema = new Schema({
    
 
     paymentMonth: String
-})
+} , {timestamps:true})
 const Invoice = model('Invoice', invoiceSchema)
 module.exports = Invoice

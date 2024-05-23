@@ -1,5 +1,6 @@
 const Payment=require('../models/payment-model')
 const Invoices = require('../models/invoice-model')
+const Chits = require('../models/chit-model')
 const PDFDocument = require('pdfkit')
 const fs = require('fs')
 const axios = require('axios')
@@ -187,4 +188,47 @@ paymentsCntrl.failureUpdate=async(req,res)=>{
         res.status(500).json({error:"internal server errror"})
     }
 }
+paymentsCntrl.chitsNotPaid = async (req, res) => {
+         const owner = req.user.id
+    try {
+        const chits = await Chits.find({ownerId:owner})
+        const today = new Date()
+        const missedPayments = []
+        for(const chit of chits){
+            let registrationDate = new Date(chit.createdAt)
+            let currentDate = new Date(registrationDate)
+            while(currentDate <= today){
+                const nextMonth = currentDate.getMonth() + 1
+                console.log(nextMonth)
+                const nextPaymentDate = new Date(currentDate.getFullYear(), nextMonth,1)
+                const payment = await Payment.findOne({
+                    chit : chit._id,
+                    paymentDate : {
+                        $gte:currentDate,
+                        $lt : nextPaymentDate
+                    }
+                })
+                if(!payment){
+                    missedPayments.push({
+                        chit : chit._id,
+                        name : chit.name,
+                        email : chit.email,
+                        amount : chit.chitAmount,
+                        month_year: `${nextMonth}/${currentDate.getFullYear()}`                       
+                    })
+                }
+                currentDate = nextPaymentDate
+            }
+        }
+        res.json({missedPayments : missedPayments})
+       
+      } catch (error) {
+        res.status(400).json({ message: error.message });
+      }
+    }
+
+
+
+
+
 module.exports=paymentsCntrl

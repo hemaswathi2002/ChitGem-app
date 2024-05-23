@@ -41,10 +41,11 @@ export default function Header() {
                             {user?.role === 'owner' && (
                                 <>
                                     <Link to="/customers" className="nav-link" style={{ color: '#fff', marginLeft: '10px' }}>Customers</Link>
-                                    <Link to="/chit" className="nav-link" style={{ color: '#fff', marginLeft: '10px' }}>Chits</Link>
-                                    <Link to="/all-invoice" className="nav-link" style={{ color: '#fff', marginLeft: '10px' }}>Invoice</Link>
+                                    {/* <Link to="/chit" className="nav-link" style={{ color: '#fff', marginLeft: '10px' }}>Chits</Link> */}
+                                    {/* <Link to="/all-invoice" className="nav-link" style={{ color: '#fff', marginLeft: '10px' }}>Invoice</Link> */}
                                     <Link to="/jewels" className="nav-link" style={{ color: '#fff', marginLeft: '10px' }}>Jewels</Link>
                                     <Link to='/live-price' className="nav-link" style={{ color: '#fff', marginLeft: '10px' }}>Live GoldPrice</Link>
+                                    <Link to="/chit-not-paid" className="nav-link" style={{ color: '#fff', marginLeft: '10px' }}>Pending Payments</Link>
                                 </>
                             )} 
                                 <>
