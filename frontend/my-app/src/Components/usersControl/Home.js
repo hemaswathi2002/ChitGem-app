@@ -14,14 +14,14 @@ export default function Home() {
                 <Container style={{ paddingTop: "50px",justifyContent: "center" }}>
                     <LiveGoldPriceDisplay />
                 </Container>
-                <Container className="mt-5" style={{ position: "fixed", top: "420px", left: "50%", transform: "translateX(-50%)" }}>
+                <Container className="mt-5" style={{ position: "fixed", top: "360px", left: "50%", transform: "translateX(-50%)" }}>
                     <div className="row">
                         <div className="col-md-4 d-flex">
                             <Card className="border border-4 border-darkpink flex-fill" style={{ borderColor: '#FFC0CB' }}>
                                 <CardBody>
                                     <CardTitle className="mb-0" style={{ fontWeight: 'bold', fontSize: '1.2rem', background: '#FFC0CB', color: 'white', padding: '10px' }}>Term Duration</CardTitle><br />
                                     <CardText className="text-justify">
-                                       The member can purchase BIS Hallmarked 22karat Gold Jewellery/ Gold Coins with benefit of NO value addition / Making charge. GST applicable.
+                                    The aggregate of 12 fixed / equal EMA easy monthly advance payment you pay monthly can be redeemed upon maturity (at the end of 12th month) with the benefit of NO VA / Making charges.
                                     </CardText>
                                 </CardBody>
                             </Card>
@@ -29,20 +29,18 @@ export default function Home() {
                         <div className="col-md-4 d-flex">
                             <Card className="border border-4 border-darkpink flex-fill" style={{ borderColor: '#FFC0CB' }}>
                                 <CardBody>
-                                    <CardTitle className="mb-0" style={{ fontWeight: 'bold', fontSize: '1.2rem', background: '#FFC0CB', color: 'white', padding: '10px' }}>Term Duration</CardTitle><br />
+                                    <CardTitle className="mb-0" style={{ fontWeight: 'bold', fontSize: '1.2rem', background: '#FFC0CB', color: 'white', padding: '10px' }}>Styling</CardTitle><br />
                                     <CardText className="text-justify">
-                                        The aggregate of eleven fixed / equal EMA easy monthly advance payment you pay monthly can be redeemed upon maturity (at the end of 11th month) with the benefit of NO VA / Making charges.
-                                    </CardText>
+                                    Everyone has a personal style. You can set your own trend by designing your jewellery at Chit-Gem. Browse through our large selection of designs and create your special piece of jewellery to reflect your unique sense of fashion.                                    </CardText>
                                 </CardBody>
                             </Card>
                         </div>
                         <div className="col-md-4 d-flex">
                             <Card className="border border-4 border-darkpink flex-fill" style={{ borderColor: '#FFC0CB' }}>
                                 <CardBody>
-                                    <CardTitle className="mb-0" style={{ fontWeight: 'bold', fontSize: '1.2rem', background: '#FFC0CB', color: 'white', padding: '10px' }}>Term Duration</CardTitle><br />
+                                    <CardTitle className="mb-0" style={{ fontWeight: 'bold', fontSize: '1.2rem', background: '#FFC0CB', color: 'white', padding: '10px' }}>Chit</CardTitle><br />
                                     <CardText className="text-justify" style={{ fontFamily: 'Helvetica, sans-serif' }}>
-                                        The aggregate of eleven fixed / equal EMA easy monthly advance payment you pay monthly can be redeemed upon maturity (at the end of 11th month) with the benefit of NO VA / Making charges.
-                                    </CardText>
+                                    For wedding occasion or light weight wear for career women or ranges for men’s wear anything and everything under one roof  </CardText>
                                 </CardBody>
                             </Card>
                         </div>

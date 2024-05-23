@@ -6,6 +6,7 @@ import { Card, Button } from 'react-bootstrap'
 import { Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap'
 import axios from 'axios'
 import { startGetUserDetails } from '../Actions/Users'
+import Swal from 'sweetalert2'
 
 export default function JewelsTable() {
     const [modal, setModal] = useState(false)
@@ -68,6 +69,7 @@ export default function JewelsTable() {
                     },
                 })
 
+             
             } else {
                 await axios.post('http://localhost:3009/api/wishlists', { jewelId: id, images, caption, price }, {
                     headers: {
@@ -78,6 +80,12 @@ export default function JewelsTable() {
                 const updatedWishlist = [...wishlist, id]
                 setWishlist(updatedWishlist)
                 localStorage.setItem('wishlist', JSON.stringify(updatedWishlist))
+
+                Swal.fire({
+                    text: 'Item added to wishlist!',
+                    icon: 'success',
+                    confirmButtonText: 'OK'
+                })
             }
         } catch (error) {
             console.error('Error adding/removing item to/from wishlist:', error)
