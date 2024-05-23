@@ -1,7 +1,8 @@
 const initialState = {
     data: [],
     paymentHistory : [],
-    chitPayment : []
+    chitPayment : [],
+    chitsNotPaidPerMonth :[]
 }
 
 export default function invoicesReducer(state = initialState, action) {
@@ -22,6 +23,8 @@ export default function invoicesReducer(state = initialState, action) {
                 ...state,
                 serverErrors: action.payload
             };
+            case 'SET_CHITS_NOT_PAID_PER_MONTH':
+            return {...state,chitsNotPaidPerMonth: action.payload}
         default: {
             return {...state}
         }

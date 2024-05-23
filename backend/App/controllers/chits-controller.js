@@ -72,14 +72,14 @@ chitsCltr.register = async (req, res) => {
     console.log(createdAt)
     const dayOfMonth = createdAt.getDate();
     console.log(dayOfMonth)
-    cron.schedule('* * * * *', async () => {     
-      console.log('Sending chit reminder email...')
-      if(chitname){
-        await sendRemainerMail(chitname)
-      }else {
-        console.log('Email not found')
-      }
-  })
+  //   cron.schedule('* * * * *', async () => {     
+  //     console.log('Sending chit reminder email...')
+  //     if(chitname){
+  //       await sendRemainerMail(chitname)
+  //     }else {
+  //       console.log('Email not found')
+  //     }
+  // })
           const year = createdAt.getFullYear();
         const month = createdAt.getMonth() + 1;
         const invoice = new Invoice({

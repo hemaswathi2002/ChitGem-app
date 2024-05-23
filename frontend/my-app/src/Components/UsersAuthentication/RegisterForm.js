@@ -68,6 +68,7 @@ export default function RegisterForm({ registerToast }) {
             }
         }
     }
+    console.log(formErrors)
 
     return (
         <div>

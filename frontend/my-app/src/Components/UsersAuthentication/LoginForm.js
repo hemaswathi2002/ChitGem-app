@@ -10,6 +10,7 @@ import Footer from '../../Components/Footer'
 export default function LoginForm(props) {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
+    const [formErrors,setFormErrors] = useState({})
     const [serverErrors, setServerErrors] = useState([])
 
     const { loginToast } = props
@@ -18,13 +19,29 @@ export default function LoginForm(props) {
     const navigate = useNavigate()
     const dispatch = useDispatch()
 
+    const errors = {}
+
+    const validateErrors = () => {
+        if(email.trim().length === 0){
+            errors.email = 'required'
+        }
+        if(password.trim().length === 0){
+            errors.password = 'required'
+        }
+       
+        setFormErrors(errors)
+        return errors
+    }
+
     const handleSubmit = async (e) => {
+        validateErrors()
         e.preventDefault()
 
         const formData = {
             email,
             password
         }
+        if(Object.keys(errors).length === 0){
         try {
             const response = await axios.post('http://localhost:3009/api/login', formData)
             const token = response.data.token
@@ -38,17 +55,17 @@ export default function LoginForm(props) {
             loginToast()
             navigate('/')
             setServerErrors([])
+            setFormErrors({})
             navigate('/usersControl')
         } catch (err) {
             console.log(err)
-            if (err.response && err.response.data && err.response.data.error) {
-                setServerErrors({ error: err.response.data.error }) // Set error message
-            } else {
-                setServerErrors({ error: 'Invalid email/password' }) // Default error message
-            }
+            console.log(err.response.data.errors)
+            setServerErrors(err.response.data.errors || [{ msg: 'invalid email/password' }])            
         }
+     }
     }
-    console.log(serverErrors)
+    console.log('server',serverErrors)
+    console.log('form',formErrors)
 
 
     return (
@@ -72,6 +89,7 @@ export default function LoginForm(props) {
             value={email} 
             onChange={(e) => setEmail(e.target.value)} 
         />
+        {formErrors.email && <small style={{ color: 'red', fontSize: '0.7rem' }}>{formErrors.email}</small>}
     </FormGroup>
     <FormGroup>
         <Label for="password">Password:</Label>
@@ -82,6 +100,7 @@ export default function LoginForm(props) {
             value={password} 
             onChange={(e) => setPassword(e.target.value)} 
         />
+        {formErrors.password && <small style={{ color: 'red', fontSize: '0.7rem' }}>{formErrors.password}</small>}
     </FormGroup>
     <Button type="submit" style={{ backgroundColor: '#ffb6c1', display: 'block', margin: 'auto' }}>Submit</Button>
     <div style={{ textAlign: 'center', marginTop: '10px' }}>

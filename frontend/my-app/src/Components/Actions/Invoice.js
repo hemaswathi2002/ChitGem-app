@@ -116,6 +116,26 @@ export const setChitTransaction = (data) => ({
     payload: data,
 });
 
+export const getChitsNotPaidPerMonth = () => {
+    return async (dispatch) => {
+        try {
+            const response = await axios.get('http://localhost:3009/api/chitIds/notPaidForMonth', {
+                headers: {
+                    Authorization: localStorage.getItem('token'),
+                },
+            });
+            console.log(response.data)
+            dispatch(setChitsNotPaidPerMonth(response.data));
+        } catch (err) {
+            console.error(err);
+        }
+    };
+};
+
+export const setChitsNotPaidPerMonth = (data) => ({
+    type: 'SET_CHITS_NOT_PAID_PER_MONTH',
+    payload: data,
+});
 
 
 

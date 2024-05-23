@@ -50,7 +50,6 @@ export default function Succes(){
 
     return (
         <div style={{ paddingTop: '80px' }}>
-            <h1>payment is succes</h1>
         </div>
     )
 }
