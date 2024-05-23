@@ -7,12 +7,12 @@ import { Table } from 'react-bootstrap';
 export default function ChitTransaction() {
     const dispatch = useDispatch();
     const { chitId } = useParams();
-    const transactions = useSelector(state => state.invoice.chitPayment)
+    const transactions = useSelector(state => state.invoice.chitPayment);
     const formatDateTime = (dateTimeStr) => {
-        const dateTime = new Date(dateTimeStr)
-        const date = dateTime.toLocaleDateString()
-        const time = dateTime.toLocaleTimeString()
-        return { date, time }
+        const dateTime = new Date(dateTimeStr);
+        const date = dateTime.toLocaleDateString();
+        const time = dateTime.toLocaleTimeString();
+        return { date, time };
     }
 
     useEffect(() => {
@@ -24,17 +24,17 @@ export default function ChitTransaction() {
     return (
         <div style={{ marginTop: '20px' }}>
             <h2>Transactions for Chit ID: {chitId}</h2>
-            <Table striped bordered hover>
-                <thead>
+            <Table striped bordered hover style={{ borderColor: 'maroon' }}>
+                <thead style={{ backgroundColor: 'maroon', color: 'white' }}>
                     <tr>
-                        <th>Date</th>
-                        <th>Time</th>
-                        <th>TransactionId</th>
-                        <th>GoldPrice</th>
-                        <th>GoldHarvested</th>
-                        <th>Payment Type</th>
-                        <th>Amount</th>
-                        <th>Status</th>
+                        <th style={{ backgroundColor: 'maroon',color: 'white'}}>Date</th>
+                        <th  style={{ backgroundColor: 'maroon',color: 'white'}}>Time</th>
+                        <th  style={{ backgroundColor: 'maroon',color: 'white'}}>TransactionId</th>
+                        <th  style={{ backgroundColor: 'maroon',color: 'white'}}>GoldPrice</th>
+                        <th  style={{ backgroundColor: 'maroon',color: 'white'}}>GoldHarvested</th>
+                        <th  style={{ backgroundColor: 'maroon',color: 'white'}}>Payment Type</th>
+                        <th  style={{ backgroundColor: 'maroon',color: 'white'}}>Amount</th>
+                        <th  style={{ backgroundColor: 'maroon',color: 'white'}}>Status</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -47,7 +47,7 @@ export default function ChitTransaction() {
                             <td>{ele.goldHarvested}</td>
                             <td>{ele.paymentType}</td>
                             <td>{ele.amount}</td>
-                            <td style = {{color:'green', fontFamily:'Bold'}}>{ele.paymentStatus}</td>
+                            <td style={{ color: 'green', fontFamily: 'Bold' }}>{ele.paymentStatus}</td>
                         </tr>
                     ))}
                 </tbody>

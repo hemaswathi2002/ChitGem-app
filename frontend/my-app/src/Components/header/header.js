@@ -4,6 +4,7 @@ import { Navbar, Nav, NavDropdown } from 'react-bootstrap';
 import { isEmpty } from 'lodash';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHomeUser, faUserPlus } from '@fortawesome/free-solid-svg-icons';
+import '../../index.css'
 
 export default function Header() {
     const { user, handleLogout } = useAuth();
@@ -65,7 +66,7 @@ export default function Header() {
                                     </>
                                 )}
                                 </>
-                            <NavDropdown alignRight title={<span style={{ color: '#fff' }}>My Account</span>} id="basic-nav-dropdown">
+                            <NavDropdown alignRight title={<span style={{ background:'marron', color: '#fff' }}>My Account</span>} id="basic-nav-dropdown" className="custom-dropdown">
                                 {user?.role === 'owner' && (
                                     <>
                                         <NavDropdown.Item as={Link} to="/account">My Account</NavDropdown.Item>

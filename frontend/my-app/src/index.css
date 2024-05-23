@@ -240,3 +240,15 @@ img {
   }
 }
 
+.custom-dropdown .dropdown-menu {
+  background-color: maroon !important;
+}
+
+.custom-dropdown .dropdown-item {
+  color: white !important;
+}
+
+.custom-dropdown .dropdown-item:hover {
+  background-color: rgba(255, 255, 255, 0.2) !important;
+  color: white !important;
+}
