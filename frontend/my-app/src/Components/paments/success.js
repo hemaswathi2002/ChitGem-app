@@ -37,10 +37,6 @@ export default function Succes(){
             const invoiceId=response.data.invoiceId
             console.log(invoiceId)
             dispatch(startUpdateInvoice(invoiceId))
-            
-            // dispatch(startPaymentStatusSuccess(transactionId,navigate))
-           // const updatedBooking=await axios.put(`http://localhost:3045/api/booking/payment/update/${bookingId}`)
-            // console.log("update",updatedBooking.data)
            }catch(err){
             console.log(err)
            }

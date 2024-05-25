@@ -34,6 +34,7 @@ export default function Invoice() {
     );
 
     return (
+        <>
         <div style={{ paddingTop: '60px' }}>
             <FormControl
                 type="text"
@@ -103,5 +104,6 @@ export default function Invoice() {
                 </Col>
             </Row>
         </div>
+        </>
     );
 }

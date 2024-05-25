@@ -129,7 +129,7 @@ export default function PaymentHistory() {
                         <th style={{ border: '2px solid maroon',backgroundColor: 'lightpink' }}>Date</th>
                         <th style={{ border: '2px solid maroon',backgroundColor: 'lightpink' }}>Time</th>
                         <th style={{ border: '2px solid maroon',backgroundColor: 'lightpink' }}>TransactionId</th>
-                        <th style={{ border: '2px solid maroon',backgroundColor: 'lightpink' }}>Shop</th>
+                        {/* <th style={{ border: '2px solid maroon',backgroundColor: 'lightpink' }}>Shop</th> */}
                         <th style={{ border: '2px solid maroon',backgroundColor: 'lightpink'}}>GoldPrice</th>
                         <th style={{ border: '2px solid maroon',backgroundColor: 'lightpink' }}>GoldHarvested</th>
                         <th style={{ border: '2px solid maroon',backgroundColor: 'lightpink'}}>Payment Type</th>
@@ -144,7 +144,7 @@ export default function PaymentHistory() {
                             <td style={{ border: '2px solid maroon' }}>{new Date(ele.paymentDate).toLocaleDateString()}</td>
                             <td style={{ border: '2px solid maroon' }}>{new Date(ele.paymentDate).toLocaleTimeString()}</td>
                             <td style={{ border: '2px solid maroon' }}>{ele.transactionId}</td>
-                            <td style={{ border: '2px solid maroon' }}>{ele.shop}</td>
+                            {/* <td style={{ border: '2px solid maroon' }}>{ele.shop}</td> */}
                             <td style={{ border: '2px solid maroon' }}>{ele.goldPrice}</td>
                             <td style={{ border: '2px solid maroon' }}>{ele.goldHarvested}</td>
                             <td style={{ border: '2px solid maroon' }}>{ele.paymentType}</td>

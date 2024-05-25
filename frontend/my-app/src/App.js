@@ -151,7 +151,7 @@ const registerToast = () => {
                     {user ? (
                       <>
                       <Route path = '/usersControl' element = {<UsersControl/>}/>
-                    <Route path='/admin' element={<Admin/>}/>+
+                    <Route path='/admin' element={<Admin/>}/>
                     <Route path='/owner' element={<Owner/>}/>
                     <Route path = '/shop' element = {<ShopsContainer/>}/>
                     <Route path = '/invoice' element = {<Invoice/>}/>
@@ -180,7 +180,7 @@ const registerToast = () => {
                     <Route path = '/cancel' element = {<Cancel/>}/>
                     <Route path='/forgotpassword' element={<ForgotPassword/>}/>
                     <Route path='/payment-history' element={<PaymentHistory/>}/>
-                    {/* <Route path = '/live-updates' element = {<GoldPriceGraph/>}/> */}
+                    <Route path = '/live-price' element = {<GoldPriceGraph/>}/>
 
                     <Route path = '/jewels-user' element = {<JewelsTable/>}/>
                     <Route path = '/chit' element = {
