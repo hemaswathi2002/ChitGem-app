@@ -19,7 +19,7 @@ export default function LiveGoldPriceDisplay() {
     };
 
     useEffect(() => {
-        const intervalId = setInterval(fetchGoldPrice, 200000);
+        const intervalId = setInterval(fetchGoldPrice, 2000);
 
         return () => {
             clearInterval(intervalId);

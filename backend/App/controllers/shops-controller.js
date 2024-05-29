@@ -16,13 +16,12 @@ shopsCltr.register = async (req, res) => {
       const shop = new Shop(body);
       const response = await shop.save();
 
-      // Assuming 'transporter' is defined somewhere to handle email sending
-      await transporter.sendMail({
-          from: 'your_email@example.com',
-          to: 'admin@example.com',
-          subject: 'New Shop Registration',
-          text: `A new shop with name ${body.shopName} has registered. Please review and approve it.`
-      });
+      // await transporter.sendMail({
+      //     from: 'your_email@example.com',
+      //     to: 'admin@example.com',
+      //     subject: 'New Shop Registration',
+      //     text: `A new shop with name ${body.shopName} has registered. Please review and approve it.`
+      // });
 
       res.status(201).json(response);
   } catch (err) {

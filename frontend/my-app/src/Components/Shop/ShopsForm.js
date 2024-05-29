@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { startCreateShop, startUpdateShop, clearServerErrors, setServerErrors } from '../Actions/shops'
 import { Form, Button, Alert } from 'react-bootstrap';
+import { useAuth } from '../../Context/AuthrorizeContext';
 
 
 export default function ShopsForm({ editId, toggle }) {
@@ -12,6 +13,7 @@ export default function ShopsForm({ editId, toggle }) {
         description: '',
         approvalStatus: 'pending'
     })
+    const {user} = useAuth()
     const [formErrors, setFormErrors] = useState({})
     const serverErrors = useSelector(state => state.shops.serverErrors)
     console.log(serverErrors)
@@ -64,9 +66,10 @@ export default function ShopsForm({ editId, toggle }) {
             }
 
             dispatch(clearServerErrors())
+            setShopData({})
             toggle()
         } catch (error) {
-            console.error('Error:', error)
+            // console.log('Error:', error)
             if (error.response && error.response.data) {
                 dispatch(setServerErrors(error.response.data))
             }
@@ -119,7 +122,7 @@ export default function ShopsForm({ editId, toggle }) {
     }
 //in jsx   in the nname field see  the chnge i have donne 
 return (
-    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '45vh', marginTop: '10px' }}>
+    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '45vh', marginTop: '10px', paddingTop: '60px' }}>
     <div style={{ border: '2px solid pink', padding: '20px', borderRadius: '5px', width: '100%' }}>
         {serverErrors && serverErrors.length > 0 && (
             <div>
@@ -138,37 +141,37 @@ return (
 
         <Form.Group controlId="formEmail">
             {/* <Form.Label>Email</Form.Label> */}
-            <Form.Control type="email" placeholder="Email" name="contact.email" value={shopData.contact.email} onChange={handleNestedChange} />
+            <Form.Control type="email" placeholder="Email" name="contact.email" value={shopData.contact?.email} onChange={handleNestedChange} />
             {formErrors.email && <Alert variant="danger">{formErrors.email}</Alert>}
         </Form.Group><br/>
 
         <Form.Group controlId="formMobile">
             {/* <Form.Label>Mobile</Form.Label> */}
-            <Form.Control type="text" placeholder="Mobile" name="contact.mobile" value={shopData.contact.mobile} onChange={handleNestedChange} />
+            <Form.Control type="text" placeholder="Mobile" name="contact.mobile" value={shopData.contact?.mobile} onChange={handleNestedChange} />
             {formErrors.mobile && <Alert variant="danger">{formErrors.mobile}</Alert>}
         </Form.Group><br/>
 
         <Form.Group controlId="formArea">
             {/* <Form.Label>Area</Form.Label> */}
-            <Form.Control type="text" placeholder="Area" name="address.area" value={shopData.address.area} onChange={handleNestedChange} />
+            <Form.Control type="text" placeholder="Area" name="address.area" value={shopData.address?.area} onChange={handleNestedChange} />
             {formErrors.area && <Alert variant="danger">{formErrors.area}</Alert>}
         </Form.Group><br/>
 
         <Form.Group controlId="formCity">
             {/* <Form.Label>City</Form.Label> */}
-            <Form.Control type="text" placeholder="City" name="address.city" value={shopData.address.city} onChange={handleNestedChange} />
+            <Form.Control type="text" placeholder="City" name="address.city" value={shopData.address?.city} onChange={handleNestedChange} />
             {formErrors.city && <Alert variant="danger">{formErrors.city}</Alert>}
         </Form.Group><br/>
 
         <Form.Group controlId="formState">
             {/* <Form.Label>State</Form.Label> */}
-            <Form.Control type="text" placeholder="State" name="address.state" value={shopData.address.state} onChange={handleNestedChange} />
+            <Form.Control type="text" placeholder="State" name="address.state" value={shopData.address?.state} onChange={handleNestedChange} />
             {formErrors.state && <Alert variant="danger">{formErrors.state}</Alert>}
         </Form.Group><br/>
 
         <Form.Group controlId="formPincode">
             {/* <Form.Label>Pincode</Form.Label> */}
-            <Form.Control type="text" placeholder="Pincode" name="address.pincode" value={shopData.address.pincode} onChange={handleNestedChange} />
+            <Form.Control type="text" placeholder="Pincode" name="address.pincode" value={shopData.address?.pincode} onChange={handleNestedChange} />
             {formErrors.pincode && <Alert variant="danger">{formErrors.pincode}</Alert>}
         </Form.Group><br/>
 
@@ -178,7 +181,7 @@ return (
             {formErrors.description && <Alert variant="danger">{formErrors.description}</Alert>}
         </Form.Group><br/>
 
-        {!editId && (
+        {user.role == 'admin' && !editId &&  (
             <Form.Group controlId="formApprovalStatus">
                 {/* <Form.Label>Approval Status</Form.Label> */}
                 <Form.Control as="select" name="approvalStatus" value={shopData.approvalStatus} onChange={handleChange}>

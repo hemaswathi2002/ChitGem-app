@@ -2,6 +2,7 @@ import { useState } from "react"
 import axios from 'axios'
 import { useNavigate, Link } from "react-router-dom"
 import { Container, Form, Button } from 'react-bootstrap'
+import { useAuth } from "../../Context/AuthrorizeContext"
 import Footer from '../../Components/Footer'
 
 export default function RegisterForm({ registerToast }) {
@@ -14,6 +15,7 @@ export default function RegisterForm({ registerToast }) {
     const [serverErrors, setServerErrors] = useState([])
 
     const navigate = useNavigate()
+    const {user} = useAuth()
 
     const errors = {}
 
@@ -59,12 +61,15 @@ export default function RegisterForm({ registerToast }) {
                 setMobile('')
                 setRole('')
                 setPassword('')
-                // navigate('/otp')
+                {user.role == 'owner' ? (
+                    navigate('/register')
+                ) : (
+                    navigate('/otp')
+                )}
                 registerToast()
             } catch(err) {
                 console.log(err)
-                console.log(err.response.data.errors)
-                setServerErrors(err.response.data.errors || [{ msg: 'Unknown error occurred' }])
+                setServerErrors(err.response?.data?.errors)         
             }
         }
     }

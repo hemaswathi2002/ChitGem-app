@@ -46,6 +46,7 @@ import CustomersForm from './Components/Customer/CustomersForm'
 import InvoiceOwner from './Components/CustomerDashboard/Invoice/Invoice'
 import ChitsNotPaidPerMonth from './Components/OwnerDashboard/Invoice/chitNotPaid'
 import ChitTransaction from './Components/OwnerDashboard/Invoice/chitTransaction'
+import ShopsForm from './Components/Shop/ShopsForm'
 export default function App() {
   const [chits, chitDispatch] = useReducer(chitReducer, {data: []})
   const [customers, customerDispatch] = useReducer(CustomersReducer, {data:[]})
@@ -181,6 +182,7 @@ const registerToast = () => {
                     <Route path='/forgotpassword' element={<ForgotPassword/>}/>
                     <Route path='/payment-history' element={<PaymentHistory/>}/>
                     <Route path = '/live-price' element = {<GoldPriceGraph/>}/>
+                    <Route path = '/register-shop' element= {<ShopsForm/>}/>
 
                     <Route path = '/jewels-user' element = {<JewelsTable/>}/>
                     <Route path = '/chit' element = {
