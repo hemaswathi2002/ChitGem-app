@@ -79,11 +79,11 @@ export default function ShopsForm({ editId, toggle }) {
     const validateForm = () => {
         const errors = {}
 
-        if (!shopData.shopName.trim()) {
+        if (!shopData.shopName) {
             errors.shopName = 'Shop name is required'
         }
 
-        if (!shopData.address.area.trim()) {
+        if (!shopData.address.area) {
             errors.area = 'Area is required'
         }
 
@@ -93,15 +93,15 @@ export default function ShopsForm({ editId, toggle }) {
             errors.pincode = 'Pincode must be a number'
         }
 
-        if (!shopData.address.city.trim()) {
+        if (!shopData.address.city) {
             errors.city = 'City is required'
         }
 
-        if (!shopData.address.state.trim()) {
+        if (!shopData.address.state) {
             errors.state = 'State is required'
         }
 
-        if (!shopData.contact.email.trim()) {
+        if (!shopData.contact.email) {
             errors.email = 'Email is required'
         } else if (!/\S+@\S+\.\S+/.test(shopData.contact.email)) {
             errors.email = 'Email is invalid'
@@ -113,7 +113,7 @@ export default function ShopsForm({ editId, toggle }) {
             errors.mobile = 'Mobile number must be a number'
         }
 
-        if (!shopData.description.trim()) {
+        if (!shopData.description) {
             errors.description = 'Description is required'
         }
 
