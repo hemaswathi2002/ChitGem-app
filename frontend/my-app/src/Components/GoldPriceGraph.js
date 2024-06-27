@@ -12,25 +12,25 @@ const GoldPriceGraph = () => {
 
   useEffect(() => {
     const fetchGoldPrices = async () => {
-      try {
-        const response = await axios.get('http://localhost:3009/api/goldprice')
-        console.log("Gold Prices Data:", response.data)
-        if (response.data.length > 0) {
-          const formattedData = {
-            labels: response.data.map((individualData) => formatDate(individualData.timestamp)),
-            datasets: [{
-              label: 'Gold Price',
-              data: response.data.map((individualData) => individualData.goldPrice),
-              borderColor: 'lightblue',
-            }]
-          }
-          setGoldPrices(formattedData)
-        } else {
-          console.log("No data found")
-        }
-      } catch (error) {
-        console.error('Error fetching gold prices:', error)
-      }
+      // try {
+      //   const response = await axios.get('http://localhost:3009/api/goldprice')
+      //   console.log("Gold Prices Data:", response.data)
+      //   if (response.data.length > 0) {
+      //     const formattedData = {
+      //       labels: response.data.map((individualData) => formatDate(individualData.timestamp)),
+      //       datasets: [{
+      //         label: 'Gold Price',
+      //         data: response.data.map((individualData) => individualData.goldPrice),
+      //         borderColor: 'lightblue',
+      //       }]
+      //     }
+      //     setGoldPrices(formattedData)
+      //   } else {
+      //     console.log("No data found")
+      //   }
+      // } catch (error) {
+      //   console.error('Error fetching gold prices:', error)
+      // }
     }
 
     fetchGoldPrices()

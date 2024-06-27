@@ -246,21 +246,21 @@ invoicesCltr.listOneCustomer = async(req,res) => {
 
 
 invoicesCltr.get = async (req, res) => {
-    try {
-        const apiKey = process.env.GOLD_API_KEY;
-        const response = await axios.get("https://www.goldapi.io/api/XAU/INR", {
-            headers: {
-                'x-access-token': apiKey
-            }
-        });
+    // try {
+    //     const apiKey = process.env.GOLD_API_KEY;
+    //     const response = await axios.get("https://www.goldapi.io/api/XAU/INR", {
+    //         headers: {
+    //             'x-access-token': apiKey
+    //         }
+    //     });
 
-        const  price_gram_24k  = Math.round(response.data.price_gram_24k)
-        console.log(response.data.price_gram_24k)
-        res.json({ goldPrice: price_gram_24k });
-    } catch (error) {
-        console.error('Error fetching live gold price:', error);
-        res.status(500).json({ message: 'Internal server error' });
-    }
+    //     const  price_gram_24k  = Math.round(response.data.price_gram_24k)
+    //     console.log(response.data.price_gram_24k)
+    //     res.json({ goldPrice: price_gram_24k });
+    // } catch (error) {
+    //     console.error('Error fetching live gold price:', error);
+    //     res.status(500).json({ message: 'Internal server error' });
+    // }
 }
 
 invoicesCltr.delete=async(req,res)=>{
